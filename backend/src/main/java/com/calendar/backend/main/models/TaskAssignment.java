@@ -6,11 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "task_assigments")
+@Table(name = "task_assignments")
 @Getter
 @Setter
 @NoArgsConstructor
-public class TaskAssigment {
+public class TaskAssignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -19,7 +19,7 @@ public class TaskAssigment {
     @OneToOne
     private User user;
     private boolean isDone = false;
-    public TaskAssigment(Task task, User user) {
+    public TaskAssignment(Task task, User user) {
         this.task = task;
         this.user = user;
     }
