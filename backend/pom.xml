@@ -17,17 +17,34 @@
     <description>backend</description>
 
     <url/>
-    <licenses>
-        <license/>
-    </licenses>
     <developers>
-        <developer/>
+        <developer>
+            <id>dexipua</id>
+            <name>Artem Moseichenko</name>
+            <email>ma.ua@outlook.com</email>
+            <organization>CoffeeProgrammers</organization>
+        </developer>
+        <developer>
+            <id>aliakravets</id>
+<!--            <name></name>-->
+<!--            <email></email>-->
+            <organization>CoffeeProgrammers</organization>
+        </developer>
+        <developer>
+            <id>Vladobrod</id>
+            <name>Vladislav Bulakovski</name>
+<!--            <email></email>-->
+            <organization>CoffeeProgrammers</organization>
+        </developer>
+        <developer>
+            <id>Yaroslav-Holobyn</id>
+            <name>Yaroslav Holobyn</name>
+<!--            <email></email>-->
+            <organization>CoffeeProgrammers</organization>
+        </developer>
     </developers>
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
+        <connection>scm:git:https://github.com/CoffeeProgrammers/School-Calendar</connection>
     </scm>
 
     <properties>
@@ -37,6 +54,7 @@
     </properties>
 
     <dependencies>
+
         <!-- Spring Boot dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -51,7 +69,7 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- Database -->
+        <!-- DB -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
@@ -112,6 +130,7 @@
             <version>0.2.0</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -149,14 +168,11 @@
 
     <build>
         <plugins>
-            <!-- Add Spring Boot Maven Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.4.2</version>
             </plugin>
-
-            <!-- Other plugins you may have -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
