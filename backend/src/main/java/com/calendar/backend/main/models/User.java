@@ -33,8 +33,7 @@ public class User implements UserDetails {
     private LocalDateTime birthday;
 
     public User(String email, String password, String firstName,
-                String lastName, String role, String token,
-                String description, LocalDateTime birthday) {
+                String lastName, String role, LocalDateTime birthday) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
