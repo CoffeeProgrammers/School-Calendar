@@ -8,16 +8,16 @@ services:
     depends_on:
       - db
     environment:
-      - DB_URL=jdbc:postgresql://db:5432/todo
+      - DB_URL=jdbc:postgresql://db:5432/db
       - DB_USERNAME=postgres
       - DB_PASSWORD=password
       - SECRET=MzI3NzQ0NzQ4NjcyNDk3MzI5Nzk3NzY2OTQ2MzIzNjY4Nzg5Njk5ODc0NzY2Nzc4NTYzNzQ3Njc5NjY0OTY5Mzc2ODMzNjk5NTg1NzUyOTY0Mzk2OTU2MzY1MzQ5NDY5Nzg1NTM3NzQ2ODk5MjQzNTg2NDg4ODM0NTM5OTkxNzY2MTY4NjE0MjU3Nzc0NzY1MzA1NjE0NzY0NTg1Mzc5MjM5NzM0NTY3NTc0OTc2NjE4NDYyMjI1NTk0OTU4NzQ4MTM5MTg5NjcxNzk2MjE3NzQ5NzUzNzA2MTMxNjk2OTIwNTI5OTI5MzQ1MjY2MDc2NjYxMjQwNjY2NzQ5Njk2NTUwNTMxMTg5OTc4NDc0NDQ3NjkzNjcyNTIwNTg3MjcxMzA5NTg4MzQwNjYzNjM3Nzg2NjkxNzMwMjYxNTA4MjYxOTkwNDg0ODk2MTI5MjQ2MTg3MTMwMjcxMzQwMDQy
       - JWT_TIME=900000
       - RT_TIME=259200000
-      - GOOGLE_CLIENT_ID=968754896902-g62j49a9a6o0kaepkkseos9dn04ecrpj.apps.googleusercontent.com
-      - GOOGLE_CLIENT_SECRET=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
-      - FACEBOOK_CLIENT_ID=2558253521030600
-      - FACEBOOK_CLIENT_SECRET=508142feb71d12faa2e86d8f7d601a6f
+      - GOOGLE_CLIENT_ID=968754896902-pa73t98upl6vm90susvqts92n1m654qf.apps.googleusercontent.com
+      - GOOGLE_CLIENT_SECRET=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
+      - FACEBOOK_CLIENT_ID=1579619569586347
+      - FACEBOOK_CLIENT_SECRET=a65d895fc168edd41cb66414c16a80af
     command: ["sh", "-c", "mvn clean package -DskipTests && java -jar target/*.jar"]
 
   db:

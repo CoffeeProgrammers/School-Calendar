@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "task_assigments")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -15,6 +15,12 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+.idea/*
+!.idea/inspectionProfiles
+!.idea/codeStyles
+!.idea/vcs.xml
+!.idea/modules.xml
+!.idea/.gitignore
 *.iws
 *.iml
 *.ipr

@@ -16,9 +16,9 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne
+    @ManyToOne
     private User creator;
-    @OneToOne
+    @ManyToOne
     private Event event;
     private String text;
     private LocalDateTime date;
