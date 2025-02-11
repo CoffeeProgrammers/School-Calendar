@@ -1,7 +1,6 @@
-package com.calendar.backend.exception.DTOs.exception;
+package com.calendar.backend.dto.exception;
 
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.List;
 

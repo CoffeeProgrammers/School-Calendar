@@ -1,6 +1,6 @@
 package com.calendar.backend.exception;
 
-import com.calendar.backend.exception.DTOs.exception.ExceptionResponse;
+import com.calendar.backend.dto.exception.ExceptionResponse;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.security.auth.message.AuthException;

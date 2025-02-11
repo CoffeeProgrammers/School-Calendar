@@ -6,7 +6,7 @@ import com.calendar.backend.auth.DTOs.string.RequestString;
 import com.calendar.backend.auth.config.JwtUtils;
 import com.calendar.backend.auth.services.impl.RefreshTokenServiceImpl;
 import com.calendar.backend.auth.services.inter.AuthService;
-import com.calendar.backend.DTOs.user.UserFullResponse;
+import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.models.User;
 import com.calendar.backend.services.inter.UserService;
