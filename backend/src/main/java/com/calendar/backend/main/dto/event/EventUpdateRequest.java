@@ -5,9 +5,6 @@ import lombok.Data;
 @Data
 public class EventUpdateRequest {
     private String name;
-    private String type;
-    private String start_date;
-    private String end_date;
     private String content;
     private boolean is_content_available_anytime;
     private String meeting_type;
