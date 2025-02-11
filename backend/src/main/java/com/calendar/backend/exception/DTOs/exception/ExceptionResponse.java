@@ -5,7 +5,6 @@ import lombok.Getter;
 
 import java.util.List;
 
-@Getter
 @Data
 public class ExceptionResponse {
     private List<String> messages;
