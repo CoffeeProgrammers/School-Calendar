@@ -2,7 +2,7 @@ package com.calendar.backend.auth.config;
 
 
 import com.calendar.backend.auth.services.impl.RefreshTokenServiceImpl;
-import com.calendar.backend.main.services.impl.UserServiceImpl;
+import com.calendar.backend.app.services.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;

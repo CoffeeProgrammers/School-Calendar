@@ -1,8 +1,8 @@
 package com.calendar.backend.auth.config;
 
 import com.calendar.backend.auth.models.RefreshToken;
-import com.calendar.backend.main.models.User;
-import com.calendar.backend.main.services.impl.UserServiceImpl;
+import com.calendar.backend.app.models.User;
+import com.calendar.backend.app.services.impl.UserServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
