@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.security.auth.login.LoginException;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -34,6 +35,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionResponse handleEntityNotFoundException(RuntimeException e) {
+        log.error("handleEntityNotFoundException: {}", e.getMessage());
+        return new ExceptionResponse(e.getMessage());
+    }
+
+    @ExceptionHandler(LoginException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ExceptionResponse handleLoginException(RuntimeException e) {
         log.error("handleEntityNotFoundException: {}", e.getMessage());
         return new ExceptionResponse(e.getMessage());
     }
