@@ -1,6 +1,6 @@
 package com.calendar.backend.auth.config;
 
-import com.calendar.backend.app.services.impl.UserServiceImpl;
+import com.calendar.backend.services.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -2,7 +2,7 @@ package com.calendar.backend.auth.config;
 
 import com.calendar.backend.auth.models.RefreshToken;
 import com.calendar.backend.auth.services.impl.RefreshTokenServiceImpl;
-import com.calendar.backend.app.services.impl.UserServiceImpl;
+import com.calendar.backend.services.impl.UserServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
