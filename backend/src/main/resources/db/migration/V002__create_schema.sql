@@ -122,7 +122,7 @@ ALTER TABLE
     ADD CONSTRAINT "invitations_sender_id_foreign" FOREIGN KEY ("sender_id") REFERENCES "users" ("id");
 ALTER TABLE
     "task_assignments"
-    ADD CONSTRAINT "task_assigments_task_id_foreign" FOREIGN KEY ("task_id") REFERENCES "tasks" ("id");
+    ADD CONSTRAINT "task_assignments_task_id_foreign" FOREIGN KEY ("task_id") REFERENCES "tasks" ("id");
 ALTER TABLE
     "tasks"
     ADD CONSTRAINT "tasks_event_id_foreign" FOREIGN KEY ("event_id") REFERENCES "events" ("id");
@@ -155,7 +155,7 @@ ALTER TABLE
     ADD CONSTRAINT "comments_creator_id_foreign" FOREIGN KEY ("creator_id") REFERENCES "users" ("id");
 ALTER TABLE
     "task_assignments"
-    ADD CONSTRAINT "task_assigments_user_id_foreign" FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+    ADD CONSTRAINT "task_assignments_user_id_foreign" FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 ALTER TABLE
     "users_notifications"
     ADD CONSTRAINT "users_notifications_notification_id_foreign" FOREIGN KEY ("notification_id") REFERENCES "notifications" ("id");
