@@ -19,7 +19,6 @@ public class Event {
     @ManyToOne
     private User creator;
     private String name;
-    @Enumerated(EnumType.STRING)
     private EventType type;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
