@@ -4,6 +4,7 @@ import Login from "./components/pages/Login";
 import Page from "./components/layouts/Page";
 import {ThemeProvider} from "@mui/material";
 import theme from "./assets/theme"
+import Events from "./components/pages/Events";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                     <Routes>
                         <Route path={""} element={<Main/>}/>
                         <Route path={"/login"} element={<Login/>}/>
+                        <Route path={"/events"} element={<Events/>}/>
                     </Routes>
                 </Page>
             </ThemeProvider>

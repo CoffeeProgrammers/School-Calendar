@@ -1,0 +1,164 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "name": "Tech Conference 2025",
+      "type": "conference",
+      "creator": {
+        "id": 101,
+        "email": "john.doe@example.com",
+        "role": "admin",
+        "first_name": "John",
+        "last_name": "Doe"
+      },
+      "start_date": "2025-05-10T09:00:00Z",
+      "end_date": "2025-05-10T17:00:00Z",
+      "meeting_type": "offline",
+      "place": "New York, Tech Hall"
+    },
+    {
+      "id": 2,
+      "name": "Weekly Team Sync",
+      "type": "meeting",
+      "creator": {
+        "id": 102,
+        "email": "jane.smith@example.com",
+        "role": "manager",
+        "first_name": "Jane",
+        "last_name": "Smith"
+      },
+      "start_date": "2025-02-20T10:00:00Z",
+      "end_date": "2025-02-20T11:00:00Z",
+      "meeting_type": "online",
+      "place": "Zoom"
+    },
+    {
+      "id": 3,
+      "name": "Product Launch",
+      "type": "presentation",
+      "creator": {
+        "id": 103,
+        "email": "alex.brown@example.com",
+        "role": "marketing",
+        "first_name": "Alex",
+        "last_name": "Brown"
+      },
+      "start_date": "2025-03-15T14:00:00Z",
+      "end_date": "2025-03-15T16:00:00Z",
+      "meeting_type": "offline",
+      "place": "San Francisco, Grand Hall"
+    },
+    {
+      "id": 4,
+      "name": "Cybersecurity Workshop",
+      "type": "workshop",
+      "creator": {
+        "id": 104,
+        "email": "linda.white@example.com",
+        "role": "security",
+        "first_name": "Linda",
+        "last_name": "White"
+      },
+      "start_date": "2025-04-05T09:30:00Z",
+      "end_date": "2025-04-05T12:30:00Z",
+      "meeting_type": "online",
+      "place": "Microsoft Teams"
+    },
+    {
+      "id": 5,
+      "name": "AI & ML Conference",
+      "type": "conference",
+      "creator": {
+        "id": 105,
+        "email": "michael.jones@example.com",
+        "role": "researcher",
+        "first_name": "Michael",
+        "last_name": "Jones"
+      },
+      "start_date": "2025-06-20T08:00:00Z",
+      "end_date": "2025-06-22T18:00:00Z",
+      "meeting_type": "offline",
+      "place": "London, AI Hub"
+    },
+    {
+      "id": 6,
+      "name": "Startup Pitch Night",
+      "type": "networking",
+      "creator": {
+        "id": 106,
+        "email": "susan.kim@example.com",
+        "role": "investor",
+        "first_name": "Susan",
+        "last_name": "Kim"
+      },
+      "start_date": "2025-07-10T18:00:00Z",
+      "end_date": "2025-07-10T21:00:00Z",
+      "meeting_type": "offline",
+      "place": "Berlin, Startup Hub"
+    },
+    {
+      "id": 7,
+      "name": "Agile Training",
+      "type": "workshop",
+      "creator": {
+        "id": 107,
+        "email": "david.lee@example.com",
+        "role": "coach",
+        "first_name": "David",
+        "last_name": "Lee"
+      },
+      "start_date": "2025-08-05T09:00:00Z",
+      "end_date": "2025-08-05T17:00:00Z",
+      "meeting_type": "hybrid",
+      "place": "Paris, Agile Center"
+    },
+    {
+      "id": 8,
+      "name": "Python for Data Science",
+      "type": "course",
+      "creator": {
+        "id": 108,
+        "email": "emma.watson@example.com",
+        "role": "trainer",
+        "first_name": "Emma",
+        "last_name": "Watson"
+      },
+      "start_date": "2025-09-01T09:00:00Z",
+      "end_date": "2025-09-30T17:00:00Z",
+      "meeting_type": "online",
+      "place": "Udemy"
+    },
+    {
+      "id": 9,
+      "name": "Hackathon 2025",
+      "type": "competition",
+      "creator": {
+        "id": 109,
+        "email": "mark.zuckerberg@example.com",
+        "role": "organizer",
+        "first_name": "Mark",
+        "last_name": "Zuckerberg"
+      },
+      "start_date": "2025-10-12T08:00:00Z",
+      "end_date": "2025-10-14T20:00:00Z",
+      "meeting_type": "offline",
+      "place": "Silicon Valley, Hack Lab"
+    },
+    {
+      "id": 10,
+      "name": "Remote Work Strategies",
+      "type": "webinar",
+      "creator": {
+        "id": 110,
+        "email": "sophia.miller@example.com",
+        "role": "consultant",
+        "first_name": "Sophia",
+        "last_name": "Miller"
+      },
+      "start_date": "2025-11-20T16:00:00Z",
+      "end_date": "2025-11-20T18:00:00Z",
+      "meeting_type": "online",
+      "place": "Google Meet"
+    }
+  ]
+}

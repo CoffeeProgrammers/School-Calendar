@@ -1,5 +1,6 @@
 import AppBarButton from "./AppBarButton";
 import {Box, Stack, Typography} from "@mui/material";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const AppBar = () => {
     const role = "TEACHER" //TODO
@@ -8,6 +9,7 @@ const AppBar = () => {
         {text: "Home", link: ""},
         {text: "Events", link: "/events"},
         {text: "Tasks", link: "/tasks"},
+        {text: "Users", link: "/users"},
     ]
 
     if (role === "TEACHER") {
@@ -16,8 +18,9 @@ const AppBar = () => {
 
     return (
         <>
-            <Stack bgcolor={"#d5d5d5"} direction="row" alignItems={"center"}>
-                <Typography variant="body1" color={"primary"}>
+            <Stack style={{border: '1px solid #ddd', padding: '20px', margin: '10px'}} direction="row" alignItems={"center"}>
+                <CalendarMonthIcon fontSize={"large"} sx={{marginRight: "9px"}}/>
+                <Typography variant="h6" color={"primary"} mr={5}>
                     Calendar
                 </Typography>
 

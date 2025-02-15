@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
+import {Typography} from "@mui/material";
 
 const Main = () => {
     return (
-        <div>
+        <Typography variant="h4">
             Main
-        </div>
+        </Typography>
     );
 };
 
