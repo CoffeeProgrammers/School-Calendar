@@ -1,5 +1,5 @@
 import AppBarButton from "./AppBarButton";
-import {Box, Stack, Typography} from "@mui/material";
+import {Stack, Typography} from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const AppBar = () => {
@@ -19,7 +19,7 @@ const AppBar = () => {
     return (
         <>
             <Stack style={{border: '1px solid #ddd', padding: '20px', margin: '10px'}} direction="row" alignItems={"center"}>
-                <CalendarMonthIcon fontSize={"large"} sx={{marginRight: "9px"}}/>
+                <CalendarMonthIcon fontSize="large" sx={{marginRight: "9px"}}/>
                 <Typography variant="h6" color={"primary"} mr={5}>
                     Calendar
                 </Typography>

@@ -5,8 +5,8 @@ import EventBoxList from "../common/event/EventBoxList";
 import {Box, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography} from "@mui/material";
 
 const Events = () => {
-    const [searchQuery, setSearchQuery] = useState('Product Launch'); // Пошуковий запит
-    const [eventType, setEventType] = useState(''); // Тип події
+    const [searchQuery, setSearchQuery] = useState('Product Launch');
+    const [eventType, setEventType] = useState('');
 
     const {data: events, loading, error} = useFetch(
         EventService.getEventList,
