@@ -22,12 +22,12 @@ public class Notification {
             name = "users_notifications",
             joinColumns = @JoinColumn(name = "notification_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> user;
+    private List<User> users;
     private String content;
     private LocalDateTime time;
 
-    public Notification(List<User> user, String content, LocalDateTime time) {
-        this.user = user;
+    public Notification(List<User> users, String content, LocalDateTime time) {
+        this.users = users;
         this.content = content;
         this.time = time;
     }
