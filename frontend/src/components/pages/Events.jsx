@@ -2,19 +2,29 @@ import React, {useState} from 'react';
 import {useFetch} from "../../hooks/useFetch";
 import EventService from "../../services/EventService";
 import EventBoxList from "../common/event/EventBoxList";
-import {Box, FormControl, Grid, InputLabel, MenuItem, Select, Stack, TextField, Typography} from "@mui/material";
+import {
+    Box,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
+import Loading from "../layouts/Loading";
 
 const Events = () => {
-    const [searchQuery, setSearchQuery] = useState('Product Launch');
+    const [searchQuery, setSearchQuery] = useState('');
     const [eventType, setEventType] = useState('');
 
     const {data: events, loading, error} = useFetch(
-        EventService.getEventList,
-        {searchQuery, eventType}
+        EventService.getEventList, searchQuery, eventType
     );
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loading/>;
     }
 
     if (error) {
@@ -47,12 +57,10 @@ const Events = () => {
                             <MenuItem value="meetup">Meetup</MenuItem>
                         </Select>
                     </FormControl>
-                    <Typography></Typography>
                 </Stack>
-
-                <Grid container spacing={0.5}>
+                <Grid container spacing={0.25}>
                     {events.map(event => (
-                        <Grid item xs={12} sm={6} md={4} key={event.id}>
+                        <Grid item xs={12} sm={6} md={3} key={event.id}>
                             <EventBoxList event={event}/>
                         </Grid>
                     ))}

@@ -19,8 +19,8 @@ const AppBar = () => {
     return (
         <>
             <Stack style={{border: '1px solid #ddd', padding: '20px', margin: '10px'}} direction="row" alignItems={"center"}>
-                <CalendarMonthIcon fontSize="large" sx={{marginRight: "9px"}}/>
-                <Typography variant="h6" color={"primary"} mr={5}>
+                <CalendarMonthIcon fontSize="large" sx={{color: "#027a0a", marginRight: "9px"}}/>
+                <Typography fontWeight="bold" variant="h6" mr={5}>
                     Calendar
                 </Typography>
 

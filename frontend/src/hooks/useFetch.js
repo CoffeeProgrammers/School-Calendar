@@ -18,7 +18,7 @@ export const useFetch = (fetchFunction, ...args) => {
         };
 
         fetchData();
-    }, [fetchFunction, ...args]);
+    }, [args, fetchFunction]);
 
     return { data, loading, error };
 };
