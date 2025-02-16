@@ -86,7 +86,7 @@ CREATE TABLE "task_assignments"
     "is_done" BOOLEAN                                 NOT NULL
 );
 ALTER TABLE
-    "task_assigments"
+    "task_assignments"
     ADD PRIMARY KEY ("id");
 ---------------------------------------------------------------
 CREATE TABLE "parents_students"
@@ -121,8 +121,8 @@ ALTER TABLE
     "invitations"
     ADD CONSTRAINT "invitations_sender_id_foreign" FOREIGN KEY ("sender_id") REFERENCES "users" ("id");
 ALTER TABLE
-    "task_assigments"
-    ADD CONSTRAINT "task_assigments_task_id_foreign" FOREIGN KEY ("task_id") REFERENCES "tasks" ("id");
+    "task_assignments"
+    ADD CONSTRAINT "task_assignments_task_id_foreign" FOREIGN KEY ("task_id") REFERENCES "tasks" ("id");
 ALTER TABLE
     "tasks"
     ADD CONSTRAINT "tasks_event_id_foreign" FOREIGN KEY ("event_id") REFERENCES "events" ("id");
@@ -154,8 +154,8 @@ ALTER TABLE
     "comments"
     ADD CONSTRAINT "comments_creator_id_foreign" FOREIGN KEY ("creator_id") REFERENCES "users" ("id");
 ALTER TABLE
-    "task_assigments"
-    ADD CONSTRAINT "task_assigments_user_id_foreign" FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+    "task_assignments"
+    ADD CONSTRAINT "task_assignments_user_id_foreign" FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 ALTER TABLE
     "users_notifications"
     ADD CONSTRAINT "users_notifications_notification_id_foreign" FOREIGN KEY ("notification_id") REFERENCES "notifications" ("id");
