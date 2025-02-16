@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
-import {useFetch} from "../../hooks/useFetch";
+import React, {useEffect, useState} from 'react';
 import EventService from "../../services/EventService";
 import EventBoxList from "../common/event/EventBoxList";
+import SearchIcon from '@mui/icons-material/Search';
+
 import {
     Box,
     FormControl,
-    Grid,
+    Grid, IconButton,
     InputLabel,
     MenuItem,
     Select,
@@ -16,12 +17,35 @@ import {
 import Loading from "../layouts/Loading";
 
 const Events = () => {
+
     const [searchQuery, setSearchQuery] = useState('');
     const [eventType, setEventType] = useState('');
+    const [events, setEvents] = useState([])
 
-    const {data: events, loading, error} = useFetch(
-        EventService.getEventList, searchQuery, eventType
-    );
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await EventService.getEventList("", "");
+                setEvents(response);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+
+    const handleSearch = async () => {
+        const response = await EventService.getEventList(searchQuery, eventType);
+        setEvents(response)
+    };
 
     if (loading) {
         return <Loading/>;
@@ -43,6 +67,9 @@ const Events = () => {
                         onChange={(e) => setSearchQuery(e.target.value)}
                         fullWidth
                     />
+                    <IconButton onClick={handleSearch} aria-label="search">
+                        <SearchIcon/>
+                    </IconButton>
 
                     <FormControl fullWidth>
                         <InputLabel>Event Type</InputLabel>
