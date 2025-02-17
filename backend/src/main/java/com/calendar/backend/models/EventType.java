@@ -1,5 +1,5 @@
 package com.calendar.backend.models;
 
 public enum EventType {
-
+    TEACHERS_MEETING, STUDENTS_MEETING, PARENTS_MEETING, TEST, ENTERTAINMENT, PERSONAL, COUNCIL_MEETING
 }
