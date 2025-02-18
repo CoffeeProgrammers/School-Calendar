@@ -3,7 +3,7 @@ import {Box, Divider, Typography} from "@mui/material";
 
 const EventBoxList = ({event}) => {
     return (
-        <Box style={{border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "12px"}}>
+        <Box  style={{border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "12px"}}>
             <Typography variant="subtitle1">{event.name}</Typography>
             <Divider sx={{marginBottom: "5px"}}/>
             <Typography variant="body2"><strong>Type:</strong> {event.type}</Typography>
