@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import {createTheme} from "@mui/material/styles";
 import "@fontsource/open-sans";
 
 const theme = createTheme({
@@ -6,6 +6,11 @@ const theme = createTheme({
         primary: {
             main: "#3d3d3d",
         },
+        secondary: {
+            main: "#347928",
+            light: "#C0EBA6"
+        }
+
 
     },
     typography: {

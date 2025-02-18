@@ -1,31 +1,63 @@
-import AppBarButton from "./AppBarButton";
-import { Stack, Typography } from "@mui/material";
+import AppBarButton from "./buttons/AppBarButton";
+import {Stack, Typography} from "@mui/material";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import '../../../assets/css/style.css'
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import * as React from "react";
+import MuiAppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import NotificationButton from "./buttons/NotificationButton";
+import AccountMenu from "./buttons/AccountMenu";
+
+const appBarStyles = {
+    width: '100%',
+    borderBottom: '1px solid #ddd',
+    backgroundColor: '#fff',
+    boxShadow: 'none',
+    zIndex: 1000
+};
+
+const appToolbar = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+}
+
+const toolbarIconsContainer = {
+    display: "flex",
+    alignItems: "center",
+};
+
+
+
+const calendarTypographyStyles = {
+    mr: "40px",
+    ml: "5px",
+    color: "black",
+};
+
+
 
 const AppBar = () => {
     const role = "TEACHER" //TODO
 
     const buttons = [
-        { text: "Home", link: "" },
-        { text: "Events", link: "/events" },
-        { text: "Tasks", link: "/tasks" },
-        { text: "Users", link: "/users" },
+        {text: "Home", link: "/"},
+        {text: "Events", link: "/events"},
+        {text: "Tasks", link: "/tasks"},
+        {text: "Users", link: "/users"},
     ]
 
     if (role === "TEACHER") {
-        buttons.push({ text: "Teacher panel", link: "/admin" })
+        buttons.push({text: "Teacher panel", link: "/admin"})
     }
 
     return (
-        <>
-            <Stack style={{ border: '1px solid #ddd', padding: '0 8px', height: "60px" }} direction="row" alignItems={"center"} position={'fixed'} top={0} display={"flex"} width={'100%'} justifyContent={"space-between"}>
-                <div className="logo-nav" style={{ display: "flex", alignItems: 'center' }}>
-                    <CalendarMonthIcon fontSize="large" sx={{ color: "#027a0a", marginRight: "9px" }} />
-                    <Typography fontWeight="bold" variant="h6" mr={5}>
+        <MuiAppBar position="absolute" sx={appBarStyles}>
+            <Toolbar sx={appToolbar}>
+
+                <Stack direction="row" alignItems={"center"}>
+                    <CalendarMonthIcon fontSize="large" color="secondary"/>
+                    <Typography fontWeight="bold" variant="h6" sx={calendarTypographyStyles}>
                         Calendar
                     </Typography>
 
@@ -36,17 +68,17 @@ const AppBar = () => {
                             link={button.link}
                         />
                     ))}
-                </div>
-                <div className="notification-avatar" style={{ display: "flex", alignItems: 'center', marginRight: '20px' }} >
-                    <NotificationsIcon color="primary" style={{ marginRight: '10px' }} />
-                    <div className="avatar" style={{ display: "flex", alignItems: 'center' }}>
-                        <AccountCircleIcon fontSize="large" color="primary" />
-                        <KeyboardArrowDownIcon color="primary" />
-                    </div>
-                </div>
-            </Stack>
-        </>
+                </Stack>
+
+                <Box sx={toolbarIconsContainer}>
+                    <NotificationButton/>
+                    <AccountMenu/>
+                </Box>
+
+            </Toolbar>
+        </MuiAppBar>
     );
-};
+}
 
 export default AppBar;
+
