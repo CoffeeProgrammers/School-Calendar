@@ -23,7 +23,7 @@ public class TaskSpecification {
             }
             if (filters.containsKey("deadline")) {
                 LocalDateTime deadline = (LocalDateTime) filters.get("deadline");
-                predicates.add(criteriaBuilder.equal(root.get("deadline"), deadline));
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("deadline"), deadline));
             }
             if (filters.containsKey("is_done")) {
                 Boolean isDone = (Boolean) filters.get("is_done");

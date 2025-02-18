@@ -15,12 +15,14 @@ public class UserSpecification {
     public static Specification<User> filterUsers(Map<String, Object> filters) {
         return (Root<User> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (filters.containsKey("search")) {
-                String search = "%" + filters.get("search").toString().toLowerCase() + "%";
-                predicates.add(criteriaBuilder.or(
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")), search),
-                        criteriaBuilder.like(criteriaBuilder.lower(root.get("lastName")), search)
-                ));
+            if (filters.containsKey("firstName")) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")),
+                        "%" + filters.get("firstName").toString().toLowerCase() + "%"));
+            }
+
+            if (filters.containsKey("lastName")) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("lastname")),
+                        "%" + filters.get("lastName").toString().toLowerCase() + "%"));
             }
 
             if (filters.containsKey("role")) {
