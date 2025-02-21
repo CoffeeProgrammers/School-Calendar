@@ -1,0 +1,25 @@
+package com.calendar.backend.repositories;
+
+import com.calendar.backend.models.Event;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
+    @Query(value = "SELECT e.* FROM events e " +
+            "JOIN users_events ue ON e.id = ue.event_id " +
+            "WHERE ue.user_id = :userId",
+            nativeQuery = true)
+    List<Event> findAllByUserId(Long userId);
+
+    @Query(value = "SELECT e.* FROM events e " +
+            "JOIN users_events ue ON e.id = ue.event_id " +
+            "WHERE ue.user_id = :userId " +
+            "AND e.start_date >= :startDate " +
+            "AND e.end_date <= :endDate",
+            nativeQuery = true)
+    List<Event> findAllByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate);
+}
