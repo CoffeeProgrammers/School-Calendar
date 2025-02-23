@@ -81,7 +81,8 @@ public class EventServiceImpl implements EventService {
                         Sort.by(Sort.Direction.ASC, "time")));
         PaginationListResponse<EventListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(events.getTotalPages());
-        response.setContent(events.getContent().stream().map(eventMapper::fromEventToEventListResponse).toList());
+        response.setContent(events.getContent().stream().map(
+                eventMapper::fromEventToEventListResponse).toList());
         return response;
     }
 

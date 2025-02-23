@@ -64,13 +64,27 @@ public class InvitationServiceImpl implements InvitationService {
     }
 
     @Override
-    public PaginationListResponse<Invitation> findAllByUserId(long userId, int page, int size) {
+    public PaginationListResponse<InvitationResponse> findAllBySenderId(Authentication authentication, int page, int size) {
+        log.info("Finding all invitations from auth user with id");
+        Page<Invitation> invitations = invitationRepository.findAllBySender_Id
+                (userServices.findUserByAuth(authentication).getId(),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
+        PaginationListResponse<InvitationResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(invitations.getTotalPages());
+        response.setContent(invitations.getContent().stream().map(
+                invitationMapper::fromInvitationToInvitationResponse).toList());
+        return response;
+    }
+
+    @Override
+    public PaginationListResponse<InvitationResponse> findAllByRecieverId(long userId, int page, int size) {
         log.info("Finding all invitations for user with id {}", userId);
         Page<Invitation> invitations = invitationRepository.findAllByReceiver_Id(userId,
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
-        PaginationListResponse<Invitation> response = new PaginationListResponse<>();
+        PaginationListResponse<InvitationResponse> response = new PaginationListResponse<>();
         response.setTotalPages(invitations.getTotalPages());
-        response.setContent(invitations.getContent());
+        response.setContent(invitations.getContent().stream().map(
+                invitationMapper::fromInvitationToInvitationResponse).toList());
         return response;
     }
 
