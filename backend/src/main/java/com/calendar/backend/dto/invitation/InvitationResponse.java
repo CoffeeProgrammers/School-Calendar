@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class InvitationResponse {
     private Long id;
-    private UserListResponse from;
-    private UserListResponse to;
+    private UserListResponse sender;
+    private UserListResponse reciever;
     private EventListResponse event;
     private String description;
     private String warning;

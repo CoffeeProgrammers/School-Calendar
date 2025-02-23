@@ -1,0 +1,107 @@
+package com.calendar.backend.services.impl;
+
+import com.calendar.backend.dto.invitation.InvitationRequest;
+import com.calendar.backend.dto.invitation.InvitationResponse;
+import com.calendar.backend.dto.wrapper.PaginationListResponse;
+import com.calendar.backend.mappers.InvitationMapper;
+import com.calendar.backend.models.Event;
+import com.calendar.backend.models.Invitation;
+import com.calendar.backend.models.Notification;
+import com.calendar.backend.models.User;
+import com.calendar.backend.repositories.InvitationRepository;
+import com.calendar.backend.services.inter.*;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class InvitationServiceImpl implements InvitationService {
+    private final InvitationRepository invitationRepository;
+    private final InvitationMapper invitationMapper;
+    private final NotificationService notificationServices;
+    private final UserService userServices;
+    private final EventService eventService;
+    private final TaskAssignmentService taskAssignmentService;
+
+    @Override
+    public InvitationResponse create(InvitationRequest invitationRequest, Authentication authentication,
+                                     long eventId, long recieverId) {
+        log.info("Saving new invitation {}", invitationRequest);
+        Invitation invitation = invitationMapper.fromInvitationRequestToInvitation(invitationRequest);
+        invitation.setEvent(eventService.findByIdForServices(eventId));
+        invitation.setSender(userServices.findUserByAuth(authentication));
+        invitation.setReceiver(userServices.findByIdForServices(recieverId));
+        return invitationMapper.fromInvitationToInvitationResponse(invitationRepository.save(invitation));
+    }
+
+    @Override
+    public InvitationResponse update(long invitationId, InvitationRequest invitationRequest) {
+        log.info("Updating invitation with id {}", invitationId);
+        Invitation invitation = findInvitationById(invitationId);
+        invitation.setDescription(invitationRequest.getDescription());
+        return invitationMapper.fromInvitationToInvitationResponse(invitation);
+    }
+
+    @Override
+    public void delete(Long id) {
+        log.info("Deleting invitation with id {}", id);
+        invitationRepository.deleteById(id);
+    }
+
+    @Override
+    public InvitationResponse findById(Long id) {
+        log.info("Finding for controller invitation with id {}", id);
+        return invitationMapper.fromInvitationToInvitationResponse(findInvitationById(id));
+    }
+
+    @Override
+    public PaginationListResponse<Invitation> findAllByUserId(long userId, int page, int size) {
+        log.info("Finding all invitations for user with id {}", userId);
+        Page<Invitation> invitations = invitationRepository.findAllByReceiver_Id(userId,
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
+        PaginationListResponse<Invitation> response = new PaginationListResponse<>();
+        response.setTotalPages(invitations.getTotalPages());
+        response.setContent(invitations.getContent());
+        return response;
+    }
+
+    @Override
+    public void acceptInvitation(Long id) {
+        log.info("Accepting invitation with id {}", id);
+        Invitation invitation = findInvitationById(id);
+        User receiver = invitation.getReceiver();
+        Event event = invitation.getEvent();
+        event.addUser(receiver);
+        taskAssignmentService.assignTasksForNewUserFromEvent(event.getId(), receiver.getId());
+        notificationServices.create(new Notification(List.of(invitation.getSender()),
+                "User " + receiver.getFirstName() + " " +
+                        receiver.getLastName() + " accepted your invitation"));
+        invitationRepository.deleteById(id);
+    }
+
+    @Override
+    public void rejectInvitation(Long id) {
+        log.info("Rejecting invitation with id {}", id);
+        Invitation invitation = findInvitationById(id);
+        User receiver = invitation.getReceiver();
+        notificationServices.create(new Notification(List.of(invitation.getSender()),
+                "User " + receiver.getFirstName() + " " +
+                        receiver.getLastName() + " reject your invitation"));
+        invitationRepository.deleteById(id);
+    }
+
+    private Invitation findInvitationById(Long id) {
+        log.info("Finding private invitation with id {}", id);
+        return invitationRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Invitation not found"));
+    }
+}

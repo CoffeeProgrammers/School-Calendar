@@ -9,5 +9,5 @@ public class UserCreateRequest {
     private String role;
     private String firstName;
     private String lastName;
-    private String birthday_date;
+    private String birthday;
 }

@@ -37,15 +37,16 @@ public class AuthController {
     private final AuthService authService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/checksEmail")
+    @GetMapping("/checks")
     public boolean checkEmail(@RequestBody RequestString requestEmail) {
-        return userService.existsByEmail(requestEmail.getValue());
+        userService.loadUserByUsername(requestEmail.getValue());
+        return true;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/getAuth")
     public UserFullResponse getAuth(Authentication authentication) {
-        return userMapper.fromUserToUserResponse(authService.getAuth(authentication));
+        return userMapper.fromUserToUserResponse(userService.findUserByAuth(authentication));
     }
 
     @ResponseStatus(HttpStatus.OK)

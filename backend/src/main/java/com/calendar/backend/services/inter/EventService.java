@@ -1,0 +1,24 @@
+package com.calendar.backend.services.inter;
+
+import com.calendar.backend.dto.event.EventCreateRequest;
+import com.calendar.backend.dto.event.EventFullResponse;
+import com.calendar.backend.dto.event.EventListResponse;
+import com.calendar.backend.dto.event.EventUpdateRequest;
+import com.calendar.backend.dto.wrapper.PaginationListResponse;
+import com.calendar.backend.models.Event;
+import org.springframework.security.core.Authentication;
+
+import java.time.LocalDateTime;
+import java.util.Map;
+
+public interface EventService {
+    EventFullResponse create (EventCreateRequest eventCreateRequest, Authentication authentication);
+    EventFullResponse update (EventUpdateRequest eventUpdateRequest, long eventId);
+    void delete (Long id);
+    EventFullResponse findById (Long id);
+    PaginationListResponse<EventListResponse> findAllByUserId
+            (long userId, Map<String, Object> filters, int page, int size);
+    PaginationListResponse<EventListResponse> findAllByUserIdForCalendar
+            (long userId, LocalDateTime start, LocalDateTime end, int page, int size);
+    Event findByIdForServices(long id);
+}

@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class PaginationListResponse<T> {
-    private Long total_pages;
+    private Integer totalPages;
     private List<T> content;
 }

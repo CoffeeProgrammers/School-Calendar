@@ -9,10 +9,10 @@ public class EventFullResponse {
     private String name;
     private String type;
     private UserListResponse creator;
-    private String start_date;
-    private String end_date;
+    private String startDate;
+    private String endDate;
     private String content;
-    private boolean is_content_available_anytime;
-    private String meeting_type;
+    private boolean isContentAvailableAnytime;
+    private String meetingType;
     private String place;
 }

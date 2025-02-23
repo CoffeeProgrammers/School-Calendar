@@ -1,11 +1,13 @@
 package com.calendar.backend.repositories;
 
 import com.calendar.backend.models.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
@@ -15,5 +17,5 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
             "JOIN users_events ue ON users.id = ue.user_id " +
             "WHERE ue.event_id = :eventId",
             nativeQuery = true)
-    List<User> findAllByEventId(Long eventId);
+    Page<User> findAllByEventId(Long eventId, Specification<User> userSpecification, Pageable pageable);
 }
