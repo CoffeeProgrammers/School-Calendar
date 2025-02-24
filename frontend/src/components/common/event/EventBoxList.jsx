@@ -1,6 +1,7 @@
 import React from 'react';
 import {Box, Divider, Typography} from "@mui/material";
 
+//TODO: text only in one line
 const EventBoxList = ({event}) => {
     return (
         <Box  style={{border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "12px"}}>

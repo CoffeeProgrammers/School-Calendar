@@ -61,8 +61,8 @@ export default function AccountMenu() {
                                     id="composition-menu"
                                     aria-labelledby="composition-button"
                                 >
-                                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                    <MenuItem onClick={handleClose}>Profile</MenuItem> {/*TODO: handleProfile*/}
+                                    <MenuItem onClick={handleClose}>Logout</MenuItem> {/*TODO: handleLogout*/}
                                 </MenuList>
                             </ClickAwayListener>
                         </Paper>
