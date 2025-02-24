@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 
+
+//TODO: basic fetch
 export const useFetch = (fetchFunction, ...args) => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
