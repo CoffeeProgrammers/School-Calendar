@@ -23,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -87,17 +88,13 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public PaginationListResponse<EventListResponse> findAllByUserIdForCalendar(long userId,
+    public List<EventListResponse> findAllByUserIdForCalendar(long userId,
                                                                                 LocalDateTime start,
-                                                                                LocalDateTime end,
-                                                                                int page, int size) {
+                                                                                LocalDateTime end) {
         log.info("Finding all events for user with id {} and date range {} - {}", userId, start, end);
-        Page<Event> events = eventRepository.findAllByUserIdAndDateRange(userId,
-                start, end, PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
-        PaginationListResponse<EventListResponse> response = new PaginationListResponse<>();
-        response.setTotalPages(events.getTotalPages());
-        response.setContent(events.getContent().stream().map(eventMapper::fromEventToEventListResponse).toList());
-        return response;
+        List<Event> events = eventRepository.findAllByUserIdAndDateRange(userId,
+                start, end, Sort.by(Sort.Direction.ASC, "time"));
+        return events.stream().map(eventMapper::fromEventToEventListResponse).toList();
     }
 
     @Override

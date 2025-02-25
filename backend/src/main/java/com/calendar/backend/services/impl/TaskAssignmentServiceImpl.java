@@ -9,6 +9,7 @@ import com.calendar.backend.services.inter.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,9 +30,10 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     }
 
     @Override
-    public void toggleDone(Long taskId, Long userId, boolean isDone) {
-        log.info("Toggling done status for task assignment with task id {} and user id {}", taskId, userId);
-        TaskAssignment taskAssignment = taskAssignmentRepository.findByTask_IdAndUser_Id(taskId, userId)
+    public void toggleDone(Long taskId, boolean isDone, Authentication authentication) {
+        log.info("Toggling done status for task assignment with task id {} and auth user", taskId);
+        TaskAssignment taskAssignment = taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,
+                        userService.findUserByAuth(authentication).getId())
                 .orElseThrow(() -> new EntityNotFoundException("Task assignment not found"));
         taskAssignment.setDone(isDone);
         taskAssignmentRepository.save(taskAssignment);

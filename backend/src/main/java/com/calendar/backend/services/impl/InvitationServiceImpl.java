@@ -1,5 +1,6 @@
 package com.calendar.backend.services.impl;
 
+import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.dto.invitation.InvitationRequest;
 import com.calendar.backend.dto.invitation.InvitationResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
@@ -34,12 +35,22 @@ public class InvitationServiceImpl implements InvitationService {
 
     @Override
     public InvitationResponse create(InvitationRequest invitationRequest, Authentication authentication,
-                                     long eventId, long recieverId) {
+                                     long eventId, long receiverId) {
         log.info("Saving new invitation {}", invitationRequest);
         Invitation invitation = invitationMapper.fromInvitationRequestToInvitation(invitationRequest);
-        invitation.setEvent(eventService.findByIdForServices(eventId));
+        Event event = eventService.findByIdForServices(eventId);
+        invitation.setEvent(event);
         invitation.setSender(userServices.findUserByAuth(authentication));
-        invitation.setReceiver(userServices.findByIdForServices(recieverId));
+        invitation.setReceiver(userServices.findByIdForServices(receiverId));
+        List<EventListResponse> events = eventService.findAllByUserIdForCalendar(receiverId,
+                event.getStartDate(), event.getEndDate());
+        if(!events.isEmpty()){
+            StringBuilder text = new StringBuilder();
+            for(EventListResponse eventResponse : events){
+                text.append(eventResponse.getName()).append(" ");
+            }
+            invitation.setWarning("You have already invited to events on this time" + text.toString());
+        }
         return invitationMapper.fromInvitationToInvitationResponse(invitationRepository.save(invitation));
     }
 

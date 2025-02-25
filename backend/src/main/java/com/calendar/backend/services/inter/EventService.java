@@ -9,6 +9,7 @@ import com.calendar.backend.models.Event;
 import org.springframework.security.core.Authentication;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 public interface EventService {
@@ -18,7 +19,7 @@ public interface EventService {
     EventFullResponse findById (Long id);
     PaginationListResponse<EventListResponse> findAllByUserId
             (long userId, Map<String, Object> filters, int page, int size);
-    PaginationListResponse<EventListResponse> findAllByUserIdForCalendar
-            (long userId, LocalDateTime start, LocalDateTime end, int page, int size);
+    List<EventListResponse> findAllByUserIdForCalendar
+            (long userId, LocalDateTime start, LocalDateTime end);
     Event findByIdForServices(long id);
 }
