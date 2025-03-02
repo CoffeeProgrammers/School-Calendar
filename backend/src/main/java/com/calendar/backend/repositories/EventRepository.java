@@ -1,6 +1,10 @@
 package com.calendar.backend.repositories;
 
 import com.calendar.backend.models.Event;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +17,7 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
             "JOIN users_events ue ON e.id = ue.event_id " +
             "WHERE ue.user_id = :userId",
             nativeQuery = true)
-    List<Event> findAllByUserId(Long userId);
+    Page<Event> findAllByUserId(Long userId, Specification<Event> eventSpecification, Pageable pageable);
 
     @Query(value = "SELECT e.* FROM events e " +
             "JOIN users_events ue ON e.id = ue.event_id " +
@@ -21,5 +25,6 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
             "AND e.start_date >= :startDate " +
             "AND e.end_date <= :endDate",
             nativeQuery = true)
-    List<Event> findAllByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate);
+    List<Event> findAllByUserIdAndDateRange(Long userId, LocalDateTime startDate,
+                                            LocalDateTime endDate, Sort sort);
 }

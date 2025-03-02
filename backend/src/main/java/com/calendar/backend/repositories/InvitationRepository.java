@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InvitationRepository extends JpaRepository<Invitation, Long> {
     Page<Invitation> findAllByReceiver_Id(Long userId, Pageable pageable);
+    Page<Invitation> findAllBySender_Id(Long userId, Pageable pageable);
 }

@@ -24,12 +24,6 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtils jwtUtils;
 
     @Override
-    public User getAuth(Authentication auth) {
-        User user = (User) auth.getPrincipal();
-        return userService.findByEmail(user.getEmail());
-    }
-
-    @Override
     public User handleOAuthLogin(Authentication authentication) throws LoginException {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         String email = oauth2User.getAttribute("email");

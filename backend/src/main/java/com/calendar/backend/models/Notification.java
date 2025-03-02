@@ -26,9 +26,9 @@ public class Notification {
     private String content;
     private LocalDateTime time;
 
-    public Notification(List<User> users, String content, LocalDateTime time) {
+    public Notification(List<User> users, String content) {
         this.users = users;
         this.content = content;
-        this.time = time;
+        this.time = LocalDateTime.now();
     }
 }
