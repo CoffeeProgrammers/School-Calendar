@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
-    @Query(value = "SELECT n.* FROM notification n " +
+    @Query(value = "SELECT n.* FROM notifications n " +
                     "JOIN users_notifications un ON n.id = un.notification_id " +
                     "WHERE un.user_id = :userId",
             nativeQuery = true)
