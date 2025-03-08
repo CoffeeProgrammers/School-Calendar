@@ -32,8 +32,8 @@
         </developer>
         <developer>
             <id>Vladobrod</id>
-            <name>Vladislav Bulakovski</name>
-<!--            <email></email>-->
+            <name>Vladyslav Bulakovskyi</name>
+            <email>bulakovskijvladislav@gmail.com</email>
             <organization>CoffeeProgrammers</organization>
         </developer>
         <developer>
@@ -104,6 +104,12 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.instancio</groupId>
+            <artifactId>instancio-junit</artifactId>
+            <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
 

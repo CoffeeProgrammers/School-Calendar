@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "task_assignments")
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class TaskAssignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
