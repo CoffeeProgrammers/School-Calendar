@@ -30,12 +30,12 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     }
 
     @Override
-    public void toggleDone(Long taskId, boolean isDone, Authentication authentication) {
+    public void toggleDone(Long taskId, Authentication authentication) {
         log.info("Toggling done status for task assignment with task id {} and auth user", taskId);
         TaskAssignment taskAssignment = taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,
                         userService.findUserByAuth(authentication).getId())
                 .orElseThrow(() -> new EntityNotFoundException("Task assignment not found"));
-        taskAssignment.setDone(isDone);
+        taskAssignment.setDone(!taskAssignment.isDone());
         taskAssignmentRepository.save(taskAssignment);
     }
 

@@ -49,6 +49,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void delete(long id) {
+        log.info("Deleting user with id {}", id);
+        userRepository.deleteById(id);
+    }
+
+    @Override
     public UserFullResponse updateUser(UserUpdateRequest userUpdateRequest, long userId) {
         log.info("Updating user with id {}", userId);
         User userToUpdate = userRepository.findById(userId).orElseThrow(() ->

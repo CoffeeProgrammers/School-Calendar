@@ -14,6 +14,8 @@ import java.util.Map;
 public interface UserService extends UserDetailsService {
     UserFullResponse create(UserCreateRequest userCreateRequest);
     UserFullResponse updateUser(UserUpdateRequest userUpdateRequest, long userId);
+
+    void delete(long id);
     UserFullResponse findById(long id);
     PaginationListResponse<UserListResponse> findAll(Map<String, Object> filters,
                                                      int page, int size);
