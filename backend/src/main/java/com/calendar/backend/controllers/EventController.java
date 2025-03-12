@@ -8,6 +8,7 @@ import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.EventService;
 import com.calendar.backend.services.inter.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,7 @@ public class EventController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullResponse createEvent(
-            @RequestBody EventCreateRequest request,
+            @Valid @RequestBody EventCreateRequest request,
             Authentication auth) {
         return eventService.create(request, auth);
     }
@@ -35,7 +36,7 @@ public class EventController {
     @ResponseStatus(HttpStatus.OK)
     public EventFullResponse updateEvent(
             @PathVariable Long id,
-            @RequestBody EventUpdateRequest request) {
+            @Valid @RequestBody EventUpdateRequest request) {
         return eventService.update(request, id);
     }
 

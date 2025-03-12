@@ -5,6 +5,7 @@ import com.calendar.backend.dto.invitation.InvitationResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.InvitationService;
 import com.calendar.backend.services.inter.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -23,7 +24,7 @@ public class InvitationController {
     public InvitationResponse createInvitation(
             @PathVariable Long event_id,
             @PathVariable Long receiver_id,
-            @RequestBody InvitationRequest request,
+            @Valid @RequestBody InvitationRequest request,
             Authentication auth) {
         return invitationService.create(request, auth, event_id, receiver_id);
     }
