@@ -4,6 +4,7 @@ import com.calendar.backend.dto.comment.CommentRequest;
 import com.calendar.backend.dto.comment.CommentResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -20,7 +21,7 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     public CommentResponse createComment(
             @PathVariable Long event_id,
-            @RequestBody CommentRequest request,
+            @Valid @RequestBody CommentRequest request,
             Authentication auth) {
         return commentService.create(request, auth, event_id);
     }
@@ -29,7 +30,7 @@ public class CommentController {
     @ResponseStatus(HttpStatus.OK)
     public CommentResponse updateComment(
             @PathVariable Long id,
-            @RequestBody CommentRequest request) {
+            @Valid @RequestBody CommentRequest request) {
         return commentService.update(request, id);
     }
 

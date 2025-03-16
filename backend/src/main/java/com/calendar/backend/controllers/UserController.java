@@ -8,6 +8,7 @@ import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.services.inter.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -25,7 +26,7 @@ public class UserController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserFullResponse createUser(@RequestBody UserCreateRequest request) {
+    public UserFullResponse createUser(@Valid @RequestBody UserCreateRequest request) {
         return userService.create(request);
     }
 
@@ -33,7 +34,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserFullResponse updateUser(
             @PathVariable Long id,
-            @RequestBody UserUpdateRequest request) {
+            @Valid @RequestBody UserUpdateRequest request) {
         return userService.updateUser(request, id);
     }
 

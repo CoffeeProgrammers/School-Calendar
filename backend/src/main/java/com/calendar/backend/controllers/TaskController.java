@@ -8,6 +8,7 @@ import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.TaskAssignmentService;
 import com.calendar.backend.services.inter.TaskService;
 import com.calendar.backend.services.inter.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -26,7 +27,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     public TaskFullResponse createTask(
             @RequestParam Long event_id,
-            @RequestBody TaskRequest request,
+            @Valid @RequestBody TaskRequest request,
             Authentication auth) {
         return taskService.create(request, auth, event_id);
     }
@@ -35,7 +36,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public TaskFullResponse updateTask(
             @PathVariable Long id,
-            @RequestBody TaskRequest request) {
+            @Valid @RequestBody TaskRequest request) {
         return taskService.update(request, id);
     }
 
