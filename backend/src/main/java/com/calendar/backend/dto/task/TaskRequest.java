@@ -12,8 +12,6 @@ public class TaskRequest {
                     "followed by one or more lowercase letters")
     private String name;
     @NotBlank(message = "Content must be provided")
-    @Pattern(regexp = "^[A-Za-z0-9\\s]+$",
-            message = "Content can contain only letters, numbers and spaces")
     private String content;
     @NotBlank(message = "Deadline must be provided")
     private String deadline;

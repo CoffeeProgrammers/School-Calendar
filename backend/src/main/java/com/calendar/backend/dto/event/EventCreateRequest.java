@@ -18,8 +18,6 @@ public class EventCreateRequest {
     @NotBlank(message = "End date must be provided")
     private String endDate;
     @NotBlank(message = "Content must be provided")
-    @Pattern(regexp = "^[A-Za-z0-9\\s]+$",
-            message = "Content can contain only letters, numbers and spaces")
     private String content;
     @NotBlank(message = "Is content available anytime must be provided")
     private boolean isContentAvailableAnytime;

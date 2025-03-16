@@ -6,9 +6,6 @@ import lombok.Data;
 
 @Data
 public class UserUpdateRequest {
-    @Pattern(regexp = "^[A-Za-z0-9\\s]+$",
-            message = "Description can contain only letters, numbers and spaces")
-    private String description;
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{6,}$",
             message =
                     "Password must be minimum 6 characters long, " +
@@ -28,4 +25,5 @@ public class UserUpdateRequest {
     private String lastName;
     @NotNull
     private String birthday;
+    private String description;
 }
