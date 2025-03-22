@@ -48,8 +48,10 @@ public class TaskController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TaskFullResponse getTask(@PathVariable Long id) {
-        return taskService.findById(id);
+    public TaskFullResponse getTask(@PathVariable Long id, Authentication auth) {
+        TaskFullResponse taskFullResponse = taskService.findById(id);
+        taskFullResponse.setDone(taskAssignmentService.isDone(id, auth));
+        return taskFullResponse;
     }
 
     @GetMapping

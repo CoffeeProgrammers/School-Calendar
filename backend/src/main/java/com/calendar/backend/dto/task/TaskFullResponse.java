@@ -9,6 +9,7 @@ public class TaskFullResponse {
     private Long id;
     private UserListResponse creator;
     private EventListResponse event;
+    private boolean isDone;
     private String name;
     private String content;
     private String deadline;

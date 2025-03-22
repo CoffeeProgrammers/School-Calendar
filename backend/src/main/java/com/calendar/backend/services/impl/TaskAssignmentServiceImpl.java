@@ -30,6 +30,13 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     }
 
     @Override
+    public boolean isDone(Long taskId, Authentication authentication) {
+        log.info("Try to determine if task assignment is done for {}", taskId);
+        return taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,
+                userService.findUserByAuth(authentication).getId()).get().isDone();
+    }
+
+    @Override
     public void toggleDone(Long taskId, Authentication authentication) {
         log.info("Toggling done status for task assignment with task id {} and auth user", taskId);
         TaskAssignment taskAssignment = taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,
@@ -47,4 +54,6 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
             create(task.getId(), userId);
         }
     }
+
+
 }
