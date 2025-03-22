@@ -4,7 +4,7 @@ import {Box, Container} from "@mui/material";
 const Page = ({children}) => {
     return (
         <>
-            <Box mb={"70px"}>
+            <Box mb={"80px"}>
                 <AppBar/>
             </Box>
 

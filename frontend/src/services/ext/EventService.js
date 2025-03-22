@@ -78,7 +78,7 @@ class EventService extends BaseService {
             this.apiClient.get('', {
                 params: {
                     _page: page,
-                    name_like: searchQuery,
+                    name: searchQuery,
                     type: type,
                     start_date: date,
                     _sort: 'start_date',
