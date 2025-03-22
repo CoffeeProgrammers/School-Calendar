@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {IconButton} from "@mui/material";
+import {Link} from "react-router-dom";
 
 export default function AccountMenu() {
     const [open, setOpen] = React.useState(false);
@@ -61,7 +62,11 @@ export default function AccountMenu() {
                                     id="composition-menu"
                                     aria-labelledby="composition-button"
                                 >
-                                    <MenuItem onClick={handleClose}>Profile</MenuItem> {/*TODO: handleProfile*/}
+                                    <MenuItem component={Link} to={"/profile"}
+                                              onClick={handleClose}
+                                    >
+                                        Profile
+                                    </MenuItem>
                                     <MenuItem onClick={handleClose}>Logout</MenuItem> {/*TODO: handleLogout*/}
                                 </MenuList>
                             </ClickAwayListener>
