@@ -7,20 +7,18 @@ const styles = {
     minWidth: 80,
     '& .MuiSelect-root': {
         color: theme.palette.secondary.main,
-        fontWeight: 'bold',
     },
     '& .MuiInputLabel-root': {
         color: theme.palette.secondary.main,
-        fontWeight: 'bold',
     },
     '& .MuiOutlinedInput-root': {
         '& fieldset': {
             borderColor: theme.palette.secondary.main,
-            borderWidth: 2,
+            borderWidth: 1.5,
         },
         '&:hover fieldset, &.Mui-focused fieldset': {
             borderColor: theme.palette.secondary.main,
-            borderWidth: 2,
+            borderWidth: 1.5,
         },
     },
 };

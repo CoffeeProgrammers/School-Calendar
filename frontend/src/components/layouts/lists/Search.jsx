@@ -6,7 +6,7 @@ const Search = ({searchQuery, setSearchQuery}) => {
         <TextField
             size="small"
             label="Search events..."
-            variant="filled"
+            variant="outlined"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
         />

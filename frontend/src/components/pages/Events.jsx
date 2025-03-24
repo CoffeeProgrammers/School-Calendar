@@ -104,14 +104,13 @@ const Events = () => {
     return (
         <>
             <Box sx={mainBoxStyles}>
-                <Typography mb={1} variant="h5">Events</Typography>
-
-                <Stack direction="row" sx={listPanelStyles}>
-                    <Search
-                        searchQuery={searchQuery}
-                        setSearchQuery={setSearchQuery}
-                    />
-                    <Box sx={{display: "flex"}} gap={1}>
+                <Stack direction="row" mb={1} sx={listPanelStyles}>
+                    <Typography variant="h4">Events</Typography>
+                    <Box sx={{display: "flex"}} gap={0.5}>
+                        <Search
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
+                        />
                         <OpenFiltersButton
                             isOpenFilterMenu={isOpenFilterMenu}
                             setOpenFilterMenu={setOpenFilterMenu}
