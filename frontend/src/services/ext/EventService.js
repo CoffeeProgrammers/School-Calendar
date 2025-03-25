@@ -69,7 +69,7 @@ class EventService extends BaseService {
     async getAllMyEvents(
         {
             page,
-            searchQuery,
+            searchQuery, //TODO: name, email
             type,
             date
         }

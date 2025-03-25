@@ -1,6 +1,6 @@
 import BaseService from "../BaseService";
 
-const API_URL = 'http://localhost:5000/api/users';
+const API_URL = 'http://localhost:5000/users';
 
 //TODO: adapt to json-server
 class UserService extends BaseService {
@@ -26,15 +26,27 @@ class UserService extends BaseService {
         );
     }
 
-    async getAllUsers({ page, size, email, lastName, firstName } = {}) {
+    async getAllUsers({page, size, searchQuery, role} = {}) {
         return await this.handleRequest(
-            () => this.apiClient.get(`/`, { params: { page, size, email, lastName, firstName } })
+            () => this.apiClient.get(`/`,
+                {
+                    params: {
+                        _page: page,
+                        // first_name: searchQuery, //TODO
+                        // last_name: searchQuery,
+                        email: searchQuery,
+                        role: role,
+                        _sort: 'start_date',
+                        _order: 'asc',
+                        // size, //TODO: pagination when backend will be done
+                    }
+                })
         );
     }
 
-    async getUsersByEvent(eventId, { page, size } = {}) {
+    async getUsersByEvent(eventId, {page, size} = {}) {
         return await this.handleRequest(
-            () => this.apiClient.get(`/events/${eventId}`, { params: { page, size } })
+            () => this.apiClient.get(`/events/${eventId}`, {params: {page, size}})
         );
     }
 

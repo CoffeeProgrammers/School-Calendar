@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import EventService from "../../services/ext/EventService";
 import {Box, Divider, Stack, Typography} from "@mui/material";
-import Loading from "../layouts/Loading";
-import PaginationBox from "../layouts/lists/PaginatioBox";
-import Search from "../layouts/lists/Search";
-import OpenFiltersButton from "../layouts/lists/OpenFiltersButton";
-import DefaultButton from "../layouts/DefaultButton";
-import EventList from "../common/event/EventList";
-import FiltersGroup from "../layouts/lists/FiltersGroup";
+import Loading from "../../layouts/Loading";
+import PaginationBox from "../../layouts/lists/PaginationBox";
+import Search from "../../layouts/lists/Search";
+import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
+import FiltersGroup from "../../layouts/lists/FiltersGroup";
+import UserService from "../../../services/ext/UserService";
+import UserList from "../../common/user/UserList";
 
 const listPanelStyles = {
     alignItems: 'center',
@@ -27,38 +26,17 @@ const mainBoxStyles = {
 
 const eventTypes = [
     {value: '', label: <em>None</em>},
-    {value: 'conference', label: 'Conference'},
-    {value: 'workshop', label: 'Workshop'},
-    {value: 'meetup', label: 'Meetup'},
-    {value: 'seminar', label: 'Seminar'},
-    {value: 'webinar', label: 'Webinar'},
-    {value: 'training', label: 'Training'},
-    {value: 'panelDiscussion', label: 'Panel Discussion'},
-    {value: 'roundTable', label: 'Round Table'},
-    {value: 'lecture', label: 'Lecture'},
-    {value: 'symposium', label: 'Symposium'},
-    {value: 'hackathon', label: 'Hackathon'},
-    {value: 'exhibition', label: 'Exhibition'},
-    {value: 'tradeShow', label: 'Trade Show'},
-    {value: 'conferenceCall', label: 'Conference Call'},
-    {value: 'liveStream', label: 'Live Stream'},
-    {value: 'panel', label: 'Panel'},
-    {value: 'keynote', label: 'Keynote'},
-    {value: 'presentation', label: 'Presentation'},
-    {value: 'networkingEvent', label: 'Networking Event'},
-    {value: 'productLaunch', label: 'Product Launch'},
-    {value: 'charityEvent', label: 'Charity Event'},
-    {value: 'pressConference', label: 'Press Conference'},
-    {value: 'focusGroup', label: 'Focus Group'},
-    {value: 'careerFair', label: 'Career Fair'},
-    {value: 'jobFair', label: 'Job Fair'}
+    {value: 'teacher', label: 'Teacher'},
+    {value: 'student', label: 'Student'},
+    {value: 'parents', label: 'Parents'},
+
 ];
 
-const Events = () => {
+const Users = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [eventType, setEventType] = useState('');
+    const [role, setRole] = useState('');
 
-    const [events, setEvents] = useState([])
+    const [users, setUsers] = useState([])
 
     const [page, setPage] = useState(1);
     const [pagesCount, setPagesCount] = useState(1)
@@ -71,16 +49,14 @@ const Events = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await EventService.getAllMyEvents(
+                const response = await UserService.getAllUsers(
                     {
                         page: page,
-                        size: 10,
                         searchQuery: searchQuery,
-                        type: eventType,
-                        date: ''
+                        role: role
                     }
                 );
-                setEvents(response.data);
+                setUsers(response.data);
                 setPagesCount(response.pages)
             } catch (error) {
                 setError(error);
@@ -90,7 +66,7 @@ const Events = () => {
         };
 
         fetchData();
-    }, [searchQuery, eventType, page]);
+    }, [searchQuery, role, page]);
 
 
     if (loading) {
@@ -105,7 +81,7 @@ const Events = () => {
         <>
             <Box sx={mainBoxStyles}>
                 <Stack direction="row" mb={1} sx={listPanelStyles}>
-                    <Typography variant="h4">Events</Typography>
+                    <Typography variant="h4">Users</Typography>
                     <Box sx={{display: "flex"}} gap={0.5}>
                         <Search
                             searchQuery={searchQuery}
@@ -115,12 +91,9 @@ const Events = () => {
                             isOpenFilterMenu={isOpenFilterMenu}
                             setOpenFilterMenu={setOpenFilterMenu}
                         />
-
-                        <DefaultButton>
-                            New
-                        </DefaultButton>
                     </Box>
                 </Stack>
+
 
                 <Divider sx={{mb: 1}}/>
 
@@ -129,22 +102,18 @@ const Events = () => {
                         <FiltersGroup
                             filters={[
                                 {
-                                    label: "Type",
-                                    value: eventType,
-                                    setValue: setEventType,
+                                    label: "Role",
+                                    value: role,
+                                    setValue: setRole,
                                     options: eventTypes
-                                },
-                                {
-                                    label: "Date",
-                                    options: [{value: "", label: <em>Todo</em>}]
                                 }
                             ]}
                         />
                     </Box>
                 )}
 
-                <EventList
-                    events={events}
+                <UserList
+                    users={users}
                 />
 
                 {pagesCount > 1 && (
@@ -163,4 +132,4 @@ const Events = () => {
     );
 };
 
-export default Events;
+export default Users;

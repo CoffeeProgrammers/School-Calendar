@@ -1,10 +1,9 @@
 import React from 'react';
 import {Box, Chip, Divider, Typography} from "@mui/material";
 
-import PlaceIcon from '@mui/icons-material/Place';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {SpaceDashboard} from "@mui/icons-material";
 
 const mainBoxStyle = {
     border: '1px solid #ddd',
@@ -18,8 +17,8 @@ const textBoxStyle = {
     gap: 0.5
 }
 
-const EventBox = ({event}) => {
-    const startDate = new Date(event.start_date);
+const TaskBox = ({task}) => {
+    const startDate = new Date(task.deadline);
     const formattedStartDate = startDate.toLocaleString('en-US', {
         month: 'long',
         day: 'numeric',
@@ -35,18 +34,21 @@ const EventBox = ({event}) => {
     return (
         <Box sx={mainBoxStyle}>
             <Typography noWrap variant="subtitle1" sx={textBoxStyle}>
-                <SpaceDashboard fontSize="small" color="secondary"/>
-                {event.name}
+                <TaskAltIcon fontSize="small" color="secondary"/>
+                {task.name}
             </Typography>
             <Divider sx={{marginBottom: "5px"}}/>
             <Box sx={{ml: -0.25}}>
-                <Chip sx={{ml: -0.25}} label={event.type} size="small"/>
-                <InfoItem icon={PlaceIcon} text={event.place}/>
+                <Chip
+                    sx={{ml: -0.25, backgroundColor: task.isDone ? "success.main" : "default"}}
+                    label={task.isDone ? "Done" : "To-Do"}
+                    size="small"
+                />
                 <InfoItem icon={CalendarMonthIcon} text={formattedStartDate}/>
-                <InfoItem icon={AccountCircleIcon} text={`${event.creator.first_name} ${event.creator.last_name}`}/>
+                <InfoItem icon={AccountCircleIcon} text={`${task.creator.first_name} ${task.creator.last_name}`}/>
             </Box>
         </Box>
     );
 };
 
-export default EventBox;
+export default TaskBox;

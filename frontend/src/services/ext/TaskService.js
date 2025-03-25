@@ -33,10 +33,18 @@ class TaskService extends BaseService {
     }
 
     //TODO
-    async getMyTasks(page, size, name , deadline ) {
+    async getMyTasks({page, size, searchQuery , deadline, isDone}) {
         return await this.handleRequest(
-            () => this.apiClient.get('/my-tasks', {
-                params: { page, size, name, deadline }
+            () => this.apiClient.get('', {
+                params: {
+                    _page: page,
+                    name: searchQuery,
+                    isDone: isDone,
+                    deadline: deadline,
+                    _sort: 'start_date',
+                    _order: 'asc'
+                    // size, //TODO: pagination when backend will be done
+                }
             })
         );
     }
@@ -57,4 +65,4 @@ class TaskService extends BaseService {
     }
 }
 
-export default TaskService;
+export default new TaskService();

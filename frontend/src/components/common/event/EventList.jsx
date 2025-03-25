@@ -4,9 +4,10 @@ import EventBox from "./EventBox";
 
 const EventList = ({events}) => {
     return (
+        //Todo: deprecated + size
         <Grid container spacing={1.5}>
             {events.map(event => (
-                <Grid item xs={15} sm={6} md={5} lg={2.4} key={event.id}>
+                <Grid item  xs={12} sm={6} md={4} lg={2.4} key={event.id}>
                     <EventBox event={event}/>
                 </Grid>
             ))}

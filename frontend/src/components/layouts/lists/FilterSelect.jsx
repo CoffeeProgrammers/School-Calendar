@@ -3,8 +3,7 @@ import theme from "../../../assets/theme";
 import {FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 
 const styles = {
-    width: 'auto',
-    minWidth: 80,
+    minWidth: 90,
     '& .MuiSelect-root': {
         color: theme.palette.secondary.main,
     },
