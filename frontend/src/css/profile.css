@@ -1,9 +1,12 @@
+* {
+    font-family: Open Sans, sans-serif;
+}
+
 .profile-container {
     height: 650px;
     width: 100%;
-    border: 1px solid black;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 2.5fr;
     grid-template-rows: 1fr 20fr;
     grid-template-areas:
         "search search"
@@ -15,11 +18,17 @@
     grid-area: search;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .profile-search input {
     height: 100%;
     width: 50%;
+}
+
+.search-icon {
+    margin-left: 10px;
+    font-size: 30px;
 }
 
 .profile-information {
@@ -36,11 +45,82 @@
 }
 
 .user-photo {
+    padding: 0;
     height: 250px;
     width: 250px;
     border: 2px solid green;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-photo-icon {
+    padding: 0;
+    margin: 0;
+}
+
+.edit-userPhoto {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+    opacity: 0;
+}
+
+.edit-userPhoto:hover {
+    opacity: 1;
+}
+
+.user-name {
+    display: flex;
+    align-items: center;
+}
+
+.edit-userName {
+    opacity: 0;
+}
+
+.user-name:hover .edit-userName {
+    opacity: 1;
+}
+
+.user-description {
+    display: flex;
+    align-items: end;
+}
+
+.edit-userDescription {
+    opacity: 0;
+}
+
+.user-description:hover .edit-userDescription {
+    opacity: 1;
+}
+
+.user-information,
+.user-information tr td {
+    border: 1px solid green;
+}
+
+
+.user-information tr td {
+    padding: 0 10px;
+}
+
+.user-information-edit {
+    background: green;
+    border: none;
+    outline: none;
+    width: 100px;
+    padding: 10px;
+    border-radius: 5px;
+    color: aliceblue;
+    margin: 0 auto;
+    margin-top: 10px;
 }
 
 .profile-calendar {
