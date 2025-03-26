@@ -124,13 +124,26 @@
 }
 
 .profile-calendar {
-    padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    gap: 10px;
+    margin-top: 20px;
+    border: 2px solid green;
 }
 
-.calendar-elem {
-    background: green;
+.profile-calendar thead tr {
+    height: 50px;
+    text-align: center;
+}
+
+.profile-calendar thead tr td {
+    background: rgba(0, 128, 0, 0.637);
+}
+
+.profile-calendar tbody tr td {
+    height: 100px;
+    width: 100px;
+    background: rgba(39, 175, 39, 0.438);
+    text-align: center;
+}
+
+.active-date {
+    border: 2px solid green;
 }
