@@ -1,0 +1,56 @@
+.profile-container {
+    height: 650px;
+    width: 100%;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 20fr;
+    grid-template-areas:
+        "search search"
+        "information calendar"
+    ;
+}
+
+.profile-search {
+    grid-area: search;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-search input {
+    height: 100%;
+    width: 50%;
+}
+
+.profile-information {
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+}
+
+.user-photo-name {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-photo {
+    height: 250px;
+    width: 250px;
+    border: 2px solid green;
+    margin-bottom: 20px;
+    border-radius: 100%;
+}
+
+.profile-calendar {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.calendar-elem {
+    background: green;
+}

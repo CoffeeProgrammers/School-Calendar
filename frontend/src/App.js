@@ -1,10 +1,11 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Main from "./components/pages/Main";
 import Login from "./components/pages/Login";
 import Page from "./components/layouts/Page";
-import {ThemeProvider} from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import theme from "./assets/theme"
 import Events from "./components/pages/Events";
+import Profile from './components/pages/Profile';
 
 function App() {
     return (
@@ -12,9 +13,10 @@ function App() {
             <ThemeProvider theme={theme}>
                 <Page>
                     <Routes>
-                        <Route path={""} element={<Main/>}/>
-                        <Route path={"/login"} element={<Login/>}/>
-                        <Route path={"/events"} element={<Events/>}/>
+                        <Route path={""} element={<Main />} />
+                        <Route path={"/login"} element={<Login />} />
+                        <Route path={"/events"} element={<Events />} />
+                        <Route path={'/profile'} element={<Profile />} />
                     </Routes>
                 </Page>
             </ThemeProvider>
