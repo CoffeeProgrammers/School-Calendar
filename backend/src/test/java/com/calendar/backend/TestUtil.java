@@ -25,10 +25,12 @@ public class TestUtil {
         return event;
     }
 
-    public static Event createEvent(String name, LocalDateTime startDate, LocalDateTime endDate, User... users) {
+    public static Event createEvent(String name, LocalDateTime startDate, LocalDateTime endDate, String type, String meetingType, User... users) {
         Event event = createEvent(name, users);
         event.setStartDate(startDate);
         event.setEndDate(endDate);
+        event.setMeetingType(MeetingType.valueOf(meetingType));
+        event.setType(EventType.valueOf(type));
         return event;
     }
 

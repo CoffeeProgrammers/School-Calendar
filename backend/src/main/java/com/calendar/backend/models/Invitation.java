@@ -2,10 +2,7 @@ package com.calendar.backend.models;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class Invitation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
