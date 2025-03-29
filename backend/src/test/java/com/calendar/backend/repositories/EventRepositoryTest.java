@@ -35,8 +35,8 @@ public class EventRepositoryTest {
     public void beforeEach() {
         user = userRepository.save(createUser("TEACHER"));
 
-        event1 = eventRepository.save(createEvent("Test Event1", LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1), user));
-        event2 = eventRepository.save(createEvent("Test Event2", LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(2), user));
+        event1 = eventRepository.save(createEvent("Test Event1", LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(1), "TEACHERS_MEETING", "ONLINE", user));
+        event2 = eventRepository.save(createEvent("Test Event2", LocalDateTime.now().minusDays(1), LocalDateTime.now().plusDays(2), "TEACHERS_MEETING", "OFFLINE_REAL", user));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class EventRepositoryTest {
         // given
         Long userId = user.getId();
         LocalDateTime startDate = LocalDateTime.now().minusDays(2);
-        LocalDateTime endDate = LocalDateTime.now().plusDays(2);
+        LocalDateTime endDate = LocalDateTime.now().plusDays(2).plusSeconds(10);
         Sort sort = Sort.by(Sort.Order.asc("start_date"));
 
         // when

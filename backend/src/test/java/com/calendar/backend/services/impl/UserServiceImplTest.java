@@ -1,5 +1,6 @@
 package com.calendar.backend.services.impl;
 
+import com.calendar.backend.TestUtil;
 import com.calendar.backend.dto.user.UserCreateRequest;
 import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.dto.user.UserUpdateRequest;
@@ -45,6 +46,7 @@ class UserServiceImplTest {
 
     @BeforeEach
     void setUp() {
+        user = TestUtil.createUser("TEACHER");
         userCreateRequest = new UserCreateRequest();
         userCreateRequest.setEmail(user.getEmail());
         userCreateRequest.setPassword(user.getPassword());
