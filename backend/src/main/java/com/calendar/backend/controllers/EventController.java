@@ -47,7 +47,7 @@ public class EventController {
     @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEvent(@PathVariable Long id) {
+    public void deleteEvent(@PathVariable Long id, Authentication auth) {
         eventService.delete(id);
     }
 
