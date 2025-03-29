@@ -90,6 +90,6 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public void assignTaskToEvent(@PathVariable Long id, @PathVariable Long event_id) {
         taskService.assignTaskForEvent(event_id, id);
-        taskAssignmentService.assignTasksForUsersFromEvent(event_id, id);
+        taskAssignmentService.assignTasksToEventUsers(event_id, id);
     }
 }
