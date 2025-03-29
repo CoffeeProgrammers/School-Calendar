@@ -73,7 +73,7 @@ public class TaskController {
         );
     }
 
-    @PostMapping("/toggle/{id}")
+    @PutMapping("/toggle/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void toggleTaskDone(
             @PathVariable Long id,
@@ -90,4 +90,10 @@ public class TaskController {
         return taskService.findAllByEventId(event_id, page, size);
     }
 
+    @PutMapping("/assign/{id}/to/{event_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void assignTaskToEvent(@PathVariable Long id, @PathVariable Long event_id) {
+        taskService.assignTaskToEvent(event_id, id);
+        taskAssignmentService.assignTasksToEventUsers(event_id, id);
+    }
 }
