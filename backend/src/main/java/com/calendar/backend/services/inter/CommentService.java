@@ -12,5 +12,5 @@ public interface CommentService {
     CommentResponse update (CommentRequest commentRequest, long id);
     void delete (long id);
     PaginationListResponse<CommentResponse> findAllByEventId(long eventId, int page, int size);
-    Comment findByIdForService(long id);
+    Comment findByIdForServices(long id);
 }

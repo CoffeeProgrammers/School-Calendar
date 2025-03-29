@@ -29,7 +29,7 @@ public class UserSecurity {
 
     public boolean checkCreatorOfComment(Authentication authentication, long commentId) {
         return this.checkUser(authentication,
-                commentService.findByIdForService(commentId).getCreator().getEmail());
+                commentService.findByIdForServices(commentId).getCreator().getEmail());
     }
 
     public boolean checkCreatorOfTask(Authentication authentication, long taskId) {

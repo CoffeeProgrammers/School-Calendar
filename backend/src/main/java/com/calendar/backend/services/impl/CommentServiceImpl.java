@@ -76,7 +76,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment findByIdForService(long id) {
+    public Comment findByIdForServices(long id) {
         return commentRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Comment not found"));
     }
