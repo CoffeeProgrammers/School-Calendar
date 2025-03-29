@@ -2,6 +2,7 @@ package com.calendar.backend.services.impl;
 
 import com.calendar.backend.models.Task;
 import com.calendar.backend.models.TaskAssignment;
+import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.TaskAssignmentRepository;
 import com.calendar.backend.services.inter.TaskAssignmentService;
 import com.calendar.backend.services.inter.TaskService;
@@ -55,5 +56,12 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
         }
     }
 
-
+    @Override
+    public void assignTasksForUsersFromEvent(Long eventId, Long taskId) {
+        log.info("Assigning tasks for users from event with id {}", eventId);
+        List<User> users = userService.findAllByEventIdForServices(eventId);
+        for(User user : users) {
+            create(user.getId(), taskId);
+        }
+    }
 }

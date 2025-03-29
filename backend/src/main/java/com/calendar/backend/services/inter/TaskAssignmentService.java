@@ -7,5 +7,5 @@ public interface TaskAssignmentService {
     boolean isDone(Long taskId, Authentication authentication);
     void toggleDone(Long taskId, Authentication authentication);
     void assignTasksForNewUserFromEvent(Long eventId, Long userId);
-
+    void assignTasksForUsersFromEvent(Long eventId, Long taskId);
 }

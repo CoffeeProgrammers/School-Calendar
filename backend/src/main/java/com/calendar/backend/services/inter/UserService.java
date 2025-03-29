@@ -9,6 +9,7 @@ import com.calendar.backend.models.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserService extends UserDetailsService {
@@ -24,4 +25,5 @@ public interface UserService extends UserDetailsService {
     User findByEmail(String email);
     User findUserByAuth(Authentication authentication);
     User findByIdForServices(long id);
+    List<User> findAllByEventIdForServices(long eventId);
 }

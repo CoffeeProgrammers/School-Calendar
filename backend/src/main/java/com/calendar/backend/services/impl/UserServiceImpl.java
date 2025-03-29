@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -97,6 +98,7 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
+    @Override
     public User findByEmail(String email) {
         log.info("Finding user with email {}", email);
         return userRepository.findByEmail(email).orElseThrow(
@@ -125,6 +127,11 @@ public class UserServiceImpl implements UserService {
     public User findByIdForServices(long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found"));
+    }
+
+    @Override
+    public List<User> findAllByEventIdForServices(long eventId){
+        return userRepository.findAllByEventId(eventId);
     }
 }
 

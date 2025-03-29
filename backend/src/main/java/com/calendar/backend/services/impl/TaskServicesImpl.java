@@ -101,4 +101,11 @@ public class TaskServicesImpl implements TaskService {
         return taskRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Task not found"));
     }
+
+    @Override
+    public void assignTaskForEvent(long eventId, long id) {
+        Task task = findByIdForServices(id);
+        task.setEvent(eventService.findByIdForServices(id));
+        taskRepository.save(task);
+    }
 }
