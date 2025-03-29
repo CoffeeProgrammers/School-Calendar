@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
         userToUpdate.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
         userToUpdate.setDescription(userUpdateRequest.getDescription());
         userToUpdate.setBirthday(LocalDateTime.parse(userUpdateRequest.getBirthday()));
-        return userMapper.fromUserToUserResponse(userToUpdate);
+        return userMapper.fromUserToUserResponse(userRepository.save(userToUpdate));
     }
 
     @Override
