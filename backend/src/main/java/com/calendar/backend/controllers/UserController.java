@@ -11,6 +11,7 @@ import com.calendar.backend.services.inter.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +25,14 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
+    @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public UserFullResponse createUser(@Valid @RequestBody UserCreateRequest request) {
         return userService.create(request);
     }
 
+    @PreAuthorize("hasRole('TEACHER')")
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserFullResponse updateUser(
@@ -69,6 +72,7 @@ public class UserController {
         return userMapper.fromUserToUserResponse(userService.findUserByAuth(auth));
     }
 
+    @PreAuthorize("hasRole('TEACHER')")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {

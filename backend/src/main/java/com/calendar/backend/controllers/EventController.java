@@ -11,6 +11,7 @@ import com.calendar.backend.services.inter.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class EventController {
     private final EventService eventService;
     private final UserService userService;
 
+    @PreAuthorize("hasAnyRole('TEACHER', 'STUDENT')")
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullResponse createEvent(
@@ -32,14 +34,17 @@ public class EventController {
         return eventService.create(request, auth);
     }
 
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullResponse updateEvent(
             @PathVariable Long id,
-            @Valid @RequestBody EventUpdateRequest request) {
+            @Valid @RequestBody EventUpdateRequest request,
+            Authentication auth) {
         return eventService.update(request, id);
     }
 
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEvent(@PathVariable Long id) {

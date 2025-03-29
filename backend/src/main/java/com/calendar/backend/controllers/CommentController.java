@@ -7,6 +7,7 @@ import com.calendar.backend.services.inter.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +27,17 @@ public class CommentController {
         return commentService.create(request, auth, event_id);
     }
 
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfComment(#auth, #id)")
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CommentResponse updateComment(
             @PathVariable Long id,
-            @Valid @RequestBody CommentRequest request) {
+            @Valid @RequestBody CommentRequest request,
+            Authentication auth) {
         return commentService.update(request, id);
     }
 
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfComment(#auth, #id)")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable Long id) {

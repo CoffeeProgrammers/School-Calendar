@@ -74,4 +74,10 @@ public class CommentServiceImpl implements CommentService {
                 commentMapper::fromCommentToCommentResponse).toList());
         return response;
     }
+
+    @Override
+    public Comment findByIdForService(long id) {
+        return commentRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Comment not found"));
+    }
 }
