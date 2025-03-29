@@ -103,7 +103,7 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
-    public void assignTaskForEvent(long eventId, long id) {
+    public void assignTaskToEvent(long eventId, long id) {
         Task task = findByIdForServices(id);
         task.setEvent(eventService.findByIdForServices(id));
         taskRepository.save(task);

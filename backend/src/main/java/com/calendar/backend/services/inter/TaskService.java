@@ -21,5 +21,5 @@ public interface TaskService {
             long eventId, int page, int size);
     List<Task> findAllByEventId(long eventId);
     Task findByIdForServices(long id);
-    void assignTaskForEvent(long eventId, long id);
+    void assignTaskToEvent(long eventId, long id);
 }

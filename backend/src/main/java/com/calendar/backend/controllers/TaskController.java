@@ -89,7 +89,7 @@ public class TaskController {
     @PutMapping("/assign/{id}/to/{event_id}")
     @ResponseStatus(HttpStatus.OK)
     public void assignTaskToEvent(@PathVariable Long id, @PathVariable Long event_id) {
-        taskService.assignTaskForEvent(event_id, id);
+        taskService.assignTaskToEvent(event_id, id);
         taskAssignmentService.assignTasksToEventUsers(event_id, id);
     }
 }
