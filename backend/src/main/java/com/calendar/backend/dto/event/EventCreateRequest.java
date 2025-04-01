@@ -22,7 +22,7 @@ public class EventCreateRequest {
     @NotBlank(message = "Is content available anytime must be provided")
     private boolean isContentAvailableAnytime;
     @NotBlank(message = "Offline or online meeting must be provided")
-    private String meeting_type;
+    private String meetingType;
     @NotBlank(message = "Place must be provided")
     @Pattern(regexp = "[A-Z][a-z]+",
             message = "Place must start with a capital letter " +
