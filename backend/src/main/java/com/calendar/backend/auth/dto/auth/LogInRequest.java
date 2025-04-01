@@ -1,4 +1,4 @@
-package com.calendar.backend.auth.DTOs.auth;
+package com.calendar.backend.auth.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

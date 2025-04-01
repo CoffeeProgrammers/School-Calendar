@@ -1,4 +1,4 @@
-package com.calendar.backend.auth.DTOs.auth;
+package com.calendar.backend.auth.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
