@@ -5,18 +5,8 @@ import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {SpaceDashboard} from "@mui/icons-material";
+import {listElementBoxStyle, listElementBoxTextStyle} from "../../../assets/styles";
 
-const mainBoxStyle = {
-    border: '1px solid #ddd',
-    padding: '12px',
-    borderRadius: "10px"
-}
-
-const textBoxStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 0.5
-}
 
 const EventBox = ({event}) => {
     const startDate = new Date(event.start_date);
@@ -26,15 +16,15 @@ const EventBox = ({event}) => {
     }) + ', ' + startDate.getFullYear();
 
     const InfoItem = ({icon: Icon, text}) => (
-        <Typography noWrap variant="body2" sx={textBoxStyle}>
+        <Typography noWrap variant="body2" sx={listElementBoxTextStyle}>
             <Icon sx={{fontSize: 18}} color="primary"/>
             {text}
         </Typography>
     )
 
     return (
-        <Box sx={mainBoxStyle}>
-            <Typography noWrap variant="subtitle1" sx={textBoxStyle}>
+        <Box sx={listElementBoxStyle}>
+            <Typography noWrap variant="subtitle1" sx={listElementBoxTextStyle}>
                 <SpaceDashboard fontSize="small" color="secondary"/>
                 {event.name}
             </Typography>

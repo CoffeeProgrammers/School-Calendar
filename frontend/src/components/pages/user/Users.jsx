@@ -7,22 +7,8 @@ import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import UserService from "../../../services/ext/UserService";
 import UserList from "../../common/user/UserList";
+import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
 
-const listPanelStyles = {
-    alignItems: 'center',
-    display: "flex",
-    justifyContent: "space-between"
-}
-
-const mainBoxStyles = {
-    minHeight: "525px", // todo: 3 lines height
-    border: '1px solid #ddd',
-    padding: '20px 20px 8px 20px',
-    margin: '10px',
-    borderRadius: "10px",
-    display: "flex",
-    flexDirection: "column"
-};
 
 const eventTypes = [
     {value: '', label: <em>None</em>},
@@ -80,9 +66,9 @@ const Users = () => {
     return (
         <>
             <Box sx={mainBoxStyles}>
-                <Stack direction="row" mb={1} sx={listPanelStyles}>
+                <Stack direction="row" sx={listPanelStyles}>
                     <Typography variant="h4">Users</Typography>
-                    <Box sx={{display: "flex"}} gap={0.5}>
+                    <Box sx={listPanelStyles} gap={0.5}>
                         <Search
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery}

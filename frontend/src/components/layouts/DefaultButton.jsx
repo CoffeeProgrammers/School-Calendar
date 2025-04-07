@@ -7,6 +7,7 @@ const DefaultButton = ({children, ...props}) => {
         <Button
             variant="contained"
             sx={{
+                height: "40px",
                 backgroundColor: theme.palette.secondary.main,
                 '&:hover': {backgroundColor: theme.palette.secondary.light},
                 color: "white",

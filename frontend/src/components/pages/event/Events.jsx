@@ -8,22 +8,7 @@ import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
 import DefaultButton from "../../layouts/DefaultButton";
 import EventList from "../../common/event/EventList";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
-
-const listPanelStyles = {
-    alignItems: 'center',
-    display: "flex",
-    justifyContent: "space-between"
-}
-
-const mainBoxStyles = {
-    minHeight: "525px", // todo: 3 lines height
-    border: '1px solid #ddd',
-    padding: '20px 20px 8px 20px',
-    margin: '10px',
-    borderRadius: "10px",
-    display: "flex",
-    flexDirection: "column"
-};
+import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
 
 const eventTypes = [
     {value: '', label: <em>None</em>},
@@ -76,7 +61,7 @@ const Events = () => {
                         page: page,
                         searchQuery: searchQuery,
                         type: eventType,
-                        date: ''
+                        date: '',
                     }
                 );
                 setEvents(response.data);
@@ -103,9 +88,9 @@ const Events = () => {
     return (
         <>
             <Box sx={mainBoxStyles}>
-                <Stack direction="row" mb={1} sx={listPanelStyles}>
+                <Stack direction="row" sx={listPanelStyles}>
                     <Typography variant="h4">Events</Typography>
-                    <Box sx={{display: "flex"}} gap={0.5}>
+                    <Box sx={listPanelStyles} gap={0.5}>
                         <Search
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery}
@@ -148,7 +133,7 @@ const Events = () => {
                 />
 
                 {pagesCount > 1 && (
-                    <Box sx={{ marginTop: "auto" }}>
+                    <Box sx={{marginTop: "auto"}}>
                         <PaginationBox
                             page={page}
                             pagesCount={pagesCount}

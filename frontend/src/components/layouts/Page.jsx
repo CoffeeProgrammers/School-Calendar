@@ -8,7 +8,10 @@ const Page = ({children}) => {
                 <AppBar/>
             </Box>
 
-            <Container maxWidth={"xl"}>
+            <Container maxWidth={"xl"} sx={{
+                display: 'flex',
+                justifyContent: 'center',
+            }}>
                 {children}
             </Container>
 

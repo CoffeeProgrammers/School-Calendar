@@ -8,22 +8,7 @@ import DefaultButton from "../../layouts/DefaultButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import TaskList from "../../common/task/TaskList";
 import TaskService from "../../../services/ext/TaskService";
-
-const listPanelStyles = {
-    alignItems: 'center',
-    display: "flex",
-    justifyContent: "space-between"
-}
-
-const mainBoxStyles = {
-    minHeight: "525px", // todo: 3 lines height
-    border: '1px solid #ddd',
-    padding: '20px 20px 8px 20px',
-    margin: '10px',
-    borderRadius: "10px",
-    display: "flex",
-    flexDirection: "column"
-};
+import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
 
 const isDoneSelectOptions = [
     {value: '', label: <em>None</em>},
@@ -83,9 +68,9 @@ const Tasks = () => {
     return (
         <>
             <Box sx={mainBoxStyles}>
-                <Stack direction="row" mb={1} sx={listPanelStyles}>
+                <Stack direction="row"  sx={listPanelStyles}>
                     <Typography variant="h4">Tasks</Typography>
-                    <Box sx={{display: "flex"}} gap={0.5}>
+                    <Box sx={listPanelStyles} gap={0.5}>
                         <Search
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery}

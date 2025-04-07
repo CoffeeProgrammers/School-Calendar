@@ -4,18 +4,7 @@ import {Box, Chip, Divider, Typography} from "@mui/material";
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-const mainBoxStyle = {
-    border: '1px solid #ddd',
-    padding: '12px',
-    borderRadius: "10px"
-}
-
-const textBoxStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 0.5
-}
+import {listElementBoxStyle, listElementBoxTextStyle} from "../../../assets/styles";
 
 const TaskBox = ({task}) => {
     const startDate = new Date(task.deadline);
@@ -25,15 +14,15 @@ const TaskBox = ({task}) => {
     }) + ', ' + startDate.getFullYear();
 
     const InfoItem = ({icon: Icon, text}) => (
-        <Typography noWrap variant="body2" sx={textBoxStyle}>
+        <Typography noWrap variant="body2" sx={listElementBoxTextStyle}>
             <Icon sx={{fontSize: 18}} color="primary"/>
             {text}
         </Typography>
     )
 
     return (
-        <Box sx={mainBoxStyle}>
-            <Typography noWrap variant="subtitle1" sx={textBoxStyle}>
+        <Box sx={listElementBoxStyle}>
+            <Typography noWrap variant="subtitle1" sx={listElementBoxTextStyle}>
                 <TaskAltIcon fontSize="small" color="secondary"/>
                 {task.name}
             </Typography>

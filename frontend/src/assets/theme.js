@@ -4,16 +4,17 @@ import "@fontsource/open-sans";
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#3d3d3d",
+            main: "#222222",
         },
         secondary: {
             main: "#347928",
         },
         success: {
-            main: "#c3e8bf"
+            main: "#c6e3c3"
+        },
+        text: {
+            secondary: "#222222",
         }
-
-
     },
     typography: {
         fontFamily: "Open Sans, Arial, sans-serif",

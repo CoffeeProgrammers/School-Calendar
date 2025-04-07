@@ -82,7 +82,7 @@ class EventService extends BaseService {
                     type: type,
                     start_date: date,
                     _sort: 'start_date',
-                    _order: 'asc'
+                    _order: 'asc',
                     // size, //TODO: pagination when backend will be done
 
                 }

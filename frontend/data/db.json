@@ -2,339 +2,453 @@
   "events": [
     {
       "id": 1,
-      "name": "Tech Conference 2025",
-      "type": "conference",
+      "name": "Spring Boot Workshop",
+      "type": "workshop",
       "creator": {
         "id": 101,
-        "email": "john.doe@example.com",
-        "role": "admin",
-        "first_name": "John",
-        "last_name": "Doe"
+        "email": "alice.green@example.com",
+        "role": "developer",
+        "first_name": "Alice",
+        "last_name": "Green"
       },
-      "start_date": "2025-05-10T09:00:00Z",
-      "end_date": "2025-05-10T17:00:00Z",
+      "start_date": "2025-03-01T09:00:00Z",
+      "end_date": "2025-03-01T12:00:00Z",
       "meeting_type": "offline",
-      "place": "New York, Tech Hall"
+      "place": "Berlin, Dev Hub",
+      "content": "Learn Spring Boot basics and build your first web app.",
+      "is_content_available_anytime": false
     },
     {
       "id": 2,
-      "name": "Weekly Team Sync",
-      "type": "meeting",
+      "name": "React.js Fundamentals",
+      "type": "course",
       "creator": {
         "id": 102,
-        "email": "jane.smith@example.com",
-        "role": "manager",
-        "first_name": "Jane",
-        "last_name": "Smith"
+        "email": "bob.martin@example.com",
+        "role": "instructor",
+        "first_name": "Bob",
+        "last_name": "Martin"
       },
-      "start_date": "2025-02-20T10:00:00Z",
-      "end_date": "2025-02-20T11:00:00Z",
+      "start_date": "2025-03-05T10:00:00Z",
+      "end_date": "2025-03-05T14:00:00Z",
       "meeting_type": "online",
-      "place": "Zoom"
+      "place": "Zoom",
+      "content": "  A comprehensive course to get you started with React.js. Whether you work on your own or with thousands of other developers, using React feels the same. It is designed to let you seamlessly combine components written by independent people, teams, and organizations. This markup syntax is called JSX. It is a JavaScript syntax extension popularized by React. Putting JSX markup close to related rendering logic makes React components easy to create, maintain, and delete. ",
+      "is_content_available_anytime": true
     },
     {
       "id": 3,
-      "name": "Product Launch",
-      "type": "presentation",
+      "name": "Data Science with Python",
+      "type": "course",
       "creator": {
         "id": 103,
-        "email": "alex.brown@example.com",
-        "role": "marketing",
-        "first_name": "Alex",
-        "last_name": "Brown"
+        "email": "carla.jones@example.com",
+        "role": "trainer",
+        "first_name": "Carla",
+        "last_name": "Jones"
       },
-      "start_date": "2025-03-15T14:00:00Z",
-      "end_date": "2025-03-15T16:00:00Z",
+      "start_date": "2025-03-10T08:00:00Z",
+      "end_date": "2025-03-10T16:00:00Z",
       "meeting_type": "offline",
-      "place": "San Francisco, Grand Hall"
+      "place": "San Francisco, Tech Lab",
+      "content": "A hands-on workshop on using Python for data analysis.",
+      "is_content_available_anytime": false
     },
     {
       "id": 4,
-      "name": "Cybersecurity Workshop",
-      "type": "workshop",
+      "name": "AI and Machine Learning Summit",
+      "type": "conference",
       "creator": {
         "id": 104,
-        "email": "linda.white@example.com",
-        "role": "security",
-        "first_name": "Linda",
-        "last_name": "White"
+        "email": "daniel.kim@example.com",
+        "role": "researcher",
+        "first_name": "Daniel",
+        "last_name": "Kim"
       },
-      "start_date": "2025-04-05T09:30:00Z",
-      "end_date": "2025-04-05T12:30:00Z",
-      "meeting_type": "online",
-      "place": "Microsoft Teams"
+      "start_date": "2025-03-15T09:00:00Z",
+      "end_date": "2025-03-15T18:00:00Z",
+      "meeting_type": "offline",
+      "place": "London, AI Center",
+      "content": "An exciting summit focused on AI and machine learning innovations.",
+      "is_content_available_anytime": false
     },
     {
       "id": 5,
-      "name": "AI & ML Conference",
-      "type": "conference",
+      "name": "Java for Beginners",
+      "type": "workshop",
       "creator": {
         "id": 105,
-        "email": "michael.jones@example.com",
-        "role": "researcher",
-        "first_name": "Michael",
-        "last_name": "Jones"
+        "email": "emily.white@example.com",
+        "role": "developer",
+        "first_name": "Emily",
+        "last_name": "White"
       },
-      "start_date": "2025-06-20T08:00:00Z",
-      "end_date": "2025-06-22T18:00:00Z",
-      "meeting_type": "offline",
-      "place": "London, AI Hub"
+      "start_date": "2025-04-02T09:00:00Z",
+      "end_date": "2025-04-02T12:00:00Z",
+      "meeting_type": "online",
+      "place": "Google Meet",
+      "content": "Learn the fundamentals of Java programming in this beginner-friendly workshop.",
+      "is_content_available_anytime": true
     },
     {
       "id": 6,
-      "name": "Startup Pitch Night",
-      "type": "networking",
+      "name": "Cybersecurity Essentials",
+      "type": "course",
       "creator": {
         "id": 106,
-        "email": "susan.kim@example.com",
-        "role": "investor",
-        "first_name": "Susan",
-        "last_name": "Kim"
+        "email": "frank.morris@example.com",
+        "role": "security expert",
+        "first_name": "Frank",
+        "last_name": "Morris"
       },
-      "start_date": "2025-07-10T18:00:00Z",
-      "end_date": "2025-07-10T21:00:00Z",
+      "start_date": "2025-04-07T08:00:00Z",
+      "end_date": "2025-04-07T16:00:00Z",
       "meeting_type": "offline",
-      "place": "Berlin, Startup Hub"
+      "place": "New York, Secure Lab",
+      "content": "A full-day course covering essential cybersecurity topics.",
+      "is_content_available_anytime": false
     },
     {
       "id": 7,
-      "name": "Agile Training",
-      "type": "workshop",
+      "name": "Blockchain 101",
+      "type": "seminar",
       "creator": {
         "id": 107,
-        "email": "david.lee@example.com",
-        "role": "coach",
-        "first_name": "David",
-        "last_name": "Lee"
+        "email": "james.smith@example.com",
+        "role": "consultant",
+        "first_name": "James",
+        "last_name": "Smith"
       },
-      "start_date": "2025-08-05T09:00:00Z",
-      "end_date": "2025-08-05T17:00:00Z",
-      "meeting_type": "hybrid",
-      "place": "Paris, Agile Center"
+      "start_date": "2025-04-15T09:00:00Z",
+      "end_date": "2025-04-15T12:00:00Z",
+      "meeting_type": "online",
+      "place": "Webex",
+      "content": "Introduction to blockchain technology and its applications.",
+      "is_content_available_anytime": true
     },
     {
       "id": 8,
-      "name": "Python for Data Science",
-      "type": "course",
+      "name": "Startup Pitch Competition",
+      "type": "competition",
       "creator": {
         "id": 108,
-        "email": "emma.watson@example.com",
-        "role": "trainer",
-        "first_name": "Emma",
-        "last_name": "Watson"
+        "email": "victor.carter@example.com",
+        "role": "investor",
+        "first_name": "Victor",
+        "last_name": "Carter"
       },
-      "start_date": "2025-09-01T09:00:00Z",
-      "end_date": "2025-09-30T17:00:00Z",
-      "meeting_type": "online",
-      "place": "Udemy"
+      "start_date": "2025-05-01T10:00:00Z",
+      "end_date": "2025-05-01T14:00:00Z",
+      "meeting_type": "offline",
+      "place": "Silicon Valley, Pitch Arena",
+      "content": "Pitch your startup idea to a panel of investors.",
+      "is_content_available_anytime": false
     },
     {
       "id": 9,
-      "name": "Hackathon 2025",
-      "type": "competition",
+      "name": "Cloud Computing Workshop",
+      "type": "workshop",
       "creator": {
         "id": 109,
-        "email": "mark.zuckerberg@example.com",
-        "role": "organizer",
-        "first_name": "Mark",
-        "last_name": "Zuckerberg"
+        "email": "lucas.green@example.com",
+        "role": "cloud architect",
+        "first_name": "Lucas",
+        "last_name": "Green"
       },
-      "start_date": "2025-10-12T08:00:00Z",
-      "end_date": "2025-10-14T20:00:00Z",
+      "start_date": "2025-05-05T08:00:00Z",
+      "end_date": "2025-05-05T16:00:00Z",
       "meeting_type": "offline",
-      "place": "Silicon Valley, Hack Lab"
+      "place": "London, Cloud Center",
+      "content": "A hands-on workshop on cloud computing technologies and services.",
+      "is_content_available_anytime": false
     },
     {
       "id": 10,
-      "name": "Remote Work Strategies",
-      "type": "webinar",
+      "name": "Digital Marketing Strategies",
+      "type": "course",
       "creator": {
         "id": 110,
-        "email": "sophia.miller@example.com",
-        "role": "consultant",
-        "first_name": "Sophia",
-        "last_name": "Miller"
+        "email": "sarah.brown@example.com",
+        "role": "marketer",
+        "first_name": "Sarah",
+        "last_name": "Brown"
       },
-      "start_date": "2025-11-20T16:00:00Z",
-      "end_date": "2025-11-20T18:00:00Z",
+      "start_date": "2025-05-10T10:00:00Z",
+      "end_date": "2025-05-10T14:00:00Z",
       "meeting_type": "online",
-      "place": "Google Meet"
+      "place": "Zoom",
+      "content": "Learn the latest strategies in digital marketing for businesses.",
+      "is_content_available_anytime": true
     },
     {
       "id": 11,
-      "name": "Some",
-      "type": "webinar",
+      "name": "AI for Beginners",
+      "type": "course",
       "creator": {
-        "id": 110,
-        "email": "sophia.miller@example.com",
-        "role": "consultant",
-        "first_name": "Sophia",
-        "last_name": "Miller"
+        "id": 111,
+        "email": "martin.smith@example.com",
+        "role": "AI expert",
+        "first_name": "Martin",
+        "last_name": "Smith"
       },
-      "start_date": "2025-11-20T16:00:00Z",
-      "end_date": "2025-11-20T18:00:00Z",
+      "start_date": "2025-05-20T09:00:00Z",
+      "end_date": "2025-05-20T16:00:00Z",
       "meeting_type": "online",
-      "place": "Google Meet"
+      "place": "Udemy",
+      "content": "An introductory course to Artificial Intelligence for beginners.",
+      "is_content_available_anytime": true
     },
     {
       "id": 12,
-      "name": "Blockchain Summit",
+      "name": "Tech Conference 2025",
       "type": "conference",
       "creator": {
-        "id": 111,
-        "email": "ethan.hunt@example.com",
-        "role": "speaker",
-        "first_name": "Ethan",
-        "last_name": "Hunt"
+        "id": 112,
+        "email": "john.doe@example.com",
+        "role": "conference organizer",
+        "first_name": "John",
+        "last_name": "Doe"
       },
-      "start_date": "2025-12-01T08:00:00Z",
-      "end_date": "2025-12-01T18:00:00Z",
+      "start_date": "2025-06-01T08:00:00Z",
+      "end_date": "2025-06-01T18:00:00Z",
       "meeting_type": "offline",
-      "place": "Dubai, Blockchain Hub"
+      "place": "New York, Tech Hall",
+      "content": "A premier event for the tech community to explore the future of technology.",
+      "is_content_available_anytime": false
     },
     {
       "id": 13,
-      "name": "Design Thinking Workshop",
-      "type": "workshop",
-      "creator": {
-        "id": 112,
-        "email": "anna.johnson@example.com",
-        "role": "facilitator",
-        "first_name": "Anna",
-        "last_name": "Johnson"
-      },
-      "start_date": "2025-12-05T10:00:00Z",
-      "end_date": "2025-12-05T15:00:00Z",
-      "meeting_type": "hybrid",
-      "place": "Amsterdam, Creative Space"
-    },
-    {
-      "id": 14,
-      "name": "Leadership Bootcamp",
-      "type": "training",
-      "creator": {
-        "id": 113,
-        "email": "paul.carter@example.com",
-        "role": "mentor",
-        "first_name": "Paul",
-        "last_name": "Carter"
-      },
-      "start_date": "2025-12-10T09:00:00Z",
-      "end_date": "2025-12-14T17:00:00Z",
-      "meeting_type": "offline",
-      "place": "Sydney, Leadership Academy"
-    },
-    {
-      "id": 15,
       "name": "JavaScript Mastery",
       "type": "course",
       "creator": {
-        "id": 114,
-        "email": "chris.evans@example.com",
+        "id": 113,
+        "email": "paul.jones@example.com",
         "role": "developer",
-        "first_name": "Chris",
-        "last_name": "Evans"
+        "first_name": "Paul",
+        "last_name": "Jones"
       },
-      "start_date": "2025-12-20T09:00:00Z",
-      "end_date": "2025-12-30T17:00:00Z",
+      "start_date": "2025-06-10T10:00:00Z",
+      "end_date": "2025-06-10T14:00:00Z",
       "meeting_type": "online",
-      "place": "Coursera"
+      "place": "Zoom",
+      "content": "Master JavaScript with advanced topics and techniques.",
+      "is_content_available_anytime": true
+    },
+    {
+      "id": 14,
+      "name": "Python for Data Science",
+      "type": "course",
+      "creator": {
+        "id": 114,
+        "email": "nancy.white@example.com",
+        "role": "data scientist",
+        "first_name": "Nancy",
+        "last_name": "White"
+      },
+      "start_date": "2025-06-15T09:00:00Z",
+      "end_date": "2025-06-15T17:00:00Z",
+      "meeting_type": "offline",
+      "place": "Boston, Data Science Lab",
+      "content": "A course focused on Python for data science applications.",
+      "is_content_available_anytime": false
+    },
+    {
+      "id": 15,
+      "name": "Tech Talk: Future of AI",
+      "type": "seminar",
+      "creator": {
+        "id": 115,
+        "email": "steve.morris@example.com",
+        "role": "AI researcher",
+        "first_name": "Steve",
+        "last_name": "Morris"
+      },
+      "start_date": "2025-07-01T09:00:00Z",
+      "end_date": "2025-07-01T11:00:00Z",
+      "meeting_type": "online",
+      "place": "Webex",
+      "content": "An in-depth talk about the future possibilities of Artificial Intelligence.",
+      "is_content_available_anytime": true
     },
     {
       "id": 16,
-      "name": "E-commerce Expo",
-      "type": "exhibition",
+      "name": "Node.js for Backend Development",
+      "type": "workshop",
       "creator": {
-        "id": 115,
-        "email": "lisa.morgan@example.com",
-        "role": "organizer",
-        "first_name": "Lisa",
-        "last_name": "Morgan"
+        "id": 116,
+        "email": "george.martin@example.com",
+        "role": "developer",
+        "first_name": "George",
+        "last_name": "Martin"
       },
-      "start_date": "2026-01-10T10:00:00Z",
-      "end_date": "2026-01-12T18:00:00Z",
+      "start_date": "2025-07-05T09:00:00Z",
+      "end_date": "2025-07-05T17:00:00Z",
       "meeting_type": "offline",
-      "place": "Singapore, Suntec Center"
+      "place": "London, Dev Hub",
+      "content": "Learn how to build efficient backends with Node.js.",
+      "is_content_available_anytime": false
     },
     {
       "id": 17,
-      "name": "Kubernetes Crash Course",
-      "type": "webinar",
-      "creator": {
-        "id": 116,
-        "email": "robert.green@example.com",
-        "role": "trainer",
-        "first_name": "Robert",
-        "last_name": "Green"
-      },
-      "start_date": "2026-01-15T18:00:00Z",
-      "end_date": "2026-01-15T20:00:00Z",
-      "meeting_type": "online",
-      "place": "WebEx"
-    },
-    {
-      "id": 18,
-      "name": "Entrepreneurship 101",
+      "name": "The Future of Web Development",
       "type": "seminar",
       "creator": {
         "id": 117,
-        "email": "nancy.adams@example.com",
-        "role": "coach",
-        "first_name": "Nancy",
-        "last_name": "Adams"
+        "email": "isabella.green@example.com",
+        "role": "developer",
+        "first_name": "Isabella",
+        "last_name": "Green"
       },
-      "start_date": "2026-02-05T09:00:00Z",
-      "end_date": "2026-02-05T13:00:00Z",
+      "start_date": "2025-07-15T10:00:00Z",
+      "end_date": "2025-07-15T12:00:00Z",
+      "meeting_type": "online",
+      "place": "Google Meet",
+      "content": "A seminar on the latest trends in web development.",
+      "is_content_available_anytime": true
+    },
+    {
+      "id": 18,
+      "name": "Advanced SQL for Developers",
+      "type": "course",
+      "creator": {
+        "id": 118,
+        "email": "olivia.wood@example.com",
+        "role": "database administrator",
+        "first_name": "Olivia",
+        "last_name": "Wood"
+      },
+      "start_date": "2025-08-01T09:00:00Z",
+      "end_date": "2025-08-01T17:00:00Z",
       "meeting_type": "offline",
-      "place": "Boston, Startup Lab"
+      "place": "Chicago, Data Center",
+      "content": "Master advanced SQL queries for data management.",
+      "is_content_available_anytime": false
     },
     {
       "id": 19,
-      "name": "Cloud Security Essentials",
+      "name": "Virtual Reality Development",
       "type": "workshop",
       "creator": {
-        "id": 118,
-        "email": "matthew.baker@example.com",
-        "role": "security",
-        "first_name": "Matthew",
-        "last_name": "Baker"
+        "id": 119,
+        "email": "jackson.moore@example.com",
+        "role": "developer",
+        "first_name": "Jackson",
+        "last_name": "Moore"
       },
-      "start_date": "2026-02-15T14:00:00Z",
-      "end_date": "2026-02-15T17:30:00Z",
-      "meeting_type": "hybrid",
-      "place": "Seattle, Security Hub"
+      "start_date": "2025-08-10T09:00:00Z",
+      "end_date": "2025-08-10T17:00:00Z",
+      "meeting_type": "offline",
+      "place": "Los Angeles, VR Lab",
+      "content": "A workshop on creating immersive virtual reality experiences.",
+      "is_content_available_anytime": false
     },
     {
       "id": 20,
-      "name": "Photography Masterclass",
+      "name": "Machine Learning with TensorFlow",
       "type": "course",
       "creator": {
-        "id": 119,
-        "email": "sara.parker@example.com",
-        "role": "photographer",
-        "first_name": "Sara",
-        "last_name": "Parker"
+        "id": 120,
+        "email": "hannah.lee@example.com",
+        "role": "data scientist",
+        "first_name": "Hannah",
+        "last_name": "Lee"
       },
-      "start_date": "2026-03-01T10:00:00Z",
-      "end_date": "2026-03-15T12:00:00Z",
+      "start_date": "2025-08-20T09:00:00Z",
+      "end_date": "2025-08-20T16:00:00Z",
       "meeting_type": "online",
-      "place": "Skillshare"
+      "place": "Udemy",
+      "content": "Learn how to build machine learning models using TensorFlow.",
+      "is_content_available_anytime": true
     },
     {
       "id": 21,
-      "name": "Social Media Trends 2026",
-      "type": "presentation",
+      "name": "Web3 Development Bootcamp",
+      "type": "bootcamp",
       "creator": {
-        "id": 120,
-        "email": "olivia.clark@example.com",
-        "role": "marketer",
-        "first_name": "Olivia",
+        "id": 121,
+        "email": "diana.clark@example.com",
+        "role": "developer",
+        "first_name": "Diana",
         "last_name": "Clark"
       },
-      "start_date": "2026-03-20T15:00:00Z",
-      "end_date": "2026-03-20T17:00:00Z",
+      "start_date": "2025-09-01T09:00:00Z",
+      "end_date": "2025-09-01T17:00:00Z",
+      "meeting_type": "offline",
+      "place": "Paris, Blockchain Hub",
+      "content": "An intensive bootcamp on developing decentralized apps with Web3.",
+      "is_content_available_anytime": false
+    },
+    {
+      "id": 22,
+      "name": "Introduction to IoT",
+      "type": "workshop",
+      "creator": {
+        "id": 122,
+        "email": "liam.harris@example.com",
+        "role": "engineer",
+        "first_name": "Liam",
+        "last_name": "Harris"
+      },
+      "start_date": "2025-09-01T09:00:00Z",
+      "end_date": "2025-09-01T17:00:00Z",
+      "meeting_type": "offline",
+      "place": "Chicago, IoT Center",
+      "content": "Introduction to Internet of Things and how to build IoT devices.",
+      "is_content_available_anytime": false
+    },
+    {
+      "id": 23,
+      "name": "Agile Scrum Master Certification",
+      "type": "course",
+      "creator": {
+        "id": 123,
+        "email": "jennifer.garcia@example.com",
+        "role": "scrum master",
+        "first_name": "Jennifer",
+        "last_name": "Garcia"
+      },
+      "start_date": "2025-09-05T10:00:00Z",
+      "end_date": "2025-09-05T16:00:00Z",
       "meeting_type": "online",
-      "place": "LinkedIn Live"
+      "place": "Zoom",
+      "content": "Learn Scrum methodology and get certified as a Scrum Master.",
+      "is_content_available_anytime": true
+    },
+    {
+      "id": 24,
+      "name": "Cloud Security Deep Dive",
+      "type": "seminar",
+      "creator": {
+        "id": 124,
+        "email": "oliver.king@example.com",
+        "role": "cloud architect",
+        "first_name": "Oliver",
+        "last_name": "King"
+      },
+      "start_date": "2025-09-15T09:00:00Z",
+      "end_date": "2025-09-15T12:00:00Z",
+      "meeting_type": "online",
+      "place": "Webex",
+      "content": "A seminar on cloud security best practices and strategies.",
+      "is_content_available_anytime": true
+    },
+    {
+      "id": 25,
+      "name": "Data Visualization with Tableau",
+      "type": "workshop",
+      "creator": {
+        "id": 125,
+        "email": "noah.davis@example.com",
+        "role": "data analyst",
+        "first_name": "Noah",
+        "last_name": "Davis"
+      },
+      "start_date": "2025-09-20T09:00:00Z",
+      "end_date": "2025-09-20T17:00:00Z",
+      "meeting_type": "offline",
+      "place": "Miami, Data Center",
+      "content": "Learn how to visualize data and create stunning dashboards with Tableau.",
+      "is_content_available_anytime": false
     }
   ],
   "comments": [
@@ -347,7 +461,8 @@
         "first_name": "Sophia",
         "last_name": "Miller"
       },
-      "text": "This meeting was very productive and informative."
+      "text": "This meeting was very productive and informative.",
+      "time": "2025-04-05T10:15:00"
     },
     {
       "id": 2,
@@ -358,7 +473,8 @@
         "first_name": "Ethan",
         "last_name": "Hunt"
       },
-      "text": "Great conference, learned a lot about blockchain trends."
+      "text": "Great conference, learned a lot about blockchain trends.",
+      "time": "2025-04-05T11:00:00"
     },
     {
       "id": 3,
@@ -369,7 +485,8 @@
         "first_name": "Anna",
         "last_name": "Johnson"
       },
-      "text": "The workshop was engaging and practical."
+      "text": "The workshop was engaging and practical.",
+      "time": "2025-04-05T11:45:00"
     },
     {
       "id": 4,
@@ -380,7 +497,8 @@
         "first_name": "Paul",
         "last_name": "Carter"
       },
-      "text": "The bootcamp significantly improved my skills."
+      "text": "The bootcamp significantly improved my skills.",
+      "time": "2025-04-05T12:30:00"
     },
     {
       "id": 5,
@@ -391,7 +509,8 @@
         "first_name": "Chris",
         "last_name": "Evans"
       },
-      "text": "A well-structured course on JavaScript!"
+      "text": "A well-structured course on JavaScript!",
+      "time": "2025-04-05T13:15:00"
     },
     {
       "id": 6,
@@ -402,7 +521,8 @@
         "first_name": "Lisa",
         "last_name": "Morgan"
       },
-      "text": "The E-commerce Expo was a huge success."
+      "text": "The E-commerce Expo was a huge success.",
+      "time": "2025-04-05T14:00:00"
     },
     {
       "id": 7,
@@ -413,7 +533,8 @@
         "first_name": "Robert",
         "last_name": "Green"
       },
-      "text": "Kubernetes Crash Course exceeded expectations!"
+      "text": "Kubernetes Crash Course exceeded expectations!",
+      "time": "2025-04-05T14:45:00"
     },
     {
       "id": 8,
@@ -424,7 +545,8 @@
         "first_name": "Nancy",
         "last_name": "Adams"
       },
-      "text": "Very insightful seminar on entrepreneurship."
+      "text": "Very insightful seminar on entrepreneurship.",
+      "time": "2025-04-05T15:30:00"
     },
     {
       "id": 9,
@@ -435,7 +557,8 @@
         "first_name": "Matthew",
         "last_name": "Baker"
       },
-      "text": "Cloud Security Essentials was extremely informative."
+      "text": "Cloud Security Essentials was extremely informative.",
+      "time": "2025-04-05T16:15:00"
     },
     {
       "id": 10,
@@ -446,7 +569,8 @@
         "first_name": "Sara",
         "last_name": "Parker"
       },
-      "text": "The Photography Masterclass was inspirational!"
+      "text": "The Photography Masterclass was inspirational!",
+      "time": "2025-04-05T17:00:00"
     },
     {
       "id": 11,
@@ -457,7 +581,8 @@
         "first_name": "Olivia",
         "last_name": "Clark"
       },
-      "text": "Social Media Trends 2026 presentation gave fresh insights."
+      "text": "Social Media Trends 2026 presentation gave fresh insights.",
+      "time": "2025-04-05T17:45:00"
     },
     {
       "id": 12,
@@ -468,7 +593,8 @@
         "first_name": "Sophia",
         "last_name": "Miller"
       },
-      "text": "The online platform used for this meeting was excellent."
+      "text": "The online platform used for this meeting was excellent.",
+      "time": "2025-04-05T18:30:00"
     },
     {
       "id": 13,
@@ -479,7 +605,8 @@
         "first_name": "Ethan",
         "last_name": "Hunt"
       },
-      "text": "Looking forward to collaborating again."
+      "text": "Looking forward to collaborating again.",
+      "time": "2025-04-05T19:15:00"
     },
     {
       "id": 14,
@@ -490,7 +617,8 @@
         "first_name": "Anna",
         "last_name": "Johnson"
       },
-      "text": "Great balance of theory and application!"
+      "text": "Great balance of theory and application!",
+      "time": "2025-04-05T20:00:00"
     },
     {
       "id": 15,
@@ -501,7 +629,8 @@
         "first_name": "Paul",
         "last_name": "Carter"
       },
-      "text": "Highly recommend this training to others."
+      "text": "Highly recommend this training to others.",
+      "time": "2025-04-05T20:45:00"
     },
     {
       "id": 16,
@@ -512,7 +641,8 @@
         "first_name": "Chris",
         "last_name": "Evans"
       },
-      "text": "The JavaScript tips were very practical."
+      "text": "The JavaScript tips were very practical.",
+      "time": "2025-04-05T21:30:00"
     },
     {
       "id": 17,
@@ -523,7 +653,8 @@
         "first_name": "Lisa",
         "last_name": "Morgan"
       },
-      "text": "Excellent organization of the expo."
+      "text": "Excellent organization of the expo.",
+      "time": "2025-04-05T22:15:00"
     },
     {
       "id": 18,
@@ -534,7 +665,8 @@
         "first_name": "Robert",
         "last_name": "Green"
       },
-      "text": "The live Q&A during the webinar was helpful."
+      "text": "The live Q&A during the webinar was helpful.",
+      "time": "2025-04-05T23:00:00"
     },
     {
       "id": 19,
@@ -545,7 +677,8 @@
         "first_name": "Nancy",
         "last_name": "Adams"
       },
-      "text": "Great networking opportunities at this event."
+      "text": "Great networking opportunities at this event.",
+      "time": "2025-04-06T08:15:00"
     },
     {
       "id": 20,
@@ -556,7 +689,8 @@
         "first_name": "Matthew",
         "last_name": "Baker"
       },
-      "text": "The workshop highlighted important security practices."
+      "text": "The workshop highlighted important security practices.",
+      "time": "2025-04-06T09:00:00"
     }
   ],
   "users": [
