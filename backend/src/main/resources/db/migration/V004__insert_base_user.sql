@@ -1,0 +1,16 @@
+INSERT INTO "users" ("email",
+                     "password",
+                     "role",
+                     "first_name",
+                     "last_name",
+                     "description",
+                     "token",
+                     "birthday")
+VALUES ('john.doe@example.com',
+        'securepassword123',
+        1,
+        'John',
+        'Doe',
+        'Example user for testing.',
+        'sometokenvalue123',
+        '2000-01-01 00:00:00');
