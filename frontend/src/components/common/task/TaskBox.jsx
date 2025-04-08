@@ -1,10 +1,10 @@
 import React from 'react';
 import {Box, Chip, Divider, Typography} from "@mui/material";
 
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {listElementBoxStyle, listElementBoxTextStyle} from "../../../assets/styles";
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 const TaskBox = ({task}) => {
     const startDate = new Date(task.deadline);
@@ -23,7 +23,7 @@ const TaskBox = ({task}) => {
     return (
         <Box sx={listElementBoxStyle}>
             <Typography noWrap variant="subtitle1" sx={listElementBoxTextStyle}>
-                <TaskAltIcon fontSize="small" color="secondary"/>
+                <AssignmentIcon fontSize="small" color="secondary"/>
                 {task.name}
             </Typography>
             <Divider sx={{marginBottom: "5px"}}/>

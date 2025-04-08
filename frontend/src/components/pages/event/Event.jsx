@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import EventService from "../../../services/ext/EventService";
 import Loading from "../../layouts/Loading";
-import {Box, Chip, Container, Divider, Typography} from "@mui/material";
+import {Box, Chip, Container, Divider, Stack, Typography} from "@mui/material";
 import {listElementBoxTextStyle} from "../../../assets/styles";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -13,6 +13,7 @@ import SubjectIcon from '@mui/icons-material/Subject';
 import ParticipantsContainer from "../../common/user/participants_dialog/ParticipantsContainer";
 import CommentsContainer from "../../common/comment/comments_dialog/CommentsContainer";
 import DateService from "../../../services/simple/DateService";
+import EventTasksContainer from "../../common/task/event_tasks_dialog/EventTasksContainer";
 
 const Event = () => {
     const {id} = useParams();
@@ -105,10 +106,12 @@ const Event = () => {
                 </table>
 
                 <Divider sx={{mt: 1, mb: 0.7}}/>
+                <Stack direction="row" spacing={0.5}>
+                    <ParticipantsContainer/>
+                    <CommentsContainer/>
+                    <EventTasksContainer/>
+                </Stack>
 
-                <ParticipantsContainer/>
-
-                <CommentsContainer/>
 
                 <Divider sx={{mt: 0.7, mb: 2}}/>
 

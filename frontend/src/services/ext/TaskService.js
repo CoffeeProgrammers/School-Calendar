@@ -56,10 +56,12 @@ class TaskService extends BaseService {
     }
 
     //TODO
-    async getTasksByEvent(eventId, page, size) {
-        return await this.handleRequest(
-            () => this.apiClient.get(`/events/${eventId}`, {
-                params: { page, size }
+    async getTasksByEvent({eventId, page, size}) {
+        return await this.handleRequest(() =>
+            this.apiClient.get('', {
+                params: {
+                    _page: page,
+                }
             })
         );
     }
