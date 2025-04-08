@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import Main from "./components/pages/Main";
+import Login from "./components/pages/Login";
+import Page from "./components/layouts/Page";
+import {ThemeProvider} from "@mui/material";
+import theme from "./assets/theme"
+import Events from "./components/pages/event/Events";
+import Users from "./components/pages/user/Users";
+import Tasks from "./components/pages/task/Tasks";
+import Event from "./components/pages/event/Event";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <ThemeProvider theme={theme}>
+                <Page>
+                    <Routes>
+                        <Route path={""} element={<Main/>}/>
+                        <Route path={"/login"} element={<Login/>}/>
+                        <Route path={"/events"} element={<Events/>}/>
+                        <Route path={"/users"} element={<Users/>}/>
+                        <Route path={"/tasks"} element={<Tasks/>}/>
+                        <Route path={"/events/:id"} element={<Event/>}/>/
+                    </Routes>
+                </Page>
+            </ThemeProvider>
+        </Router>
+    );
 }
 
 export default App;
