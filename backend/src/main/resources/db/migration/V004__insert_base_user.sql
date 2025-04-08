@@ -7,10 +7,10 @@ INSERT INTO "users" ("email",
                      "token",
                      "birthday")
 VALUES ('john.doe@example.com',
-        'securepassword123',
-        1,
+        '$2a$12$tCc7xjpcZZg0PT57MxYmX.3Pp2gedmXUHfS86IHz5Y8RUoIKq.Ma6',
+        0,
         'John',
         'Doe',
         'Example user for testing.',
-        'sometokenvalue123',
+        '6f89c859-b1eb-420f-b9f9-dee46f80fd44',
         '2000-01-01 00:00:00');
