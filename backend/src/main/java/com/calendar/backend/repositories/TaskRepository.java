@@ -22,4 +22,6 @@ public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificat
         """, nativeQuery = true)
     Page<Task> findAllByUserId(@Param("userId") Long userId, Specification<Task> taskSpecification,
                                  Pageable pageable);
+
+    Page<Task> findAllByCreator_IdAndEventIsEmpty(long creatorId, Pageable pageable);
 }
