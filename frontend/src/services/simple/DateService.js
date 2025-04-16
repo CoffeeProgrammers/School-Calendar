@@ -11,6 +11,16 @@ class DateService {
             hour12: false
         })
     }
+
+    static formatDateToMDT(date) {
+        return new Date(date).toLocaleString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: false
+        })
+    }
 }
 
 export default DateService;

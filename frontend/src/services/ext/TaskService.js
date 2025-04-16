@@ -10,7 +10,7 @@ class TaskService extends BaseService {
 
     async createTask(eventId, taskData) {
         return await this.handleRequest(
-            () => this.apiClient.post(`/create`, { ...taskData, event_id: eventId })
+            () => this.apiClient.post(`/create`, {...taskData, event_id: eventId})
         );
     }
 
@@ -33,7 +33,7 @@ class TaskService extends BaseService {
     }
 
     //TODO
-    async getMyTasks({page, size, searchQuery , deadline, isDone}) {
+    async getMyTasks({page, size, searchQuery, deadline, isDone}) {
         return await this.handleRequest(
             () => this.apiClient.get('', {
                 params: {
@@ -49,11 +49,13 @@ class TaskService extends BaseService {
         );
     }
 
-    async toggleTaskDone(taskId) {
-        return await this.handleRequest(
-            () => this.apiClient.post(`/toggle/${taskId}`)
+    async toggleTask({taskId, isDone}) {
+        return await this.handleRequest(() =>
+            this.apiClient.patch(`/${taskId}`, {
+                isDone: !isDone,
+            })
         );
-    }
+    };
 
     //TODO
     async getTasksByEvent({eventId, page, size}) {

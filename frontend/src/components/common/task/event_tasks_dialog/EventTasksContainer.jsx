@@ -23,7 +23,6 @@ const EventTasksContainer = () => {
                     }
                 );
                 setTasks(response.data);
-                console.log(response.data);
                 setPagesCount(response.pages)
             } catch (error) {
                 setError(error);
@@ -35,6 +34,16 @@ const EventTasksContainer = () => {
         fetchData();
     }, [page]);
 
+     const handleToggleTask = async (task) => {
+        const updatedTask = await TaskService.toggleTask({
+            taskId: task.id,
+            isDone: task.isDone
+        });
+
+        setTasks(prevTasks =>
+            prevTasks.map(t => (t.id === updatedTask.id ? updatedTask : t))
+        );
+    }
 
     if (loading) {
         return <Loading/>;
@@ -50,6 +59,7 @@ const EventTasksContainer = () => {
             pagesCount={pagesCount}
             page={page}
             setPage={setPage}
+            handleToggleTask={handleToggleTask}
         />
     );
 }

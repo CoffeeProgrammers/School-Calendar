@@ -55,7 +55,6 @@ const Event = () => {
 
     return (
         <Box
-            fullWidth
             sx={{
                 maxWidth: '1000px',
                 border: '1px solid #ddd',

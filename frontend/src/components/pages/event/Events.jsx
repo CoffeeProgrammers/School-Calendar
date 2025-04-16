@@ -8,7 +8,7 @@ import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
 import DefaultButton from "../../layouts/DefaultButton";
 import EventList from "../../common/event/EventList";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
-import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
+import {listPanelStyles} from "../../../assets/styles";
 
 const eventTypes = [
     {value: '', label: <em>None</em>},
@@ -87,7 +87,12 @@ const Events = () => {
 
     return (
         <>
-            <Box sx={mainBoxStyles}>
+            <Box sx={{
+                border: '1px solid #ddd',
+                padding: '20px',
+                margin: '10px',
+                borderRadius: "10px",
+            }}>
                 <Stack direction="row" sx={listPanelStyles}>
                     <Typography variant="h4">Events</Typography>
                     <Box sx={listPanelStyles} gap={0.5}>

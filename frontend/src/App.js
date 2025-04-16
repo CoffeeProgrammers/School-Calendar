@@ -1,6 +1,6 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Main from "./components/pages/Main";
-import Login from "./components/pages/Login";
+import Login from "./components/pages/login/Login";
 import Page from "./components/layouts/Page";
 import {ThemeProvider} from "@mui/material";
 import theme from "./assets/theme"

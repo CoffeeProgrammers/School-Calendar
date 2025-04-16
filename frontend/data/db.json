@@ -1,7 +1,7 @@
 {
   "events": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Spring Boot Workshop",
       "type": "workshop",
       "creator": {
@@ -19,7 +19,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "React.js Fundamentals",
       "type": "course",
       "creator": {
@@ -37,7 +37,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Data Science with Python",
       "type": "course",
       "creator": {
@@ -55,7 +55,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "AI and Machine Learning Summit",
       "type": "conference",
       "creator": {
@@ -73,7 +73,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Java for Beginners",
       "type": "workshop",
       "creator": {
@@ -91,7 +91,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "Cybersecurity Essentials",
       "type": "course",
       "creator": {
@@ -109,7 +109,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Blockchain 101",
       "type": "seminar",
       "creator": {
@@ -127,7 +127,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Startup Pitch Competition",
       "type": "competition",
       "creator": {
@@ -145,7 +145,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "Cloud Computing Workshop",
       "type": "workshop",
       "creator": {
@@ -163,7 +163,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Digital Marketing Strategies",
       "type": "course",
       "creator": {
@@ -181,7 +181,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 11,
+      "id": "11",
       "name": "AI for Beginners",
       "type": "course",
       "creator": {
@@ -199,7 +199,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 12,
+      "id": "12",
       "name": "Tech Conference 2025",
       "type": "conference",
       "creator": {
@@ -217,7 +217,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 13,
+      "id": "13",
       "name": "JavaScript Mastery",
       "type": "course",
       "creator": {
@@ -235,7 +235,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 14,
+      "id": "14",
       "name": "Python for Data Science",
       "type": "course",
       "creator": {
@@ -253,7 +253,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 15,
+      "id": "15",
       "name": "Tech Talk: Future of AI",
       "type": "seminar",
       "creator": {
@@ -271,7 +271,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 16,
+      "id": "16",
       "name": "Node.js for Backend Development",
       "type": "workshop",
       "creator": {
@@ -289,7 +289,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 17,
+      "id": "17",
       "name": "The Future of Web Development",
       "type": "seminar",
       "creator": {
@@ -307,7 +307,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 18,
+      "id": "18",
       "name": "Advanced SQL for Developers",
       "type": "course",
       "creator": {
@@ -325,7 +325,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 19,
+      "id": "19",
       "name": "Virtual Reality Development",
       "type": "workshop",
       "creator": {
@@ -343,7 +343,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 20,
+      "id": "20",
       "name": "Machine Learning with TensorFlow",
       "type": "course",
       "creator": {
@@ -361,7 +361,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 21,
+      "id": "21",
       "name": "Web3 Development Bootcamp",
       "type": "bootcamp",
       "creator": {
@@ -379,7 +379,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 22,
+      "id": "22",
       "name": "Introduction to IoT",
       "type": "workshop",
       "creator": {
@@ -397,7 +397,7 @@
       "is_content_available_anytime": false
     },
     {
-      "id": 23,
+      "id": "23",
       "name": "Agile Scrum Master Certification",
       "type": "course",
       "creator": {
@@ -415,7 +415,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 24,
+      "id": "24",
       "name": "Cloud Security Deep Dive",
       "type": "seminar",
       "creator": {
@@ -433,7 +433,7 @@
       "is_content_available_anytime": true
     },
     {
-      "id": 25,
+      "id": "25",
       "name": "Data Visualization with Tableau",
       "type": "workshop",
       "creator": {
@@ -453,7 +453,7 @@
   ],
   "comments": [
     {
-      "id": 1,
+      "id": "1",
       "creator": {
         "id": 110,
         "email": "sophia.miller@example.com",
@@ -465,7 +465,7 @@
       "time": "2025-04-05T10:15:00"
     },
     {
-      "id": 2,
+      "id": "2",
       "creator": {
         "id": 111,
         "email": "ethan.hunt@example.com",
@@ -477,7 +477,7 @@
       "time": "2025-04-05T11:00:00"
     },
     {
-      "id": 3,
+      "id": "3",
       "creator": {
         "id": 112,
         "email": "anna.johnson@example.com",
@@ -489,7 +489,7 @@
       "time": "2025-04-05T11:45:00"
     },
     {
-      "id": 4,
+      "id": "4",
       "creator": {
         "id": 113,
         "email": "paul.carter@example.com",
@@ -501,7 +501,7 @@
       "time": "2025-04-05T12:30:00"
     },
     {
-      "id": 5,
+      "id": "5",
       "creator": {
         "id": 114,
         "email": "chris.evans@example.com",
@@ -513,7 +513,7 @@
       "time": "2025-04-05T13:15:00"
     },
     {
-      "id": 6,
+      "id": "6",
       "creator": {
         "id": 115,
         "email": "lisa.morgan@example.com",
@@ -525,7 +525,7 @@
       "time": "2025-04-05T14:00:00"
     },
     {
-      "id": 7,
+      "id": "7",
       "creator": {
         "id": 116,
         "email": "robert.green@example.com",
@@ -537,7 +537,7 @@
       "time": "2025-04-05T14:45:00"
     },
     {
-      "id": 8,
+      "id": "8",
       "creator": {
         "id": 117,
         "email": "nancy.adams@example.com",
@@ -549,7 +549,7 @@
       "time": "2025-04-05T15:30:00"
     },
     {
-      "id": 9,
+      "id": "9",
       "creator": {
         "id": 118,
         "email": "matthew.baker@example.com",
@@ -561,7 +561,7 @@
       "time": "2025-04-05T16:15:00"
     },
     {
-      "id": 10,
+      "id": "10",
       "creator": {
         "id": 119,
         "email": "sara.parker@example.com",
@@ -573,7 +573,7 @@
       "time": "2025-04-05T17:00:00"
     },
     {
-      "id": 11,
+      "id": "11",
       "creator": {
         "id": 120,
         "email": "olivia.clark@example.com",
@@ -585,7 +585,7 @@
       "time": "2025-04-05T17:45:00"
     },
     {
-      "id": 12,
+      "id": "12",
       "creator": {
         "id": 110,
         "email": "sophia.miller@example.com",
@@ -597,7 +597,7 @@
       "time": "2025-04-05T18:30:00"
     },
     {
-      "id": 13,
+      "id": "13",
       "creator": {
         "id": 111,
         "email": "ethan.hunt@example.com",
@@ -609,7 +609,7 @@
       "time": "2025-04-05T19:15:00"
     },
     {
-      "id": 14,
+      "id": "14",
       "creator": {
         "id": 112,
         "email": "anna.johnson@example.com",
@@ -621,7 +621,7 @@
       "time": "2025-04-05T20:00:00"
     },
     {
-      "id": 15,
+      "id": "15",
       "creator": {
         "id": 113,
         "email": "paul.carter@example.com",
@@ -633,7 +633,7 @@
       "time": "2025-04-05T20:45:00"
     },
     {
-      "id": 16,
+      "id": "16",
       "creator": {
         "id": 114,
         "email": "chris.evans@example.com",
@@ -645,7 +645,7 @@
       "time": "2025-04-05T21:30:00"
     },
     {
-      "id": 17,
+      "id": "17",
       "creator": {
         "id": 115,
         "email": "lisa.morgan@example.com",
@@ -657,7 +657,7 @@
       "time": "2025-04-05T22:15:00"
     },
     {
-      "id": 18,
+      "id": "18",
       "creator": {
         "id": 116,
         "email": "robert.green@example.com",
@@ -669,7 +669,7 @@
       "time": "2025-04-05T23:00:00"
     },
     {
-      "id": 19,
+      "id": "19",
       "creator": {
         "id": 117,
         "email": "nancy.adams@example.com",
@@ -681,7 +681,7 @@
       "time": "2025-04-06T08:15:00"
     },
     {
-      "id": 20,
+      "id": "20",
       "creator": {
         "id": 118,
         "email": "matthew.baker@example.com",
@@ -695,175 +695,175 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "email": "user1@example.com",
       "role": "user",
       "first_name": "John",
       "last_name": "Doe"
     },
     {
-      "id": 2,
+      "id": "2",
       "email": "user2@example.com",
       "role": "admin",
       "first_name": "Alice",
       "last_name": "Smith"
     },
     {
-      "id": 3,
+      "id": "3",
       "email": "user3@example.com",
       "role": "user",
       "first_name": "Bob",
       "last_name": "Johnson"
     },
     {
-      "id": 4,
+      "id": "4",
       "email": "user4@example.com",
       "role": "moderator",
       "first_name": "Emily",
       "last_name": "Davis"
     },
     {
-      "id": 5,
+      "id": "5",
       "email": "user5@example.com",
       "role": "user",
       "first_name": "Michael",
       "last_name": "Brown"
     },
     {
-      "id": 6,
+      "id": "6",
       "email": "user6@example.com",
       "role": "user",
       "first_name": "Emma",
       "last_name": "Miller"
     },
     {
-      "id": 7,
+      "id": "7",
       "email": "user7@example.com",
       "role": "admin",
       "first_name": "David",
       "last_name": "Wilson"
     },
     {
-      "id": 8,
+      "id": "8",
       "email": "user8@example.com",
       "role": "user",
       "first_name": "Sophia",
       "last_name": "Moore"
     },
     {
-      "id": 9,
+      "id": "9",
       "email": "user9@example.com",
       "role": "moderator",
       "first_name": "James",
       "last_name": "Taylor"
     },
     {
-      "id": 10,
+      "id": "10",
       "email": "user10@example.com",
       "role": "user",
       "first_name": "Olivia",
       "last_name": "Anderson"
     },
     {
-      "id": 11,
+      "id": "11",
       "email": "user11@example.com",
       "role": "user",
       "first_name": "William",
       "last_name": "Thomas"
     },
     {
-      "id": 12,
+      "id": "12",
       "email": "user12@example.com",
       "role": "admin",
       "first_name": "Ava",
       "last_name": "Jackson"
     },
     {
-      "id": 13,
+      "id": "13",
       "email": "user13@example.com",
       "role": "user",
       "first_name": "Benjamin",
       "last_name": "White"
     },
     {
-      "id": 14,
+      "id": "14",
       "email": "user14@example.com",
       "role": "moderator",
       "first_name": "Mia",
       "last_name": "Harris"
     },
     {
-      "id": 15,
+      "id": "15",
       "email": "user15@example.com",
       "role": "user",
       "first_name": "Lucas",
       "last_name": "Martin"
     },
     {
-      "id": 16,
+      "id": "16",
       "email": "user16@example.com",
       "role": "user",
       "first_name": "Charlotte",
       "last_name": "Thompson"
     },
     {
-      "id": 17,
+      "id": "17",
       "email": "user17@example.com",
       "role": "admin",
       "first_name": "Henry",
       "last_name": "Garcia"
     },
     {
-      "id": 18,
+      "id": "18",
       "email": "user18@example.com",
       "role": "user",
       "first_name": "Amelia",
       "last_name": "Martinez"
     },
     {
-      "id": 19,
+      "id": "19",
       "email": "user19@example.com",
       "role": "moderator",
       "first_name": "Alexander",
       "last_name": "Robinson"
     },
     {
-      "id": 20,
+      "id": "20",
       "email": "user20@example.com",
       "role": "user",
       "first_name": "Evelyn",
       "last_name": "Clark"
     },
     {
-      "id": 21,
+      "id": "21",
       "email": "user21@example.com",
       "role": "user",
       "first_name": "Daniel",
       "last_name": "Rodriguez"
     },
     {
-      "id": 22,
+      "id": "22",
       "email": "user22@example.com",
       "role": "admin",
       "first_name": "Scarlett",
       "last_name": "Lewis"
     },
     {
-      "id": 23,
+      "id": "23",
       "email": "user23@example.com",
       "role": "user",
       "first_name": "Matthew",
       "last_name": "Walker"
     },
     {
-      "id": 24,
+      "id": "24",
       "email": "user24@example.com",
       "role": "moderator",
       "first_name": "Liam",
       "last_name": "Hall"
     },
     {
-      "id": 25,
+      "id": "25",
       "email": "user25@example.com",
       "role": "user",
       "first_name": "Ella",
@@ -872,7 +872,7 @@
   ],
   "tasks": [
     {
-      "id": 1,
+      "id": "1",
       "isDone": false,
       "name": "Task 1",
       "deadline": "2025-04-01T12:00:00Z",
@@ -885,7 +885,7 @@
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "isDone": true,
       "name": "Task 2",
       "deadline": "2025-04-02T12:00:00Z",
@@ -898,8 +898,8 @@
       }
     },
     {
-      "id": 3,
-      "isDone": false,
+      "id": "3",
+      "isDone": true,
       "name": "Task 3",
       "deadline": "2025-04-03T12:00:00Z",
       "creator": {
@@ -911,8 +911,8 @@
       }
     },
     {
-      "id": 4,
-      "isDone": false,
+      "id": "4",
+      "isDone": true,
       "name": "Task 4",
       "deadline": "2025-04-04T12:00:00Z",
       "creator": {
@@ -924,7 +924,7 @@
       }
     },
     {
-      "id": 5,
+      "id": "5",
       "isDone": true,
       "name": "Task 5",
       "deadline": "2025-04-05T12:00:00Z",
@@ -937,8 +937,8 @@
       }
     },
     {
-      "id": 6,
-      "isDone": false,
+      "id": "6",
+      "isDone": true,
       "name": "Task 6",
       "deadline": "2025-04-06T12:00:00Z",
       "creator": {
@@ -950,8 +950,8 @@
       }
     },
     {
-      "id": 7,
-      "isDone": false,
+      "id": "7",
+      "isDone": true,
       "name": "Task 7",
       "deadline": "2025-04-07T12:00:00Z",
       "creator": {
@@ -963,7 +963,7 @@
       }
     },
     {
-      "id": 8,
+      "id": "8",
       "isDone": true,
       "name": "Task 8",
       "deadline": "2025-04-08T12:00:00Z",
@@ -976,8 +976,8 @@
       }
     },
     {
-      "id": 9,
-      "isDone": false,
+      "id": "9",
+      "isDone": true,
       "name": "Task 9",
       "deadline": "2025-04-09T12:00:00Z",
       "creator": {
@@ -989,8 +989,8 @@
       }
     },
     {
-      "id": 10,
-      "isDone": false,
+      "id": "10",
+      "isDone": true,
       "name": "Task 10",
       "deadline": "2025-04-10T12:00:00Z",
       "creator": {
@@ -1002,7 +1002,7 @@
       }
     },
     {
-      "id": 11,
+      "id": "11",
       "isDone": true,
       "name": "Task 11",
       "deadline": "2025-04-11T12:00:00Z",
@@ -1012,11 +1012,14 @@
         "role": "member",
         "first_name": "Liam",
         "last_name": "Harris"
+      },
+      "params": {
+        "isDone": false
       }
     },
     {
-      "id": 12,
-      "isDone": false,
+      "id": "12",
+      "isDone": true,
       "name": "Task 12",
       "deadline": "2025-04-12T12:00:00Z",
       "creator": {
@@ -1025,11 +1028,14 @@
         "role": "editor",
         "first_name": "Isabella",
         "last_name": "Clark"
+      },
+      "params": {
+        "isDone": true
       }
     },
     {
-      "id": 13,
-      "isDone": false,
+      "id": "13",
+      "isDone": true,
       "name": "Task 13",
       "deadline": "2025-04-13T12:00:00Z",
       "creator": {
@@ -1041,7 +1047,7 @@
       }
     },
     {
-      "id": 14,
+      "id": "14",
       "isDone": true,
       "name": "Task 14",
       "deadline": "2025-04-14T12:00:00Z",
@@ -1051,11 +1057,14 @@
         "role": "member",
         "first_name": "Charlotte",
         "last_name": "Walker"
+      },
+      "params": {
+        "isDone": false
       }
     },
     {
-      "id": 15,
-      "isDone": false,
+      "id": "15",
+      "isDone": true,
       "name": "Task 15",
       "deadline": "2025-04-15T12:00:00Z",
       "creator": {
@@ -1067,8 +1076,8 @@
       }
     },
     {
-      "id": 16,
-      "isDone": false,
+      "id": "16",
+      "isDone": true,
       "name": "Task 16",
       "deadline": "2025-04-16T12:00:00Z",
       "creator": {
@@ -1080,7 +1089,7 @@
       }
     },
     {
-      "id": 17,
+      "id": "17",
       "isDone": true,
       "name": "Task 17",
       "deadline": "2025-04-17T12:00:00Z",
@@ -1093,8 +1102,8 @@
       }
     },
     {
-      "id": 18,
-      "isDone": false,
+      "id": "18",
+      "isDone": true,
       "name": "Task 18",
       "deadline": "2025-04-18T12:00:00Z",
       "creator": {
@@ -1106,8 +1115,8 @@
       }
     },
     {
-      "id": 19,
-      "isDone": false,
+      "id": "19",
+      "isDone": true,
       "name": "Task 19",
       "deadline": "2025-04-19T12:00:00Z",
       "creator": {
@@ -1119,7 +1128,7 @@
       }
     },
     {
-      "id": 20,
+      "id": "20",
       "isDone": true,
       "name": "Task 20",
       "deadline": "2025-04-20T12:00:00Z",
@@ -1132,8 +1141,8 @@
       }
     },
     {
-      "id": 21,
-      "isDone": false,
+      "id": "21",
+      "isDone": true,
       "name": "Task 21",
       "deadline": "2025-04-21T12:00:00Z",
       "creator": {
@@ -1145,8 +1154,8 @@
       }
     },
     {
-      "id": 22,
-      "isDone": false,
+      "id": "22",
+      "isDone": true,
       "name": "Task 22",
       "deadline": "2025-04-22T12:00:00Z",
       "creator": {
@@ -1158,7 +1167,7 @@
       }
     },
     {
-      "id": 23,
+      "id": "23",
       "isDone": true,
       "name": "Task 23",
       "deadline": "2025-04-23T12:00:00Z",
@@ -1171,8 +1180,8 @@
       }
     },
     {
-      "id": 24,
-      "isDone": false,
+      "id": "24",
+      "isDone": true,
       "name": "Task 24",
       "deadline": "2025-04-24T12:00:00Z",
       "creator": {
@@ -1184,8 +1193,8 @@
       }
     },
     {
-      "id": 25,
-      "isDone": false,
+      "id": "25",
+      "isDone": true,
       "name": "Task 25",
       "deadline": "2025-04-25T12:00:00Z",
       "creator": {
@@ -1198,4 +1207,3 @@
     }
   ]
 }
-
