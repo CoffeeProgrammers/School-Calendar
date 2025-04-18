@@ -15,6 +15,10 @@ import java.util.Map;
 public class EventSpecification {
     public static Specification<Event> filterEvents(Map<String, Object> filters) {
         return (Root<Event> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            if (filters == null || filters.isEmpty()) {
+                return null;
+            }
+
             List<Predicate> predicates = new ArrayList<>();
 
             if (filters.containsKey("search")) {

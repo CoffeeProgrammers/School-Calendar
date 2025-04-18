@@ -19,7 +19,6 @@ public class EventCreateRequest {
     private String endDate;
     @NotBlank(message = "Content must be provided")
     private String content;
-    @NotBlank(message = "Is content available anytime must be provided")
     private boolean isContentAvailableAnytime;
     @NotBlank(message = "Offline or online meeting must be provided")
     private String meetingType;

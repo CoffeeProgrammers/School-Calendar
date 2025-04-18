@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
                                                             int page, int size) {
         log.info("Finding all users with filters {}", filters);
         Page<User> users = userRepository.findAll(UserSpecification.filterUsers(filters),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "last_Name", "first_Name")));
         PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(users.getTotalPages());
         response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
                                                                      long eventId, int page, int size) {
         log.info("Finding all users with filters {} and event id {}", filters, eventId);
         Page<User> users = userRepository.findAllByEventId(eventId, UserSpecification.filterUsers(filters),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "last_Name", "first_Name")));
         PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(users.getTotalPages());
         response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());

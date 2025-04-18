@@ -79,7 +79,7 @@ public class EventServiceImpl implements EventService {
         log.info("Finding all events for user with id {} and filters {}", userId, filters);
         Page<Event> events = eventRepository.findAllByUserId(userId,
                 EventSpecification.filterEvents(filters), PageRequest.of(page, size,
-                        Sort.by(Sort.Direction.ASC, "time")));
+                        Sort.by(Sort.Direction.ASC, "start_date")));
         PaginationListResponse<EventListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(events.getTotalPages());
         response.setContent(events.getContent().stream().map(
@@ -93,7 +93,7 @@ public class EventServiceImpl implements EventService {
                                                                                 LocalDateTime end) {
         log.info("Finding all events for user with id {} and date range {} - {}", userId, start, end);
         List<Event> events = eventRepository.findAllByUserIdAndDateRange(userId,
-                start, end, Sort.by(Sort.Direction.ASC, "time"));
+                start, end, Sort.by(Sort.Direction.ASC, "start_date"));
         return events.stream().map(eventMapper::fromEventToEventListResponse).toList();
     }
 

@@ -8,9 +8,6 @@ CREATE TABLE "events"
     "end_date"                     TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     "content"                      VARCHAR(255),
     "is_content_available_anytime" BOOLEAN                                 NOT NULL,
-    "meeting_type"                 VARCHAR(255)                            NOT NULL
-        CHECK
-            ("meeting_type" IN ('')),
     "place"                        VARCHAR(255)                            NOT NULL
 );
 ALTER TABLE

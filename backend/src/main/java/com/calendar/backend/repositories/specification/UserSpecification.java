@@ -14,6 +14,10 @@ import java.util.Map;
 public class UserSpecification {
     public static Specification<User> filterUsers(Map<String, Object> filters) {
         return (Root<User> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            if (filters == null || filters.isEmpty()) {
+                return null;
+            }
+
             List<Predicate> predicates = new ArrayList<>();
             if (filters.containsKey("firstName")) {
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")),
