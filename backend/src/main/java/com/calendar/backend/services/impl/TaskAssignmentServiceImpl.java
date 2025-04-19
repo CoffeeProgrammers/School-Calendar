@@ -31,6 +31,14 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     }
 
     @Override
+    public void createWithNewTask(Authentication authentication, Long taskId) {
+        User user = userService.findUserByAuth(authentication);
+        log.info("Saving new task assignment for task with id {} and user with id {}", taskId, user.getId());
+        taskAssignmentRepository.save(new TaskAssignment(taskService.findByIdForServices(taskId),
+                userService.findByIdForServices(user.getId())));
+    }
+
+    @Override
     public boolean isDone(Long taskId, Authentication authentication) {
         log.info("Try to determine if task assignment is done for {}", taskId);
         return taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,

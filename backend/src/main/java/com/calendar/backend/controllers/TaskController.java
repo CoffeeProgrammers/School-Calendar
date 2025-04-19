@@ -30,7 +30,9 @@ public class TaskController {
             @RequestParam Long event_id,
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
-        return taskService.create(request, auth, event_id);
+        TaskFullResponse taskFullResponse = taskService.create(request, auth, event_id);
+        taskAssignmentService.createWithNewTask(auth, taskFullResponse.getId());
+        return taskFullResponse;
     }
 
     @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfTask(#auth, #id)")
@@ -66,7 +68,7 @@ public class TaskController {
             @RequestBody(required = false) FilterRequest filter,
             Authentication auth) {
         return taskService.findAllByUserId(
-                filter.getFilters(),
+                filter == null ? null : filter.getFilters(),
                 userService.findUserByAuth(auth).getId(),
                 page,
                 size

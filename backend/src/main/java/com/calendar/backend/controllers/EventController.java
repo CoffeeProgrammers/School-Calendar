@@ -66,7 +66,7 @@ public class EventController {
             Authentication auth) {
         return eventService.findAllByUserId(
                 userService.findUserByAuth(auth).getId(),
-                filter.getFilters(),
+                filter == null ? null : filter.getFilters(),
                 page,
                 size
         );

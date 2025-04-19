@@ -15,6 +15,10 @@ import java.util.Map;
 public class TaskSpecification {
     public static Specification<Task> filterTasks(Map<String, Object> filters) {
         return (Root<Task> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
+            if (filters == null || filters.isEmpty()) {
+                return null;
+            }
+
             List<Predicate> predicates = new ArrayList<>();
 
             if (filters.containsKey("name")) {
