@@ -9,6 +9,7 @@ import com.calendar.backend.mappers.EventMapper;
 import com.calendar.backend.models.Event;
 import com.calendar.backend.models.MeetingType;
 import com.calendar.backend.models.Notification;
+import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.EventRepository;
 import com.calendar.backend.repositories.specification.EventSpecification;
 import com.calendar.backend.services.inter.EventService;
@@ -39,7 +40,9 @@ public class EventServiceImpl implements EventService {
     public EventFullResponse create(EventCreateRequest eventCreateRequest, Authentication authentication) {
         log.info("Saving new event {}", eventCreateRequest);
         Event event = eventMapper.fromEventRequestToEvent(eventCreateRequest);
-        event.setCreator(userService.findUserByAuth(authentication));
+        User user = userService.findUserByAuth(authentication);
+        event.setCreator(user);
+        event.setUsers(List.of(user));
         return eventMapper.fromEventToEventResponse(eventRepository.save(event));
     }
 
