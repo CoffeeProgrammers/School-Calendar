@@ -62,7 +62,7 @@ public class EventController {
     public PaginationListResponse<EventListResponse> getMyEvents(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestBody(required = false) FilterRequest filter,
+            @RequestParam(required = false) FilterRequest filter,
             Authentication auth) {
         return eventService.findAllByUserId(
                 userService.findUserByAuth(auth).getId(),
