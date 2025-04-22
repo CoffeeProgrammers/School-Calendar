@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
     public PaginationListResponse<UserListResponse> findAllByEventId(Map<String, Object> filters,
                                                                      long eventId, int page, int size) {
         log.info("Finding all users with filters {} and event id {}", filters, eventId);
-        Page<User> users = userRepository.findAllByEventId(eventId, UserSpecification.filterUsers(filters),
+        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId).and(UserSpecification.filterUsers(filters)),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
         PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(users.getTotalPages());

@@ -77,8 +77,7 @@ public class EventServiceImpl implements EventService {
                                                                      Map<String, Object> filters,
                                                                      int page, int size) {
         log.info("Finding all events for user with id {} and filters {}", userId, filters);
-        Page<Event> events = eventRepository.findAllByUserId(userId,
-                EventSpecification.filterEvents(filters), PageRequest.of(page, size,
+        Page<Event> events = eventRepository.findAll(EventSpecification.hasUser(userId).and(EventSpecification.filterEvents(filters)), PageRequest.of(page, size,
                         Sort.by(Sort.Direction.ASC, "time")));
         PaginationListResponse<EventListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(events.getTotalPages());

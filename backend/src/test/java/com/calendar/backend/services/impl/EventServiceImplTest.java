@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 
 import java.time.LocalDateTime;
@@ -146,7 +147,7 @@ class EventServiceImplTest {
         Map<String, Object> filters = Map.of();
         Page<Event> page = new PageImpl<>(List.of(event));
 
-        when(eventRepository.findAllByUserId(eq(userId), any(), any(PageRequest.class))).thenReturn(page);
+        when(eventRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
         when(eventMapper.fromEventToEventListResponse(any(Event.class))).thenReturn(new EventListResponse());
 
         PaginationListResponse<EventListResponse> result = eventService.findAllByUserId(userId, filters, 0, 10);

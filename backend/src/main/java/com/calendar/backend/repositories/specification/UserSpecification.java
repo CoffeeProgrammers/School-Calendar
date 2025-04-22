@@ -31,4 +31,8 @@ public class UserSpecification {
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
+
+    public static Specification<User> hasEvent(Long eventId) {
+        return (root, query, cb) -> cb.equal(root.join("events").get("id"), eventId);
+    }
 }

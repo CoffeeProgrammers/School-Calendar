@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "tasks")
@@ -23,6 +24,8 @@ public class Task {
     private String name;
     private String content;
     private LocalDateTime deadline;
+    @OneToMany(mappedBy = "task")
+    private Set<TaskAssignment> taskAssignments;
 
     public Task(User creator, String name, String content, LocalDateTime deadline) {
         this.creator = creator;

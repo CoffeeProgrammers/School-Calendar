@@ -2,6 +2,7 @@ package com.calendar.backend.repositories;
 
 import com.calendar.backend.models.Event;
 import com.calendar.backend.models.User;
+import com.calendar.backend.repositories.specification.EventSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,7 +46,7 @@ public class EventRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         // when
-        var result = eventRepository.findAllByUserId(userId, Specification.where(null), pageable);
+        var result = eventRepository.findAll(EventSpecification.hasUser(user.getId()), pageable);
 
         // then
         assertThat(result.getTotalElements()).isGreaterThan(0);
@@ -60,7 +60,7 @@ public class EventRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10);
 
         // when
-        var result = eventRepository.findAllByUserId(userId, Specification.where(null), pageable);
+        var result = eventRepository.findAll(EventSpecification.hasUser(userId), pageable);
 
         // then
         assertThat(result.getTotalElements()).isEqualTo(0);

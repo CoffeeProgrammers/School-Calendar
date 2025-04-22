@@ -67,7 +67,7 @@ public class TaskServicesImpl implements TaskService {
     @Override
     public PaginationListResponse<TaskListResponse> findAllByUserId(Map<String, Object> filters, long userId, int page, int size) {
         log.info("Finding all tasks for user with id {} and filters {}", userId, filters);
-        Page<Task> tasks = taskRepository.findAllByUserId(userId, TaskSpecification.filterTasks(filters),
+        Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId).and(TaskSpecification.filterTasks(filters)),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
         PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(tasks.getTotalPages());
