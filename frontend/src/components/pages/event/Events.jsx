@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import EventService from "../../../services/ext/EventService";
+import EventService from "../../../services/base/ext/EventService";
 import {Box, Divider, Stack, Typography} from "@mui/material";
 import Loading from "../../layouts/Loading";
 import PaginationBox from "../../layouts/lists/PaginationBox";
@@ -59,13 +59,13 @@ const Events = () => {
                 const response = await EventService.getAllMyEvents(
                     {
                         page: page,
-                        searchQuery: searchQuery,
-                        type: eventType,
-                        date: '',
+                        size: 15,
+                        search: "134f324f2rrrrtrhrthwer",
                     }
                 );
-                setEvents(response.data);
-                setPagesCount(response.pages)
+                console.log(response)
+                setEvents(response.content);
+                setPagesCount(response.totalPages - 1)
             } catch (error) {
                 setError(error);
             } finally {

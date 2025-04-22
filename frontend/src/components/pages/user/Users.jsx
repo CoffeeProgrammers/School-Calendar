@@ -5,7 +5,7 @@ import PaginationBox from "../../layouts/lists/PaginationBox";
 import Search from "../../layouts/lists/Search";
 import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
-import UserService from "../../../services/ext/UserService";
+import UserService from "../../../services/base/ext/UserService";
 import UserList from "../../common/user/UserList";
 import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
 
@@ -38,12 +38,12 @@ const Users = () => {
                 const response = await UserService.getAllUsers(
                     {
                         page: page,
-                        searchQuery: searchQuery,
-                        role: role
+                        size: 15,
                     }
                 );
-                setUsers(response.data);
-                setPagesCount(response.pages)
+                console.log(response)
+                setUsers(response.content);
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {

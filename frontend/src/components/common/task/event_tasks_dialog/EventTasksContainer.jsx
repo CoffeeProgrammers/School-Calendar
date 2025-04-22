@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Loading from "../../../layouts/Loading";
-import TaskService from "../../../../services/ext/TaskService";
+import TaskService from "../../../../services/base/ext/TaskService";
 import EventTasksDialog from "./EventTasksDialog";
 
 const EventTasksContainer = () => {

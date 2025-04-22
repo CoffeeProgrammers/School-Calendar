@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import ParticipantsDialog from "./ParticipantsDialog";
-import UserService from "../../../../services/ext/UserService";
+import UserService from "../../../../services/base/ext/UserService";
 import Loading from "../../../layouts/Loading";
 
 const ParticipantsContainer = () => {

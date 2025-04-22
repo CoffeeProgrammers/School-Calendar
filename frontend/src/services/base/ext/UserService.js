@@ -1,8 +1,7 @@
 import BaseService from "../BaseService";
 
-const API_URL = 'http://localhost:5000/users';
+const API_URL = 'http://localhost:8081/api/';
 
-//TODO: adapt to json-server
 class UserService extends BaseService {
     constructor() {
         super(API_URL);
@@ -27,20 +26,20 @@ class UserService extends BaseService {
     }
 
     async getAllUsers({page, size, searchQuery, role} = {}) {
-        return await this.handleRequest(
-            () => this.apiClient.get(`/`,
-                {
-                    params: {
-                        _page: page,
-                        // first_name: searchQuery, //TODO
-                        // last_name: searchQuery,
-                        email: searchQuery,
-                        role: role,
-                        _sort: 'start_date',
-                        _order: 'asc',
-                        // size, //TODO: pagination when backend will be done
-                    }
-                })
+        const params = {
+            page,
+            size,
+        };
+
+        if (searchQuery) {
+            params.name = searchQuery;
+        }
+        if (role) {
+            params.role = role;
+        }
+
+        return await this.handleRequest(() =>
+            this.apiClient.get('users', { params })
         );
     }
 

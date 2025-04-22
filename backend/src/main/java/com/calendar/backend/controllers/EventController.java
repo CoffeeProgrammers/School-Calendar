@@ -4,7 +4,6 @@ import com.calendar.backend.dto.event.EventCreateRequest;
 import com.calendar.backend.dto.event.EventFullResponse;
 import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.dto.event.EventUpdateRequest;
-import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.EventService;
 import com.calendar.backend.services.inter.UserService;
@@ -16,7 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/events")
@@ -62,15 +63,40 @@ public class EventController {
     public PaginationListResponse<EventListResponse> getMyEvents(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestParam(required = false) FilterRequest filter,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) Boolean isPast,
             Authentication auth) {
+
+        // Створюємо Map для фільтрів
+        Map<String, Object> filters = new HashMap<>();
+
+        if (search != null) {
+            filters.put("search", search);
+        }
+        if (startDate != null) {
+            filters.put("startDate", startDate);
+        }
+        if (endDate != null) {
+            filters.put("endDate", endDate);
+        }
+        if (isPast != null) {
+            filters.put("isPast", isPast);
+        }
+
+        // Логування для перевірки
+        System.out.println("Filters: " + filters);
+
         return eventService.findAllByUserId(
                 userService.findUserByAuth(auth).getId(),
-                filter == null ? null : filter.getFilters(),
+                filters.isEmpty() ? null : filters,
                 page,
                 size
         );
     }
+
+
 
     @GetMapping("/users/{user_id}/between")
     @ResponseStatus(HttpStatus.OK)

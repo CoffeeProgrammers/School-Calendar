@@ -1,6 +1,6 @@
 import BaseService from "../BaseService";
 
-const API_URL = 'http://localhost:5000/tasks';
+const API_URL = 'http://localhost:8081/api/';
 
 //TODO: adapt to json-server
 class TaskService extends BaseService {
@@ -33,19 +33,24 @@ class TaskService extends BaseService {
     }
 
     //TODO
-    async getMyTasks({page, size, searchQuery, deadline, isDone}) {
-        return await this.handleRequest(
-            () => this.apiClient.get('', {
-                params: {
-                    _page: page,
-                    name: searchQuery,
-                    isDone: isDone,
-                    deadline: deadline,
-                    _sort: 'start_date',
-                    _order: 'asc'
-                    // size, //TODO: pagination when backend will be done
-                }
-            })
+    async getMyTasks({ page, size, searchQuery, deadline, isDone }) {
+        const params = {
+            page,
+            size,
+        };
+
+        if (searchQuery) {
+            params.name = searchQuery;
+        }
+        if (typeof isDone === 'boolean') {
+            params.isDone = isDone;
+        }
+        if (deadline) {
+            params.deadline = deadline;
+        }
+
+        return await this.handleRequest(() =>
+            this.apiClient.get('tasks', { params })
         );
     }
 

@@ -7,7 +7,7 @@ import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
 import DefaultButton from "../../layouts/DefaultButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import TaskList from "../../common/task/TaskList";
-import TaskService from "../../../services/ext/TaskService";
+import TaskService from "../../../services/base/ext/TaskService";
 import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
 
 const isDoneSelectOptions = [
@@ -39,13 +39,13 @@ const Tasks = () => {
                 const response = await TaskService.getMyTasks(
                     {
                         page: page,
-                        searchQuery: searchQuery,
-                        deadline: deadline,
-                        isDone: isDone
+                        size: 15,
+
                     }
-                );
-                setTasks(response.data);
-                setPagesCount(response.pages)
+            );
+                console.log(response)
+                setTasks(response.content);
+                setPagesCount(response.totalPages - 1)
             } catch (error) {
                 setError(error);
             } finally {

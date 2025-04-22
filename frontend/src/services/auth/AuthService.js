@@ -3,6 +3,9 @@ import Cookies from 'js-cookie';
 
 const API_URL = 'http://localhost:8081/api/'
 
+const apiClient = axios.create({
+    baseURL: API_URL,
+});
 // {
 //     "id": 2,
 //     "username": "john.doe@example.com",
@@ -10,7 +13,16 @@ const API_URL = 'http://localhost:8081/api/'
 //     "role": "STUDENT"
 // }
 
-class AuthService  {
+class AuthService {
+    static async handleRequest(request) {
+        try {
+            const response = await request();
+            return response.data;
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    }
 
     static async login(email, password) {
         try {
@@ -18,6 +30,8 @@ class AuthService  {
                 response = await axios.post(`${API_URL}auth/login`, {
                     username: email,
                     password,
+                }, {
+                    withCredentials: true
                 });
 
             const accessToken = response.data.accessToken;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Loading from "../../../layouts/Loading";
-import CommentService from "../../../../services/ext/CommentService";
+import CommentService from "../../../../services/base/ext/CommentService";
 import CommentsDialog from "./CommentsDialog";
 
 const CommentsContainer = () => {

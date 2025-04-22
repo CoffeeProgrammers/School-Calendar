@@ -3,11 +3,11 @@ import {useNavigate} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import "./login.css"
-import AuthService from "../../../services/AuthService";
+import AuthService from "../../services/auth/AuthService";
 
 const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('john.doe@example.com');
+    const [password, setPassword] = useState('passWord1');
 
     const [errorMessages, setErrorMessages] = useState([]);
 

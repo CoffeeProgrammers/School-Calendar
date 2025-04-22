@@ -1,6 +1,6 @@
 import BaseService from "../BaseService";
 
-const API_URL = 'http://localhost:5000/events';
+const API_URL = 'http://localhost:8081/api/';
 
 class EventService extends BaseService {
     constructor() {
@@ -62,31 +62,32 @@ class EventService extends BaseService {
 
     async getEventById(eventId) {
         return await this.handleRequest(
-            () => this.apiClient.get(`/${eventId}`));
+            () => this.apiClient.get(`events/${eventId}`));
     }
 
-    //TODO: "MY" Events
-    async getAllMyEvents(
-        {
+    async getAllMyEvents({
+                             page = 0,
+                             size = 10,
+                             search = '',       // Додаємо окремі параметри для фільтрів
+                             startDate = '',
+                             endDate = '',
+                             isPast = null
+                         }) {
+        // Формуємо параметри для запиту
+        const params = {
             page,
-            searchQuery, //TODO: name, email
-            type,
-            date
-        }
-    ) {
-        return await this.handleRequest(() =>
-            this.apiClient.get('', {
-                params: {
-                    _page: page,
-                    name: searchQuery,
-                    type: type,
-                    start_date: date,
-                    _sort: 'start_date',
-                    _order: 'asc',
-                    // size, //TODO: pagination when backend will be done
+            size,
+        };
 
-                }
-            })
+        // Додаємо фільтри тільки якщо вони існують
+        if (search) params.search = search;
+        if (startDate) params.startDate = startDate;
+        if (endDate) params.endDate = endDate;
+        if (isPast !== null) params.isPast = isPast;
+
+        // Відправляємо запит з параметрами
+        return await this.handleRequest(() =>
+            this.apiClient.get('/events', { params })
         );
     }
 

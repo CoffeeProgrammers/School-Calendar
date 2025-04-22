@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import EventService from "../../../services/ext/EventService";
+import EventService from "../../../services/base/ext/EventService";
 import Loading from "../../layouts/Loading";
 import {Box, Chip, Container, Divider, Stack, Typography} from "@mui/material";
 import {listElementBoxTextStyle} from "../../../assets/styles";

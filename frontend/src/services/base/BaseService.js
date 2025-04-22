@@ -1,24 +1,23 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 class BaseService {
     constructor(baseURL) {
         this.apiClient = axios.create({
             baseURL,
-            // withCredentials: true,
+             withCredentials: true,
         });
 
-        //TODO: Security
-
-        // this.apiClient.interceptors.request.use(
-        //     (config) => {
-        //         const token = Cookies.get("token");
-        //         if (token) {
-        //             config.headers["Authorization"] = `Bearer ${token}`;
-        //         }
-        //         return config;
-        //     },
-        //     (error) => Promise.reject(error)
-        // );
+        this.apiClient.interceptors.request.use(
+            (config) => {
+                const token = Cookies.get("accessToken");
+                if (token) {
+                    config.headers["Authorization"] = `Bearer ${token}`;
+                }
+                return config;
+            },
+            (error) => Promise.reject(error)
+        );
     }
 
     async handleRequest(request) {
