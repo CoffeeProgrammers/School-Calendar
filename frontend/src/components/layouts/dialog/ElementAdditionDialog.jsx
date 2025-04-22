@@ -2,7 +2,7 @@ import React from 'react';
 import Button from "@mui/material/Button";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseButton from "./CloseButton";
-import {Box, Divider} from "@mui/material";
+import {Box, DialogActions, Divider} from "@mui/material";
 import DialogContent from "@mui/material/DialogContent";
 import PaginationBox from "../lists/PaginationBox";
 import {styled} from "@mui/material/styles";
@@ -17,7 +17,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-const ElementAdditionDialog = ({size, title, content, pagesCount, page, setPage}) => {
+const ElementAdditionDialog = ({size, title, content, pagesCount, page, setPage, actions}) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -63,6 +63,9 @@ const ElementAdditionDialog = ({size, title, content, pagesCount, page, setPage}
 
                 <Divider sx={{ mb: 2}}/>
 
+                <DialogActions>
+                    {actions}
+                </DialogActions>
             </BootstrapDialog>
         </>
     );

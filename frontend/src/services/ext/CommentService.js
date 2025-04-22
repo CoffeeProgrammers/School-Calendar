@@ -7,19 +7,26 @@ class CommentService extends BaseService {
         super(API_URL);
     }
 
-    async createComment(eventId, {commentRequest: {text}}) {
+    async createComment(text) {
         return await this.handleRequest(
             () => this.apiClient.post(`/comments`, {
-                eventId,
-                commentRequest: {text}
+                eventId: 1,
+                text: text,
+                time: new Date().toISOString(),
+                creator: {
+                    id: 101,
+                    email: "john.doe@example.com",
+                    role: "consultant",
+                    first_name: "John",
+                    last_name: "Doe"
+                }
             })
         );
     }
 
-    async updateComment(commentId, {commentRequest: {text}}) {
-        return await this.handleRequest(
-            () => this.apiClient.put(`/comments/${commentId}`,
-                {commentRequest: {text}})
+    async updateComment(commentId, newText) {
+        return await this.handleRequest(() =>
+            this.apiClient.patch(`/comments/${commentId}`, { text: newText})
         );
     }
 

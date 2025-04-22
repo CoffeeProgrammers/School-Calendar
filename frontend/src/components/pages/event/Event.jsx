@@ -11,7 +11,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import {SpaceDashboard} from "@mui/icons-material";
 import SubjectIcon from '@mui/icons-material/Subject';
 import ParticipantsContainer from "../../common/user/participants_dialog/ParticipantsContainer";
-import CommentsContainer from "../../common/comment/comments_dialog/CommentsContainer";
+import CommentsContainer from "../../common/comment/event_comments_dialog/CommentsContainer";
 import DateService from "../../../services/simple/DateService";
 import EventTasksContainer from "../../common/task/event_tasks_dialog/EventTasksContainer";
 
@@ -97,7 +97,7 @@ const Event = () => {
                                 </Typography>
                             </td>
                             <td>
-                                <Typography>{value}</Typography>
+                                <Typography component="div">{value}</Typography>
                             </td>
                         </tr>
                     ))}
