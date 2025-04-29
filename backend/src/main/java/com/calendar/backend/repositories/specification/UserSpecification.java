@@ -21,7 +21,7 @@ public class UserSpecification {
             }
 
             if (filters.containsKey("lastName")) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("lastname")),
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("lastName")),
                         "%" + filters.get("lastName").toString().toLowerCase() + "%"));
             }
 

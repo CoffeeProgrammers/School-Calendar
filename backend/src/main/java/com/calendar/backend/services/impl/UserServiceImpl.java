@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -75,8 +76,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PaginationListResponse<UserListResponse> findAll(Map<String, Object> filters,
+    public PaginationListResponse<UserListResponse> findAll(String firstName, String lastName, String role,
                                                             int page, int size) {
+        Map<String, Object> filters = new HashMap<>();
+        if(!firstName.isEmpty()) {
+            filters.put("firstName", firstName);
+        }
+        if(!lastName.isEmpty()) {
+            filters.put("lastName", lastName);
+        }
+        if(!role.isEmpty()) {
+            filters.put("role", role);
+        }
         log.info("Finding all users with filters {}", filters);
         Page<User> users = userRepository.findAll(UserSpecification.filterUsers(filters),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));

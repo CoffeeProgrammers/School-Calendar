@@ -27,7 +27,6 @@ import org.springframework.security.core.Authentication;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -156,7 +155,7 @@ class TaskServiceImplTest {
         when(taskRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(taskPage);
         when(taskMapper.fromTaskToTaskListResponse(task)).thenReturn(new TaskListResponse());
 
-        PaginationListResponse<TaskListResponse> result = taskService.findAllByUserId(Map.of(), 1L, 0, 10);
+        PaginationListResponse<TaskListResponse> result = taskService.findAllByUserId("", "", "", "", 1L, 0, 10);
 
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalPages());
