@@ -4,7 +4,6 @@ import com.calendar.backend.dto.user.UserCreateRequest;
 import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.dto.user.UserListResponse;
 import com.calendar.backend.dto.user.UserUpdateRequest;
-import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.services.inter.UserService;
@@ -52,8 +51,11 @@ public class UserController {
     public PaginationListResponse<UserListResponse> getAllUsers(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestBody(required = false) FilterRequest filter) {
-        return userService.findAll(filter.getFilters(), page, size);
+            @RequestBody(required = false) String firstName,
+            @RequestBody(required = false) String lastName,
+            @RequestBody(required = false) String role
+    ) {
+        return userService.findAll(firstName, lastName, role, page, size);
     }
 
     @GetMapping("/events/{event_id}")

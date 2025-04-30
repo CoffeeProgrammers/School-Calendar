@@ -3,7 +3,6 @@ package com.calendar.backend.controllers;
 import com.calendar.backend.dto.task.TaskFullResponse;
 import com.calendar.backend.dto.task.TaskListResponse;
 import com.calendar.backend.dto.task.TaskRequest;
-import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.TaskAssignmentService;
 import com.calendar.backend.services.inter.TaskService;
@@ -63,10 +62,16 @@ public class TaskController {
     public PaginationListResponse<TaskListResponse> getMyTasks(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestBody(required = false) FilterRequest filter,
+            @RequestBody(required = false) String name,
+            @RequestBody(required = false) String deadline,
+            @RequestBody(required = false) String isDone,
+            @RequestBody(required = false) String isPast,
             Authentication auth) {
         return taskService.findAllByUserId(
-                filter.getFilters(),
+                name,
+                deadline,
+                isDone,
+                isPast,
                 userService.findUserByAuth(auth).getId(),
                 page,
                 size

@@ -26,11 +26,11 @@ public class TaskSpecification {
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("deadline"), deadline));
             }
             if (filters.containsKey("is_done")) {
-                Boolean isDone = (Boolean) filters.get("is_done");
+                Boolean isDone = Boolean.parseBoolean(filters.get("is_done").toString());
                 predicates.add(criteriaBuilder.equal(root.get("event").get("isDone"), isDone));
             }
             if (filters.containsKey("is_past")) {
-                Boolean isPast = (Boolean) filters.get("is_past");
+                Boolean isPast = Boolean.parseBoolean(filters.get("is_past").toString());
                 if (isPast) {
                     predicates.add(criteriaBuilder.lessThan(root.get("deadline"), LocalDateTime.now()));
                 } else {
@@ -39,5 +39,9 @@ public class TaskSpecification {
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
+    }
+
+    public static Specification<Task> assignedToUser(Long userId) {
+        return (root, query, cb) -> cb.equal(root.join("taskAssignments").get("user").get("id"), userId);
     }
 }

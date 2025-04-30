@@ -23,11 +23,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -143,13 +143,12 @@ class EventServiceImplTest {
     @Test
     void findAllByUserId_success() {
         long userId = 1L;
-        Map<String, Object> filters = Map.of();
         Page<Event> page = new PageImpl<>(List.of(event));
 
-        when(eventRepository.findAllByUserId(eq(userId), any(), any(PageRequest.class))).thenReturn(page);
+        when(eventRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
         when(eventMapper.fromEventToEventListResponse(any(Event.class))).thenReturn(new EventListResponse());
 
-        PaginationListResponse<EventListResponse> result = eventService.findAllByUserId(userId, filters, 0, 10);
+        PaginationListResponse<EventListResponse> result = eventService.findAllByUserId(userId, "", "", "", "", 0, 10);
 
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalPages());

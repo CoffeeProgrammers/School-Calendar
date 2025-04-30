@@ -18,8 +18,7 @@ public interface UserService extends UserDetailsService {
 
     void delete(long id);
     UserFullResponse findById(long id);
-    PaginationListResponse<UserListResponse> findAll(Map<String, Object> filters,
-                                                     int page, int size);
+    PaginationListResponse<UserListResponse> findAll(String firstName, String lastName, String role, int page, int size);
     PaginationListResponse<UserListResponse> findAllByEventId(Map<String, Object> filters,
                                                               long eventId, int page, int size);
     User findByEmail(String email);
