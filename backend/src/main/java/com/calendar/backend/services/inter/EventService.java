@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 public interface EventService {
     EventFullResponse create (EventCreateRequest eventCreateRequest, Authentication authentication);
@@ -18,7 +17,7 @@ public interface EventService {
     void delete (Long id);
     EventFullResponse findById (Long id);
     PaginationListResponse<EventListResponse> findAllByUserId
-            (long userId, Map<String, Object> filters, int page, int size);
+            (long userId, String search, String startDate, String endDate, String isPast, int page, int size);
     List<EventListResponse> findAllByUserIdForCalendar
             (long userId, LocalDateTime start, LocalDateTime end);
     Event findByIdForServices(long id);

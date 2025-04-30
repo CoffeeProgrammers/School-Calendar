@@ -4,7 +4,6 @@ import com.calendar.backend.dto.event.EventCreateRequest;
 import com.calendar.backend.dto.event.EventFullResponse;
 import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.dto.event.EventUpdateRequest;
-import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.EventService;
 import com.calendar.backend.services.inter.UserService;
@@ -62,11 +61,17 @@ public class EventController {
     public PaginationListResponse<EventListResponse> getMyEvents(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestBody(required = false) FilterRequest filter,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) String isPast,
             Authentication auth) {
         return eventService.findAllByUserId(
                 userService.findUserByAuth(auth).getId(),
-                filter == null ? null : filter.getFilters(),
+                search,
+                startDate,
+                endDate,
+                isPast,
                 page,
                 size
         );

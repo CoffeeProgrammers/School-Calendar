@@ -4,7 +4,6 @@ import com.calendar.backend.dto.user.UserCreateRequest;
 import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.dto.user.UserListResponse;
 import com.calendar.backend.dto.user.UserUpdateRequest;
-import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.services.inter.UserService;
@@ -14,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -50,8 +51,11 @@ public class UserController {
     public PaginationListResponse<UserListResponse> getAllUsers(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestBody(required = false) FilterRequest filter) {
-        return userService.findAll(filter == null ? null : filter.getFilters(), page, size);
+            @RequestBody(required = false) String firstName,
+            @RequestBody(required = false) String lastName,
+            @RequestBody(required = false) String role
+    ) {
+        return userService.findAll(firstName, lastName, role, page, size);
     }
 
     @GetMapping("/events/{event_id}")
@@ -60,8 +64,8 @@ public class UserController {
             @PathVariable Long event_id,
             @RequestParam Integer page,
             @RequestParam Integer size,
-            @RequestBody(required = false) FilterRequest filter) {
-        return userService.findAllByEventId(filter == null ? null : filter.getFilters(), event_id, page, size);
+            @RequestBody(required = false) Map<String, Object> filters) {
+        return userService.findAllByEventId(filters, event_id, page, size);
     }
 
     @GetMapping("/my")

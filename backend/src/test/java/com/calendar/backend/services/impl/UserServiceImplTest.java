@@ -3,7 +3,9 @@ package com.calendar.backend.services.impl;
 import com.calendar.backend.TestUtil;
 import com.calendar.backend.dto.user.UserCreateRequest;
 import com.calendar.backend.dto.user.UserFullResponse;
+import com.calendar.backend.dto.user.UserListResponse;
 import com.calendar.backend.dto.user.UserUpdateRequest;
+import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.UserRepository;
@@ -16,9 +18,17 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -170,7 +180,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findById() {
+    void findById_success() {
         // when
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         when(userMapper.fromUserToUserResponse(user)).thenReturn(userFullResponse);
@@ -186,34 +196,128 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findAll() {
-    }
-
-    @Test
-    void findAllByEventId() {
-    }
-
-    @Test
-    void findByEmail() {
-    }
-
-    @Test
-    void loadUserByUsername() {
-    }
-
-    @Test
-    void findUserByAuth() {
-    }
-
-    @Test
-    void findByIdForServices_notExists() {
-        // when
+    void findById_notExists() {
         when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
-
-        assertThrows(EntityNotFoundException.class, () -> userService.findByIdForServices(user.getId()), "User with id " + user.getId() + " not found");
+        assertThrows(EntityNotFoundException.class,
+                () -> userService.findById(user.getId()),
+                "User with id " + user.getId() + " not found");
 
         // then
         verify(userRepository, times(1)).findById(user.getId());
-        verify(userMapper, times(0)).fromUserToUserResponse(user);
+
+        verify(userMapper, times(0)).fromUserToUserResponse(updatedUser);
     }
+
+    @Test
+    void findAll_success() {
+        Page<User> page = new PageImpl<>(List.of(user));
+        when(userRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
+        when(userMapper.fromUserToUserListResponse(user)).thenReturn(new UserListResponse());
+
+        PaginationListResponse<UserListResponse> result = userService.findAll("", "", "", 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(userRepository).findAll(any(Specification.class), any(PageRequest.class));
+    }
+
+    @Test
+    void findAllByEventId_success() {
+        Page<User> page = new PageImpl<>(List.of(user));
+        when(userRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
+        when(userMapper.fromUserToUserListResponse(user)).thenReturn(new UserListResponse());
+
+        PaginationListResponse<UserListResponse> result = userService.findAllByEventId(Map.of(), 1L, 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(userRepository).findAll(any(Specification.class), any(PageRequest.class));
+    }
+
+    @Test
+    void delete_success() {
+        userService.delete(user.getId());
+
+        verify(userRepository).deleteById(user.getId());
+    }
+
+    @Test
+    void findByEmail_success() {
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+
+        User result = userService.findByEmail(user.getEmail());
+
+        assertEquals(user, result);
+        verify(userRepository).findByEmail(user.getEmail());
+    }
+
+    @Test
+    void findByEmail_notFound() {
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> userService.findByEmail(user.getEmail()));
+    }
+
+    @Test
+    void loadUserByUsername_success() {
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+
+        UserDetails result = userService.loadUserByUsername(user.getEmail());
+
+        assertEquals(user, result);
+    }
+
+    @Test
+    void loadUserByUsername_notFound() {
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> userService.loadUserByUsername(user.getEmail()));
+    }
+
+    @Test
+    void findUserByAuth_success() {
+        Authentication auth = mock(Authentication.class);
+        when(auth.getName()).thenReturn(user.getEmail());
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+
+        User result = userService.findUserByAuth(auth);
+
+        assertEquals(user, result);
+    }
+
+    @Test
+    void findUserByAuth_notFound() {
+        Authentication auth = mock(Authentication.class);
+        when(auth.getName()).thenReturn(user.getEmail());
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> userService.findUserByAuth(auth));
+    }
+
+    @Test
+    void findByIdForServices_success() {
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+
+        User result = userService.findByIdForServices(user.getId());
+
+        assertEquals(user, result);
+    }
+
+    @Test
+    void findByIdForServices_notFound() {
+        when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> userService.findByIdForServices(user.getId()));
+    }
+
+    @Test
+    void findAllByEventIdForServices_success() {
+        List<User> users = List.of(user);
+        when(userRepository.findAllByEventId(1L)).thenReturn(users);
+
+        List<User> result = userService.findAllByEventIdForServices(1L);
+
+        assertEquals(users, result);
+    }
+
 }

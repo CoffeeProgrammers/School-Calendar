@@ -2,13 +2,13 @@ package com.calendar.backend.repositories;
 
 import com.calendar.backend.models.Event;
 import com.calendar.backend.models.User;
+import com.calendar.backend.repositories.specification.UserSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Optional;
 
@@ -93,7 +93,7 @@ public class UserRepositoryTest {
         PageRequest pageRequest = PageRequest.of(0, 10);
 
         // when
-        Page<User> users = userRepository.findAllByEventId(eventId, Specification.where(null), pageRequest);
+        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId), pageRequest);
 
         // then
         assertThat(users).hasSize(2);
@@ -107,7 +107,7 @@ public class UserRepositoryTest {
         PageRequest pageRequest = PageRequest.of(0, 10);
 
         // when
-        Page<User> users = userRepository.findAllByEventId(nonExistingEventId, Specification.where(null), pageRequest);
+        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(nonExistingEventId), pageRequest);
 
         // then
         assertThat(users).isEmpty();
