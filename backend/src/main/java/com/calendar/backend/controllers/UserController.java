@@ -14,8 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -51,9 +49,9 @@ public class UserController {
     public PaginationListResponse<UserListResponse> getAllUsers(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestBody(required = false) String firstName,
-            @RequestBody(required = false) String lastName,
-            @RequestBody(required = false) String role
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String role
     ) {
         return userService.findAll(firstName, lastName, role, page, size);
     }
@@ -64,8 +62,10 @@ public class UserController {
             @PathVariable Long event_id,
             @RequestParam Integer page,
             @RequestParam Integer size,
-            @RequestBody(required = false) Map<String, Object> filters) {
-        return userService.findAllByEventId(filters, event_id, page, size);
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String role) {
+        return userService.findAllByEventId(firstName, lastName, role, event_id, page, size);
     }
 
     @GetMapping("/my")

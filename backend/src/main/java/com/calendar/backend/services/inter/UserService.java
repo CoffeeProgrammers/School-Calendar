@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UserService extends UserDetailsService {
     UserFullResponse create(UserCreateRequest userCreateRequest);
@@ -19,7 +18,7 @@ public interface UserService extends UserDetailsService {
     void delete(long id);
     UserFullResponse findById(long id);
     PaginationListResponse<UserListResponse> findAll(String firstName, String lastName, String role, int page, int size);
-    PaginationListResponse<UserListResponse> findAllByEventId(Map<String, Object> filters,
+    PaginationListResponse<UserListResponse> findAllByEventId(String firstName, String lastName, String role,
                                                               long eventId, int page, int size);
     User findByEmail(String email);
     User findUserByAuth(Authentication authentication);

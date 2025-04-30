@@ -66,9 +66,12 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
-    public PaginationListResponse<TaskListResponse> findAllByUserId(String name, String deadline, String isDone, String isPast, long userId, int page, int size) {
+    public PaginationListResponse<TaskListResponse> findAllByUserId(String name,
+                                                                    String deadline, String isDone,
+                                                                    String isPast, long userId,
+                                                                    int page, int size) {
         Map<String, Object> filters = new HashMap<>();
-        if(!name.isEmpty()) {
+        if(name != null && !name.isBlank() && !name.equals("null")) {
             filters.put("name", name);
         }
         if(!deadline.isEmpty()) {
@@ -128,10 +131,11 @@ public class TaskServicesImpl implements TaskService {
                                                                                     int page, int size) {
         log.info("Finding all tasks for auth user with no events");
         PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
-        //Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsEmpty(userService.findUserByAuth(authentication).getId(),
-                ///PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-        //response.setTotalPages(tasks.getTotalPages());
-        //response.setContent(tasks.map(taskMapper::fromTaskToTaskListResponse).toList());
+        Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsEmpty(
+                userService.findUserByAuth(authentication).getId(),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+        response.setTotalPages(tasks.getTotalPages());
+        response.setContent(tasks.map(taskMapper::fromTaskToTaskListResponse).toList());
         return response;
     }
 }

@@ -11,4 +11,5 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificationExecutor<Task> {
     Page<Task> findAllByEvent_Id(Long eventId, Pageable pageable);
     List<Task> findAllByEvent_Id(Long eventId);
+    Page<Task> findAllByCreator_IdAndEventIsEmpty(long creator_id, Pageable pageable);
 }

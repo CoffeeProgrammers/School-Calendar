@@ -29,7 +29,9 @@ public class TaskController {
             @RequestParam Long event_id,
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
-        return taskService.create(request, auth, event_id);
+        TaskFullResponse task = taskService.create(request, auth, event_id);
+        taskAssignmentService.create(task.getId(), userService.findUserByAuth(auth).getId());
+        return task;
     }
 
     @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfTask(#auth, #id)")
@@ -62,10 +64,10 @@ public class TaskController {
     public PaginationListResponse<TaskListResponse> getMyTasks(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestBody(required = false) String name,
-            @RequestBody(required = false) String deadline,
-            @RequestBody(required = false) String isDone,
-            @RequestBody(required = false) String isPast,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String deadline,
+            @RequestParam(required = false) String isDone,
+            @RequestParam(required = false) String isPast,
             Authentication auth) {
         return taskService.findAllByUserId(
                 name,
