@@ -128,10 +128,10 @@ public class TaskServicesImpl implements TaskService {
                                                                                     int page, int size) {
         log.info("Finding all tasks for auth user with no events");
         PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
-        Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsEmpty(userService.findUserByAuth(authentication).getId(),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-        response.setTotalPages(tasks.getTotalPages());
-        response.setContent(tasks.map(taskMapper::fromTaskToTaskListResponse).toList());
+        //Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsEmpty(userService.findUserByAuth(authentication).getId(),
+                ///PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+        //response.setTotalPages(tasks.getTotalPages());
+        //response.setContent(tasks.map(taskMapper::fromTaskToTaskListResponse).toList());
         return response;
     }
 }

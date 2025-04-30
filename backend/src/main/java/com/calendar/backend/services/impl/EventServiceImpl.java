@@ -9,6 +9,7 @@ import com.calendar.backend.mappers.EventMapper;
 import com.calendar.backend.models.Event;
 import com.calendar.backend.models.MeetingType;
 import com.calendar.backend.models.Notification;
+import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.EventRepository;
 import com.calendar.backend.repositories.specification.EventSpecification;
 import com.calendar.backend.services.inter.EventService;
@@ -40,7 +41,9 @@ public class EventServiceImpl implements EventService {
     public EventFullResponse create(EventCreateRequest eventCreateRequest, Authentication authentication) {
         log.info("Saving new event {}", eventCreateRequest);
         Event event = eventMapper.fromEventRequestToEvent(eventCreateRequest);
-        event.setCreator(userService.findUserByAuth(authentication));
+        User user = userService.findUserByAuth(authentication);
+        event.addUser(user);
+        event.setCreator(user);
         return eventMapper.fromEventToEventResponse(eventRepository.save(event));
     }
 
@@ -95,7 +98,7 @@ public class EventServiceImpl implements EventService {
         }
         log.info("Finding all events for user with id {} and filters {}", userId, filters);
         Page<Event> events = eventRepository.findAll(EventSpecification.hasUser(userId).and(EventSpecification.filterEvents(filters)), PageRequest.of(page, size,
-                        Sort.by(Sort.Direction.ASC, "time")));
+                        Sort.by(Sort.Direction.ASC, "startDate")));
         PaginationListResponse<EventListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(events.getTotalPages());
         response.setContent(events.getContent().stream().map(
