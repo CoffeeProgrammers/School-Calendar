@@ -2,7 +2,6 @@ import BaseService from "../BaseService";
 
 const API_URL = 'http://localhost:5000/users';
 
-//TODO: adapt to json-server
 class UserService extends BaseService {
     constructor() {
         super(API_URL);

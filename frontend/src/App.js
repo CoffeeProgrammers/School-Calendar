@@ -6,9 +6,10 @@ import theme from "./assets/theme"
 import Users from "./components/pages/user/Users";
 import Tasks from "./components/pages/task/Tasks";
 import Event from "./components/pages/event/Event";
-import Profile from "./components/pages/Profile";
 import Login from "./components/pages/login/Login";
 import Events from "./components/pages/event/Events";
+import UserPage from "./components/pages/user/UserPage";
+import MyProfile from "./components/pages/user/MyProfile";
 
 function App() {
     return (
@@ -21,8 +22,9 @@ function App() {
                         <Route path={"/events"} element={<Events/>}/>
                         <Route path={"/users"} element={<Users/>}/>
                         <Route path={"/tasks"} element={<Tasks/>}/>
-                        <Route path={"/events/:id"} element={<Event/>}/>/
-                        <Route path={'/profile'} element={<Profile />} />
+                        <Route path={"/events/:id"} element={<Event/>}/>
+                        <Route path={'/profile'} element={<MyProfile/>} />
+                        <Route path={"/users/:id"} element={<UserPage/>}/>
                     </Routes>
                 </Page>
             </ThemeProvider>
