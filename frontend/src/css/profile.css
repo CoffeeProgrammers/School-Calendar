@@ -7,28 +7,6 @@
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 2.5fr;
-    grid-template-rows: 1fr 20fr;
-    grid-template-areas:
-        "search search"
-        "information calendar"
-    ;
-}
-
-.profile-search {
-    grid-area: search;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.profile-search input {
-    height: 100%;
-    width: 50%;
-}
-
-.search-icon {
-    margin-left: 10px;
-    font-size: 30px;
 }
 
 .profile-information {
@@ -42,7 +20,7 @@
     padding: 0;
     height: 250px;
     width: 250px;
-    border: 2px solid green;
+    /* border: 2px solid green; */
     margin-bottom: 10px;
     border-radius: 100%;
     display: flex;
@@ -84,7 +62,7 @@
 
 .user-description {
     display: flex;
-    align-items: end;
+    flex-direction: column;
 }
 
 .edit-userDescription {
@@ -95,14 +73,9 @@
     opacity: 1;
 }
 
-.user-information,
-.user-information tr td {
-    border: 1px solid green;
-}
-
 
 .user-information tr td {
-    padding: 10px;
+    padding: 0 10px 0 0;
 }
 
 .user-information-edit {
