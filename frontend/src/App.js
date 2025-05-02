@@ -1,10 +1,14 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Main from "./components/pages/Main";
-import Login from "./components/pages/Login";
 import Page from "./components/layouts/Page";
 import {ThemeProvider} from "@mui/material";
 import theme from "./assets/theme"
-import Events from "./components/pages/Events";
+import Users from "./components/pages/user/Users";
+import Tasks from "./components/pages/task/Tasks";
+import Event from "./components/pages/event/Event";
+import Profile from "./components/pages/Profile";
+import Login from "./components/pages/login/Login";
+import Events from "./components/pages/event/Events";
 
 function App() {
     return (

@@ -1,5 +1,5 @@
 import React from "react"
-import "../../css/profile.css"
+import "../../assets/css/profile.css"
 import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
 import CreateIcon from '@mui/icons-material/Create';
