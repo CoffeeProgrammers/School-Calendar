@@ -1,13 +1,10 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Main from "./components/pages/Main";
-import Login from "./components/pages/login/Login";
+import Login from "./components/pages/Login";
 import Page from "./components/layouts/Page";
 import {ThemeProvider} from "@mui/material";
 import theme from "./assets/theme"
-import Events from "./components/pages/event/Events";
-import Users from "./components/pages/user/Users";
-import Tasks from "./components/pages/task/Tasks";
-import Event from "./components/pages/event/Event";
+import Events from "./components/pages/Events";
 
 function App() {
     return (
@@ -21,6 +18,7 @@ function App() {
                         <Route path={"/users"} element={<Users/>}/>
                         <Route path={"/tasks"} element={<Tasks/>}/>
                         <Route path={"/events/:id"} element={<Event/>}/>/
+                        <Route path={'/profile'} element={<Profile />} />
                     </Routes>
                 </Page>
             </ThemeProvider>
