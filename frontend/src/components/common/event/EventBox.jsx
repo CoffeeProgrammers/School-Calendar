@@ -9,7 +9,7 @@ import {listElementBoxStyle, listElementBoxTextStyle} from "../../../assets/styl
 
 
 const EventBox = ({event}) => {
-    const startDate = new Date(event.start_date);
+    const startDate = new Date(event.startDate);
     const formattedStartDate = startDate.toLocaleString('en-US', {
         month: 'long',
         day: 'numeric',
@@ -30,10 +30,12 @@ const EventBox = ({event}) => {
             </Typography>
             <Divider sx={{marginBottom: "5px"}}/>
             <Box sx={{ml: -0.25}}>
-                <Chip sx={{ml: -0.25}} label={event.type} size="small"/>
+                <Chip sx={{ml: -0.25}} label={event.type
+                    .toLowerCase()
+                    .replace("_", ' ')} size="small"/>
                 <InfoItem icon={PlaceIcon} text={event.place}/>
                 <InfoItem icon={CalendarMonthIcon} text={formattedStartDate}/>
-                <InfoItem icon={AccountCircleIcon} text={`${event.creator.first_name} ${event.creator.last_name}`}/>
+                <InfoItem icon={AccountCircleIcon} text={`${event.creator.firstName} ${event.creator.lastName}`}/>
             </Box>
         </Box>
     );

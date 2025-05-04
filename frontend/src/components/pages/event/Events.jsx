@@ -12,8 +12,8 @@ import {listPanelStyles} from "../../../assets/styles";
 
 const eventTypes = [
     {value: '', label: <em>None</em>},
-    {value: 'conference', label: 'Conference'},
-    {value: 'workshop', label: 'Workshop'},
+    {value: 'STUDENTS_MEETING', label: 'Students meeting'},
+    {value: 'TEACHERS_MEETING', label: 'TEACHERS_MEETING'},
     {value: 'meetup', label: 'Meetup'},
     {value: 'seminar', label: 'Seminar'},
     {value: 'webinar', label: 'Webinar'},
@@ -45,7 +45,7 @@ const Events = () => {
 
     const [events, setEvents] = useState([])
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [pagesCount, setPagesCount] = useState(1)
 
     const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
@@ -60,7 +60,8 @@ const Events = () => {
                     {
                         page: page,
                         size: 15,
-                        search: "134f324f2rrrrtrhrthwer",
+                        search: searchQuery,
+                        type: eventType
                     }
                 );
                 console.log(response)

@@ -68,24 +68,24 @@ class EventService extends BaseService {
     async getAllMyEvents({
                              page = 0,
                              size = 10,
-                             search = '',       // Додаємо окремі параметри для фільтрів
+                             search = '',
                              startDate = '',
                              endDate = '',
-                             isPast = null
+                             isPast = '',
+                             type = ''
                          }) {
-        // Формуємо параметри для запиту
+
         const params = {
             page,
             size,
         };
 
-        // Додаємо фільтри тільки якщо вони існують
         if (search) params.search = search;
         if (startDate) params.startDate = startDate;
         if (endDate) params.endDate = endDate;
         if (isPast !== null) params.isPast = isPast;
+        if (type) params.typeOfEvent = type;
 
-        // Відправляємо запит з параметрами
         return await this.handleRequest(() =>
             this.apiClient.get('/events', { params })
         );

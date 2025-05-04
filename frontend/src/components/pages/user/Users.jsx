@@ -24,7 +24,7 @@ const Users = () => {
 
     const [users, setUsers] = useState([])
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [pagesCount, setPagesCount] = useState(1)
 
     const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);

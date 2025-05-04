@@ -10,7 +10,7 @@ const UserBox = ({user}) => {
         <Box sx={listElementBoxStyle}>
             <Typography noWrap variant="subtitle1" sx={listElementBoxTextStyle}>
                 <AccountBoxIcon fontSize="medium" color="secondary"/>
-                {user.first_name + " " + user.last_name}
+                {user.firstName + " " + user.lastName}
             </Typography>
 
             <Divider sx={{marginBottom: "5px"}}/>
