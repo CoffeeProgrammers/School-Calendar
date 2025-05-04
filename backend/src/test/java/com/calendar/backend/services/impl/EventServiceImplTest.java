@@ -50,12 +50,14 @@ class EventServiceImplTest {
     private EventServiceImpl eventService;
 
     private User user;
+    private User student;
     private Event event;
 
     @BeforeEach
     void setUp() {
         user = TestUtil.createUser("TEACHER");
-        event = TestUtil.createEvent("Sample Event");
+        student = TestUtil.createUser("STUDENT");
+        event = TestUtil.createEvent("Sample Event", student);
     }
 
     @Test
@@ -110,10 +112,10 @@ class EventServiceImplTest {
     void delete_success() {
         when(eventRepository.findById(anyLong())).thenReturn(Optional.of(event));
 
-        eventService.delete(1L);
+        eventService.delete(event.getId());
 
         verify(notificationService).create(any(Notification.class));
-        verify(eventRepository).deleteById(1L);
+        verify(eventRepository).deleteById(event.getId());
     }
 
     @Test
@@ -122,6 +124,29 @@ class EventServiceImplTest {
 
         assertThrows(EntityNotFoundException.class, () -> eventService.delete(1L));
     }
+
+    @Test
+    public void deleteUserById_success() {
+        when(eventRepository.findById(anyLong())).thenReturn(Optional.of(event));
+        when(userService.findByIdForServices(anyLong())).thenReturn(student);
+
+        eventService.deleteUserById(event.getId(), student.getId());
+
+        verify(notificationService).create(any(Notification.class));
+        verify(eventRepository).findById(event.getId());
+        verify(userService).findByIdForServices(student.getId());
+    }
+
+    @Test
+    public void deleteUserById_notFoundEvent() {
+        when(eventRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> eventService.deleteUserById(event.getId(), student.getId()));
+
+        verify(notificationService, times(0)).create(any(Notification.class));
+        verify(userService, times(0)).findByIdForServices(student.getId());
+    }
+
 
     @Test
     void findById_success() {

@@ -24,9 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -125,4 +123,14 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Event not found"));
     }
+
+    @Override
+    public void deleteUserById(long id, long userId) {
+        Event event = findByIdForServices(id);
+        User user = userService.findByIdForServices(userId);
+        notificationServices.create(new Notification(new ArrayList<>(Arrays.asList(user)),
+                "You have been removed from " + event.getName()));
+        event.deleteUser(user);
+    }
+
 }
