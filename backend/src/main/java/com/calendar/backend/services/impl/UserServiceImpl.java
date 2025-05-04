@@ -79,13 +79,13 @@ public class UserServiceImpl implements UserService {
     public PaginationListResponse<UserListResponse> findAll(String firstName, String lastName, String role,
                                                             int page, int size) {
         Map<String, Object> filters = new HashMap<>();
-        if(!firstName.isEmpty()) {
+        if(firstName != null && !firstName.isBlank() && !firstName.equals("null")) {
             filters.put("firstName", firstName);
         }
-        if(!lastName.isEmpty()) {
+        if(lastName != null && !lastName.isBlank() && !lastName.equals("null")) {
             filters.put("lastName", lastName);
         }
-        if(!role.isEmpty()) {
+        if(role != null && !role.isBlank() && !role.equals("null")) {
             filters.put("role", role);
         }
         log.info("Finding all users with filters {}", filters);

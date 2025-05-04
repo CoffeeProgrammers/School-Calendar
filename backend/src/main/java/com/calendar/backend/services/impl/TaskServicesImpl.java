@@ -74,13 +74,13 @@ public class TaskServicesImpl implements TaskService {
         if(name != null && !name.isBlank() && !name.equals("null")) {
             filters.put("name", name);
         }
-        if(!deadline.isEmpty()) {
+        if(deadline != null && !deadline.isBlank() && !deadline.equals("null")) {
             filters.put("deadline", deadline);
         }
-        if(!isDone.isEmpty()) {
+        if(isDone != null && !isDone.isBlank() && !isDone.equals("null")) {
             filters.put("isDone", isDone);
         }
-        if(!isPast.isEmpty()) {
+        if(!isPast.isBlank() && !isPast.equals("null") && isPast.equals("true")) {
             filters.put("isPast", isPast);
         }
         log.info("Finding all tasks for user with id {} and filters {}", userId, filters);
