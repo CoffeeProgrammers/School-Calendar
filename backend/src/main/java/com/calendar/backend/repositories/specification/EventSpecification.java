@@ -1,6 +1,7 @@
 package com.calendar.backend.repositories.specification;
 
 import com.calendar.backend.models.Event;
+import com.calendar.backend.models.EventType;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -34,6 +35,11 @@ public class EventSpecification {
             if (filters.containsKey("endDate")) {
                 LocalDateTime endDate = LocalDateTime.parse(filters.get("endDate").toString());
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), endDate));
+            }
+
+            if (filters.containsKey("typeOfEvent")) {
+                EventType eventType = EventType.valueOf((String) filters.get("typeOfEvent"));
+                predicates.add(criteriaBuilder.equal(root.get("type"), eventType));
             }
 
             if (filters.containsKey("isPast")) {

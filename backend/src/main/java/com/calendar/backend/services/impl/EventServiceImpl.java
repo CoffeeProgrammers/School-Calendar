@@ -82,6 +82,7 @@ public class EventServiceImpl implements EventService {
                                                                      String startDate,
                                                                      String endDate,
                                                                      String isPast,
+                                                                     String typeOfEvent,
                                                                      int page, int size) {
         Map<String, Object> filters = new HashMap<>();
         if(search != null && !search.isBlank() && !search.equals("null")) {
@@ -95,6 +96,9 @@ public class EventServiceImpl implements EventService {
         }
         if(isPast != null && !isPast.isBlank() && !isPast.equals("null")) {
             filters.put("isPast", isPast);
+        }
+        if(typeOfEvent != null && !typeOfEvent.isBlank() && !typeOfEvent.equals("null")) {
+            filters.put("typeOfEvent", typeOfEvent);
         }
         log.info("Finding all events for user with id {} and filters {}", userId, filters);
         Page<Event> events = eventRepository.findAll(EventSpecification.hasUser(userId).and(EventSpecification.filterEvents(filters)), PageRequest.of(page, size,
