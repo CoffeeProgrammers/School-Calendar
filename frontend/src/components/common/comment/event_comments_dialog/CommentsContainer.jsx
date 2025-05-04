@@ -5,6 +5,7 @@ import Loading from "../../../layouts/Loading";
 import CommentService from "../../../../services/base/ext/CommentService";
 import CommentsDialog from "./CommentsDialog";
 
+//TODO: update|delete|create for comment creator, delete for event creator
 const CommentsContainer = () => {
     const [comments, setComments] = useState([])
 
@@ -34,6 +35,31 @@ const CommentsContainer = () => {
         fetchData();
     }, [page]);
 
+    const handleDeleteComment = async (deletedId) => {
+        await CommentService.deleteComment(deletedId);
+        setComments((prev) => prev.filter(comment => comment.id !== deletedId));
+    };
+
+    const handleEditComment = async (commentId, newText) => {
+        const updatedComment = await CommentService.updateComment(commentId, newText);
+
+        setComments((prev) =>
+            prev.map(comment =>
+                comment.id === commentId ?
+                    {
+                        ...comment,
+                        text: updatedComment.text,
+                        time: updatedComment.time
+                    } : comment
+            )
+        );
+
+    };
+
+    const handleCreateComment = async (text) => {
+        const newComment = await CommentService.createComment( text );
+        setComments((prev) => [newComment, ...prev]);
+    };
 
     if (loading) {
         return <Loading/>;
@@ -49,6 +75,9 @@ const CommentsContainer = () => {
             pagesCount={pagesCount}
             page={page}
             setPage={setPage}
+            handleDeleteComment={handleDeleteComment}
+            handleEditComment={handleEditComment}
+            handleCreate={handleCreateComment}
         />
     );
 }

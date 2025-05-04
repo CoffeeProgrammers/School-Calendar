@@ -24,6 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,8 +42,8 @@ public class EventServiceImpl implements EventService {
         log.info("Saving new event {}", eventCreateRequest);
         Event event = eventMapper.fromEventRequestToEvent(eventCreateRequest);
         User user = userService.findUserByAuth(authentication);
+        event.addUser(user);
         event.setCreator(user);
-        event.setUsers(List.of(user));
         return eventMapper.fromEventToEventResponse(eventRepository.save(event));
     }
 
@@ -77,12 +78,27 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public PaginationListResponse<EventListResponse> findAllByUserId(long userId,
-                                                                     Map<String, Object> filters,
+                                                                     String search,
+                                                                     String startDate,
+                                                                     String endDate,
+                                                                     String isPast,
                                                                      int page, int size) {
+        Map<String, Object> filters = new HashMap<>();
+        if(!search.isEmpty()) {
+            filters.put("search", search);
+        }
+        if(!startDate.isEmpty()) {
+            filters.put("startDate", startDate);
+        }
+        if(!endDate.isEmpty()) {
+            filters.put("endDate", endDate);
+        }
+        if(!isPast.isEmpty()) {
+            filters.put("isPast", isPast);
+        }
         log.info("Finding all events for user with id {} and filters {}", userId, filters);
-        Page<Event> events = eventRepository.findAllByUserId(userId,
-                EventSpecification.filterEvents(filters), PageRequest.of(page, size,
-                        Sort.by(Sort.Direction.ASC, "start_date")));
+        Page<Event> events = eventRepository.findAll(EventSpecification.hasUser(userId).and(EventSpecification.filterEvents(filters)), PageRequest.of(page, size,
+                        Sort.by(Sort.Direction.ASC, "startDate")));
         PaginationListResponse<EventListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(events.getTotalPages());
         response.setContent(events.getContent().stream().map(
@@ -96,7 +112,7 @@ public class EventServiceImpl implements EventService {
                                                                                 LocalDateTime end) {
         log.info("Finding all events for user with id {} and date range {} - {}", userId, start, end);
         List<Event> events = eventRepository.findAllByUserIdAndDateRange(userId,
-                start, end, Sort.by(Sort.Direction.ASC, "start_date"));
+                start, end, Sort.by(Sort.Direction.ASC, "time"));
         return events.stream().map(eventMapper::fromEventToEventListResponse).toList();
     }
 

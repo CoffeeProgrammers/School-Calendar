@@ -15,9 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/events")
@@ -66,37 +64,18 @@ public class EventController {
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) Boolean isPast,
+            @RequestParam(required = false) String isPast,
             Authentication auth) {
-
-        // Створюємо Map для фільтрів
-        Map<String, Object> filters = new HashMap<>();
-
-        if (search != null) {
-            filters.put("search", search);
-        }
-        if (startDate != null) {
-            filters.put("startDate", startDate);
-        }
-        if (endDate != null) {
-            filters.put("endDate", endDate);
-        }
-        if (isPast != null) {
-            filters.put("isPast", isPast);
-        }
-
-        // Логування для перевірки
-        System.out.println("Filters: " + filters);
-
         return eventService.findAllByUserId(
                 userService.findUserByAuth(auth).getId(),
-                filters.isEmpty() ? null : filters,
+                search,
+                startDate,
+                endDate,
+                isPast,
                 page,
                 size
         );
     }
-
-
 
     @GetMapping("/users/{user_id}/between")
     @ResponseStatus(HttpStatus.OK)

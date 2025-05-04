@@ -25,7 +25,7 @@ public class UserSpecification {
             }
 
             if (filters.containsKey("lastName")) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("lastname")),
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("lastName")),
                         "%" + filters.get("lastName").toString().toLowerCase() + "%"));
             }
 
@@ -34,5 +34,9 @@ public class UserSpecification {
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
+    }
+
+    public static Specification<User> hasEvent(Long eventId) {
+        return (root, query, cb) -> cb.equal(root.join("events").get("id"), eventId);
     }
 }

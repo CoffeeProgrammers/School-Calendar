@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,9 +66,25 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
-    public PaginationListResponse<TaskListResponse> findAllByUserId(Map<String, Object> filters, long userId, int page, int size) {
+    public PaginationListResponse<TaskListResponse> findAllByUserId(String name,
+                                                                    String deadline, String isDone,
+                                                                    String isPast, long userId,
+                                                                    int page, int size) {
+        Map<String, Object> filters = new HashMap<>();
+        if(name != null && !name.isBlank() && !name.equals("null")) {
+            filters.put("name", name);
+        }
+        if(!deadline.isEmpty()) {
+            filters.put("deadline", deadline);
+        }
+        if(!isDone.isEmpty()) {
+            filters.put("isDone", isDone);
+        }
+        if(!isPast.isEmpty()) {
+            filters.put("isPast", isPast);
+        }
         log.info("Finding all tasks for user with id {} and filters {}", userId, filters);
-        Page<Task> tasks = taskRepository.findAllByUserId(userId, TaskSpecification.filterTasks(filters),
+        Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId).and(TaskSpecification.filterTasks(filters)),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
         PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(tasks.getTotalPages());
@@ -114,7 +131,8 @@ public class TaskServicesImpl implements TaskService {
                                                                                     int page, int size) {
         log.info("Finding all tasks for auth user with no events");
         PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
-        Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsEmpty(userService.findUserByAuth(authentication).getId(),
+        Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsEmpty(
+                userService.findUserByAuth(authentication).getId(),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
         response.setTotalPages(tasks.getTotalPages());
         response.setContent(tasks.map(taskMapper::fromTaskToTaskListResponse).toList());

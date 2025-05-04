@@ -4,7 +4,6 @@ import com.calendar.backend.dto.user.UserCreateRequest;
 import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.dto.user.UserListResponse;
 import com.calendar.backend.dto.user.UserUpdateRequest;
-import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.services.inter.UserService;
@@ -50,8 +49,11 @@ public class UserController {
     public PaginationListResponse<UserListResponse> getAllUsers(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestBody(required = false) FilterRequest filter) {
-        return userService.findAll(filter == null ? null : filter.getFilters(), page, size);
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String role
+    ) {
+        return userService.findAll(firstName, lastName, role, page, size);
     }
 
     @GetMapping("/events/{event_id}")
@@ -60,8 +62,10 @@ public class UserController {
             @PathVariable Long event_id,
             @RequestParam Integer page,
             @RequestParam Integer size,
-            @RequestBody(required = false) FilterRequest filter) {
-        return userService.findAllByEventId(filter == null ? null : filter.getFilters(), event_id, page, size);
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String role) {
+        return userService.findAllByEventId(firstName, lastName, role, event_id, page, size);
     }
 
     @GetMapping("/my")

@@ -453,126 +453,6 @@
   ],
   "comments": [
     {
-      "id": "1",
-      "creator": {
-        "id": 110,
-        "email": "sophia.miller@example.com",
-        "role": "consultant",
-        "first_name": "Sophia",
-        "last_name": "Miller"
-      },
-      "text": "This meeting was very productive and informative.",
-      "time": "2025-04-05T10:15:00"
-    },
-    {
-      "id": "2",
-      "creator": {
-        "id": 111,
-        "email": "ethan.hunt@example.com",
-        "role": "speaker",
-        "first_name": "Ethan",
-        "last_name": "Hunt"
-      },
-      "text": "Great conference, learned a lot about blockchain trends.",
-      "time": "2025-04-05T11:00:00"
-    },
-    {
-      "id": "3",
-      "creator": {
-        "id": 112,
-        "email": "anna.johnson@example.com",
-        "role": "facilitator",
-        "first_name": "Anna",
-        "last_name": "Johnson"
-      },
-      "text": "The workshop was engaging and practical.",
-      "time": "2025-04-05T11:45:00"
-    },
-    {
-      "id": "4",
-      "creator": {
-        "id": 113,
-        "email": "paul.carter@example.com",
-        "role": "mentor",
-        "first_name": "Paul",
-        "last_name": "Carter"
-      },
-      "text": "The bootcamp significantly improved my skills.",
-      "time": "2025-04-05T12:30:00"
-    },
-    {
-      "id": "5",
-      "creator": {
-        "id": 114,
-        "email": "chris.evans@example.com",
-        "role": "developer",
-        "first_name": "Chris",
-        "last_name": "Evans"
-      },
-      "text": "A well-structured course on JavaScript!",
-      "time": "2025-04-05T13:15:00"
-    },
-    {
-      "id": "6",
-      "creator": {
-        "id": 115,
-        "email": "lisa.morgan@example.com",
-        "role": "organizer",
-        "first_name": "Lisa",
-        "last_name": "Morgan"
-      },
-      "text": "The E-commerce Expo was a huge success.",
-      "time": "2025-04-05T14:00:00"
-    },
-    {
-      "id": "7",
-      "creator": {
-        "id": 116,
-        "email": "robert.green@example.com",
-        "role": "trainer",
-        "first_name": "Robert",
-        "last_name": "Green"
-      },
-      "text": "Kubernetes Crash Course exceeded expectations!",
-      "time": "2025-04-05T14:45:00"
-    },
-    {
-      "id": "8",
-      "creator": {
-        "id": 117,
-        "email": "nancy.adams@example.com",
-        "role": "coach",
-        "first_name": "Nancy",
-        "last_name": "Adams"
-      },
-      "text": "Very insightful seminar on entrepreneurship.",
-      "time": "2025-04-05T15:30:00"
-    },
-    {
-      "id": "9",
-      "creator": {
-        "id": 118,
-        "email": "matthew.baker@example.com",
-        "role": "security",
-        "first_name": "Matthew",
-        "last_name": "Baker"
-      },
-      "text": "Cloud Security Essentials was extremely informative.",
-      "time": "2025-04-05T16:15:00"
-    },
-    {
-      "id": "10",
-      "creator": {
-        "id": 119,
-        "email": "sara.parker@example.com",
-        "role": "photographer",
-        "first_name": "Sara",
-        "last_name": "Parker"
-      },
-      "text": "The Photography Masterclass was inspirational!",
-      "time": "2025-04-05T17:00:00"
-    },
-    {
       "id": "11",
       "creator": {
         "id": 120,
@@ -581,7 +461,7 @@
         "first_name": "Olivia",
         "last_name": "Clark"
       },
-      "text": "Social Media Trends 2026 presentation gave fresh insights.",
+      "text": "Yraaaa vono updatenylos ",
       "time": "2025-04-05T17:45:00"
     },
     {
@@ -593,7 +473,7 @@
         "first_name": "Sophia",
         "last_name": "Miller"
       },
-      "text": "The online platform used for this meeting was excellent.",
+      "text": " Test update",
       "time": "2025-04-05T18:30:00"
     },
     {
@@ -605,7 +485,7 @@
         "first_name": "Ethan",
         "last_name": "Hunt"
       },
-      "text": "Looking forward to collaborating again.",
+      "text": " Nareshti",
       "time": "2025-04-05T19:15:00"
     },
     {
@@ -691,6 +571,58 @@
       },
       "text": "The workshop highlighted important security practices.",
       "time": "2025-04-06T09:00:00"
+    },
+    {
+      "id": "3107",
+      "eventId": 1,
+      "text": "Created new",
+      "time": "2025-04-22T12:21:13.974Z",
+      "creator": {
+        "id": 101,
+        "email": "john.doe@example.com",
+        "role": "consultant",
+        "first_name": "John",
+        "last_name": "Doe"
+      }
+    },
+    {
+      "id": "f35a",
+      "eventId": 1,
+      "text": "Yraaaaaa created without errrorrs\n",
+      "time": "2025-04-22T12:21:39.153Z",
+      "creator": {
+        "id": 101,
+        "email": "john.doe@example.com",
+        "role": "consultant",
+        "first_name": "John",
+        "last_name": "Doe"
+      }
+    },
+    {
+      "id": "734e",
+      "eventId": 1,
+      "text": "New",
+      "time": "2025-04-22T12:23:54.939Z",
+      "creator": {
+        "id": 101,
+        "email": "john.doe@example.com",
+        "role": "consultant",
+        "first_name": "John",
+        "last_name": "Doe"
+      }
+    },
+    {
+      "id": "7ca1",
+      "eventId": 1,
+      "text": "New",
+      "time": "2025-04-22T12:24:17.972Z",
+      "creator": {
+        "id": 101,
+        "email": "john.doe@example.com",
+        "role": "consultant",
+        "first_name": "John",
+        "last_name": "Doe"
+      }
     }
   ],
   "users": [
