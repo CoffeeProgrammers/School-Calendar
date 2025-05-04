@@ -1,12 +1,10 @@
 package com.calendar.backend.dto;
 
-import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.dto.wrapper.StringRequest;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,19 +32,6 @@ class WrapperDtoTests {
 
         StringRequest request2 = new StringRequest();
         request2.setText(request1.getText());
-
-        assertEquals(request1, request2);
-        assertEquals(request1.toString(), request2.toString());
-        assertEquals(request1.hashCode(), request2.hashCode());
-    }
-
-    @Test
-    void testFilterRequest() {
-        FilterRequest request1 = new FilterRequest();
-        request1.setFilters(Map.of("key1", "value1", "key2", 123));
-
-        FilterRequest request2 = new FilterRequest();
-        request2.setFilters(request1.getFilters());
 
         assertEquals(request1, request2);
         assertEquals(request1.toString(), request2.toString());

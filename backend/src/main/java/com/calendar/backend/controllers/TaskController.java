@@ -3,7 +3,6 @@ package com.calendar.backend.controllers;
 import com.calendar.backend.dto.task.TaskFullResponse;
 import com.calendar.backend.dto.task.TaskListResponse;
 import com.calendar.backend.dto.task.TaskRequest;
-import com.calendar.backend.dto.wrapper.FilterRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.TaskAssignmentService;
 import com.calendar.backend.services.inter.TaskService;
@@ -30,9 +29,9 @@ public class TaskController {
             @RequestParam Long event_id,
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
-        TaskFullResponse taskFullResponse = taskService.create(request, auth, event_id);
-        taskAssignmentService.createWithNewTask(auth, taskFullResponse.getId());
-        return taskFullResponse;
+        TaskFullResponse task = taskService.create(request, auth, event_id);
+        taskAssignmentService.create(task.getId(), userService.findUserByAuth(auth).getId());
+        return task;
     }
 
     @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfTask(#auth, #id)")
@@ -65,10 +64,16 @@ public class TaskController {
     public PaginationListResponse<TaskListResponse> getMyTasks(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestBody(required = false) FilterRequest filter,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String deadline,
+            @RequestParam(required = false) String isDone,
+            @RequestParam(required = false) String isPast,
             Authentication auth) {
         return taskService.findAllByUserId(
-                filter == null ? null : filter.getFilters(),
+                name,
+                deadline,
+                isDone,
+                isPast,
                 userService.findUserByAuth(auth).getId(),
                 page,
                 size
@@ -97,12 +102,5 @@ public class TaskController {
     public void assignTaskToEvent(@PathVariable Long id, @PathVariable Long event_id) {
         taskService.assignTaskToEvent(event_id, id);
         taskAssignmentService.assignTasksToEventUsers(event_id, id);
-    }
-
-    @GetMapping("/getAllWithEmptyEvent")
-    @ResponseStatus(HttpStatus.OK)
-    public PaginationListResponse<TaskListResponse> getAllWithEmptyEvent(
-            Authentication auth, @RequestParam int page, @RequestParam int size) {
-        return taskService.findAllByCreatorIdAndEventEmpty(auth, page, size);
     }
 }

@@ -1,6 +1,5 @@
 docker exec -it db psql -U postgres -d db
 
-
 -- Drop constraints
 ALTER TABLE "users_notifications" DROP CONSTRAINT IF EXISTS "users_notifications_notification_id_foreign";
 ALTER TABLE "task_assignments" DROP CONSTRAINT IF EXISTS "task_assignments_user_id_foreign";

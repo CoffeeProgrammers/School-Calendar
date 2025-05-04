@@ -33,6 +33,9 @@ public class User implements UserDetails {
     private String description;
     private LocalDateTime birthday;
 
+    @ManyToMany(mappedBy = "users")
+    private List<Event> events;
+
     public User(String email, String password, String firstName,
                 String lastName, String role, LocalDateTime birthday) {
         this.email = email;

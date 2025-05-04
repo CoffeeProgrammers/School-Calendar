@@ -4,13 +4,13 @@ import com.calendar.backend.models.Event;
 import com.calendar.backend.models.Task;
 import com.calendar.backend.models.TaskAssignment;
 import com.calendar.backend.models.User;
+import com.calendar.backend.repositories.specification.TaskSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
@@ -101,7 +101,7 @@ public class TaskRepositoryTest {
         PageRequest pageRequest = PageRequest.of(0, 10);
 
         // when
-        Page<Task> tasks = taskRepository.findAllByUserId(userId, Specification.where(null), pageRequest);
+        Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId), pageRequest);
 
         // then
         assertThat(tasks).hasSize(1);
@@ -115,7 +115,7 @@ public class TaskRepositoryTest {
         PageRequest pageRequest = PageRequest.of(0, 10);
 
         // when
-        Page<Task> tasks = taskRepository.findAllByUserId(userId, Specification.where(null), pageRequest);
+        Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId), pageRequest);
 
         // then
         assertThat(tasks).hasSize(1);
@@ -129,7 +129,7 @@ public class TaskRepositoryTest {
         PageRequest pageRequest = PageRequest.of(0, 10);
 
         // when
-        Page<Task> tasks = taskRepository.findAllByUserId(nonExistingUserId, Specification.where(null), pageRequest);
+        Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(nonExistingUserId), pageRequest);
 
         // then
         assertThat(tasks).isEmpty();

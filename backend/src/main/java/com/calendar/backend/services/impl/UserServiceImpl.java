@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -75,11 +76,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PaginationListResponse<UserListResponse> findAll(Map<String, Object> filters,
+    public PaginationListResponse<UserListResponse> findAll(String firstName, String lastName, String role,
                                                             int page, int size) {
+        Map<String, Object> filters = new HashMap<>();
+        if(!firstName.isEmpty()) {
+            filters.put("firstName", firstName);
+        }
+        if(!lastName.isEmpty()) {
+            filters.put("lastName", lastName);
+        }
+        if(!role.isEmpty()) {
+            filters.put("role", role);
+        }
         log.info("Finding all users with filters {}", filters);
         Page<User> users = userRepository.findAll(UserSpecification.filterUsers(filters),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "last_Name", "first_Name")));
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
         PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(users.getTotalPages());
         response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
@@ -87,11 +98,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PaginationListResponse<UserListResponse> findAllByEventId(Map<String, Object> filters,
+    public PaginationListResponse<UserListResponse> findAllByEventId(String firstName, String lastName, String role,
                                                                      long eventId, int page, int size) {
+        Map<String, Object> filters = new HashMap<>();
+        if(!firstName.isEmpty()) {
+            filters.put("firstName", firstName);
+        }
+        if(!lastName.isEmpty()) {
+            filters.put("lastName", lastName);
+        }
+        if(!role.isEmpty()) {
+            filters.put("role", role);
+        }
         log.info("Finding all users with filters {} and event id {}", filters, eventId);
-        Page<User> users = userRepository.findAllByEventId(eventId, UserSpecification.filterUsers(filters),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "last_Name", "first_Name")));
+        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId).and(UserSpecification.filterUsers(filters)),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
         PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(users.getTotalPages());
         response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
