@@ -4,7 +4,7 @@ import {Divider, IconButton, Menu, MenuItem} from "@mui/material";
 import ConfirmDialog from "../../layouts/dialog/ConfirmDialog";
 import EditCommentDialog from "./EditCommentDialog";
 
-const EditCommentMenuDialog = ({handleDeleteComment, handleEditComment, commentContent}) => {
+const CommentActionsMenu = ({handleDeleteComment, handleEditComment, commentContent}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -12,7 +12,7 @@ const EditCommentMenuDialog = ({handleDeleteComment, handleEditComment, commentC
     const [openEditDialog, setOpenEditDialog] = useState(false)
 
 
-    const handleClick = (event) => {
+    const handleOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -53,13 +53,11 @@ const EditCommentMenuDialog = ({handleDeleteComment, handleEditComment, commentC
 
     return (
         <>
-            <IconButton onClick={handleClick}>
+            <IconButton onClick={handleOpen}>
                 <MoreVertIcon/>
             </IconButton>
 
             <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
@@ -73,7 +71,7 @@ const EditCommentMenuDialog = ({handleDeleteComment, handleEditComment, commentC
                 }}
             >
                 <MenuItem onClick={handleOptionEdit}>Edit</MenuItem>
-                <Divider/>
+                <Divider />
                 <MenuItem onClick={handleOptionDelete}>Delete</MenuItem>
             </Menu>
 
@@ -94,4 +92,4 @@ const EditCommentMenuDialog = ({handleDeleteComment, handleEditComment, commentC
     );
 }
 
-export default EditCommentMenuDialog;
+export default CommentActionsMenu;

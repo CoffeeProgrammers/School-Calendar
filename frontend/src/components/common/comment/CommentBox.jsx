@@ -2,7 +2,7 @@ import React from 'react';
 import {Box, Card, CardContent, CardHeader, Typography} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DateService from "../../../services/simple/DateService";
-import EditCommentMenuDialog from "./EditCommentMenuDialog";
+import CommentActionsMenu from "./CommentActionsMenu";
 
 const CommentBox = ({comment, handleDeleteComment, handleEditComment}) => {
     const formattedDate = DateService.formatDateToMDYT(comment.time)
@@ -11,7 +11,7 @@ const CommentBox = ({comment, handleDeleteComment, handleEditComment}) => {
         <Card variant="outlined" sx={{ borderRadius: "10px", position: 'relative'}}>
 
             <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
-               <EditCommentMenuDialog
+               <CommentActionsMenu
                    handleDeleteComment={() => handleDeleteComment(comment.id)}
                    handleEditComment={(content) => handleEditComment(comment.id, content)}
                    commentContent={comment.text}

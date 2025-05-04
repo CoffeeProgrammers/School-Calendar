@@ -8,7 +8,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import Options from "../../layouts/Options";
 
 const mainBoxStyles = {
-    minHeight: "525px", // todo: 3 lines height
     border: '1px solid #ddd',
     padding: '20px 20px 8px 20px',
     margin: '10px',
@@ -41,8 +40,8 @@ const UserView = ({user}) => {
         <Box sx={mainBoxStyles}>
             <Box className="profile-container">
                 <Box className="profile-information">
-                    <Box className="user-photo" border={2} borderColor={'#347928'}>
-                        <PersonIcon className="user-photo-icon" sx={{ fontSize: 210 }} />
+                    <Box className="user-photo" border={3} borderColor={'#347928'}>
+                        <PersonIcon className="user-photo-icon" color="primary" sx={{ fontSize: 210 }} />
                     </Box>
 
                     <Box className="user-name">
