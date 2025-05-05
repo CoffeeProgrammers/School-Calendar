@@ -22,8 +22,6 @@ const CreateCommentDialog = ({handleCreate}) => {
 
     }
 
-
-
     return (
         <>
             <Button onClick={() => setOpen(true)} variant="contained" sx={{
@@ -44,7 +42,7 @@ const CreateCommentDialog = ({handleCreate}) => {
                 maxWidth="sm"
             >
                 <DialogTitle color="primary">
-                    {"Create"}
+                    {"Create a comment"}
                 </DialogTitle>
 
                 <Box mt={-3}>

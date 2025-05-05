@@ -14,6 +14,7 @@ import ParticipantsContainer from "../../common/user/participants_dialog/Partici
 import CommentsContainer from "../../common/comment/event_comments_dialog/CommentsContainer";
 import DateService from "../../../services/simple/DateService";
 import EventTasksContainer from "../../common/task/event_tasks_dialog/EventTasksContainer";
+import Options from "../../layouts/Options";
 
 const Event = () => {
     const {id} = useParams();
@@ -53,6 +54,29 @@ const Event = () => {
         DateService.formatDateToMDYT(event.endDate)
 
 
+    const optionList =  [
+        {
+            icon: <FormatListBulletedIcon fontSize="small"/>,
+            label: "Type:",
+            value: <Chip sx={{ml: -0.75}} label={event.type} size="small"/>
+        },
+        {
+            icon: <PlaceIcon fontSize="small"/>,
+            label: "Place:",
+            value: event.place
+        },
+        {
+            icon: <CalendarMonthIcon fontSize="small"/>,
+            label: "Date:",
+            value: formattedDate
+        },
+        {
+            icon: <AccountCircleIcon fontSize="small"/>,
+            label: "Creator:",
+            value: `${event.creator.first_name} ${event.creator.last_name}`
+        }
+    ]
+
     return (
         <Box
             sx={{
@@ -73,36 +97,7 @@ const Event = () => {
 
                 <Divider sx={{mt: 1, mb: 1}}/>
 
-                <table>
-                    <tbody>
-                    {[
-                        {
-                            icon: <FormatListBulletedIcon fontSize="small"/>,
-                            label: "Type:",
-                            value: <Chip sx={{ml: -0.75}} label={event.type} size="small"/>
-                        },
-                        {icon: <PlaceIcon fontSize="small"/>, label: "Place:", value: event.place},
-                        {icon: <CalendarMonthIcon fontSize="small"/>, label: "Date:", value: formattedDate},
-                        {
-                            icon: <AccountCircleIcon fontSize="small"/>,
-                            label: "Creator:",
-                            value: `${event.creator.firstName} ${event.creator.lastName}`
-                        }
-                    ].map(({icon, label, value}, index) => (
-                        <tr key={index}>
-                            <td style={{paddingRight: "20px"}}>
-                                <Typography noWrap variant="body1" color="primary" sx={listElementBoxTextStyle}>
-                                    {icon}
-                                    {label}
-                                </Typography>
-                            </td>
-                            <td>
-                                <Typography component="div">{value}</Typography>
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                <Options optionsList={optionList}/>
 
                 <Divider sx={{mt: 1, mb: 0.7}}/>
                 <Stack direction="row" spacing={0.5}>

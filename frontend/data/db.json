@@ -453,18 +453,6 @@
   ],
   "comments": [
     {
-      "id": "11",
-      "creator": {
-        "id": 120,
-        "email": "olivia.clark@example.com",
-        "role": "marketer",
-        "first_name": "Olivia",
-        "last_name": "Clark"
-      },
-      "text": "Yraaaa vono updatenylos ",
-      "time": "2025-04-05T17:45:00"
-    },
-    {
       "id": "12",
       "creator": {
         "id": 110,
@@ -475,18 +463,6 @@
       },
       "text": " Test update",
       "time": "2025-04-05T18:30:00"
-    },
-    {
-      "id": "13",
-      "creator": {
-        "id": 111,
-        "email": "ethan.hunt@example.com",
-        "role": "speaker",
-        "first_name": "Ethan",
-        "last_name": "Hunt"
-      },
-      "text": " Nareshti",
-      "time": "2025-04-05T19:15:00"
     },
     {
       "id": "14",
@@ -623,6 +599,19 @@
         "first_name": "John",
         "last_name": "Doe"
       }
+    },
+    {
+      "id": "ac19",
+      "eventId": 1,
+      "text": "Created comment",
+      "time": "2025-05-03T19:02:16.273Z",
+      "creator": {
+        "id": 101,
+        "email": "john.doe@example.com",
+        "role": "consultant",
+        "first_name": "John",
+        "last_name": "Doe"
+      }
     }
   ],
   "users": [
@@ -631,175 +620,225 @@
       "email": "user1@example.com",
       "role": "user",
       "first_name": "John",
-      "last_name": "Doe"
+      "last_name": "Doe",
+      "birthday": "1990-03-15",
+      "description": "Enthusiastic user who enjoys exploring new technologies."
     },
     {
       "id": "2",
       "email": "user2@example.com",
       "role": "admin",
       "first_name": "Alice",
-      "last_name": "Smith"
+      "last_name": "Smith",
+      "birthday": "1985-07-22",
+      "description": "Experienced administrator with a passion for security and systems management."
     },
     {
       "id": "3",
       "email": "user3@example.com",
       "role": "user",
       "first_name": "Bob",
-      "last_name": "Johnson"
+      "last_name": "Johnson",
+      "birthday": "1992-11-10",
+      "description": "Casual user who regularly participates in community discussions."
     },
     {
       "id": "4",
       "email": "user4@example.com",
       "role": "moderator",
       "first_name": "Emily",
-      "last_name": "Davis"
+      "last_name": "Davis",
+      "birthday": "1994-02-06",
+      "description": "Dedicated moderator ensuring a safe and respectful environment."
     },
     {
       "id": "5",
       "email": "user5@example.com",
       "role": "user",
       "first_name": "Michael",
-      "last_name": "Brown"
+      "last_name": "Brown",
+      "birthday": "1988-12-30",
+      "description": "Active contributor with an interest in software development."
     },
     {
       "id": "6",
       "email": "user6@example.com",
       "role": "user",
       "first_name": "Emma",
-      "last_name": "Miller"
+      "last_name": "Miller",
+      "birthday": "1996-05-18",
+      "description": "Creative thinker and curious learner in the tech world."
     },
     {
       "id": "7",
       "email": "user7@example.com",
       "role": "admin",
       "first_name": "David",
-      "last_name": "Wilson"
+      "last_name": "Wilson",
+      "birthday": "1983-09-25",
+      "description": "System admin with a strong background in infrastructure."
     },
     {
       "id": "8",
       "email": "user8@example.com",
       "role": "user",
       "first_name": "Sophia",
-      "last_name": "Moore"
+      "last_name": "Moore",
+      "birthday": "1991-06-13",
+      "description": "Passionate about digital art and user experience design."
     },
     {
       "id": "9",
       "email": "user9@example.com",
       "role": "moderator",
       "first_name": "James",
-      "last_name": "Taylor"
+      "last_name": "Taylor",
+      "birthday": "1989-04-27",
+      "description": "Community moderator focused on fairness and clarity."
     },
     {
       "id": "10",
       "email": "user10@example.com",
       "role": "user",
       "first_name": "Olivia",
-      "last_name": "Anderson"
+      "last_name": "Anderson",
+      "birthday": "1993-08-09",
+      "description": "Avid reader and active forum participant."
     },
     {
       "id": "11",
       "email": "user11@example.com",
       "role": "user",
       "first_name": "William",
-      "last_name": "Thomas"
+      "last_name": "Thomas",
+      "birthday": "1990-01-20",
+      "description": "Enjoys learning about cloud computing and cybersecurity."
     },
     {
       "id": "12",
       "email": "user12@example.com",
       "role": "admin",
       "first_name": "Ava",
-      "last_name": "Jackson"
+      "last_name": "Jackson",
+      "birthday": "1987-03-03",
+      "description": "Leadership-oriented admin with years of experience."
     },
     {
       "id": "13",
       "email": "user13@example.com",
       "role": "user",
       "first_name": "Benjamin",
-      "last_name": "White"
+      "last_name": "White",
+      "birthday": "1995-07-29",
+      "description": "Loves contributing tutorials and helping others."
     },
     {
       "id": "14",
       "email": "user14@example.com",
       "role": "moderator",
       "first_name": "Mia",
-      "last_name": "Harris"
+      "last_name": "Harris",
+      "birthday": "1994-10-16",
+      "description": "Passionate about keeping the community friendly and productive."
     },
     {
       "id": "15",
       "email": "user15@example.com",
       "role": "user",
       "first_name": "Lucas",
-      "last_name": "Martin"
+      "last_name": "Martin",
+      "birthday": "1992-12-03",
+      "description": "Tech-savvy user who often shares useful feedback."
     },
     {
       "id": "16",
       "email": "user16@example.com",
       "role": "user",
       "first_name": "Charlotte",
-      "last_name": "Thompson"
+      "last_name": "Thompson",
+      "birthday": "1996-02-19",
+      "description": "Student and aspiring developer with a strong learning drive."
     },
     {
       "id": "17",
       "email": "user17@example.com",
       "role": "admin",
       "first_name": "Henry",
-      "last_name": "Garcia"
+      "last_name": "Garcia",
+      "birthday": "1986-11-01",
+      "description": "Focused on platform stability and user data protection."
     },
     {
       "id": "18",
       "email": "user18@example.com",
       "role": "user",
       "first_name": "Amelia",
-      "last_name": "Martinez"
+      "last_name": "Martinez",
+      "birthday": "1993-05-26",
+      "description": "Loves collaborating on open-source projects."
     },
     {
       "id": "19",
       "email": "user19@example.com",
       "role": "moderator",
       "first_name": "Alexander",
-      "last_name": "Robinson"
+      "last_name": "Robinson",
+      "birthday": "1989-09-08",
+      "description": "Always ready to help resolve user disputes constructively."
     },
     {
       "id": "20",
       "email": "user20@example.com",
       "role": "user",
       "first_name": "Evelyn",
-      "last_name": "Clark"
+      "last_name": "Clark",
+      "birthday": "1991-06-05",
+      "description": "Enjoys testing new features and reporting bugs."
     },
     {
       "id": "21",
       "email": "user21@example.com",
       "role": "user",
       "first_name": "Daniel",
-      "last_name": "Rodriguez"
+      "last_name": "Rodriguez",
+      "birthday": "1992-03-14",
+      "description": "Backend developer enthusiast and open learner."
     },
     {
       "id": "22",
       "email": "user22@example.com",
       "role": "admin",
       "first_name": "Scarlett",
-      "last_name": "Lewis"
+      "last_name": "Lewis",
+      "birthday": "1984-07-07",
+      "description": "Admin with a strong focus on system architecture."
     },
     {
       "id": "23",
       "email": "user23@example.com",
       "role": "user",
       "first_name": "Matthew",
-      "last_name": "Walker"
+      "last_name": "Walker",
+      "birthday": "1990-10-23",
+      "description": "Regular user with interests in UI design."
     },
     {
       "id": "24",
       "email": "user24@example.com",
       "role": "moderator",
       "first_name": "Liam",
-      "last_name": "Hall"
+      "last_name": "Hall",
+      "birthday": "1988-01-17",
+      "description": "Moderator ensuring community rules are followed."
     },
     {
       "id": "25",
       "email": "user25@example.com",
       "role": "user",
       "first_name": "Ella",
-      "last_name": "Allen"
+      "last_name": "Allen",
+      "birthday": "1994-08-11",
+      "description": "Creative problem solver and active contributor."
     }
   ],
   "tasks": [
@@ -831,7 +870,7 @@
     },
     {
       "id": "3",
-      "isDone": true,
+      "isDone": false,
       "name": "Task 3",
       "deadline": "2025-04-03T12:00:00Z",
       "creator": {
