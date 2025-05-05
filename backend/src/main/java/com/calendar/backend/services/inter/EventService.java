@@ -22,4 +22,5 @@ public interface EventService {
     List<EventListResponse> findAllByUserIdForCalendar
             (long userId, LocalDateTime start, LocalDateTime end);
     Event findByIdForServices(long id);
+    void deleteUserById(long id, long userId);
 }
