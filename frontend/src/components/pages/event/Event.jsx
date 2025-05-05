@@ -48,9 +48,9 @@ const Event = () => {
 
 
     const formattedDate =
-        DateService.formatDateToMDYT(event.start_date)
+        DateService.formatDateToMDYT(event.startDate)
         + "  ⭢  " +
-        DateService.formatDateToMDYT(event.end_date)
+        DateService.formatDateToMDYT(event.endDate)
 
 
     return (
@@ -86,7 +86,7 @@ const Event = () => {
                         {
                             icon: <AccountCircleIcon fontSize="small"/>,
                             label: "Creator:",
-                            value: `${event.creator.first_name} ${event.creator.last_name}`
+                            value: `${event.creator.firstName} ${event.creator.lastName}`
                         }
                     ].map(({icon, label, value}, index) => (
                         <tr key={index}>
