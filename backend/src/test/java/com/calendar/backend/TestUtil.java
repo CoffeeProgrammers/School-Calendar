@@ -41,14 +41,14 @@ public class TestUtil {
         return event;
     }
 
-//    public static Comment createComment(String text, LocalDateTime date, User creator, Event event) {
-//        Comment comment = new Comment();
-//        comment.setText(text);
-//        comment.setDate(date);
-//        comment.setCreator(creator);
-//        comment.setEvent(event);
-//        return comment;
-//    }
+    public static Comment createComment(String text, LocalDateTime date, User creator, Event event) {
+        Comment comment = new Comment();
+        comment.setText(text);
+        comment.setDate(date);
+        comment.setCreator(creator);
+        comment.setEvent(event);
+        return comment;
+    }
 
     public static Task createTask(String content, Event event) {
         Task task = createTask(content);
