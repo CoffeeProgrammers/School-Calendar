@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import DateService from "../../../services/simple/DateService";
+import DateUtils from "../../../utils/DateUtils";
 
 const EventTaskBox = ({task, handleToggleTask}) => {
 
@@ -38,7 +38,7 @@ const EventTaskBox = ({task, handleToggleTask}) => {
                 </ListItemIcon>
                 <ListItemText primary={task.name}/>
                 <Box sx={{marginLeft: 'auto'}}>
-                    <ListItemText secondary={DateService.formatDateToMDT(task.deadline)}/>
+                    <ListItemText secondary={DateUtils.formatDateToMDT(task.deadline)}/>
                 </Box>
             </ListItemButton>
         </ListItem>

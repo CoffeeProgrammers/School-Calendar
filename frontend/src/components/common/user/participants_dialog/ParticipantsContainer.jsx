@@ -17,13 +17,15 @@ const ParticipantsContainer = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                //TODO: users by event
                 const response = await UserService.getAllUsers(
                     {
-                        page: page,
+                        page: page - 1,
+                        size: 10,
                     }
                 );
-                setUsers(response.data);
-                setPagesCount(response.pages)
+                setUsers(response.content);
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {

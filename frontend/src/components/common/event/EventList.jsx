@@ -11,7 +11,7 @@ const EventList = ({events}) => {
         <Grid container spacing={1.5}>
             {events.map(event => (
                 <Grid item xs={12} sm={6} md={4} lg={2.4} key={event.id}>
-                    <Box   onClick={() => navigate(`${event.id}`)}>
+                    <Box onClick={() => navigate(`${event.id}`)}>
                         <EventBox event={event}/>
                     </Box>
                 </Grid>
