@@ -12,8 +12,10 @@ import {SpaceDashboard} from "@mui/icons-material";
 import SubjectIcon from '@mui/icons-material/Subject';
 import ParticipantsContainer from "../../common/user/participants_dialog/ParticipantsContainer";
 import CommentsContainer from "../../common/comment/event_comments_dialog/CommentsContainer";
-import DateService from "../../../services/simple/DateService";
+import DateUtils from "../../../utils/DateUtils";
 import EventTasksContainer from "../../common/task/event_tasks_dialog/EventTasksContainer";
+import Options from "../../layouts/Options";
+import TextUtils from "../../../utils/TextUtils";
 
 const Event = () => {
     const {id} = useParams();
@@ -48,10 +50,38 @@ const Event = () => {
 
 
     const formattedDate =
-        DateService.formatDateToMDYT(event.start_date)
+        DateUtils.formatDateToMDYT(event.startDate)
         + "  ⭢  " +
-        DateService.formatDateToMDYT(event.end_date)
+        DateUtils.formatDateToMDYT(event.endDate)
 
+
+    const optionList = [
+        {
+            icon: <FormatListBulletedIcon fontSize="small"/>,
+            label: "Type:",
+            value:
+                (<Chip
+                    sx={{ml: -0.75}}
+                    label={TextUtils.formatEnumText(event.type)}
+                    size="small"
+                />)
+        },
+        {
+            icon: <PlaceIcon fontSize="small"/>,
+            label: "Place:",
+            value: event.place
+        },
+        {
+            icon: <CalendarMonthIcon fontSize="small"/>,
+            label: "Date:",
+            value: formattedDate
+        },
+        {
+            icon: <AccountCircleIcon fontSize="small"/>,
+            label: "Creator:",
+            value: TextUtils.getUserFullName(event.creator)
+        }
+    ]
 
     return (
         <Box
@@ -73,38 +103,10 @@ const Event = () => {
 
                 <Divider sx={{mt: 1, mb: 1}}/>
 
-                <table>
-                    <tbody>
-                    {[
-                        {
-                            icon: <FormatListBulletedIcon fontSize="small"/>,
-                            label: "Type:",
-                            value: <Chip sx={{ml: -0.75}} label={event.type} size="small"/>
-                        },
-                        {icon: <PlaceIcon fontSize="small"/>, label: "Place:", value: event.place},
-                        {icon: <CalendarMonthIcon fontSize="small"/>, label: "Date:", value: formattedDate},
-                        {
-                            icon: <AccountCircleIcon fontSize="small"/>,
-                            label: "Creator:",
-                            value: `${event.creator.first_name} ${event.creator.last_name}`
-                        }
-                    ].map(({icon, label, value}, index) => (
-                        <tr key={index}>
-                            <td style={{paddingRight: "20px"}}>
-                                <Typography noWrap variant="body1" color="primary" sx={listElementBoxTextStyle}>
-                                    {icon}
-                                    {label}
-                                </Typography>
-                            </td>
-                            <td>
-                                <Typography component="div">{value}</Typography>
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                <Options optionsList={optionList}/>
 
                 <Divider sx={{mt: 1, mb: 0.7}}/>
+
                 <Stack direction="row" spacing={0.5}>
                     <ParticipantsContainer/>
                     <CommentsContainer/>

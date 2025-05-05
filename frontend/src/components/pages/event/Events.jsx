@@ -12,8 +12,8 @@ import {listPanelStyles} from "../../../assets/styles";
 
 const eventTypes = [
     {value: '', label: <em>None</em>},
-    {value: 'conference', label: 'Conference'},
-    {value: 'workshop', label: 'Workshop'},
+    {value: 'STUDENTS_MEETING', label: 'Students meeting'},
+    {value: 'TEACHERS_MEETING', label: 'TEACHERS_MEETING'},
     {value: 'meetup', label: 'Meetup'},
     {value: 'seminar', label: 'Seminar'},
     {value: 'webinar', label: 'Webinar'},
@@ -58,14 +58,15 @@ const Events = () => {
             try {
                 const response = await EventService.getAllMyEvents(
                     {
-                        page: page,
+                        page: page - 1,
                         size: 15,
-                        search: "134f324f2rrrrtrhrthwer",
+                        search: searchQuery,
+                        type: eventType
                     }
                 );
                 console.log(response)
                 setEvents(response.content);
-                setPagesCount(response.totalPages - 1)
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {
@@ -88,6 +89,7 @@ const Events = () => {
     return (
         <>
             <Box sx={{
+                width: 1500,
                 border: '1px solid #ddd',
                 padding: '20px',
                 margin: '10px',

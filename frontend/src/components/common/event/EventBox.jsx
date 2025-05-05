@@ -6,10 +6,12 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {SpaceDashboard} from "@mui/icons-material";
 import {listElementBoxStyle, listElementBoxTextStyle} from "../../../assets/styles";
+import TextUtils from "../../../utils/TextUtils";
 
 
 const EventBox = ({event}) => {
-    const startDate = new Date(event.start_date);
+    //TODO date to utils
+    const startDate = new Date(event.startDate);
     const formattedStartDate = startDate.toLocaleString('en-US', {
         month: 'long',
         day: 'numeric',
@@ -30,10 +32,14 @@ const EventBox = ({event}) => {
             </Typography>
             <Divider sx={{marginBottom: "5px"}}/>
             <Box sx={{ml: -0.25}}>
-                <Chip sx={{ml: -0.25}} label={event.type} size="small"/>
+                <Chip
+                    sx={{ml: -0.25}}
+                    label={TextUtils.formatEnumText(event.type)}
+                    size="small"
+                />
                 <InfoItem icon={PlaceIcon} text={event.place}/>
                 <InfoItem icon={CalendarMonthIcon} text={formattedStartDate}/>
-                <InfoItem icon={AccountCircleIcon} text={`${event.creator.first_name} ${event.creator.last_name}`}/>
+                <InfoItem icon={AccountCircleIcon} text={`${event.creator.firstName} ${event.creator.lastName}`}/>
             </Box>
         </Box>
     );

@@ -7,10 +7,10 @@ import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import UserService from "../../../services/base/ext/UserService";
 import UserList from "../../common/user/UserList";
-import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
+import {listPanelStyles} from "../../../assets/styles";
 
 
-const eventTypes = [
+const roleTypes = [
     {value: '', label: <em>None</em>},
     {value: 'teacher', label: 'Teacher'},
     {value: 'student', label: 'Student'},
@@ -37,7 +37,7 @@ const Users = () => {
             try {
                 const response = await UserService.getAllUsers(
                     {
-                        page: page,
+                        page: page - 1,
                         size: 15,
                     }
                 );
@@ -65,7 +65,15 @@ const Users = () => {
 
     return (
         <>
-            <Box sx={mainBoxStyles}>
+            <Box sx={{
+                width: 1500,
+                border: '1px solid #ddd',
+                padding: '20px',
+                margin: '10px',
+                borderRadius: "10px",
+                display: "flex",
+                flexDirection: "column"
+            }}>
                 <Stack direction="row" sx={listPanelStyles}>
                     <Typography variant="h4">Users</Typography>
                     <Box sx={listPanelStyles} gap={0.5}>
@@ -91,7 +99,7 @@ const Users = () => {
                                     label: "Role",
                                     value: role,
                                     setValue: setRole,
-                                    options: eventTypes
+                                    options: roleTypes
                                 }
                             ]}
                         />
@@ -103,7 +111,7 @@ const Users = () => {
                 />
 
                 {pagesCount > 1 && (
-                    <Box sx={{ marginTop: "auto" }}>
+                    <Box sx={{marginTop: "auto"}}>
                         <PaginationBox
                             page={page}
                             pagesCount={pagesCount}

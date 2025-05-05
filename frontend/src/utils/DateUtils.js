@@ -1,5 +1,5 @@
 
-class DateService {
+class DateUtils {
 
     static formatDateToMDYT(date) {
         return new Date(date).toLocaleString('en-US', {
@@ -23,4 +23,4 @@ class DateService {
     }
 }
 
-export default DateService;
+export default DateUtils;

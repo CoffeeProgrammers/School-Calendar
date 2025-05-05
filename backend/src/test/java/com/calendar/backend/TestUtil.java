@@ -7,6 +7,7 @@ import org.instancio.Instancio;
 import org.mapstruct.factory.Mappers;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TestUtil {
@@ -36,7 +37,7 @@ public class TestUtil {
 
     public static Event createEvent(String name, User... users) {
         Event event = createEvent(name);
-        event.setUsers(Arrays.asList(users));
+        event.setUsers(new ArrayList<>(Arrays.asList(users)));
         return event;
     }
 
