@@ -625,15 +625,6 @@
       "description": "Enthusiastic user who enjoys exploring new technologies."
     },
     {
-      "id": "2",
-      "email": "user2@example.com",
-      "role": "admin",
-      "first_name": "Alice",
-      "last_name": "Smith",
-      "birthday": "1985-07-22",
-      "description": "Experienced administrator with a passion for security and systems management."
-    },
-    {
       "id": "3",
       "email": "user3@example.com",
       "role": "user",
@@ -650,15 +641,6 @@
       "last_name": "Davis",
       "birthday": "1994-02-06",
       "description": "Dedicated moderator ensuring a safe and respectful environment."
-    },
-    {
-      "id": "5",
-      "email": "user5@example.com",
-      "role": "user",
-      "first_name": "Michael",
-      "last_name": "Brown",
-      "birthday": "1988-12-30",
-      "description": "Active contributor with an interest in software development."
     },
     {
       "id": "6",
@@ -812,33 +794,6 @@
       "last_name": "Lewis",
       "birthday": "1984-07-07",
       "description": "Admin with a strong focus on system architecture."
-    },
-    {
-      "id": "23",
-      "email": "user23@example.com",
-      "role": "user",
-      "first_name": "Matthew",
-      "last_name": "Walker",
-      "birthday": "1990-10-23",
-      "description": "Regular user with interests in UI design."
-    },
-    {
-      "id": "24",
-      "email": "user24@example.com",
-      "role": "moderator",
-      "first_name": "Liam",
-      "last_name": "Hall",
-      "birthday": "1988-01-17",
-      "description": "Moderator ensuring community rules are followed."
-    },
-    {
-      "id": "25",
-      "email": "user25@example.com",
-      "role": "user",
-      "first_name": "Ella",
-      "last_name": "Allen",
-      "birthday": "1994-08-11",
-      "description": "Creative problem solver and active contributor."
     }
   ],
   "tasks": [

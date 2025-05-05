@@ -57,7 +57,7 @@ class UserService extends BaseService {
 
     async deleteUser(userId) {
         return await this.handleRequest(
-            () => this.apiClient.delete(`/delete/${userId}`)
+            () => this.apiClient.delete(`/${userId}`)
         );
     }
 
