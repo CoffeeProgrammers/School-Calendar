@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import "./login.css"
+import "../../assets/css/login.css"
 import AuthService from "../../services/auth/AuthService";
 
 const Login = () => {
@@ -18,7 +18,7 @@ const Login = () => {
         setErrorMessages([])
         try {
             await AuthService.login(email, password);
-            navigate("/events");
+            navigate("/");
         } catch (error) {
             if (error.response && error.response.data.messages && Array.isArray(error.response.data.messages)) {
                 const errorMessages = error.response.data.messages;

@@ -45,7 +45,7 @@ const Events = () => {
 
     const [events, setEvents] = useState([])
 
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const [pagesCount, setPagesCount] = useState(1)
 
     const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
@@ -58,7 +58,7 @@ const Events = () => {
             try {
                 const response = await EventService.getAllMyEvents(
                     {
-                        page: page,
+                        page: page - 1,
                         size: 15,
                         search: searchQuery,
                         type: eventType
@@ -66,7 +66,7 @@ const Events = () => {
                 );
                 console.log(response)
                 setEvents(response.content);
-                setPagesCount(response.totalPages - 1)
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {
@@ -89,6 +89,7 @@ const Events = () => {
     return (
         <>
             <Box sx={{
+                width: 1500,
                 border: '1px solid #ddd',
                 padding: '20px',
                 margin: '10px',

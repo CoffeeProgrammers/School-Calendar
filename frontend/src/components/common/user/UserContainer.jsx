@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Loading from "../../layouts/Loading";
 import {Typography} from "@mui/material";
-import UserService from "../../../services/ext/UserService";
 import UserView from "./UserView";
+import UserService from "../../../services/base/ext/UserService";
 
 const UserContainer = ({userId}) => {
 
