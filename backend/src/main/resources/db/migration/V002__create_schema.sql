@@ -56,7 +56,7 @@ CREATE TABLE "comments"
     "creator_id" BIGINT                                  NOT NULL,
     "event_id"   BIGINT                                  NOT NULL,
     "text"       VARCHAR(255)                            NOT NULL,
-    "date"       TIMESTAMP NOT NULL
+    "time"       TIMESTAMP NOT NULL
 );
 ALTER TABLE
     "comments"
