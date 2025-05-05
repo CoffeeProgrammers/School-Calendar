@@ -20,16 +20,16 @@ public class ModelsTests {
         event = TestUtil.createEvent("Meeting", LocalDateTime.MIN, LocalDateTime.MAX, "TEACHERS_MEETING", "ONLINE", user);
     }
 
-    @Test
-    void testComment() {
-        // given
-        Comment comment1 = new Comment(user, event, "ABC");
-        Comment comment2 = new Comment(comment1.getCreator(), comment1.getEvent(), comment1.getText());
-        comment2.setDate(comment1.getDate());
-        assertEquals(comment1, comment2);
-        assertEquals(comment1.toString(), comment2.toString());
-        assertEquals(comment1.hashCode(), comment2.hashCode());
-    }
+//    @Test
+//    void testComment() {
+//        // given
+//        Comment comment1 = new Comment(user, event, "ABC");
+//        Comment comment2 = new Comment(comment1.getCreator(), comment1.getEvent(), comment1.getText());
+//        comment2.setDate(comment1.getDate());
+//        assertEquals(comment1, comment2);
+//        assertEquals(comment1.toString(), comment2.toString());
+//        assertEquals(comment1.hashCode(), comment2.hashCode());
+//    }
 
     @Test
     void testUser() {

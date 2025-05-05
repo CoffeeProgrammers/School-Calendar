@@ -22,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -41,6 +42,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentMapper.fromCommentRequestToComment(commentRequest);
         User user = userService.findByEmail(authentication.getName());
         Event event = eventService.findByIdForServices(eventId);
+        comment.setTime(LocalDateTime.now());
         comment.setCreator(user);
         comment.setEvent(event);
         notificationService.create(new Notification(List.of(event.getCreator()),

@@ -16,7 +16,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "events")
 @EqualsAndHashCode
 public class User implements UserDetails {
     @Id

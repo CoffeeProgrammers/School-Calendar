@@ -21,12 +21,12 @@ public class Comment {
     @ManyToOne
     private Event event;
     private String text;
-    private LocalDateTime date;
+    private LocalDateTime time;
 
     public Comment(User creator, Event event, String text) {
         this.creator = creator;
         this.event = event;
         this.text = text;
-        this.date = LocalDateTime.now();
+        this.time = LocalDateTime.now();
     }
 }
