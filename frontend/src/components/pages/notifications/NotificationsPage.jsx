@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import GenerationCard from '../../common/notifications/GenerationCard';
+import GenerationNotifications from '../../common/notifications/GenerationNotifications';
+import GenerationInvitations from '../../common/notifications/GenerationInvitations';
 
 const NotificationsPage = () => {
     const [value, setValue] = React.useState('notifications');
@@ -40,7 +41,7 @@ const NotificationsPage = () => {
 
 
     return (
-        <Box sx={{ width: "50%", border: "1px solid black", padding: "10px" }}>
+        <Box sx={{ width: "60%", padding: "10px", border: '1px solid #ddd', borderRadius: "10px" }}>
             <Tabs
                 value={value}
                 onChange={handleChange}
@@ -52,10 +53,10 @@ const NotificationsPage = () => {
                 <Tab value='invitations' label={<Typography>Invitations</Typography>} sx={{ textTransform: "none" }} />
             </Tabs>
             <TabPanel value={value} index='notifications'>
-                <GenerationCard />
+                <GenerationNotifications />
             </TabPanel>
             <TabPanel value={value} index='invitations'>
-                Invitations
+                <GenerationInvitations />
             </TabPanel>
         </Box>
     )
