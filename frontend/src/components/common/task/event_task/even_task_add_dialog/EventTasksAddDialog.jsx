@@ -1,26 +1,28 @@
 import React, {useState} from 'react';
 import {Box, Button, Divider, Grid2, Stack} from "@mui/material";
-import BasicDataDialog from "../../../layouts/dialog/BasicDataDialog";
-import {defaultButtonStyles, listPanelStyles} from "../../../../assets/styles";
-import Search from "../../../layouts/lists/Search";
-import OpenFiltersButton from "../../../layouts/lists/OpenFiltersButton";
-import FiltersGroup from "../../../layouts/lists/FiltersGroup";
-import InviteUserBox from "./InviteUserBox";
+import {defaultButtonStyles, listPanelStyles} from "../../../../../assets/styles";
+import Search from "../../../../layouts/lists/Search";
+import OpenFiltersButton from "../../../../layouts/lists/OpenFiltersButton";
+import DefaultButton from "../../../../layouts/DefaultButton";
+import FiltersGroup from "../../../../layouts/lists/FiltersGroup";
+import BasicDataDialog from "../../../../layouts/dialog/BasicDataDialog";
+import AddTaskBox from "./AddTaskBox";
 
-const EventInviteDialog = (
+
+const EventTasksAddDialog = (
     {
+        tasks,
+        isDone,
+        setIsDone,
+        isDoneSelectOptions,
         searchQuery,
         setSearchQuery,
         isOpenFilterMenu,
         setOpenFilterMenu,
-        role,
-        setRole,
-        eventTypes,
-        users,
         page,
         setPage,
         pagesCount,
-        handleInvite
+        handleAdd
     }) => {
 
     const [open, setOpen] = useState(false);
@@ -32,18 +34,16 @@ const EventInviteDialog = (
         setOpen(false);
         setPage(1);
     };
-
     return (
         <>
             <Button onClick={handleClickOpen} variant="contained" sx={defaultButtonStyles}>
-                Invite
+                Add
             </Button>
-
 
             <BasicDataDialog
                 open={open}
                 handleClose={handleClose}
-                title={"Choose the person to invite"}
+                title={"Choose the tasks to add"}
                 size={"md"}
                 content={
                     //TODO: refactor bp
@@ -58,6 +58,9 @@ const EventInviteDialog = (
                                     isOpenFilterMenu={isOpenFilterMenu}
                                     setOpenFilterMenu={setOpenFilterMenu}
                                 />
+                                <DefaultButton>
+                                    New
+                                </DefaultButton>
                             </Box>
                         </Stack>
 
@@ -69,24 +72,29 @@ const EventInviteDialog = (
                                 <FiltersGroup
                                     filters={[
                                         {
-                                            label: "Role",
-                                            value: role,
-                                            setValue: setRole,
-                                            options: eventTypes
+                                            label: "Status",
+                                            value: isDone,
+                                            setValue: setIsDone,
+                                            options: isDoneSelectOptions
+                                        },
+                                        {
+                                            label: "Date",
+                                            options: [{value: "", label: <em>Todo</em>}]
                                         }
                                     ]}
                                 />
                             </Box>
                         )}
-                        {/*TODO: list optimize*/}
+                        {/*//TODO: list optimize*/}
                         <Grid2 container spacing={1.5}>
-                            {users.map(user => (
-                                <Grid2 item size={{ xs: 12, sm: 6, md: 4}} key={user.id}>
-                                   <InviteUserBox user={user} handleInvite={handleInvite}/>
+                            {tasks.map(task => (
+                                <Grid2 item size={{ xs: 12, sm: 6, md: 4}} key={task.id}>
+                                    <AddTaskBox task={task} handleAdd={handleAdd}/>
                                 </Grid2>
                             ))}
                         </Grid2>
                     </>
+
                 }
                 pagesCount={pagesCount}
                 page={page}
@@ -96,4 +104,4 @@ const EventInviteDialog = (
     );
 };
 
-export default EventInviteDialog;
+export default EventTasksAddDialog;

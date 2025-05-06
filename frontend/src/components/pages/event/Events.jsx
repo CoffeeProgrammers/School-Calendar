@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import EventService from "../../../services/ext/EventService";
-import {Box, Divider, Stack, Typography} from "@mui/material";
+import {Box, Divider, Grid2, Stack, Typography} from "@mui/material";
 import Loading from "../../layouts/Loading";
 import PaginationBox from "../../layouts/lists/PaginationBox";
 import Search from "../../layouts/lists/Search";
 import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
 import DefaultButton from "../../layouts/DefaultButton";
-import EventList from "../../common/event/EventList";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
-import {listPanelStyles} from "../../../assets/styles";
+import EventBox from "../../common/event/EventBox";
+import {useNavigate} from "react-router-dom";
 
 const eventTypes = [
     {value: '', label: <em>None</em>},
@@ -40,15 +40,16 @@ const eventTypes = [
 ];
 
 const Events = () => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [eventType, setEventType] = useState('');
+    const navigate = useNavigate();
 
     const [events, setEvents] = useState([])
 
+    const [searchQuery, setSearchQuery] = useState('');
+    const [eventType, setEventType] = useState('');
+    const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
+
     const [page, setPage] = useState(1);
     const [pagesCount, setPagesCount] = useState(1)
-
-    const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -87,15 +88,10 @@ const Events = () => {
 
     return (
         <>
-            <Box sx={{
-                border: '1px solid #ddd',
-                padding: '20px',
-                margin: '10px',
-                borderRadius: "10px",
-            }}>
-                <Stack direction="row" sx={listPanelStyles}>
+            <Box sx={{border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "10px",}}>
+                <Stack direction="row" sx={{alignItems: 'center', display: "flex", justifyContent: "space-between "}}>
                     <Typography variant="h4">Events</Typography>
-                    <Box sx={listPanelStyles} gap={0.5}>
+                    <Box sx={{alignItems: 'center', display: "flex", justifyContent: "space-between"}} gap={0.5}>
                         <Search
                             searchQuery={searchQuery}
                             setSearchQuery={setSearchQuery}
@@ -104,13 +100,11 @@ const Events = () => {
                             isOpenFilterMenu={isOpenFilterMenu}
                             setOpenFilterMenu={setOpenFilterMenu}
                         />
-
                         <DefaultButton>
                             New
                         </DefaultButton>
                     </Box>
                 </Stack>
-
 
                 <Divider sx={{mb: 1}}/>
 
@@ -125,6 +119,7 @@ const Events = () => {
                                     options: eventTypes
                                 },
                                 {
+                                    //TODO: Date
                                     label: "Date",
                                     options: [{value: "", label: <em>Todo</em>}]
                                 }
@@ -133,9 +128,16 @@ const Events = () => {
                     </Box>
                 )}
 
-                <EventList
-                    events={events}
-                />
+                {/*TODO: list optimize*/}
+                <Grid2 container spacing={1.5}>
+                    {events.map(event => (
+                        <Grid2 item size={{ xs: 12, sm: 6, md: 4, lg: 2.4}} key={event.id}>
+                            <Box onClick={() => navigate(`${event.id}`)}>
+                                <EventBox event={event}/>
+                            </Box>
+                        </Grid2>
+                    ))}
+                </Grid2>
 
                 {pagesCount > 1 && (
                     <Box sx={{marginTop: "auto"}}>
@@ -146,8 +148,6 @@ const Events = () => {
                         />
                     </Box>
                 )}
-
-
             </Box>
         </>
     );

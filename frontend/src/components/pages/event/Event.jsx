@@ -13,7 +13,7 @@ import SubjectIcon from '@mui/icons-material/Subject';
 import ParticipantsContainer from "../../common/user/participants_dialog/ParticipantsContainer";
 import CommentsContainer from "../../common/comment/event_comments_dialog/CommentsContainer";
 import DateService from "../../../services/simple/DateService";
-import EventTasksContainer from "../../common/task/event_tasks_dialog/EventTasksContainer";
+import EventTasksContainer from "../../common/task/event_task/event_tasks_dialog/EventTasksContainer";
 import Options from "../../layouts/Options";
 
 const Event = () => {
@@ -78,19 +78,9 @@ const Event = () => {
     ]
 
     return (
-        <Box
-            sx={{
-                maxWidth: '1000px',
-                border: '1px solid #ddd',
-                padding: '20px',
-                margin: '10px',
-                borderRadius: "10px",
-                display: "flex",
-                flexDirection: "column"
-            }}>
+        <Box sx={{width: "800px", border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "10px", display: "flex", flexDirection: "column"}}>
             <Container maxWidth="md">
-
-                <Typography variant="h4" sx={listElementBoxTextStyle}>
+                <Typography variant="h4" sx={{display: 'flex', alignItems: 'center', gap: 0.5}}>
                     <SpaceDashboard fontSize="large" color="secondary"/>
                     {event.name}
                 </Typography>
@@ -100,12 +90,12 @@ const Event = () => {
                 <Options optionsList={optionList}/>
 
                 <Divider sx={{mt: 1, mb: 0.7}}/>
+
                 <Stack direction="row" spacing={0.5}>
                     <ParticipantsContainer/>
                     <CommentsContainer/>
                     <EventTasksContainer/>
                 </Stack>
-
 
                 <Divider sx={{mt: 0.7, mb: 2}}/>
 
@@ -114,8 +104,11 @@ const Event = () => {
                     Content:
                 </Typography>
                 <Container>
-                    <Typography variant="body1" color="primary">{event.content}</Typography>
+                    <Typography variant="body1" color="primary">
+                        {event.content}
+                    </Typography>
                 </Container>
+
             </Container>
         </Box>
     );

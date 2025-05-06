@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Main from "./components/pages/Main";
+import Main from "./components/pages/main/Main";
 import Page from "./components/layouts/Page";
 import {ThemeProvider} from "@mui/material";
 import theme from "./assets/theme"

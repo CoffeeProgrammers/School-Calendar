@@ -2,7 +2,6 @@ import BaseService from "../BaseService";
 
 const API_URL = 'http://localhost:5000/tasks';
 
-//TODO: adapt to json-server
 class TaskService extends BaseService {
     constructor() {
         super(API_URL);
@@ -32,7 +31,6 @@ class TaskService extends BaseService {
         );
     }
 
-    //TODO
     async getMyTasks({page, size, searchQuery, deadline, isDone}) {
         return await this.handleRequest(
             () => this.apiClient.get('', {
@@ -43,7 +41,6 @@ class TaskService extends BaseService {
                     deadline: deadline,
                     _sort: 'start_date',
                     _order: 'asc'
-                    // size, //TODO: pagination when backend will be done
                 }
             })
         );
@@ -57,7 +54,6 @@ class TaskService extends BaseService {
         );
     };
 
-    //TODO
     async getTasksByEvent({eventId, page, size}) {
         return await this.handleRequest(() =>
             this.apiClient.get('', {

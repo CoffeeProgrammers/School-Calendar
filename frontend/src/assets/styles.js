@@ -1,3 +1,5 @@
+import {red} from "@mui/material/colors";
+import theme from "./theme";
 
 export const listElementBoxStyle = {
     border: '1px solid #ddd',
@@ -32,3 +34,15 @@ export const mainBoxStyles = {
     display: "flex",
     flexDirection: "column"
 };
+
+export const disagreeButtonStyles = {
+    backgroundColor: red["700"],
+    '&:hover': {backgroundColor: red["500"]},
+    color: "white",
+}
+
+export const defaultButtonStyles = {
+    backgroundColor: theme.palette.secondary.main,
+    '&:hover': {backgroundColor: theme.palette.secondary.light},
+    color: "white",
+}

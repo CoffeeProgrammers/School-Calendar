@@ -625,15 +625,6 @@
       "description": "Enthusiastic user who enjoys exploring new technologies."
     },
     {
-      "id": "3",
-      "email": "user3@example.com",
-      "role": "user",
-      "first_name": "Bob",
-      "last_name": "Johnson",
-      "birthday": "1992-11-10",
-      "description": "Casual user who regularly participates in community discussions."
-    },
-    {
       "id": "4",
       "email": "user4@example.com",
       "role": "moderator",
@@ -799,8 +790,8 @@
   "tasks": [
     {
       "id": "1",
-      "isDone": false,
-      "name": "Task 1",
+      "isDone": true,
+      "name": "MUI offers a comprehensive suite of free UI tools to help you ship new features faster. Start with Material UI, our fully-loaded component library, or bring your own design system to our production-ready components.",
       "deadline": "2025-04-01T12:00:00Z",
       "creator": {
         "id": 101,
