@@ -103,4 +103,17 @@ public class TaskController {
         taskService.assignTaskToEvent(event_id, id);
         taskAssignmentService.assignTasksToEventUsers(event_id, id);
     }
+
+    @GetMapping("/getMyWithoutEvent")
+    @ResponseStatus(HttpStatus.OK)
+    public PaginationListResponse<TaskListResponse> getMyTasks(
+            @RequestParam int page,
+            @RequestParam int size,
+            Authentication auth) {
+        return taskService.findAllByCreatorIdAndEventEmpty(
+                auth,
+                page,
+                size
+        );
+    }
 }
