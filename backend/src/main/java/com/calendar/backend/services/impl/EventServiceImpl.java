@@ -24,7 +24,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -55,7 +58,7 @@ public class EventServiceImpl implements EventService {
         event.setContentAvailableAnytime(eventUpdateRequest.isContentAvailableAnytime());
         event.setMeetingType(MeetingType.valueOf(eventUpdateRequest.getMeetingType()));
         event.setPlace(eventUpdateRequest.getPlace());
-        notificationServices.create(new Notification(event.getUsers(),
+        notificationServices.create(new Notification(new ArrayList<>(event.getUsers()),
                 "Event " + event.getName() + " was updated"));
         return eventMapper.fromEventToEventResponse(event);
     }
@@ -63,7 +66,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public void delete(Long id) {
         log.info("Deleting event with id {}", id);
-        notificationServices.create(new Notification(findByIdForServices(id).getUsers(),
+        notificationServices.create(new Notification(new ArrayList<>(findByIdForServices(id).getUsers()),
                 "Event " + findByIdForServices(id).getName() + " was updated"));
         eventRepository.deleteById(id);
     }
@@ -114,7 +117,7 @@ public class EventServiceImpl implements EventService {
                                                                                 LocalDateTime end) {
         log.info("Finding all events for user with id {} and date range {} - {}", userId, start, end);
         List<Event> events = eventRepository.findAllByUserIdAndDateRange(userId,
-                start, end, Sort.by(Sort.Direction.ASC, "time"));
+                start, end, Sort.by(Sort.Direction.ASC, "start_date"));
         return events.stream().map(eventMapper::fromEventToEventListResponse).toList();
     }
 
@@ -128,7 +131,7 @@ public class EventServiceImpl implements EventService {
     public void deleteUserById(long id, long userId) {
         Event event = findByIdForServices(id);
         User user = userService.findByIdForServices(userId);
-        notificationServices.create(new Notification(new ArrayList<>(Arrays.asList(user)),
+        notificationServices.create(new Notification(List.of(user),
                 "You have been removed from " + event.getName()));
         event.deleteUser(user);
     }

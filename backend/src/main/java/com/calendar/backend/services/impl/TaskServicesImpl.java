@@ -39,7 +39,7 @@ public class TaskServicesImpl implements TaskService {
         log.info("Saving new task {}", taskRequest);
         Task task = taskMapper.fromTaskRequestToTask(taskRequest);
         task.setCreator(userService.findUserByAuth(authentication));
-        task.setEvent(eventId == 0 ? eventService.findByIdForServices(eventId) : null);
+        task.setEvent(eventId != 0 ? eventService.findByIdForServices(eventId) : null);
         return taskMapper.fromTaskToTaskResponse(taskRepository.save(task));
     }
 
@@ -124,6 +124,12 @@ public class TaskServicesImpl implements TaskService {
         Task task = findByIdForServices(id);
         task.setEvent(eventService.findByIdForServices(id));
         taskRepository.save(task);
+    }
+
+    @Override
+    public void unsignAllFromEvent(long eventId) {
+        List<Task> tasks = findAllByEventId(eventId).stream().map(task -> {task.setEvent(null); return task;}).toList();
+        taskRepository.saveAll(tasks);
     }
 
     @Override

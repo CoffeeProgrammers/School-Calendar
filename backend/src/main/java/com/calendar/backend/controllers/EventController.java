@@ -6,6 +6,7 @@ import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.dto.event.EventUpdateRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.EventService;
+import com.calendar.backend.services.inter.TaskService;
 import com.calendar.backend.services.inter.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.util.List;
 public class EventController {
     private final EventService eventService;
     private final UserService userService;
+    private final TaskService taskService;
 
     @PreAuthorize("hasAnyRole('TEACHER', 'STUDENT')")
     @PostMapping("/create")
@@ -47,6 +49,7 @@ public class EventController {
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEvent(@PathVariable Long id, Authentication auth) {
+        taskService.unsignAllFromEvent(id);
         eventService.delete(id);
     }
 

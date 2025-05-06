@@ -69,7 +69,7 @@ public class CommentServiceImpl implements CommentService {
     public PaginationListResponse<CommentResponse> findAllByEventId(long eventId, int page, int size) {
         log.info("Finding all comments for event with id {}", eventId);
         Page<Comment> comments = commentRepository.findAllByEvent_Id(eventId, PageRequest.of(page, size,
-                Sort.by(Sort.Direction.ASC, "time")));
+                Sort.by(Sort.Direction.ASC, "date")));
         PaginationListResponse<CommentResponse> response = new PaginationListResponse<>();
         response.setTotalPages(comments.getTotalPages());
         response.setContent(comments.getContent().stream().map(
