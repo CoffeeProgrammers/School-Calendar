@@ -49,11 +49,12 @@ public class UserController {
     public PaginationListResponse<UserListResponse> getAllUsers(
             @RequestParam int page,
             @RequestParam int size,
+            @RequestParam(required = false) String email,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String role
     ) {
-        return userService.findAll(firstName, lastName, role, page, size);
+        return userService.findAll(email, firstName, lastName, role, page, size);
     }
 
     @GetMapping("/events/{event_id}")
@@ -62,10 +63,11 @@ public class UserController {
             @PathVariable Long event_id,
             @RequestParam Integer page,
             @RequestParam Integer size,
+            @RequestParam(required = false) String email,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String role) {
-        return userService.findAllByEventId(firstName, lastName, role, event_id, page, size);
+        return userService.findAllByEventId(email, firstName, lastName, role, event_id, page, size);
     }
 
     @GetMapping("/not_events/{event_id}")
@@ -74,10 +76,11 @@ public class UserController {
             @PathVariable Long event_id,
             @RequestParam Integer page,
             @RequestParam Integer size,
+            @RequestParam(required = false) String email,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String role) {
-        return userService.findAllByEventsNotContains(firstName, lastName, role, event_id, page, size);
+        return userService.findAllByEventsNotContains(email, firstName, lastName, role, event_id, page, size);
     }
 
     @GetMapping("/my")

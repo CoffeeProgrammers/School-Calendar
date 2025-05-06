@@ -17,13 +17,14 @@ public interface UserService extends UserDetailsService {
 
     void delete(long id);
     UserFullResponse findById(long id);
-    PaginationListResponse<UserListResponse> findAll(String firstName, String lastName, String role, int page, int size);
-    PaginationListResponse<UserListResponse> findAllByEventId(String firstName, String lastName, String role,
-                                                              long eventId, int page, int size);
+    PaginationListResponse<UserListResponse> findAll(
+            String email, String firstName, String lastName, String role, int page, int size);
+    PaginationListResponse<UserListResponse> findAllByEventId(
+            String email, String firstName, String lastName, String role, long eventId, int page, int size);
+    PaginationListResponse<UserListResponse> findAllByEventsNotContains(
+            String email, String firstName, String lastName, String role, long eventId, int page, int size);
     User findByEmail(String email);
     User findUserByAuth(Authentication authentication);
     User findByIdForServices(long id);
     List<User> findAllByEventIdForServices(long eventId);
-    PaginationListResponse<UserListResponse> findAllByEventsNotContains(String firstName, String lastName, String role,
-                                                                        long eventId, int page, int size);
 }

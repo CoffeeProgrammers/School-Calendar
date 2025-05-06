@@ -26,6 +26,11 @@ public class UserSpecification {
                         "%" + filters.get("lastName").toString().toLowerCase() + "%"));
             }
 
+            if (filters.containsKey("email")) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("email")),
+                        "%" + filters.get("email").toString().toLowerCase() + "%"));
+            }
+
             if (filters.containsKey("role")) {
                 predicates.add(criteriaBuilder.equal(root.get("role"), filters.get("role").toString()));
             }
