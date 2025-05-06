@@ -24,4 +24,6 @@ public interface UserService extends UserDetailsService {
     User findUserByAuth(Authentication authentication);
     User findByIdForServices(long id);
     List<User> findAllByEventIdForServices(long eventId);
+    PaginationListResponse<UserListResponse> findAllByEventsNotContains(String firstName, String lastName, String role,
+                                                                        long eventId, int page, int size);
 }

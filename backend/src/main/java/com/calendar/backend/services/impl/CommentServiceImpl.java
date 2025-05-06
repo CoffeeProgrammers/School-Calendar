@@ -42,7 +42,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentMapper.fromCommentRequestToComment(commentRequest);
         User user = userService.findByEmail(authentication.getName());
         Event event = eventService.findByIdForServices(eventId);
-        comment.setTime(LocalDateTime.now());
+        comment.setDate(LocalDateTime.now());
         comment.setCreator(user);
         comment.setEvent(event);
         notificationService.create(new Notification(List.of(event.getCreator()),

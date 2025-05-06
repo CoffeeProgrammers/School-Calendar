@@ -1,10 +1,7 @@
 package com.calendar.backend.repositories.specification;
 
 import com.calendar.backend.models.User;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
@@ -37,6 +34,23 @@ public class UserSpecification {
     }
 
     public static Specification<User> hasEvent(Long eventId) {
-        return (root, query, cb) -> cb.equal(root.join("events").get("id"), eventId);
+        return (root, query, cb) ->
+                cb.equal(root.join("events").get("id"), eventId);
     }
+
+    public static Specification<User> doesNotHaveEvent(Long eventId) {
+        return (root, query, cb) -> {
+            Subquery<Long> subquery = query.subquery(Long.class);
+            Root<User> subRoot = subquery.from(User.class);
+            Join<Object, Object> join = subRoot.join("events");
+            subquery.select(subRoot.get("id"))
+                    .where(
+                            cb.equal(subRoot.get("id"), root.get("id")),
+                            cb.equal(join.get("id"), eventId)
+                    );
+
+            return cb.not(cb.exists(subquery));
+        };
+    }
+
 }

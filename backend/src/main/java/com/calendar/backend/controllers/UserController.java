@@ -68,6 +68,18 @@ public class UserController {
         return userService.findAllByEventId(firstName, lastName, role, event_id, page, size);
     }
 
+    @GetMapping("/not_events/{event_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PaginationListResponse<UserListResponse> getUsersByNotEvent(
+            @PathVariable Long event_id,
+            @RequestParam Integer page,
+            @RequestParam Integer size,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String role) {
+        return userService.findAllByEventsNotContains(firstName, lastName, role, event_id, page, size);
+    }
+
     @GetMapping("/my")
     @ResponseStatus(HttpStatus.OK)
     public UserFullResponse getMyUser(Authentication auth) {

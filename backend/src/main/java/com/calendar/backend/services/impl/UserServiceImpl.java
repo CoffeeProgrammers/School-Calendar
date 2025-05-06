@@ -96,28 +96,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PaginationListResponse<UserListResponse> findAllByEventId(String firstName, String lastName, String role,
-                                                                     long eventId, int page, int size) {
-        Map<String, Object> filters = new HashMap<>();
-        if(!firstName.isEmpty()) {
-            filters.put("firstName", firstName);
-        }
-        if(!lastName.isEmpty()) {
-            filters.put("lastName", lastName);
-        }
-        if(!role.isEmpty()) {
-            filters.put("role", role);
-        }
-        log.info("Finding all users with filters {} and event id {}", filters, eventId);
-        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId).and(UserSpecification.filterUsers(filters)),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
-        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
-        response.setTotalPages(users.getTotalPages());
-        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
-        return response;
-    }
-
-    @Override
     public User findByEmail(String email) {
         log.info("Finding user with email {}", email);
         return userRepository.findByEmail(email).orElseThrow(
@@ -152,5 +130,45 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllByEventIdForServices(long eventId){
         return userRepository.findAllByEventId(eventId);
     }
+
+    @Override
+    public PaginationListResponse<UserListResponse> findAllByEventsNotContains(String firstName, String lastName, String role,
+                                                                               long eventId, int page, int size) {
+        Map<String, Object> filters = createFilters(firstName, lastName, role);
+        log.info("Finding all users with events not contains event with id {}", eventId);
+        Page<User> users = userRepository.findAll(UserSpecification.doesNotHaveEvent(eventId).and(UserSpecification.filterUsers(filters)),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
+        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(users.getTotalPages());
+        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
+        return response;
+    }
+
+    @Override
+    public PaginationListResponse<UserListResponse> findAllByEventId(String firstName, String lastName, String role,
+                                                                     long eventId, int page, int size) {
+        Map<String, Object> filters = createFilters(firstName, lastName, role);
+        log.info("Finding all users with filters {} and event id {}", filters, eventId);
+        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId).and(UserSpecification.filterUsers(filters)),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
+        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(users.getTotalPages());
+        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
+        return response;
+    }
+
+    private Map<String, Object> createFilters(String firstName, String lastName, String role) {
+        Map<String, Object> filters = new HashMap<>();
+        if(!firstName.isEmpty()) {
+            filters.put("firstName", firstName);
+        }
+        if(!lastName.isEmpty()) {
+            filters.put("lastName", lastName);
+        }
+        if(!role.isEmpty()) {
+            filters.put("role", role);
+        }
+        return filters;
+    };
 }
 
