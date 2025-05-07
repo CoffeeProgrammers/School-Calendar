@@ -1,6 +1,5 @@
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { Card, CardContent, Stack } from '@mui/material';
+import {Stack} from '@mui/material';
+import NotificationBox from "./NotificationBox";
 
 const notificationsData = [
     {
@@ -56,24 +55,14 @@ const notificationsData = [
 ];
 
 
-const GenerationNotifications = () => {
+const NotificationsList = () => {
     return (
         <Stack spacing={1} mt={-1}>
             {notificationsData.map(notification => (
-                <Card variant='outlined' sx={{ borderRadius: "10px" }}>
-                    <Box mb={-2}>
-                        <CardContent >
-                            <Typography>{notification.message}</Typography>
-                            <Box sx={{ display: "flex", justifyContent: "end" }}>
-                                <Typography variant='subtitle2'>{notification.date}</Typography>
-                            </Box>
-                        </CardContent>
-                    </Box>
-                </Card>
-            ))
-            }
+                <NotificationBox notification={notification}/>
+            ))}
         </Stack>
     )
 }
 
-export default GenerationNotifications
+export default NotificationsList

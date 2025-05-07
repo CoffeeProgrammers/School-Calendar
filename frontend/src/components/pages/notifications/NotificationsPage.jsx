@@ -3,14 +3,14 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import GenerationNotifications from '../../common/notifications/GenerationNotifications';
-import GenerationInvitations from '../../common/notifications/GenerationInvitations';
+import NotificationsList from '../../common/notifications/NotificationsList';
+import InvitationsList from '../../common/invitations/InvitationsList';
 
 const NotificationsPage = () => {
-    const [value, setValue] = React.useState('notifications');
+    const [tabValue, setTabValue] = React.useState('notifications');
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
+        setTabValue(newValue);
     };
 
     function TabPanel(props) {
@@ -43,20 +43,27 @@ const NotificationsPage = () => {
     return (
         <Box sx={{ width: "60%", padding: "10px", border: '1px solid #ddd', borderRadius: "10px" }}>
             <Tabs
-                value={value}
+                value={tabValue}
                 onChange={handleChange}
                 textColor="secondary"
                 indicatorColor="secondary"
-                aria-label="full width tabs example"
             >
-                <Tab value='notifications' label={<Typography>Notifications</Typography>} {...a11yProps(0)} sx={{ textTransform: "none" }} ></Tab>
-                <Tab value='invitations' label={<Typography>Invitations</Typography>} sx={{ textTransform: "none" }} />
+                <Tab
+                    value='notifications'
+                    label={<Typography>Notifications</Typography>} {...a11yProps(0)}
+                    sx={{ textTransform: "none" }}
+                />
+                <Tab
+                    value='invitations'
+                    label={<Typography>Invitations</Typography>}
+                    sx={{ textTransform: "none" }}
+                />
             </Tabs>
-            <TabPanel value={value} index='notifications'>
-                <GenerationNotifications />
+            <TabPanel value={tabValue} index='notifications'>
+                <NotificationsList/>
             </TabPanel>
-            <TabPanel value={value} index='invitations'>
-                <GenerationInvitations />
+            <TabPanel value={tabValue} index='invitations'>
+                <InvitationsList />
             </TabPanel>
         </Box>
     )
