@@ -1119,5 +1119,549 @@
         "last_name": "Martin"
       }
     }
+  ],
+  "invitations": [
+    {
+      "id": "1",
+      "creator": {
+        "id": 201,
+        "email": "invitee1@example.com",
+        "role": "admin",
+        "first_name": "Olivia",
+        "last_name": "Smith"
+      },
+      "event": {
+        "id": "E1",
+        "name": "Annual Conference",
+        "type": "corporate",
+        "start_date": "2025-05-01T10:00:00Z",
+        "end_date": "2025-05-01T18:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Conference Hall A"
+      },
+      "description": "Join the annual corporate conference.",
+      "warning": "Limited seats available.",
+      "time": "2025-05-01T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "creator": {
+        "id": 202,
+        "email": "invitee2@example.com",
+        "role": "member",
+        "first_name": "Liam",
+        "last_name": "Johnson"
+      },
+      "event": {
+        "id": "E2",
+        "name": "Team Building Retreat",
+        "type": "team",
+        "start_date": "2025-05-02T08:00:00Z",
+        "end_date": "2025-05-04T17:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Mountain Resort Center"
+      },
+      "description": "A retreat to enhance team collaboration.",
+      "warning": "Pack comfortable clothes for outdoor activities.",
+      "time": "2025-05-02T08:00:00Z"
+    },
+    {
+      "id": "3",
+      "creator": {
+        "id": 203,
+        "email": "invitee3@example.com",
+        "role": "editor",
+        "first_name": "Emma",
+        "last_name": "Williams"
+      },
+      "event": {
+        "id": "E3",
+        "name": "Product Launch",
+        "type": "marketing",
+        "start_date": "2025-05-05T14:00:00Z",
+        "end_date": "2025-05-05T16:00:00Z",
+        "meeting_type": "online",
+        "place": "Virtual Platform - Zoom"
+      },
+      "description": "Introducing our latest product.",
+      "warning": "Ensure you have a stable internet connection.",
+      "time": "2025-05-05T14:00:00Z"
+    },
+    {
+      "id": "4",
+      "creator": {
+        "id": 204,
+        "email": "invitee4@example.com",
+        "role": "admin",
+        "first_name": "Noah",
+        "last_name": "Brown"
+      },
+      "event": {
+        "id": "E4",
+        "name": "Leadership Training",
+        "type": "workshop",
+        "start_date": "2025-05-08T09:00:00Z",
+        "end_date": "2025-05-09T16:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Training Room 3B"
+      },
+      "description": "An intensive training on leadership skills.",
+      "warning": "Please arrive on time.",
+      "time": "2025-05-08T09:00:00Z"
+    },
+    {
+      "id": "5",
+      "creator": {
+        "id": 205,
+        "email": "invitee5@example.com",
+        "role": "member",
+        "first_name": "Ava",
+        "last_name": "Jones"
+      },
+      "event": {
+        "id": "E5",
+        "name": "Environmental Sustainability Webinar",
+        "type": "webinar",
+        "start_date": "2025-05-11T12:00:00Z",
+        "end_date": "2025-05-11T13:30:00Z",
+        "meeting_type": "online",
+        "place": "Virtual Platform - Teams"
+      },
+      "description": "A discussion on sustainable practices.",
+      "warning": "Register to receive the webinar link.",
+      "time": "2025-05-11T12:00:00Z"
+    },
+    {
+      "id": "6",
+      "creator": {
+        "id": 206,
+        "email": "invitee6@example.com",
+        "role": "member",
+        "first_name": "Sophia",
+        "last_name": "Miller"
+      },
+      "event": {
+        "id": "E6",
+        "name": "Hackathon 2025",
+        "type": "competition",
+        "start_date": "2025-05-15T09:00:00Z",
+        "end_date": "2025-05-16T18:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Tech Lab Center"
+      },
+      "description": "Compete with peers in coding challenges.",
+      "warning": "Bring your own devices.",
+      "time": "2025-05-15T09:00:00Z"
+    },
+    {
+      "id": "7",
+      "creator": {
+        "id": 207,
+        "email": "invitee7@example.com",
+        "role": "editor",
+        "first_name": "James",
+        "last_name": "Garcia"
+      },
+      "event": {
+        "id": "E7",
+        "name": "Virtual Networking Session",
+        "type": "networking",
+        "start_date": "2025-05-20T10:00:00Z",
+        "end_date": "2025-05-20T12:00:00Z",
+        "meeting_type": "online",
+        "place": "Virtual Platform - WebEx"
+      },
+      "description": "Interactive networking opportunity.",
+      "warning": "Ensure your profile is updated.",
+      "time": "2025-05-20T10:00:00Z"
+    },
+    {
+      "id": "8",
+      "creator": {
+        "id": 208,
+        "email": "invitee8@example.com",
+        "role": "admin",
+        "first_name": "Evelyn",
+        "last_name": "Martinez"
+      },
+      "event": {
+        "id": "E8",
+        "name": "Customer Support Training",
+        "type": "workshop",
+        "start_date": "2025-05-22T09:00:00Z",
+        "end_date": "2025-05-22T17:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Support Training Center"
+      },
+      "description": "Hands-on training for support staff.",
+      "warning": "Bring your training materials.",
+      "time": "2025-05-22T09:00:00Z"
+    },
+    {
+      "id": "9",
+      "creator": {
+        "id": 209,
+        "email": "invitee9@example.com",
+        "role": "member",
+        "first_name": "Alexander",
+        "last_name": "Robinson"
+      },
+      "event": {
+        "id": "E9",
+        "name": "Annual Fundraising Gala",
+        "type": "event",
+        "start_date": "2025-05-25T18:00:00Z",
+        "end_date": "2025-05-25T23:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Grand Ballroom"
+      },
+      "description": "Celebrate and raise funds for the cause.",
+      "warning": "Formal dress code required.",
+      "time": "2025-05-25T18:00:00Z"
+    },
+    {
+      "id": "10",
+      "creator": {
+        "id": 210,
+        "email": "invitee10@example.com",
+        "role": "editor",
+        "first_name": "Sofia",
+        "last_name": "Clark"
+      },
+      "event": {
+        "id": "E10",
+        "name": "Quarterly Business Review",
+        "type": "corporate",
+        "start_date": "2025-05-28T13:00:00Z",
+        "end_date": "2025-05-28T16:00:00Z",
+        "meeting_type": "online",
+        "place": "Virtual Platform - Zoom"
+      },
+      "description": "Discussion on quarterly performance.",
+      "warning": "Prepare reports in advance.",
+      "time": "2025-05-28T13:00:00Z"
+    },
+    {
+      "id": "11",
+      "creator": {
+        "id": 211,
+        "email": "invitee11@example.com",
+        "role": "member",
+        "first_name": "Grace",
+        "last_name": "Hernandez"
+      },
+      "event": {
+        "id": "E11",
+        "name": "Career Development Workshop",
+        "type": "workshop",
+        "start_date": "2025-06-01T09:00:00Z",
+        "end_date": "2025-06-01T17:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Seminar Hall B"
+      },
+      "description": "Grow your career potential.",
+      "warning": "Bring your CV for reviews.",
+      "time": "2025-06-01T09:00:00Z"
+    },
+    {
+      "id": "12",
+      "creator": {
+        "id": 212,
+        "email": "invitee12@example.com",
+        "role": "admin",
+        "first_name": "Luke",
+        "last_name": "Lopez"
+      },
+      "event": {
+        "id": "E12",
+        "name": "Volunteer Orientation",
+        "type": "training",
+        "start_date": "2025-06-05T10:00:00Z",
+        "end_date": "2025-06-05T13:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Community Center"
+      },
+      "description": "Orientation for new volunteers.",
+      "warning": "Attendance is mandatory.",
+      "time": "2025-06-05T10:00:00Z"
+    },
+    {
+      "id": "13",
+      "creator": {
+        "id": 213,
+        "email": "invitee13@example.com",
+        "role": "editor",
+        "first_name": "Ella",
+        "last_name": "Gonzalez"
+      },
+      "event": {
+        "id": "E13",
+        "name": "Health Awareness Workshop",
+        "type": "seminar",
+        "start_date": "2025-06-10T09:00:00Z",
+        "end_date": "2025-06-10T12:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Health Center Room A"
+      },
+      "description": "Enhancing health consciousness.",
+      "warning": "Bring a notebook for notes.",
+      "time": "2025-06-10T09:00:00Z"
+    },
+    {
+      "id": "14",
+      "creator": {
+        "id": 214,
+        "email": "invitee14@example.com",
+        "role": "member",
+        "first_name": "Mia",
+        "last_name": "Harris"
+      },
+      "event": {
+        "id": "E14",
+        "name": "Coding Bootcamp",
+        "type": "training",
+        "start_date": "2025-06-15T08:00:00Z",
+        "end_date": "2025-06-15T17:00:00Z",
+        "meeting_type": "in-person",
+        "place": "IT Lab"
+      },
+      "description": "Learn the latest coding techniques.",
+      "warning": "Basic programming knowledge required.",
+      "time": "2025-06-15T08:00:00Z"
+    },
+    {
+      "id": "15",
+      "creator": {
+        "id": 215,
+        "email": "invitee15@example.com",
+        "role": "admin",
+        "first_name": "Benjamin",
+        "last_name": "Martinez"
+      },
+      "event": {
+        "id": "E15",
+        "name": "Data Analytics Seminar",
+        "type": "seminar",
+        "start_date": "2025-06-20T12:00:00Z",
+        "end_date": "2025-06-20T15:00:00Z",
+        "meeting_type": "online",
+        "place": "Virtual Platform - Teams"
+      },
+      "description": "Explore the world of data.",
+      "warning": "Have Python pre-installed on your device.",
+      "time": "2025-06-20T12:00:00Z"
+    },
+    {
+      "id": "16",
+      "creator": {
+        "id": 216,
+        "email": "invitee16@example.com",
+        "role": "editor",
+        "first_name": "Alexander",
+        "last_name": "Thompson"
+      },
+      "event": {
+        "id": "E16",
+        "name": "Innovative Tech Showcase",
+        "type": "expo",
+        "start_date": "2025-06-25T10:00:00Z",
+        "end_date": "2025-06-25T18:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Tech Expo Center"
+      },
+      "description": "Experience the latest in technology.",
+      "warning": "Wear a visitor badge at all times.",
+      "time": "2025-06-25T10:00:00Z"
+    },
+    {
+      "id": "17",
+      "creator": {
+        "id": 217,
+        "email": "invitee17@example.com",
+        "role": "member",
+        "first_name": "Aria",
+        "last_name": "Lopez"
+      },
+      "event": {
+        "id": "E17",
+        "name": "Yoga Retreat",
+        "type": "wellness",
+        "start_date": "2025-07-01T07:00:00Z",
+        "end_date": "2025-07-01T19:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Wellness Retreat Center"
+      },
+      "description": "Rejuvenate your mind and body.",
+      "warning": "Bring a yoga mat.",
+      "time": "2025-07-01T07:00:00Z"
+    },
+    {
+      "id": "18",
+      "creator": {
+        "id": 218,
+        "email": "invitee18@example.com",
+        "role": "admin",
+        "first_name": "Charlotte",
+        "last_name": "Roberts"
+      },
+      "event": {
+        "id": "E18",
+        "name": "Charity Run",
+        "type": "event",
+        "start_date": "2025-07-04T06:00:00Z",
+        "end_date": "2025-07-04T12:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Central Park"
+      },
+      "description": "Support a good cause.",
+      "warning": "Wear comfortable running shoes.",
+      "time": "2025-07-04T06:00:00Z"
+    },
+    {
+      "id": "19",
+      "creator": {
+        "id": 219,
+        "email": "invitee19@example.com",
+        "role": "editor",
+        "first_name": "Henry",
+        "last_name": "King"
+      },
+      "event": {
+        "id": "E19",
+        "name": "AI and ML Conference",
+        "type": "conference",
+        "start_date": "2025-07-10T09:00:00Z",
+        "end_date": "2025-07-10T17:00:00Z",
+        "meeting_type": "online",
+        "place": "Virtual Platform - WebEx"
+      },
+      "description": "Learn from AI and ML experts.",
+      "warning": "Ensure sound-proof surroundings.",
+      "time": "2025-07-10T09:00:00Z"
+    },
+    {
+      "id": "20",
+      "creator": {
+        "id": 220,
+        "email": "invitee20@example.com",
+        "role": "member",
+        "first_name": "Mia",
+        "last_name": "Scott"
+      },
+      "event": {
+        "id": "E20",
+        "name": "Team Celebration Party",
+        "type": "event",
+        "start_date": "2025-07-15T18:00:00Z",
+        "end_date": "2025-07-15T23:00:00Z",
+        "meeting_type": "in-person",
+        "place": "Banquet Hall"
+      },
+      "description": "Enjoy and celebrate our team's success.",
+      "warning": "Inform HR for dietary restrictions.",
+      "time": "2025-07-15T18:00:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "1",
+      "content": "Your event 'Coding Bootcamp' starts soon.",
+      "time": "2025-06-10T09:00:00Z"
+    },
+    {
+      "id": "2",
+      "content": "Reminder: Data Analytics Seminar begins at 12 PM.",
+      "time": "2025-06-20T11:00:00Z"
+    },
+    {
+      "id": "3",
+      "content": "Innovative Tech Showcase happening today at 10 AM.",
+      "time": "2025-06-25T09:00:00Z"
+    },
+    {
+      "id": "4",
+      "content": "Don't forget your yoga mat for the Yoga Retreat!",
+      "time": "2025-07-01T06:00:00Z"
+    },
+    {
+      "id": "5",
+      "content": "Lace up for the Charity Run starting at 6 AM.",
+      "time": "2025-07-04T05:00:00Z"
+    },
+    {
+      "id": "6",
+      "content": "Join the AI and ML Conference online today!",
+      "time": "2025-07-10T08:00:00Z"
+    },
+    {
+      "id": "7",
+      "content": "Team Celebration Party is at 6 PM in the Banquet Hall.",
+      "time": "2025-07-15T17:00:00Z"
+    },
+    {
+      "id": "8",
+      "content": "Reminder: Coding Bootcamp is this week.",
+      "time": "2025-06-13T10:00:00Z"
+    },
+    {
+      "id": "9",
+      "content": "Prepare for the Data Analytics Seminar tomorrow.",
+      "time": "2025-06-19T18:00:00Z"
+    },
+    {
+      "id": "10",
+      "content": "Virtual doors are opening soon for the AI and ML Conference.",
+      "time": "2025-07-10T08:30:00Z"
+    },
+    {
+      "id": "11",
+      "content": "Celebrate success with your team in today's party!",
+      "time": "2025-07-15T12:00:00Z"
+    },
+    {
+      "id": "12",
+      "content": "Yoga Retreat registration closes soon.",
+      "time": "2025-06-29T14:00:00Z"
+    },
+    {
+      "id": "13",
+      "content": "Stay hydrated! The Charity Run is approaching fast.",
+      "time": "2025-07-03T18:00:00Z"
+    },
+    {
+      "id": "14",
+      "content": "Explore new tech at the Innovative Tech Showcase tomorrow.",
+      "time": "2025-06-24T16:00:00Z"
+    },
+    {
+      "id": "15",
+      "content": "Reminder: Bring your laptop for the Data Analytics Seminar.",
+      "time": "2025-06-19T16:00:00Z"
+    },
+    {
+      "id": "16",
+      "content": "AI and ML Conference insights will help advance your career.",
+      "time": "2025-07-09T18:00:00Z"
+    },
+    {
+      "id": "17",
+      "content": "Final call for the Team Celebration Party tonight!",
+      "time": "2025-07-15T16:00:00Z"
+    },
+    {
+      "id": "18",
+      "content": "Get ready to dive into coding at the Bootcamp.",
+      "time": "2025-06-14T20:00:00Z"
+    },
+    {
+      "id": "19",
+      "content": "Pack your yoga essentials! The retreat is tomorrow.",
+      "time": "2025-06-30T18:00:00Z"
+    },
+    {
+      "id": "20",
+      "content": "Run with purpose - the Charity Run starts at dawn.",
+      "time": "2025-07-03T23:00:00Z"
+    }
   ]
 }

@@ -10,6 +10,7 @@ import Login from "./components/pages/login/Login";
 import Events from "./components/pages/event/Events";
 import UserPage from "./components/pages/user/UserPage";
 import MyProfile from "./components/pages/user/MyProfile";
+import NotificationsPage from './components/pages/notifications/NotificationsPage';
 import TaskPage from "./components/pages/task/TaskPage";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                     <Route path={'/profile'} element={<Page><MyProfile/></Page>}/>
                     <Route path={"/users/:id"} element={<Page><UserPage/></Page>}/>
                     <Route path={"/tasks/:id"} element={<TaskPage/>}/>
+                    <Route path={"/users/:id"} element={<Page><NotificationsPage/></Page>}/>
                 </Routes>
             </ThemeProvider>
         </Router>
