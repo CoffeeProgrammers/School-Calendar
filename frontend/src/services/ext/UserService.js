@@ -31,13 +31,13 @@ class UserService extends BaseService {
                 {
                     params: {
                         _page: page,
-                        // first_name: searchQuery, //TODO
+                        // first_name: searchQuery,
                         // last_name: searchQuery,
                         email: searchQuery,
                         role: role,
                         _sort: 'start_date',
                         _order: 'asc',
-                        // size, //TODO: pagination when backend will be done
+                        // size,
                     }
                 })
         );
@@ -57,7 +57,7 @@ class UserService extends BaseService {
 
     async deleteUser(userId) {
         return await this.handleRequest(
-            () => this.apiClient.delete(`/delete/${userId}`)
+            () => this.apiClient.delete(`/${userId}`)
         );
     }
 

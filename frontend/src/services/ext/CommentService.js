@@ -36,7 +36,6 @@ class CommentService extends BaseService {
         );
     }
 
-    //TODO: adapt to json-server
     async getCommentsByEventId({eventId, page, size}){
         return await this.handleRequest(
             () => this.apiClient.get(`/comments`, {

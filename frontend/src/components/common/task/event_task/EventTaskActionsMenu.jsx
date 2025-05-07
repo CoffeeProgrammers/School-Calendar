@@ -2,16 +2,16 @@ import React from 'react';
 import {Divider, Menu, MenuItem} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
-const ParticipantsActionsMenu = ({ anchorPosition, onClose, user, handleRemove }) => {
+const EventTaskActionsMenu = ({ anchorPosition, onClose, task, handleRemove }) => {
     const navigate = useNavigate();
 
     const handleOpenOption = () => {
-        navigate(`/users/${user.id}`);
+        navigate(`/tasks/${task.id}`);
         onClose();
     };
 
     const handleRemoveOption = () => {
-        handleRemove(user.id)
+        handleRemove(task.id)
         onClose();
     };
 
@@ -29,4 +29,4 @@ const ParticipantsActionsMenu = ({ anchorPosition, onClose, user, handleRemove }
     );
 };
 
-export default ParticipantsActionsMenu;
+export default EventTaskActionsMenu;

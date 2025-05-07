@@ -65,11 +65,10 @@ class EventService extends BaseService {
             () => this.apiClient.get(`/${eventId}`));
     }
 
-    //TODO: "MY" Events
     async getAllMyEvents(
         {
             page,
-            searchQuery, //TODO: name, email
+            searchQuery,
             type,
             date
         }
@@ -83,34 +82,30 @@ class EventService extends BaseService {
                     start_date: date,
                     _sort: 'start_date',
                     _order: 'asc',
-                    // size, //TODO: pagination when backend will be done
+                    // size, /
 
                 }
             })
         );
     }
 
-    //TODO
     async getOtherUsersEventsBetweenDates(userId, startDate, endDate, gap) {
         return await this.handleRequest(() =>
             this.apiClient.get(`/users/${userId}/between`, {
                 params: {
                     start_date_gte: startDate,
                     start_date_lte: endDate,
-                    //TODO: gap
                 },
             })
         );
     }
 
-    //TODO
     async getMyEventsBetweenDates(startDate, endDate, gap) {
         return await this.handleRequest(() =>
             this.apiClient.get('/between', {
                 params: {
                     start_date_gte: startDate,
                     start_date_lte: endDate,
-                    //TODO: gap
                 },
             })
         );

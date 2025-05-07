@@ -8,7 +8,7 @@ import DefaultButton from "../../layouts/DefaultButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import TaskList from "../../common/task/TaskList";
 import TaskService from "../../../services/ext/TaskService";
-import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
+import {listPanelStyles} from "../../../assets/styles";
 
 const isDoneSelectOptions = [
     {value: '', label: <em>None</em>},
@@ -67,7 +67,16 @@ const Tasks = () => {
 
     return (
         <>
-            <Box sx={mainBoxStyles}>
+            <Box sx={{
+                width: "1295px",
+                //maxWidth: "1295px",
+                border: '1px solid #ddd',
+                padding: '20px',
+                margin: '10px',
+                borderRadius: "10px",
+                display: "flex",
+                flexDirection: "column"
+            }}>
                 <Stack direction="row"  sx={listPanelStyles}>
                     <Typography variant="h4">Tasks</Typography>
                     <Box sx={listPanelStyles} gap={0.5}>
@@ -92,6 +101,7 @@ const Tasks = () => {
                 {isOpenFilterMenu && (
                     <Box sx={{mb: 1}}>
                         <FiltersGroup
+                            //TODO: date
                             filters={[
                                 {
                                     label: "Status",
@@ -101,7 +111,7 @@ const Tasks = () => {
                                 },
                                 {
                                     label: "Date",
-                                    options: [{value: "", label: <em>Todo</em>}]
+                                    options: [{value: "", label: <em>____</em>}]
                                 }
                             ]}
                         />

@@ -21,7 +21,7 @@ const TaskBox = ({task}) => {
     )
 
     return (
-        <Box sx={listElementBoxStyle}>
+        <Box sx={{...listElementBoxStyle, maxWidth: "350px"}}>
             <Typography noWrap variant="subtitle1" sx={listElementBoxTextStyle}>
                 <AssignmentIcon fontSize="small" color="secondary"/>
                 {task.name}

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
-import Loading from "../../../layouts/Loading";
-import TaskService from "../../../../services/ext/TaskService";
+import Loading from "../../../../layouts/Loading";
+import TaskService from "../../../../../services/ext/TaskService";
 import EventTasksDialog from "./EventTasksDialog";
 
 const EventTasksContainer = () => {
@@ -34,7 +34,7 @@ const EventTasksContainer = () => {
         fetchData();
     }, [page]);
 
-     const handleToggleTask = async (task) => {
+    const handleToggleTask = async (task) => {
         const updatedTask = await TaskService.toggleTask({
             taskId: task.id,
             isDone: task.isDone
@@ -44,6 +44,18 @@ const EventTasksContainer = () => {
             prevTasks.map(t => (t.id === updatedTask.id ? updatedTask : t))
         );
     }
+
+    const handleRemoveTask = async (taskId) => {
+        console.log("delete task " + taskId);
+        setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
+    }
+
+
+    const handleAddTask = async (task) => {
+        console.log("add task " + task.name);
+        setTasks(prevTasks => [task, ...prevTasks]);
+
+    };
 
     if (loading) {
         return <Loading/>;
@@ -60,6 +72,8 @@ const EventTasksContainer = () => {
             page={page}
             setPage={setPage}
             handleToggleTask={handleToggleTask}
+            handleRemove={handleRemoveTask}
+            handleAddTask={handleAddTask}
         />
     );
 }

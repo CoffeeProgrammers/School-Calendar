@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Main from "./components/pages/Main";
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import Main from "./components/pages/main/Main";
 import Page from "./components/layouts/Page";
-import { ThemeProvider } from "@mui/material";
+import {ThemeProvider} from "@mui/material";
 import theme from "./assets/theme"
 import Users from "./components/pages/user/Users";
 import Tasks from "./components/pages/task/Tasks";

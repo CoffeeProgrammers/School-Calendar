@@ -2,7 +2,6 @@ import BaseService from "../BaseService";
 
 const API_URL = "http://localhost:5000/invitations";
 
-//TODO: adapt to json-server
 class InvitationService extends BaseService {
     constructor() {
         super(API_URL);
@@ -28,7 +27,6 @@ class InvitationService extends BaseService {
         );
     }
 
-    //TODO: pagination
     async getAllInvitations(page, size) {
         return await this.handleRequest(() =>
             this.apiClient.get("", {
@@ -39,8 +37,6 @@ class InvitationService extends BaseService {
             })
         );
     }
-
-    //TODO: get invitations that were sent by me
 
     async acceptInvitation(invitationId) {
         return await this.handleRequest(() =>
