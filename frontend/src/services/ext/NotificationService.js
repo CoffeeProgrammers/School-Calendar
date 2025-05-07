@@ -7,11 +7,11 @@ class NotificationService extends BaseService {
         super(API_URL);
     }
 
-    async getMyNotifications() {
+    async getMyNotifications({ page }) {
         return await this.handleRequest(
             () => this.apiClient.get(`/`, {
                 params: {
-                    _page: 1,
+                    _page: page,
                 }
             })
         );

@@ -1,67 +1,68 @@
-import {Stack} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Stack } from '@mui/material';
 import NotificationBox from "./NotificationBox";
-
-const notificationsData = [
-    {
-        id: 1,
-        date: '05-06 09:15',
-        message: 'Увага! Завтра, 7 травня, у зв\'язку з технічними роботами, сайт може бути тимчасово недоступний. Просимо вибачення за незручності.',
-    },
-    {
-        id: 2,
-        date: '05-08 14:30',
-        message: 'Шановні батьки майбутніх першокласників! Запрошуємо вас на онлайн-зустріч 15 травня о 18:00. Деталі будуть надіслані на електронну пошту.',
-    },
-    {
-        id: 3,
-        date: '05-10 11:00',
-        message: 'Нове надходження книг! Запрошуємо учнів ознайомитися з новими науково-популярними виданнями та захопливими романами.',
-    },
-    {
-        id: 4,
-        date: '05-12 16:45',
-        message: 'Оголошується набір до секції з футболу для учнів 5-7 класів. Перше тренування відбудеться 20 травня о 15:00 на шкільному стадіоні.',
-    },
-    {
-        id: 5,
-        date: '05-15 10:20',
-        message: 'Увага! Конкурс малюнків "Моя квітуча Україна" триває до кінця травня. Запрошуємо всіх охочих взяти участь!',
-    },
-    {
-        id: 6,
-        date: '05-17 13:00',
-        message: 'Нагадую про батьківські збори, які відбудуться 22 травня о 18:30 в актовій залі. Явка обов\'язкова.',
-    },
-    {
-        id: 7,
-        date: '05-19 09:55',
-        message: 'Запрошуємо всіх учнів взяти участь у голосуванні за проєкт покращення шкільного подвір\'я. Бюлетені будуть доступні у холі першого поверху з 25 травня.',
-    },
-    {
-        id: 8,
-        date: '05-21 15:30',
-        message: 'Оголошується додатковий набір на безкоштовні підготовчі курси до ДПА з математики для учнів 11 класів. Запис за посиланням на сайті.',
-    },
-    {
-        id: 9,
-        date: '05-23 12:10',
-        message: 'Просимо батьків надати оновлені медичні довідки учнів до 1 червня. Дякуємо за співпрацю.',
-    },
-    {
-        id: 10,
-        date: '05-26 08:40',
-        message: 'Вітаємо всіх учнів та вчителів з успішним завершенням навчального року! Бажаємо гарних літніх канікул!',
-    },
-];
-
+import NotificationService from "../../../services/ext/NotificationService";
+import Loading from "../../layouts/Loading";
+import PaginationBox from "../../layouts/lists/PaginationBox";
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 const NotificationsList = () => {
+
+    const [notifications, setNotifications] = useState([])
+
+    const [page, setPage] = useState(1);
+    const [pagesCount, setPagesCount] = useState(1)
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await NotificationService.getMyNotifications(
+                    {
+                        page: page
+                    }
+                ); console.log(response.data)
+                setNotifications(response.data);
+                setPagesCount(response.pages)
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [page]);
+
+
+    if (loading) {
+        return <Loading />;
+    }
+
+    if (error) {
+        return <Typography color={"error"}>Error: {error.message}</Typography>;
+    }
+
     return (
-        <Stack spacing={1} mt={-1}>
-            {notificationsData.map(notification => (
-                <NotificationBox notification={notification}/>
-            ))}
-        </Stack>
+        <>
+            <Stack spacing={1} mt={-1}>
+                {notifications.map(notification => (
+                    <NotificationBox notification={notification} />
+                ))}
+            </Stack>
+            {pagesCount > 1 && (
+                <Box sx={{ marginTop: "auto" }}>
+                    <PaginationBox
+                        page={page}
+                        pagesCount={pagesCount}
+                        setPage={setPage}
+                    />
+                </Box>
+            )}
+        </>
     )
 }
 
