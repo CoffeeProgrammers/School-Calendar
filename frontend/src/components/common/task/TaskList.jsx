@@ -9,7 +9,7 @@ const TaskList = ({tasks}) => {
         //Todo: list optimize
         <Grid2 container spacing={1.5}>
             {tasks.map(task => (
-                <Grid2 item size={{ xs: 12, sm: 6, md: 4, lg: 2.4}} key={task.id}>
+                <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 2.4}} key={task.id}>
                     <Box onClick={() => navigate(`${task.id}`)}>
                         <TaskBox task={task}/>
                     </Box>

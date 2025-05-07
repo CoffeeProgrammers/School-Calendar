@@ -10,7 +10,7 @@ const UserList = ({users}) => {
         //TODO: list optimize
         <Grid2 container spacing={1.5}>
             {users.map(user => (
-                <Grid2 item size={{ xs: 12, sm: 6, md: 4, lg: 2.4}}  key={user.id}>
+                <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 2.4}}  key={user.id}>
                     <Box onClick={() => navigate(`${user.id}`)}>
                         <UserBox user={user}/>
                     </Box>

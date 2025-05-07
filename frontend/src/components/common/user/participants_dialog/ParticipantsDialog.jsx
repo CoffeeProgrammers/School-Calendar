@@ -14,7 +14,7 @@ const ParticipantsDialog = ({ users, pagesCount, page, setPage, handleRemove }) 
                     //TODO: list optimize
                     <Grid2 container spacing={1.5}>
                         {users.map(user => (
-                            <Grid2 item size={{ xs: 12, sm: 6}} key={user.id}>
+                            <Grid2 size={{ xs: 12, sm: 6}} key={user.id}>
                                 <ParticipantBox user={user} handleRemove={handleRemove}/>
                             </Grid2>
                         ))}

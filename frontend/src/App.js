@@ -10,23 +10,23 @@ import Login from "./components/pages/login/Login";
 import Events from "./components/pages/event/Events";
 import UserPage from "./components/pages/user/UserPage";
 import MyProfile from "./components/pages/user/MyProfile";
+import TaskPage from "./components/pages/task/TaskPage";
 
 function App() {
     return (
         <Router>
             <ThemeProvider theme={theme}>
-                <Page>
-                    <Routes>
-                        <Route path={""} element={<Main/>}/>
-                        <Route path={"/login"} element={<Login/>}/>
-                        <Route path={"/events"} element={<Events/>}/>
-                        <Route path={"/users"} element={<Users/>}/>
-                        <Route path={"/tasks"} element={<Tasks/>}/>
-                        <Route path={"/events/:id"} element={<Event/>}/>
-                        <Route path={'/profile'} element={<MyProfile/>} />
-                        <Route path={"/users/:id"} element={<UserPage/>}/>
-                    </Routes>
-                </Page>
+                <Routes>
+                    <Route path={""} element={<Page><Main/></Page>}/>
+                    <Route path={"/login"} element={<Page><Login/></Page>}/>
+                    <Route path={"/events"} element={<Page><Events/></Page>}/>
+                    <Route path={"/users"} element={<Page><Users/></Page>}/>
+                    <Route path={"/tasks"} element={<Page><Tasks/></Page>}/>
+                    <Route path={"/events/:id"} element={<Page><Event/></Page>}/>
+                    <Route path={'/profile'} element={<Page><MyProfile/></Page>}/>
+                    <Route path={"/users/:id"} element={<Page><UserPage/></Page>}/>
+                    <Route path={"/tasks/:id"} element={<TaskPage/>}/>
+                </Routes>
             </ThemeProvider>
         </Router>
     );

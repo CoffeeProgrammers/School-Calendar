@@ -21,7 +21,7 @@ class TaskService extends BaseService {
 
     async deleteTask(taskId) {
         return await this.handleRequest(
-            () => this.apiClient.delete(`/delete/${taskId}`)
+            () => this.apiClient.delete(`/${taskId}`)
         );
     }
 

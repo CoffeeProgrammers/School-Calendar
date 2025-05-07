@@ -42,7 +42,7 @@ const EventTaskBox = ({task, handleToggleTask, handleRemove}) => {
                     },
                 }}
             >
-                <ListItemButton onClick={handleClick} sx={{display: 'flex', alignItems: 'center'}}>
+                <ListItemButton onClick={handleClick}>
                     <ListItemIcon
                         sx={{minWidth: 'unset', marginRight: 1, marginLeft: 0.5}}
                         onClick={(e) => {
