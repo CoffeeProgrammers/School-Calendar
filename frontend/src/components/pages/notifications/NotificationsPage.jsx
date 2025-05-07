@@ -14,7 +14,7 @@ const NotificationsPage = () => {
     };
 
     function TabPanel(props) {
-        const { children, value, index } = props
+        const {children, value, index} = props
 
         return (
             <div
@@ -24,7 +24,7 @@ const NotificationsPage = () => {
                 aria-labelledby={`full-width-tab-${index}`}
             >
                 {value === index && (
-                    <Box sx={{ p: 3 }}>
+                    <Box sx={{p: 3}}>
                         <Typography>{children}</Typography>
                     </Box>
                 )}
@@ -41,29 +41,33 @@ const NotificationsPage = () => {
 
 
     return (
-        <Box sx={{ width: "60%", padding: "10px", border: '1px solid #ddd', borderRadius: "10px" }}>
-            <Tabs
-                value={tabValue}
-                onChange={handleChange}
-                textColor="secondary"
-                indicatorColor="secondary"
-            >
-                <Tab
-                    value='notifications'
-                    label={<Typography>Notifications</Typography>} {...a11yProps(0)}
-                    sx={{ textTransform: "none" }}
-                />
-                <Tab
-                    value='invitations'
-                    label={<Typography>Invitations</Typography>}
-                    sx={{ textTransform: "none" }}
-                />
-            </Tabs>
+        <Box sx={{width: "60%", padding: "10px", border: '1px solid #ddd', borderRadius: "10px"}}>
+            <Box sx={{width: '100%'}}>
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                    <Tabs
+                        value={tabValue}
+                        onChange={handleChange}
+                        textColor="secondary"
+                        indicatorColor="secondary"
+                    >
+                        <Tab
+                            value='notifications'
+                            label={<Typography>Notifications</Typography>} {...a11yProps(0)}
+                            sx={{textTransform: "none"}}
+                        />
+                        <Tab
+                            value='invitations'
+                            label={<Typography>Invitations</Typography>}
+                            sx={{textTransform: "none"}}
+                        />
+                    </Tabs>
+                </Box>
+            </Box>
             <TabPanel value={tabValue} index='notifications'>
                 <NotificationsList/>
             </TabPanel>
             <TabPanel value={tabValue} index='invitations'>
-                <InvitationsList />
+                <InvitationsList/>
             </TabPanel>
         </Box>
     )
