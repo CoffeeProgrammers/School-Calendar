@@ -27,13 +27,13 @@ class InvitationService extends BaseService {
         );
     }
 
-    async getAllInvitations(page, size) {
+    async getAllInvitations(page) {
         return await this.handleRequest(() =>
             this.apiClient.get("", {
                 params: {
-                    page,
-                    size
-                },
+                    _page: page,
+
+                }
             })
         );
     }
