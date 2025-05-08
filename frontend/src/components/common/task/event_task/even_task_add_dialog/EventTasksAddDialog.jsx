@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, Divider, Grid2, Stack} from "@mui/material";
+import {Box, Button, Divider, Grid, Stack} from "@mui/material";
 import {defaultButtonStyles, listPanelStyles} from "../../../../../assets/styles";
 import Search from "../../../../layouts/lists/Search";
 import OpenFiltersButton from "../../../../layouts/lists/OpenFiltersButton";
@@ -86,13 +86,13 @@ const EventTasksAddDialog = (
                             </Box>
                         )}
                         {/*//TODO: list optimize*/}
-                        <Grid2 container spacing={1.5}>
+                        <Grid container spacing={1.5}>
                             {tasks.map(task => (
-                                <Grid2 size={{ xs: 12, sm: 6, md: 4}} key={task.id}>
+                                <Grid size={{ xs: 12, sm: 6, md: 4}} key={task.id}>
                                     <AddTaskBox task={task} handleAdd={handleAdd}/>
-                                </Grid2>
+                                </Grid>
                             ))}
-                        </Grid2>
+                        </Grid>
                     </>
 
                 }

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Button, Divider, Grid2, Stack} from "@mui/material";
+import {Box, Button, Divider, Grid, Stack} from "@mui/material";
 import BasicDataDialog from "../../../layouts/dialog/BasicDataDialog";
 import {defaultButtonStyles, listPanelStyles} from "../../../../assets/styles";
 import Search from "../../../layouts/lists/Search";
@@ -79,13 +79,13 @@ const EventInviteDialog = (
                             </Box>
                         )}
                         {/*TODO: list optimize*/}
-                        <Grid2 container spacing={1.5}>
+                        <Grid container spacing={1.5}>
                             {users.map(user => (
-                                <Grid2 size={{ xs: 12, sm: 6, md: 4}} key={user.id}>
+                                <Grid size={{ xs: 12, sm: 6, md: 4}} key={user.id}>
                                    <InviteUserBox user={user} handleInvite={handleInvite}/>
-                                </Grid2>
+                                </Grid>
                             ))}
-                        </Grid2>
+                        </Grid>
                     </>
                 }
                 pagesCount={pagesCount}

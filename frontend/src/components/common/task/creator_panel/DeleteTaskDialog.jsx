@@ -3,17 +3,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {IconButton} from "@mui/material";
 import ConfirmDialog from "../../../layouts/dialog/ConfirmDialog";
 import TaskService from "../../../../services/ext/TaskService";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-const DeleteTaskDialog = () => {
-    const {id} = useParams();
+const DeleteTaskDialog = ({taskId}) => {
     const navigate = useNavigate();
 
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
 
     const onConfirmDelete = async () => {
-        console.log(id)
-        await TaskService.deleteTask(id)
+        await TaskService.deleteTask(taskId)
         setOpenConfirmDialog(false)
         navigate('/tasks')
     }

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import EventService from "../../../services/ext/EventService";
-import {Box, Divider, Grid2, Stack, Typography} from "@mui/material";
+import {Box, Divider, Grid, Stack, Typography} from "@mui/material";
 import Loading from "../../layouts/Loading";
 import PaginationBox from "../../layouts/lists/PaginationBox";
 import Search from "../../layouts/lists/Search";
@@ -129,15 +129,15 @@ const Events = () => {
                 )}
 
                 {/*TODO: list optimize*/}
-                <Grid2 container spacing={1.5}>
+                <Grid container spacing={1.5}>
                     {events.map(event => (
-                        <Grid2 size={{ xs: 12, sm: 6, md: 4, lg: 2.4}} key={event.id}>
+                        <Grid size={{ xs: 12, sm: 6, md: 4, lg: 2.4}} key={event.id}>
                             <Box onClick={() => navigate(`${event.id}`)}>
                                 <EventBox event={event}/>
                             </Box>
-                        </Grid2>
+                        </Grid>
                     ))}
-                </Grid2>
+                </Grid>
 
                 {pagesCount > 1 && (
                     <Box sx={{marginTop: "auto"}}>

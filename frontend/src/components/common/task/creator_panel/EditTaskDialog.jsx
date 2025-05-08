@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
@@ -8,15 +9,27 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import {Edit} from "@mui/icons-material";
-import {Box, Container, TextField} from "@mui/material";
+import {Box, Container, Divider, TextField} from "@mui/material";
 import {defaultButtonStyles} from "../../../../assets/styles";
+import {DateTimePicker} from '@mui/x-date-pickers/DateTimePicker';
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import theme from "../../../../assets/theme";
+import dayjs from "dayjs";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const EditTaskDialog = () => {
+const EditTaskDialog = ({task}) => {
     const [open, setOpen] = React.useState(false);
+
+    const [name, setName] = useState(task.name);
+    const [deadline, setDeadline] = useState(task.deadline);
+    const [content, setContent] = useState(task.content);
+
+    //TODO: handleSave
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -60,9 +73,16 @@ const EditTaskDialog = () => {
                             <CloseIcon/>
                         </IconButton>
 
-                        <Typography color="primary" sx={{ml: 2, flex: 1}} variant="h6" component="div">
-                            Task Update
-                        </Typography>
+                        <Box sx={{display: 'flex', alignItems: 'center'}}>
+                            <CalendarMonthIcon fontSize="large" color="secondary"/>
+                            <Typography fontWeight="bold" variant="h6" sx={{
+                                ml: "5px",
+                                color: "black",
+                            }}>
+                                Calendar
+                            </Typography>
+                        </Box>
+
 
                         <Button autoFocus sx={{...defaultButtonStyles, height: '40px'}} onClick={handleClose}>
                             Save
@@ -85,13 +105,52 @@ const EditTaskDialog = () => {
                     }}>
                         <Container maxWidth="md">
                             <Container maxWidth="md">
-                                <Box sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
-                                    <TextField label="Name" fullWidth variant="outlined"/>
-                                    <TextField label="Start date" fullWidth variant="outlined"
-                                               type="datetime-local" InputLabelProps={{shrink: true}}/>
-                                    <TextField label="End date" fullWidth variant="outlined"
-                                               type="datetime-local" InputLabelProps={{shrink: true}}/>
-                                    <TextField label="Content" fullWidth variant="outlined" multiline rows={4}/>
+                                <Box sx={{display: 'flex', alignItems: 'center', gap: 0.5}}>
+                                    <AssignmentIcon fontSize="medium" color="secondary"/>                                    <Typography variant="h6">
+                                        Task Update
+                                    </Typography>
+                                </Box>
+
+                                <Divider sx={{mt: 1, mb: 1}}/>
+
+                                <Box sx={{display: 'flex', flexDirection: 'column', gap: 1.5}}>
+
+                                    <TextField
+                                        multiline
+                                        label="Name"
+                                        fullWidth
+                                        variant="outlined"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                    />
+                                    <DateTimePicker
+                                        label="Deadline"
+                                        views={['month', 'day', 'hours', 'minutes']}
+                                        ampm={false}
+                                        defaultValue={deadline ? dayjs(deadline) : null}
+                                        onChange={(newValue) => setDeadline(newValue)}
+                                        slotProps={{
+                                            textField: {
+                                                sx: {
+                                                    '& .MuiInputAdornment-root .MuiIconButton-root': {
+                                                        color: theme.palette.secondary.main,
+                                                    },
+                                                    '& .MuiInputAdornment-root .MuiIconButton-root:hover': {
+                                                        color: theme.palette.secondary.light,
+                                                    },
+                                                },
+                                            }
+                                        }}
+                                    />
+                                    <TextField
+                                        label="Content"
+                                        fullWidth
+                                        variant="outlined"
+                                        multiline
+                                        rows={4}
+                                        value={content}
+                                        onChange={(e) => setContent(e.target.value)}
+                                    />
                                 </Box>
                             </Container>
                         </Container>
