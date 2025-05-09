@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Loading from "../../../layouts/Loading";
 import {Typography} from "@mui/material";
-import TaskService from "../../../../services/ext/TaskService";
 import TaskView from "./TaskView";
+import TaskService from "../../../../services/base/ext/TaskService";
 
 
 const TaskContainer = () => {

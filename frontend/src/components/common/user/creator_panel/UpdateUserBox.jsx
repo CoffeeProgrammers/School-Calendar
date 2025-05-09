@@ -6,12 +6,6 @@ import {DateTimePicker} from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import theme from "../../../../assets/theme";
 
-// password
-// first_name
-// last_name
-// description
-// birthday_date
-
 const UpdateUserBox = ({user}) => {
     const [firstName, setFirstName] = useState(user.first_name || '');
     const [lastName, setLastName] = useState(user.last_name || '');

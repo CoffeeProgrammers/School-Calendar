@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import TaskService from "../../../../../services/ext/TaskService";
 import Loading from "../../../../layouts/Loading";
 import {Typography} from "@mui/material";
 import EventTasksAddDialog from "./EventTasksAddDialog";
+import TaskService from "../../../../../services/base/ext/TaskService";
 
 const isDoneSelectOptions = [
     {value: '', label: <em>None</em>},

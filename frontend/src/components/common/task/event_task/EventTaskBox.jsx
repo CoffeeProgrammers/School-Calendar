@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {Box, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import DateService from "../../../../services/simple/DateService";
 import theme from "../../../../assets/theme";
 import EventTaskActionsMenu from "./EventTaskActionsMenu";
+import DateUtils from "../../../../utils/DateUtils";
 
 const EventTaskBox = ({task, handleToggleTask, handleRemove}) => {
     const [actionMenuPosition, setActionMenuPosition] = useState(null);
@@ -70,7 +70,7 @@ const EventTaskBox = ({task, handleToggleTask, handleRemove}) => {
                     </ListItemIcon>
                     <ListItemText sx={{mr: 2}} primary={task.name}/>
                     <Box sx={{marginLeft: 'auto', minWidth: '100px'}}>
-                        <ListItemText secondary={DateService.formatDateToMDT(task.deadline)}/>
+                        <ListItemText secondary={DateUtils.formatDateToMDT(task.deadline)}/>
                     </Box>
                 </ListItemButton>
             </ListItem>

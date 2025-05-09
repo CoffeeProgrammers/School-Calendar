@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Typography} from "@mui/material";
-import UserService from "../../../../services/ext/UserService";
 import Loading from "../../../layouts/Loading";
 import EventInviteDialog from "./EventInviteDialog";
+import UserService from "../../../../services/base/ext/UserService";
 
 const eventTypes = [
     {value: '', label: <em>None</em>},

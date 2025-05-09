@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import Checkbox from '@mui/material/Checkbox';
-import TaskService from "../../../services/ext/TaskService";
+import TaskService from "../../../services/base/ext/TaskService";
 
 const TaskCheckbox = ({task, sx = {}}) => {
     const [checked, setChecked] = useState(task.isDone)

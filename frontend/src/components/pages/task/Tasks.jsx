@@ -8,7 +8,7 @@ import DefaultButton from "../../layouts/DefaultButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import TaskList from "../../common/task/TaskList";
 import TaskService from "../../../services/base/ext/TaskService";
-import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
+import {listPanelStyles} from "../../../assets/styles";
 
 const isDoneSelectOptions = [
     {value: '', label: <em>None</em>},

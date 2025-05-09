@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import "../../../assets/css/login.css"
-import AuthService from "../../../services/AuthService";
+import AuthService from "../../services/auth/AuthService";
+import './../../assets/css/login.css'
 
 const Login = () => {
     const [email, setEmail] = useState('john.doe@example.com');

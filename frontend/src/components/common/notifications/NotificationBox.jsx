@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from "@mui/material/Box";
-import { Card, CardContent } from "@mui/material";
+import {Card, CardContent} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import DateService from "../../../services/simple/DateService";
+import DateUtils from "../../../utils/DateUtils";
 
 const NotificationBox = ({ notification }) => {
     return (
@@ -11,7 +11,7 @@ const NotificationBox = ({ notification }) => {
                 <CardContent >
                     <Typography variant='body1'>{notification.content}</Typography>
                     <Box sx={{ display: "flex", justifyContent: "end" }}>
-                        <Typography variant='body2' color='grey'>{DateService.formatDateToMDT(notification.time)}</Typography>
+                        <Typography variant='body2' color='grey'>{DateUtils.formatDateToMDT(notification.time)}</Typography>
                     </Box>
                 </CardContent>
             </Box>

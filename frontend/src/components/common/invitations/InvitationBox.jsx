@@ -1,16 +1,16 @@
 import React from 'react';
 import Box from "@mui/material/Box";
-import { Button, Card, CardContent, CardHeader } from "@mui/material";
+import {Button, Card, CardContent, CardHeader} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Typography from "@mui/material/Typography";
-import { defaultButtonStyles, disagreeButtonStyles } from "../../../assets/styles";
-import DateService from "../../../services/simple/DateService";
+import {defaultButtonStyles, disagreeButtonStyles} from "../../../assets/styles";
+import DateUtils from "../../../utils/DateUtils";
 
 const InvitationBox = ({ invitation, handleRejectInvitation, handleAcceptInvitation }) => {
     const formattedDate =
-        DateService.formatDateToMDT(invitation.event.start_date)
+        DateUtils.formatDateToMDT(invitation.event.start_date)
         + "  ⭢  " +
-        DateService.formatDateToMDT(invitation.event.end_date)
+        DateUtils.formatDateToMDT(invitation.event.end_date)
 
     const onReject = () => {
         handleRejectInvitation(invitation.id)
@@ -32,7 +32,7 @@ const InvitationBox = ({ invitation, handleRejectInvitation, handleAcceptInvitat
                     }
                     //TODO TextUtils
                     title={invitation.creator.first_name + " " + invitation.creator.last_name}
-                    subheader={DateService.formatDateToMDT(invitation.time)}
+                    subheader={DateUtils.formatDateToMDT(invitation.time)}
                     sx={{ paddingBottom: "0" }}
                 />
                 <CardContent sx={{ paddingTop: "10px" }}>

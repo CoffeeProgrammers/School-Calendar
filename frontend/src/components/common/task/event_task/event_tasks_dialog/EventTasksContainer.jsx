@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
-import Loading from "../../../layouts/Loading";
-import TaskService from "../../../../services/base/ext/TaskService";
 import EventTasksDialog from "./EventTasksDialog";
+import TaskService from "../../../../../services/base/ext/TaskService";
+import Loading from "../../../../layouts/Loading";
 
 const EventTasksContainer = () => {
     const [tasks, setTasks] = useState([])

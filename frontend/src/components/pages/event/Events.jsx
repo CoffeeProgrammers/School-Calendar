@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import EventService from "../../../services/ext/EventService";
 import {Box, Divider, Grid, Stack, Typography} from "@mui/material";
 import EventService from "../../../services/base/ext/EventService";
-import {Box, Divider, Stack, Typography} from "@mui/material";
 import Loading from "../../layouts/Loading";
 import PaginationBox from "../../layouts/lists/PaginationBox";
 import Search from "../../layouts/lists/Search";

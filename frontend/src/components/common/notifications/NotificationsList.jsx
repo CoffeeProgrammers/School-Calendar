@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Stack } from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {Stack} from '@mui/material';
 import NotificationBox from "./NotificationBox";
-import NotificationService from "../../../services/ext/NotificationService";
 import Loading from "../../layouts/Loading";
 import PaginationBox from "../../layouts/lists/PaginationBox";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import NotificationService from "../../../services/base/ext/NotificationService";
 
 const NotificationsList = () => {
 

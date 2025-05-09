@@ -1,5 +1,5 @@
 import React from 'react';
-import EventPageMainBox from "../user/participants_dialog/EventPageMainBox";
+import EventPageMainBox from "../user/EventPageMainBox";
 import EventCreatorPanel from "./EventCreatorPanel";
 import {Box, Divider} from "@mui/material";
 

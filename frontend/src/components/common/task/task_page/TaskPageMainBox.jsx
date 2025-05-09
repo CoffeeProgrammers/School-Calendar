@@ -3,17 +3,17 @@ import {Box, Container, Divider, Typography} from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Options from "../../../layouts/Options";
 import SubjectIcon from "@mui/icons-material/Subject";
-import DateService from "../../../../services/simple/DateService";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import TaskCheckbox from "../TaskCheckbox";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {SpaceDashboard} from "@mui/icons-material";
+import DateUtils from "../../../../utils/DateUtils";
 
 
 const TaskPageMainBox = ({task}) => {
 
-    const formattedDate = DateService.formatDateToMDYT(task.deadline)
+    const formattedDate = DateUtils.formatDateToMDYT(task.deadline)
 
     const optionsList = [
         {

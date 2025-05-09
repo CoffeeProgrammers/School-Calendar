@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import EventService from "../../../services/ext/EventService";
 import Loading from "../../layouts/Loading";
 import {Typography} from "@mui/material";
 import EventView from "./EventView";
+import EventService from "../../../services/base/ext/EventService";
 
 const EventContainer = ({eventId}) => {
     const [event, setEvent] = useState(null);

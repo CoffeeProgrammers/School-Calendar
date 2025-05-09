@@ -1,11 +1,11 @@
-import { Stack } from '@mui/material';
+import {Stack} from '@mui/material';
 import InvitationBox from "./InvitationBox";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Loading from "../../layouts/Loading";
-import InvitationService from "../../../services/ext/InvitationService";
 import PaginationBox from "../../layouts/lists/PaginationBox";
+import InvitationService from "../../../services/base/ext/InvitationService";
 
 const InvitationsList = () => {
     const [invitations, setInvitations] = useState([])

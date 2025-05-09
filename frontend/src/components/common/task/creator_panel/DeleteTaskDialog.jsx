@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import DeleteIcon from "@mui/icons-material/Delete";
 import {IconButton} from "@mui/material";
 import ConfirmDialog from "../../../layouts/dialog/ConfirmDialog";
-import TaskService from "../../../../services/ext/TaskService";
 import {useNavigate} from "react-router-dom";
+import TaskService from "../../../../services/base/ext/TaskService";
 
 const DeleteTaskDialog = ({taskId}) => {
     const navigate = useNavigate();
