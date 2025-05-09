@@ -13,6 +13,7 @@ import com.calendar.backend.models.EventType;
 import com.calendar.backend.models.MeetingType;
 import com.calendar.backend.models.User;
 import com.calendar.backend.services.impl.EventServiceImpl;
+import com.calendar.backend.services.impl.TaskServicesImpl;
 import com.calendar.backend.services.impl.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +54,9 @@ class EventControllerTest {
 
     @MockBean
     private JwtUtils jwtUtils;
+
+    @MockBean
+    private TaskServicesImpl taskService;
 
     @MockBean
     private RefreshTokenServiceImpl refreshTokenService;
