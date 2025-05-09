@@ -213,7 +213,7 @@ class UserServiceImplTest {
         when(userRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
         when(userMapper.fromUserToUserListResponse(user)).thenReturn(new UserListResponse());
 
-        PaginationListResponse<UserListResponse> result = userService.findAll("", "", "", 0, 10);
+        PaginationListResponse<UserListResponse> result = userService.findAll("", "", "", "", 0, 10);
 
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalPages());
@@ -226,7 +226,7 @@ class UserServiceImplTest {
         when(userRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
         when(userMapper.fromUserToUserListResponse(user)).thenReturn(new UserListResponse());
 
-        PaginationListResponse<UserListResponse> result = userService.findAllByEventId("", "", "", 1L, 0, 10);
+        PaginationListResponse<UserListResponse> result = userService.findAllByEventId("", "", "", "", 1L, 0, 10);
 
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalPages());
