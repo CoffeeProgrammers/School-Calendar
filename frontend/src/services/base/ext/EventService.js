@@ -91,27 +91,23 @@ class EventService extends BaseService {
         );
     }
 
-    //TODO
     async getOtherUsersEventsBetweenDates(userId, startDate, endDate, gap) {
         return await this.handleRequest(() =>
             this.apiClient.get(`/users/${userId}/between`, {
                 params: {
                     start_date_gte: startDate,
                     start_date_lte: endDate,
-                    //TODO: gap
                 },
             })
         );
     }
 
-    //TODO
     async getMyEventsBetweenDates(startDate, endDate, gap) {
         return await this.handleRequest(() =>
             this.apiClient.get('/between', {
                 params: {
                     start_date_gte: startDate,
                     start_date_lte: endDate,
-                    //TODO: gap
                 },
             })
         );

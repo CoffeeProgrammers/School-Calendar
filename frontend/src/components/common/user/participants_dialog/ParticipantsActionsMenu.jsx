@@ -2,49 +2,30 @@ import React from 'react';
 import {Divider, Menu, MenuItem} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 
-const ParticipantsActionsMenu = ({anchorEl, setAnchorEl, user}) => {
-    const navigate = useNavigate()
-
-    const open = Boolean(anchorEl);
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+const ParticipantsActionsMenu = ({ anchorPosition, onClose, user, handleRemove }) => {
+    const navigate = useNavigate();
 
     const handleOpenOption = () => {
-        navigate(`/users/${user.id}`)
-        handleClose()
+        navigate(`/users/${user.id}`);
+        onClose();
     };
 
     const handleRemoveOption = () => {
-        handleClose()
+        handleRemove(user.id)
+        onClose();
     };
 
-
     return (
-        <>
-            <Menu
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'center',
-                    horizontal: 'right',
-                }}
-            >
-                <MenuItem onClick={handleOpenOption}>
-                    Open
-                </MenuItem>
-                <Divider/>
-                <MenuItem onClick={handleRemoveOption}>
-                    Remove
-                </MenuItem>
-            </Menu>
-        </>
+        <Menu
+            anchorReference="anchorPosition"
+            anchorPosition={anchorPosition}
+            open={Boolean(anchorPosition)}
+            onClose={onClose}
+        >
+            <MenuItem onClick={handleOpenOption}>Open</MenuItem>
+            <Divider />
+            <MenuItem onClick={handleRemoveOption}>Remove</MenuItem>
+        </Menu>
     );
 };
 

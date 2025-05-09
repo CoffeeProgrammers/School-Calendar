@@ -1,24 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Button from "@mui/material/Button";
-import DialogTitle from "@mui/material/DialogTitle";
-import CloseButton from "./CloseButton";
-import {Box, DialogActions, Divider} from "@mui/material";
-import DialogContent from "@mui/material/DialogContent";
-import PaginationBox from "../lists/PaginationBox";
-import {styled} from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
+import BasicDataDialog from "./BasicDataDialog";
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-        padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-        padding: theme.spacing(1),
-    },
-}));
 
-const ElementAdditionDialog = ({size, title, content, pagesCount, page, setPage, actions}) => {
-    const [open, setOpen] = React.useState(false);
+const ElementAdditionDialog = (
+    {
+        size,
+        title,
+        content,
+        pagesCount,
+        page,
+        setPage,
+        actions
+    }) => {
+
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -34,39 +30,17 @@ const ElementAdditionDialog = ({size, title, content, pagesCount, page, setPage,
                 {title}
             </Button>
 
-            <BootstrapDialog
-                onClose={handleClose}
+            <BasicDataDialog
                 open={open}
-                maxWidth={size}
-                fullWidth
-            >
-                <DialogTitle sx={{ m: 0, p: 2 }}>
-                    {title}
-                </DialogTitle>
-
-                <CloseButton handleClose={handleClose}/>
-
-                <Divider/>
-
-                <DialogContent>
-                    {content}
-                    {pagesCount > 1 && (
-                        <Box sx={{ marginTop: "auto" }}>
-                            <PaginationBox
-                                page={page}
-                                pagesCount={pagesCount}
-                                setPage={setPage}
-                            />
-                        </Box>
-                    )}
-                </DialogContent>
-
-                <Divider sx={{ mb: 2}}/>
-
-                <DialogActions>
-                    {actions}
-                </DialogActions>
-            </BootstrapDialog>
+                handleClose={handleClose}
+                title={title}
+                actions={actions}
+                content={content}
+                pagesCount={pagesCount}
+                page={page}
+                setPage={setPage}
+                size={size}
+            />
         </>
     );
 };

@@ -1,46 +1,32 @@
 import * as React from 'react';
-import {useState} from 'react';
-import {Box, Grid2} from "@mui/material";
-import UserBox from "../UserBox";
+import {Grid} from "@mui/material";
 import ElementAdditionDialog from "../../../layouts/dialog/ElementAdditionDialog";
-import ParticipantsActionsMenu from "./ParticipantsActionsMenu";
+import EventInviteContainer from "../invite_dialog/EventInviteContainer";
+import ParticipantBox from "./ParticipantBox";
 
-
-const ParticipantsDialog = ({users, pagesCount, page, setPage}) => {
-    const [anchorEl, setAnchorEl] = useState(null);
-
+const ParticipantsDialog = ({ users, pagesCount, page, setPage, handleRemove }) => {
     return (
         <>
             <ElementAdditionDialog
                 size={"sm"}
                 title={"Participants"}
                 content={
-                    <Grid2 container spacing={1.5}>
+                    //TODO: list optimize
+                    <Grid container spacing={1.5}>
                         {users.map(user => (
-                            <Grid2 size={{xs: 12, sm: 6}} key={user.id}>
-                                <Box>
-                                    <Box onClick={(event) => setAnchorEl(event.currentTarget)}>
-                                        <UserBox user={user}/>
-                                        <ParticipantsActionsMenu
-                                            user={user}
-                                            anchorEl={anchorEl}
-                                            setAnchorEl={setAnchorEl}
-                                        />
-                                    </Box>
-                                </Box>
-
-                            </Grid2>
+                            <Grid size={{ xs: 12, sm: 6}} key={user.id}>
+                                <ParticipantBox user={user} handleRemove={handleRemove}/>
+                            </Grid>
                         ))}
-                    </Grid2>
+                    </Grid>
                 }
                 page={page}
                 setPage={setPage}
                 pagesCount={pagesCount}
+                actions={<EventInviteContainer/>}
             />
-
         </>
-
     );
-}
+};
 
 export default ParticipantsDialog;

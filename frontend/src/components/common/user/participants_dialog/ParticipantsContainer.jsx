@@ -36,6 +36,11 @@ const ParticipantsContainer = () => {
         fetchData();
     }, [page]);
 
+    const handleRemove = async (userId) => {
+        //TODO: delete from event
+        await UserService.deleteUser(userId);
+        setUsers((prevUsers) => prevUsers.filter(user => user.id !== userId));
+    };
 
     if (loading) {
         return <Loading/>;
@@ -51,6 +56,7 @@ const ParticipantsContainer = () => {
             pagesCount={pagesCount}
             page={page}
             setPage={setPage}
+            handleRemove={handleRemove}
         />
     );
 }

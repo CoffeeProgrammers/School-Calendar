@@ -45,6 +45,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setDate(LocalDateTime.now());
         comment.setCreator(user);
         comment.setEvent(event);
+        comment.setDate(LocalDateTime.now());
         notificationService.create(new Notification(List.of(event.getCreator()),
                 "New comment to event with id " + eventId));
         return commentMapper.fromCommentToCommentResponse(commentRepository.save(comment));

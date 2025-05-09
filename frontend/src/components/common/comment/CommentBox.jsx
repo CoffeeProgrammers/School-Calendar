@@ -9,7 +9,6 @@ const CommentBox = ({comment, handleDeleteComment, handleEditComment}) => {
 
     return (
         <Card variant="outlined" sx={{ borderRadius: "10px", position: 'relative'}}>
-
             <Box sx={{ position: 'absolute', top: 8, right: 8 }}>
                <CommentActionsMenu
                    handleDeleteComment={() => handleDeleteComment(comment.id)}
@@ -19,11 +18,14 @@ const CommentBox = ({comment, handleDeleteComment, handleEditComment}) => {
             </Box>
 
             <CardHeader
-                titleTypographyProps={{ fontSize: "18px" }}
-                subheaderTypographyProps={{ color: "gray" }}
+                slotProps={{
+                    title: {sx: {fontSize: "18px"}},
+                    subheader: {sx: {color: "gray"}}
+                }}
                 avatar={
                     <AccountCircleIcon sx={{fontSize: "40px"}} color="secondary" />
                 }
+                //TODO: method TextUtils
                 title={comment.creator.first_name + " " + comment.creator.last_name}
                 subheader={formattedDate}
             />

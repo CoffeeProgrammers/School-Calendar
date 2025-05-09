@@ -2,7 +2,6 @@ import BaseService from "../BaseService";
 
 const API_URL = 'http://localhost:8081/api/';
 
-//TODO: adapt to json-server
 class TaskService extends BaseService {
     constructor() {
         super(API_URL);
@@ -62,7 +61,6 @@ class TaskService extends BaseService {
         );
     };
 
-    //TODO
     async getTasksByEvent({eventId, page, size}) {
         return await this.handleRequest(() =>
             this.apiClient.get('', {
