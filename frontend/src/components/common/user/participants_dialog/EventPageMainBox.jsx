@@ -1,52 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
-import EventService from "../../../services/ext/EventService";
-import Loading from "../../layouts/Loading";
+import React from 'react';
 import {Box, Chip, Container, Divider, Stack, Typography} from "@mui/material";
-import {listElementBoxTextStyle} from "../../../assets/styles";
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import {SpaceDashboard} from "@mui/icons-material";
+import Options from "../../../layouts/Options";
+import ParticipantsContainer from "./ParticipantsContainer";
+import CommentsContainer from "../../comment/event_comments_dialog/CommentsContainer";
+import EventTasksContainer from "../../task/event_task/event_tasks_dialog/EventTasksContainer";
+import {listElementBoxTextStyle} from "../../../../assets/styles";
+import SubjectIcon from "@mui/icons-material/Subject";
+import DateService from "../../../../services/simple/DateService";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import PlaceIcon from "@mui/icons-material/Place";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import PlaceIcon from "@mui/icons-material/Place";
-import {SpaceDashboard} from "@mui/icons-material";
-import SubjectIcon from '@mui/icons-material/Subject';
-import ParticipantsContainer from "../../common/user/participants_dialog/ParticipantsContainer";
-import CommentsContainer from "../../common/comment/event_comments_dialog/CommentsContainer";
-import DateService from "../../../services/simple/DateService";
-import EventTasksContainer from "../../common/task/event_task/event_tasks_dialog/EventTasksContainer";
-import Options from "../../layouts/Options";
 
-const Event = () => {
-    const {id} = useParams();
 
-    const [event, setEvent] = useState(null);
-
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await EventService.getEventById(id);
-                setEvent(response);
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [id]);
-
-    if (loading) {
-        return <Loading/>;
-    }
-
-    if (error) {
-        return <Typography color={"error"}>Error: {error.message}</Typography>;
-    }
-
+const EventPageMainBox = ({event}) => {
 
     const formattedDate =
         DateService.formatDateToMDYT(event.start_date)
@@ -76,7 +44,6 @@ const Event = () => {
             value: `${event.creator.first_name} ${event.creator.last_name}`
         }
     ]
-
     return (
         <Box sx={{width: "800px", border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "10px", display: "flex", flexDirection: "column"}}>
             <Container maxWidth="md">
@@ -114,4 +81,4 @@ const Event = () => {
     );
 };
 
-export default Event;
+export default EventPageMainBox;

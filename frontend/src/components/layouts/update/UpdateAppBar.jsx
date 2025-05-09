@@ -6,7 +6,7 @@ import {Box} from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import {defaultButtonStyles} from "../../assets/styles";
+import {defaultButtonStyles} from "../../../assets/styles";
 import AppBar from "@mui/material/AppBar";
 
 const UpdateAppBar = ({handleClose, handleSave}) => {

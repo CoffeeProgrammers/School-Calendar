@@ -1,17 +1,11 @@
 import * as React from 'react';
-import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
-import Slide from '@mui/material/Slide';
 import {Edit} from "@mui/icons-material";
-import UpdateAppBar from "../../../layouts/UpdateAppBar";
-import EditTaskBox from "../../../pages/task/EditTaskBox";
+import UpdateAppBar from "../../../layouts/update/UpdateAppBar";
+import UpdateTaskBox from "../UpdateTaskBox";
+import FullScreenFunctionDialog from "../../../layouts/FullScreenFunctionDialog";
 
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props}/>;
-});
-
-const EditTaskDialog = ({task}) => {
+const UpdateTaskDialog = ({task}) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -36,18 +30,12 @@ const EditTaskDialog = ({task}) => {
                 <Edit/>
             </IconButton>
 
-            <Dialog
-                fullScreen
-                open={open}
-                onClose={handleClose}
-                slots={{ transition: Transition }}
-            >
+            <FullScreenFunctionDialog open={open} handleClose={handleClose}>
                 <UpdateAppBar handleClose={handleClose} handleSave={handleSave}/>
-
-                <EditTaskBox task={task}/>
-            </Dialog>
+                <UpdateTaskBox task={task}/>
+            </FullScreenFunctionDialog>
         </>
     );
 };
 
-export default EditTaskDialog;
+export default UpdateTaskDialog;

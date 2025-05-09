@@ -9,7 +9,7 @@ import Main from './components/pages/main/Main';
 import Page from './components/layouts/Page';
 import Users from './components/pages/user/Users';
 import Tasks from './components/pages/task/Tasks';
-import Event from './components/pages/event/Event';
+import EventPage from './components/pages/event/EventPage';
 import Login from './components/pages/login/Login';
 import Events from './components/pages/event/Events';
 import UserPage from './components/pages/user/UserPage';
@@ -23,16 +23,16 @@ function App() {
             <ThemeProvider theme={theme}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Routes>
-                        <Route path="" element={<Page><Main /></Page>} />
-                        <Route path="/login" element={<Page><Login /></Page>} />
-                        <Route path="/events" element={<Page><Events /></Page>} />
-                        <Route path="/users" element={<Page><Users /></Page>} />
-                        <Route path="/tasks" element={<Page><Tasks /></Page>} />
-                        <Route path="/events/:id" element={<Page><Event /></Page>} />
-                        <Route path="/profile" element={<Page><MyProfile /></Page>} />
-                        <Route path="/users/:id" element={<Page><UserPage /></Page>} />
-                        <Route path="/tasks/:id" element={<TaskPage />} />
-                        <Route path="/notifications" element={<Page><NotificationsPage /></Page>} />
+                        <Route path="" element={<Page><Main/></Page>}/>
+                        <Route path="/login" element={<Page><Login/></Page>}/>
+                        <Route path="/events" element={<Page><Events/></Page>}/>
+                        <Route path="/users" element={<Page><Users/></Page>}/>
+                        <Route path="/tasks" element={<Page><Tasks/></Page>}/>
+                        <Route path="/events/:id" element={<EventPage/>}/>
+                        <Route path="/profile" element={<Page><MyProfile/></Page>}/>
+                        <Route path="/users/:id" element={<Page><UserPage/></Page>}/>
+                        <Route path="/tasks/:id" element={<TaskPage/>}/>
+                        <Route path="/notifications" element={<Page><NotificationsPage/></Page>}/>
                     </Routes>
                 </LocalizationProvider>
             </ThemeProvider>

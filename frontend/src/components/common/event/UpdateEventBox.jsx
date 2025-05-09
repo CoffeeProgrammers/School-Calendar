@@ -6,10 +6,13 @@ import {DateTimePicker} from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import theme from "../../../assets/theme";
 
-const EditTaskBox = ({task}) => {
-    const [name, setName] = useState(task.name);
-    const [deadline, setDeadline] = useState(task.deadline);
-    const [content, setContent] = useState(task.content);
+const UpdateEventBox = ({event}) => {
+    const [name, setName] = useState(event.name);
+    const [type, setType] = useState(event.type);
+    const [startDate, setStartDate] = useState(event.start_date);
+    const [endDate, setEndDate] = useState(event.end_date);
+    const [place, setPlace] = useState(event.place);
+    const [content, setContent] = useState(event.content);
 
     return (
         <Box sx={{
@@ -29,14 +32,13 @@ const EditTaskBox = ({task}) => {
                     <Box sx={{display: 'flex', alignItems: 'center', gap: 0.5}}>
                         <AssignmentIcon fontSize="medium" color="secondary"/>
                         <Typography variant="h6">
-                            Task Update
+                            Event Update
                         </Typography>
                     </Box>
 
                     <Divider sx={{mt: 1, mb: 1}}/>
 
                     <Box sx={{display: 'flex', flexDirection: 'column', gap: 1.5}}>
-
                         <TextField
                             multiline
                             label="Name"
@@ -45,12 +47,39 @@ const EditTaskBox = ({task}) => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
+                        {/*TODO: Choose type*/}
+                        <TextField
+                            label="Type"
+                            fullWidth
+                            variant="outlined"
+                            value={type}
+                            onChange={(e) => setType(e.target.value)}
+                        />
                         <DateTimePicker
-                            label="Deadline"
+                            label="Start Date"
                             views={['month', 'day', 'hours', 'minutes']}
                             ampm={false}
-                            defaultValue={deadline ? dayjs(deadline) : null}
-                            onChange={(newValue) => setDeadline(newValue)}
+                            defaultValue={startDate ? dayjs(startDate) : null}
+                            onChange={(newValue) => setStartDate(newValue)}
+                            slotProps={{
+                                textField: {
+                                    sx: {
+                                        '& .MuiInputAdornment-root .MuiIconButton-root': {
+                                            color: theme.palette.secondary.main,
+                                        },
+                                        '& .MuiInputAdornment-root .MuiIconButton-root:hover': {
+                                            color: theme.palette.secondary.light,
+                                        },
+                                    },
+                                }
+                            }}
+                        />
+                        <DateTimePicker
+                            label="End Date"
+                            views={['month', 'day', 'hours', 'minutes']}
+                            ampm={false}
+                            defaultValue={endDate ? dayjs(endDate) : null}
+                            onChange={(newValue) => setEndDate(newValue)}
                             slotProps={{
                                 textField: {
                                     sx: {
@@ -65,11 +94,17 @@ const EditTaskBox = ({task}) => {
                             }}
                         />
                         <TextField
+                            label="Place"
+                            fullWidth
+                            variant="outlined"
+                            value={place}
+                            onChange={(e) => setPlace(e.target.value)}
+                        />
+                        <TextField
                             label="Content"
                             fullWidth
                             variant="outlined"
                             multiline
-                            rows={4}
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                         />
@@ -80,4 +115,4 @@ const EditTaskBox = ({task}) => {
     );
 };
 
-export default EditTaskBox;
+export default UpdateEventBox;

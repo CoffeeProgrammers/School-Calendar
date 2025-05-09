@@ -817,20 +817,6 @@
       }
     },
     {
-      "id": "5",
-      "isDone": false,
-      "name": "Task 5",
-      "content": "Detailed description of Task 5.",
-      "deadline": "2025-04-05T12:00:00Z",
-      "creator": {
-        "id": 105,
-        "email": "user5@example.com",
-        "role": "member",
-        "first_name": "David",
-        "last_name": "Brown"
-      }
-    },
-    {
       "id": "6",
       "isDone": true,
       "name": "Task 6",

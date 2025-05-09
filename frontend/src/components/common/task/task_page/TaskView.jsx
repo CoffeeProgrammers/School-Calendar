@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Divider} from '@mui/material';
 import TaskCreatorPanel from "../creator_panel/TaskCreatorPanel";
-import TaskViewMainBox from "../TaskViewMainBox";
+import TaskPageMainBox from "./TaskPageMainBox";
 
 const TaskView = ({task}) => {
     return (
@@ -10,7 +10,7 @@ const TaskView = ({task}) => {
 
             <Divider sx={{width: '100%', mb: 0.5}}/>
 
-            <TaskViewMainBox task={task}/>
+            <TaskPageMainBox task={task}/>
         </Box>
     );
 };

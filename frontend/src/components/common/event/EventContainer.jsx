@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import EventService from "../../../services/ext/EventService";
 import Loading from "../../layouts/Loading";
 import {Typography} from "@mui/material";
-import UserService from "../../../services/ext/UserService";
-import UserView from "./UserView";
+import EventView from "./EventView";
 
-const UserContainer = ({userId}) => {
-    const [user, setUser] = useState(null);
+const EventContainer = ({eventId}) => {
+    const [event, setEvent] = useState(null);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -13,8 +13,8 @@ const UserContainer = ({userId}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await UserService.getUserById(userId);
-                setUser(response);
+                const response = await EventService.getEventById(eventId);
+                setEvent(response);
             } catch (error) {
                 setError(error);
             } finally {
@@ -23,7 +23,7 @@ const UserContainer = ({userId}) => {
         };
 
         fetchData();
-    }, [userId]);
+    }, [eventId]);
 
     if (loading) {
         return <Loading/>;
@@ -34,10 +34,9 @@ const UserContainer = ({userId}) => {
     }
 
     return (
-        <UserView
-            user={user}
-        />
+        <EventView event={event}/>
     );
 };
 
-export default UserContainer;
+
+export default EventContainer;
