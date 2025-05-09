@@ -108,11 +108,12 @@ public class EventController {
     public List<EventListResponse> getMyEventsBetween(
             @RequestParam String start_date,
             @RequestParam String end_date,
-            Authentication auth) {
+            Authentication auth,
+            @RequestParam(required = false) Integer gap) {
         return eventService.findAllByUserIdForCalendar(
                 userService.findUserByAuth(auth).getId(),
-                LocalDateTime.parse(start_date),
-                LocalDateTime.parse(end_date)
+                LocalDateTime.parse(start_date).minusDays(gap),
+                LocalDateTime.parse(end_date).plusDays(gap)
         );
     }
 
