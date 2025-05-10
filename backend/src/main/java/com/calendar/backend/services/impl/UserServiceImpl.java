@@ -150,16 +150,16 @@ public class UserServiceImpl implements UserService {
 
     private Map<String, Object> createFilters(String email, String firstName, String lastName, String role) {
         Map<String, Object> filters = new HashMap<>();
-        if(!email.isEmpty()) {
+        if(email != null && !email.isBlank() && !email.equals("null")) {
             filters.put("email", email);
         }
-        if(!firstName.isEmpty()) {
+        if(firstName != null && !firstName.isBlank() && !firstName.equals("null")) {
             filters.put("firstName", firstName);
         }
-        if(!lastName.isEmpty()) {
+        if(lastName != null && !lastName.isBlank() && !lastName.equals("null")) {
             filters.put("lastName", lastName);
         }
-        if(!role.isEmpty()) {
+        if(role != null && !role.isBlank() && !role.equals("null")) {
             filters.put("role", role);
         }
         return filters;
