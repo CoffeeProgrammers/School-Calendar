@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Slf4j
@@ -43,7 +44,7 @@ public class InvitationServiceImpl implements InvitationService {
         invitation.setEvent(event);
         invitation.setSender(userServices.findUserByAuth(authentication));
         invitation.setReceiver(userServices.findByIdForServices(receiverId));
-        invitation.setTime(LocalDateTime.now());
+        invitation.setTime(LocalDateTime.now(ZoneId.of("Europe/Kiev")));
         List<EventListResponse> events = eventService.findAllByUserIdForCalendar(receiverId,
                 event.getStartDate(), event.getEndDate());
         if(!events.isEmpty()){

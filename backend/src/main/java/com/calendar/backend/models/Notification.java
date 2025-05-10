@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,6 @@ public class Notification {
     public Notification(List<User> users, String content) {
         this.users = users;
         this.content = content;
-        this.time = LocalDateTime.now();
+        this.time = LocalDateTime.now(ZoneId.of("Europe/Kiev"));
     }
 }

@@ -23,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Slf4j
@@ -42,7 +43,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = commentMapper.fromCommentRequestToComment(commentRequest);
         User user = userService.findByEmail(authentication.getName());
         Event event = eventService.findByIdForServices(eventId);
-        comment.setDate(LocalDateTime.now());
+        comment.setDate(LocalDateTime.now(ZoneId.of("Europe/Kiev")));
         comment.setCreator(user);
         comment.setEvent(event);
         notificationService.create(new Notification(List.of(event.getCreator()),
@@ -69,7 +70,7 @@ public class CommentServiceImpl implements CommentService {
     public PaginationListResponse<CommentResponse> findAllByEventId(long eventId, int page, int size) {
         log.info("Finding all comments for event with id {}", eventId);
         Page<Comment> comments = commentRepository.findAllByEvent_Id(eventId, PageRequest.of(page, size,
-                Sort.by(Sort.Direction.ASC, "date")));
+                Sort.by(Sort.Direction.DESC, "date")));
         PaginationListResponse<CommentResponse> response = new PaginationListResponse<>();
         response.setTotalPages(comments.getTotalPages());
         response.setContent(comments.getContent().stream().map(
