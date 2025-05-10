@@ -29,13 +29,13 @@ class CommentDtoTests {
         response1.setId(1L);
         response1.setCreator(creator);
         response1.setText("Sample text");
-        response1.setTime("2024-01-01T10:00:00");
+        response1.setDate("2024-01-01T10:00:00");
 
         CommentResponse response2 = new CommentResponse();
         response2.setId(response1.getId());
         response2.setCreator(response1.getCreator());
         response2.setText(response1.getText());
-        response2.setTime(response1.getTime());
+        response2.setDate(response1.getDate());
 
         assertEquals(response1, response2);
         assertEquals(response1.toString(), response2.toString());

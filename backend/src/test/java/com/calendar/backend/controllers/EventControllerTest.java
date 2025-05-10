@@ -210,7 +210,7 @@ class EventControllerTest {
         when(userService.findUserByAuth(any(Authentication.class)))
                 .thenReturn(creator);
 
-        MvcResult mvcResult = mvc.perform(get("/api/events/between?start_date=2025-01-01T00:00:00&end_date=2025-01-31T23:59:59"))
+        MvcResult mvcResult = mvc.perform(get("/api/events/between?start_date=2025-01-01T00:00:00&end_date=2025-01-31T23:59:59&gap=1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
