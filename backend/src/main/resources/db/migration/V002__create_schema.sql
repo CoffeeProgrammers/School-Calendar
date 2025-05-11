@@ -8,7 +8,8 @@ CREATE TABLE "events"
     "end_date"                     TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
     "content"                      VARCHAR(999),
     "is_content_available_anytime" BOOLEAN                                 NOT NULL,
-    "place"                        VARCHAR(255)                            NOT NULL
+    "place"                        VARCHAR(255)                            NOT NULL,
+    "meeting_type"                 SMALLINT                                NOT NULL
 );
 ALTER TABLE
     "events"
@@ -56,7 +57,7 @@ CREATE TABLE "comments"
     "creator_id" BIGINT                                  NOT NULL,
     "event_id"   BIGINT                                  NOT NULL,
     "text"       VARCHAR(999)                            NOT NULL,
-    "date"       TIMESTAMP NOT NULL
+    "date"       TIMESTAMP                               NOT NULL
 );
 ALTER TABLE
     "comments"

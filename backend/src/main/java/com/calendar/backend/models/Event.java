@@ -28,7 +28,6 @@ public class Event {
     private LocalDateTime endDate;
     private String content;
     private boolean isContentAvailableAnytime;
-    @Enumerated(EnumType.STRING)
     private MeetingType meetingType;
     private String place;
 
