@@ -4,8 +4,9 @@ import Typography from '@mui/material/Typography';
 import ParticipantsDialog from "./ParticipantsDialog";
 import UserService from "../../../../services/base/ext/UserService";
 import Loading from "../../../layouts/Loading";
+import EventService from "../../../../services/base/ext/EventService";
 
-const ParticipantsContainer = () => {
+const ParticipantsContainer = ({eventId, isCreator}) => {
     const [users, setUsers] = useState([])
 
     const [page, setPage] = useState(1);
@@ -17,13 +18,15 @@ const ParticipantsContainer = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                //TODO: users by event
-                const response = await UserService.getAllUsers(
-                    {
-                        page: page - 1,
-                        size: 10,
-                    }
+                //TODO: search & filters
+                const response = await UserService.getUsersByEvent(
+                    eventId,
+                    page - 1,
+                    10,
                 );
+                console.log("participants:")
+                console.log(response)
+                
                 setUsers(response.content);
                 setPagesCount(response.totalPages)
             } catch (error) {
@@ -34,12 +37,20 @@ const ParticipantsContainer = () => {
         };
 
         fetchData();
-    }, [page]);
+    }, [eventId, page]);
 
     const handleRemove = async (userId) => {
-        //TODO: delete from event
-        await UserService.deleteUser(userId);
-        setUsers((prevUsers) => prevUsers.filter(user => user.id !== userId));
+        setLoading(true);
+        setError(null);
+        try {
+            await EventService.deleteUserFromEvent(eventId, userId);
+            setUsers((prevUsers) => prevUsers.filter(user => user.id !== userId));
+        } catch (error) {
+            console.error("Failed to remove user:", error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     if (loading) {
@@ -57,6 +68,8 @@ const ParticipantsContainer = () => {
             page={page}
             setPage={setPage}
             handleRemove={handleRemove}
+            isCreator={isCreator}
+            eventId={eventId}
         />
     );
 }

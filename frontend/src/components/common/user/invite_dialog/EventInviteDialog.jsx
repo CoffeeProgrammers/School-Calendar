@@ -6,6 +6,7 @@ import Search from "../../../layouts/lists/Search";
 import OpenFiltersButton from "../../../layouts/lists/OpenFiltersButton";
 import FiltersGroup from "../../../layouts/lists/FiltersGroup";
 import InviteUserBox from "./InviteUserBox";
+import Cookies from "js-cookie";
 
 const EventInviteDialog = (
     {
@@ -23,6 +24,9 @@ const EventInviteDialog = (
         handleInvite
     }) => {
 
+    const isTeacher = "TEACHER" === Cookies.get("role");
+    const isStudent = "STUDENT" === Cookies.get("role");
+
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -32,6 +36,10 @@ const EventInviteDialog = (
         setOpen(false);
         setPage(1);
     };
+
+    if(isStudent){
+        setRole("STUDENT");
+    }
 
     return (
         <>
@@ -54,17 +62,19 @@ const EventInviteDialog = (
                                     searchQuery={searchQuery}
                                     setSearchQuery={setSearchQuery}
                                 />
-                                <OpenFiltersButton
-                                    isOpenFilterMenu={isOpenFilterMenu}
-                                    setOpenFilterMenu={setOpenFilterMenu}
-                                />
+                                {isTeacher && (
+                                    <OpenFiltersButton
+                                        isOpenFilterMenu={isOpenFilterMenu}
+                                        setOpenFilterMenu={setOpenFilterMenu}
+                                    />
+                                )}
                             </Box>
                         </Stack>
 
 
                         <Divider sx={{mb: 1}}/>
 
-                        {isOpenFilterMenu && (
+                        {isOpenFilterMenu && isTeacher && (
                             <Box sx={{mb: 1}}>
                                 <FiltersGroup
                                     filters={[

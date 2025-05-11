@@ -1,18 +1,15 @@
 import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
 import {IconButton} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ConfirmDialog from "../../layouts/dialog/ConfirmDialog";
 
-const EventDeleteDialog = ({eventId}) => {
-    const navigate = useNavigate();
-
+const EventDeleteDialog = ({eventId, handleDelete}) => {
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
 
     const onConfirmDelete = async () => {
-        // TODO: method to delete
+        handleDelete(eventId)
         setOpenConfirmDialog(false)
-        navigate('/events')
+
     }
     const onCancelDelete = () => {
         setOpenConfirmDialog(false)

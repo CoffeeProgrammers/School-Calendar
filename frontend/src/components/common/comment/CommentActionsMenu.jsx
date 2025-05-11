@@ -42,12 +42,11 @@ const CommentActionsMenu = ({handleDeleteComment, handleEditComment, commentCont
 
     const handleSaveEditDialog = async (content) => {
         handleEditComment(content)
-        handleCloseEditDialog()
+        setOpenEditDialog(false)
     };
 
     const handleCloseEditDialog = () => {
         setOpenEditDialog(false)
-        handleClose()
     };
 
 

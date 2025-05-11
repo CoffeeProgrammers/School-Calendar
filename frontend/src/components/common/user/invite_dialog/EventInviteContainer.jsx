@@ -12,7 +12,7 @@ const eventTypes = [
 
 ];
 
-const EventInviteContainer = () => {
+const EventInviteContainer = ({eventId}) => {
     const [users, setUsers] = useState([])
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -28,15 +28,15 @@ const EventInviteContainer = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await UserService.getAllUsers(
-                    {
-                        page: page,
-                        searchQuery: searchQuery,
-                        role: role
-                    }
+                const response = await UserService.getUsersByNotEvent(
+                    eventId,
+                    page - 1,
+                    10,
+                    searchQuery,
+                    role,
                 );
-                setUsers(response.data);
-                setPagesCount(response.pages)
+                setUsers(response.content);
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {
@@ -45,9 +45,9 @@ const EventInviteContainer = () => {
         };
 
         fetchData();
-    }, [searchQuery, role, page]);
+    }, [searchQuery, role, page, eventId]);
 
-    //TODO: method invite
+    //TODO: method invite + dialog
     const handleInvite =  (invitedUser) => {
         console.log("handleInvite " + invitedUser.first_name + " " + invitedUser.last_name);
         setUsers((prevUsers) => prevUsers.filter(user => user.id !== invitedUser.id));

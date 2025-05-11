@@ -11,7 +11,7 @@ const CreateCommentDialog = ({handleCreate}) => {
     const [text, setText] = useState("");
 
     const handleSubmit = () => {
-        handleCreate(text);
+        handleCreate({text: text});
         setOpen(false);
         setText("")
     }

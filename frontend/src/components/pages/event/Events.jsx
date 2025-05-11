@@ -11,33 +11,23 @@ import EventBox from "../../common/event/EventBox";
 import {useNavigate} from "react-router-dom";
 
 const eventTypes = [
-    {value: '', label: <em>None</em>},
-    {value: 'STUDENTS_MEETING', label: 'Students meeting'},
-    {value: 'TEACHERS_MEETING', label: 'TEACHERS_MEETING'},
-    {value: 'meetup', label: 'Meetup'},
-    {value: 'seminar', label: 'Seminar'},
-    {value: 'webinar', label: 'Webinar'},
-    {value: 'training', label: 'Training'},
-    {value: 'panelDiscussion', label: 'Panel Discussion'},
-    {value: 'roundTable', label: 'Round Table'},
-    {value: 'lecture', label: 'Lecture'},
-    {value: 'symposium', label: 'Symposium'},
-    {value: 'hackathon', label: 'Hackathon'},
-    {value: 'exhibition', label: 'Exhibition'},
-    {value: 'tradeShow', label: 'Trade Show'},
-    {value: 'conferenceCall', label: 'Conference Call'},
-    {value: 'liveStream', label: 'Live Stream'},
-    {value: 'panel', label: 'Panel'},
-    {value: 'keynote', label: 'Keynote'},
-    {value: 'presentation', label: 'Presentation'},
-    {value: 'networkingEvent', label: 'Networking Event'},
-    {value: 'productLaunch', label: 'Product Launch'},
-    {value: 'charityEvent', label: 'Charity Event'},
-    {value: 'pressConference', label: 'Press Conference'},
-    {value: 'focusGroup', label: 'Focus Group'},
-    {value: 'careerFair', label: 'Career Fair'},
-    {value: 'jobFair', label: 'Job Fair'}
+    { value: '', label: <em>None</em> },
+    { value: 'TEACHERS_MEETING', label: 'Teachers meeting' },
+    { value: 'STUDENTS_MEETING', label: 'Students meeting' },
+    { value: 'PARENTS_MEETING', label: 'Parents meeting' },
+    { value: 'TEST', label: 'Test' },
+    { value: 'ENTERTAINMENT', label: 'Entertainment' },
+    { value: 'PERSONAL', label: 'Personal' },
+    { value: 'COUNCIL_MEETING', label: 'Council meeting' }
 ];
+
+const isPastFilterOptions = [
+    { value: "", label: <em>None</em> },
+    { value: true, label: 'Is past' },
+    { value: false, label: 'Is coming' },
+
+];
+
 
 const Events = () => {
     const navigate = useNavigate();
@@ -46,6 +36,8 @@ const Events = () => {
 
     const [searchQuery, setSearchQuery] = useState('');
     const [eventType, setEventType] = useState('');
+    const [isPastFilter, setIsPastFilter] = useState("")
+
     const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
 
     const [page, setPage] = useState(1);
@@ -57,15 +49,19 @@ const Events = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await EventService.getAllMyEvents(
-                    {
-                        page: page - 1,
-                        size: 15,
-                        search: searchQuery,
-                        type: eventType
-                    }
+                const response = await EventService.getMyEvents(
+                    page - 1,
+                    10,
+                    searchQuery,
+                    "",
+                    "",
+                    isPastFilter,
+                    eventType
                 );
+
+                console.log("events:")
                 console.log(response)
+
                 setEvents(response.content);
                 setPagesCount(response.totalPages)
             } catch (error) {
@@ -76,7 +72,7 @@ const Events = () => {
         };
 
         fetchData();
-    }, [searchQuery, eventType, page]);
+    }, [searchQuery, eventType, page, isPastFilter]);
 
 
     if (loading) {
@@ -89,7 +85,7 @@ const Events = () => {
 
     return (
         <>
-            <Box sx={{border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "10px",}}>
+            <Box sx={{width: '1500px', border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "10px",}}>
                 <Stack direction="row" sx={{alignItems: 'center', display: "flex", justifyContent: "space-between "}}>
                     <Typography variant="h4">Events</Typography>
                     <Box sx={{alignItems: 'center', display: "flex", justifyContent: "space-between"}} gap={0.5}>
@@ -120,9 +116,10 @@ const Events = () => {
                                     options: eventTypes
                                 },
                                 {
-                                    //TODO: Date
-                                    label: "Date",
-                                    options: [{value: "", label: <em>Todo</em>}]
+                                    label: "Is past",
+                                    value: isPastFilter,
+                                    setValue: setIsPastFilter,
+                                    options: isPastFilterOptions
                                 }
                             ]}
                         />

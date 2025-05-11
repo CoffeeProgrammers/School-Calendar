@@ -1,52 +1,45 @@
 import BaseService from "../BaseService";
 
-const API_URL = "http://localhost:5000/invitations";
-
 class InvitationService extends BaseService {
     constructor() {
-        super(API_URL);
+        super("http://localhost:8081/api/events");
     }
 
-    async createInvitation(eventId, receiverId, invitationData) {
-        return await this.handleRequest(() =>
-            this.apiClient.post(`/create/receivers/${receiverId}`, invitationData, {
-                params: { event_id: eventId },
+    createInvitation(eventId, receiverId, data) {
+        return this.handleRequest(() =>
+            this.apiClient.post(`/${eventId}/invitations/create/receivers/${receiverId}`, data)
+        );
+    }
+
+    updateInvitation(eventId, invitationId, data) {
+        return this.handleRequest(() =>
+            this.apiClient.put(`/${eventId}/invitations/update/${invitationId}`, data)
+        );
+    }
+
+    deleteInvitation(eventId, invitationId) {
+        return this.handleRequest(() =>
+            this.apiClient.delete(`/${eventId}/invitations/delete/${invitationId}`)
+        );
+    }
+
+    getInvitations(eventId, page, size) {
+        return this.handleRequest(() =>
+            this.apiClient.get(`/${eventId}/invitations`, {
+                params: { page, size }
             })
         );
     }
 
-    async updateInvitation(invitationId, invitationData) {
-        return await this.handleRequest(() =>
-            this.apiClient.put(`/update/${invitationId}`, invitationData)
+    acceptInvitation(eventId, invitationId) {
+        return this.handleRequest(() =>
+            this.apiClient.post(`/${eventId}/invitations/accept/${invitationId}`)
         );
     }
 
-    async deleteInvitation(invitationId) {
-        return await this.handleRequest(() =>
-            this.apiClient.delete(`/delete/${invitationId}`)
-        );
-    }
-
-    async getAllInvitations(page) {
-        return await this.handleRequest(() =>
-            this.apiClient.get("", {
-                params: {
-                    _page: page,
-
-                }
-            })
-        );
-    }
-
-    async acceptInvitation(invitationId) {
-        return await this.handleRequest(() =>
-            this.apiClient.post(`/accept/${invitationId}`)
-        );
-    }
-
-    async rejectInvitation(invitationId) {
-        return await this.handleRequest(() =>
-            this.apiClient.post(`/reject/${invitationId}`)
+    rejectInvitation(eventId, invitationId) {
+        return this.handleRequest(() =>
+            this.apiClient.post(`/${eventId}/invitations/reject/${invitationId}`)
         );
     }
 }

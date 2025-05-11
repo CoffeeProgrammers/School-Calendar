@@ -1,18 +1,19 @@
-import React, {useState} from 'react';
-import {Box, Container, Divider, TextField} from "@mui/material";
+import React from 'react';
+import {Box, Container, Divider, MenuItem, TextField} from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Typography from "@mui/material/Typography";
-import {DateTimePicker} from "@mui/x-date-pickers/DateTimePicker";
-import dayjs from "dayjs";
-import theme from "../../../assets/theme";
 
-const UpdateEventBox = ({event}) => {
-    const [name, setName] = useState(event.name);
-    const [type, setType] = useState(event.type);
-    const [startDate, setStartDate] = useState(event.start_date);
-    const [endDate, setEndDate] = useState(event.end_date);
-    const [place, setPlace] = useState(event.place);
-    const [content, setContent] = useState(event.content);
+const UpdateEventBox = (
+    {
+        name,
+        setName,
+        place,
+        setPlace,
+        meetingType,
+        setMeetingType,
+        content,
+        setContent
+    }) => {
 
     return (
         <Box sx={{
@@ -47,52 +48,7 @@ const UpdateEventBox = ({event}) => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
-                        {/*TODO: Choose type*/}
-                        <TextField
-                            label="Type"
-                            fullWidth
-                            variant="outlined"
-                            value={type}
-                            onChange={(e) => setType(e.target.value)}
-                        />
-                        <DateTimePicker
-                            label="Start Date"
-                            views={['month', 'day', 'hours', 'minutes']}
-                            ampm={false}
-                            defaultValue={startDate ? dayjs(startDate) : null}
-                            onChange={(newValue) => setStartDate(newValue)}
-                            slotProps={{
-                                textField: {
-                                    sx: {
-                                        '& .MuiInputAdornment-root .MuiIconButton-root': {
-                                            color: theme.palette.secondary.main,
-                                        },
-                                        '& .MuiInputAdornment-root .MuiIconButton-root:hover': {
-                                            color: theme.palette.secondary.light,
-                                        },
-                                    },
-                                }
-                            }}
-                        />
-                        <DateTimePicker
-                            label="End Date"
-                            views={['month', 'day', 'hours', 'minutes']}
-                            ampm={false}
-                            defaultValue={endDate ? dayjs(endDate) : null}
-                            onChange={(newValue) => setEndDate(newValue)}
-                            slotProps={{
-                                textField: {
-                                    sx: {
-                                        '& .MuiInputAdornment-root .MuiIconButton-root': {
-                                            color: theme.palette.secondary.main,
-                                        },
-                                        '& .MuiInputAdornment-root .MuiIconButton-root:hover': {
-                                            color: theme.palette.secondary.light,
-                                        },
-                                    },
-                                }
-                            }}
-                        />
+
                         <TextField
                             label="Place"
                             fullWidth
@@ -100,6 +56,18 @@ const UpdateEventBox = ({event}) => {
                             value={place}
                             onChange={(e) => setPlace(e.target.value)}
                         />
+                        <TextField
+                            label="Meeting type"
+                            fullWidth
+                            variant="outlined"
+                            select
+                            value={meetingType}
+                            onChange={(e) => setMeetingType(e.target.value)}
+                        >
+                            <MenuItem value="ONLINE">Online</MenuItem>
+                            {/*TODO: OFFLINE*/}
+                            <MenuItem value="OFFLINE_REAL">Offline</MenuItem>
+                        </TextField>
                         <TextField
                             label="Content"
                             fullWidth

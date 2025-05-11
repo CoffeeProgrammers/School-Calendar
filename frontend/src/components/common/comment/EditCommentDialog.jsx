@@ -8,6 +8,9 @@ import {defaultButtonStyles, disagreeButtonStyles} from "../../../assets/styles"
 const EditCommentDialog = ({open, handleClose, handleEdit, commentContent}) => {
     const [newText, setNewText] = useState(commentContent)
 
+    const handleSave = () => {
+        handleEdit({text: newText})
+    }
     return (
         <>
             <Dialog
@@ -40,7 +43,7 @@ const EditCommentDialog = ({open, handleClose, handleEdit, commentContent}) => {
                             <Button variant="contained" sx={disagreeButtonStyles} onClick={handleClose}>
                                 Cancel
                             </Button>
-                            <Button variant="contained" sx={defaultButtonStyles} onClick={() => handleEdit(newText)}>
+                            <Button variant="contained" sx={defaultButtonStyles} onClick={handleSave}>
                                 Save
                             </Button>
                         </DialogActions>

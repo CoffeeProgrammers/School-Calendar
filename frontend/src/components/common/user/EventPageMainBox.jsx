@@ -11,17 +11,17 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PlaceIcon from "@mui/icons-material/Place";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
 import DateUtils from "../../../utils/DateUtils";
 import TextUtils from "../../../utils/TextUtils";
 
 
-const EventPageMainBox = ({event}) => {
+const EventPageMainBox = ({event, isCreator}) => {
 
     const formattedDate =
         DateUtils.formatDateToMDYT(event.startDate)
         + "  ⭢  " +
         DateUtils.formatDateToMDYT(event.endDate)
-
 
     const optionList = [
         {
@@ -38,6 +38,11 @@ const EventPageMainBox = ({event}) => {
             icon: <PlaceIcon fontSize="small"/>,
             label: "Place:",
             value: event.place
+        },
+        {
+            icon: <CameraIndoorIcon fontSize="small"/>,
+            label: "Meeting type:",
+            value: event.meetingType.toLowerCase()
         },
         {
             icon: <CalendarMonthIcon fontSize="small"/>,
@@ -66,9 +71,9 @@ const EventPageMainBox = ({event}) => {
                 <Divider sx={{mt: 1, mb: 0.7}}/>
 
                 <Stack direction="row" spacing={0.5}>
-                    <ParticipantsContainer/>
-                    <CommentsContainer/>
-                    <EventTasksContainer/>
+                    <ParticipantsContainer eventId={event.id} isCreator={isCreator}/>
+                    <CommentsContainer eventId={event.id}/>
+                    <EventTasksContainer eventId={event.id}/>
                 </Stack>
 
                 <Divider sx={{mt: 0.7, mb: 2}}/>

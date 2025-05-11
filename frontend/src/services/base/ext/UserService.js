@@ -1,69 +1,81 @@
 import BaseService from "../BaseService";
 
-const API_URL = 'http://localhost:8081/api/';
-
 class UserService extends BaseService {
     constructor() {
-        super(API_URL);
+        super("http://localhost:8081/api/users");
     }
 
-    async createUser(userData) {
-        return await this.handleRequest(
-            () => this.apiClient.post(`/create`, userData)
+    createUser(data) {
+        return this.handleRequest(() =>
+            this.apiClient.post("/create", data)
         );
     }
 
-    async updateUser(userId, userData) {
-        return await this.handleRequest(
-            () => this.apiClient.put(`/update/${userId}`, userData)
+    updateUser(id, data) {
+        return this.handleRequest(() =>
+            this.apiClient.put(`/update/${id}`, data)
         );
     }
 
-    async getUserById(userId) {
-        return await this.handleRequest(
-            () => this.apiClient.get(`/${userId}`)
+    getUser(id) {
+        return this.handleRequest(() =>
+            this.apiClient.get(`/${id}`)
         );
     }
 
-    async getAllUsers({page, size, searchQuery, role} = {}) {
-        const params = {
-            page,
-            size,
-        };
-
-        if (searchQuery) {
-            params.name = searchQuery;
-        }
-        if (role) {
-            params.role = role;
-        }
-
-        return await this.handleRequest(() =>
-            this.apiClient.get('users', { params })
+    getAllUsers(
+        page,
+        size,
+        email = "",
+        firstName = "",
+        lastName = "",
+        role = ""
+    ) {
+        return this.handleRequest(() =>
+            this.apiClient.get("", {
+                params: {page, size, email, firstName, lastName, role}
+            })
         );
     }
 
-    async getUsersByEvent(eventId, {page, size} = {}) {
-        return await this.handleRequest(
-            () => this.apiClient.get(`/events/${eventId}`, {params: {page, size}})
+    getUsersByEvent(
+        eventId,
+        page,
+        size,
+        firstName = "",
+        lastName = "",
+        role = ""
+    ) {
+        return this.handleRequest(() =>
+            this.apiClient.get(`/events/${eventId}`, {
+                params: {page, size, firstName, lastName, role}
+            })
         );
     }
 
-    async getMyUser() {
-        return await this.handleRequest(
-            () => this.apiClient.get(`/my`)
+    getUsersByNotEvent(eventId, page, size, email = "", firstName = "", lastName = "", role = "") {
+        return this.handleRequest(() =>
+            this.apiClient.get(`/not_events/${eventId}`, {
+                params: {page, size, email, firstName, lastName, role}
+            })
         );
     }
 
-    async deleteUser(userId) {
-        return await this.handleRequest(
-            () => this.apiClient.delete(`/delete/${userId}`)
+    getMyUser() {
+        return this.handleRequest(() =>
+            this.apiClient.get("/my")
         );
     }
 
-    async updateMyUser(userData) {
-        return await this.handleRequest(
-            () => this.apiClient.put(`/update`, userData)
+    deleteUser(id) {
+        return this.handleRequest(() =>
+            this.apiClient.delete(`/delete/${id}`)
+        );
+    }
+
+    updateMyUser(data) {
+        return this.handleRequest(() =>
+            this.apiClient.put("/update", data)
         );
     }
 }

@@ -6,7 +6,8 @@ import CommentService from "../../../../services/base/ext/CommentService";
 import CommentsDialog from "./CommentsDialog";
 
 //TODO: update|delete|create for comment creator, delete for event creator
-const CommentsContainer = () => {
+const CommentsContainer = ({eventId}) => {
+
     const [comments, setComments] = useState([])
 
     const [page, setPage] = useState(1);
@@ -18,13 +19,13 @@ const CommentsContainer = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await CommentService.getCommentsByEventId(
-                    {
-                        page: page,
-                    }
+                const response = await CommentService.getComments(
+                    eventId,
+                    page - 1,
+                    10,
                 );
-                setComments(response.data);
-                setPagesCount(response.pages)
+                setComments(response.content);
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {
@@ -33,32 +34,43 @@ const CommentsContainer = () => {
         };
 
         fetchData();
-    }, [page]);
+    }, [eventId, page]);
 
     const handleDeleteComment = async (deletedId) => {
-        await CommentService.deleteComment(deletedId);
-        setComments((prev) => prev.filter(comment => comment.id !== deletedId));
+        try {
+            await CommentService.deleteComment(eventId, deletedId);
+            setComments((prev) => prev.filter(comment => comment.id !== deletedId));
+        } catch (error) {
+            console.error("Error deleting comment:", error);
+        }
     };
 
-    const handleEditComment = async (commentId, newText) => {
-        const updatedComment = await CommentService.updateComment(commentId, newText);
-
-        setComments((prev) =>
-            prev.map(comment =>
-                comment.id === commentId ?
-                    {
-                        ...comment,
-                        text: updatedComment.text,
-                        time: updatedComment.time
-                    } : comment
-            )
-        );
-
+    const handleEditComment = async (commentId, data) => {
+        try {
+            const updatedComment = await CommentService.updateComment(eventId, commentId, data);
+            setComments((prev) =>
+                prev.map((comment) =>
+                    comment.id === commentId
+                        ? {
+                            ...comment,
+                            text: updatedComment.text,
+                            date: updatedComment.date,
+                        }
+                        : comment
+                )
+            );
+        } catch (error) {
+            console.error("Error updating comment:", error);
+        }
     };
 
-    const handleCreateComment = async (text) => {
-        const newComment = await CommentService.createComment( text );
-        setComments((prev) => [newComment, ...prev]);
+    const handleCreateComment = async (data) => {
+        try {
+            const newComment = await CommentService.createComment(eventId, data);
+            setComments((prev) => [newComment, ...prev]);
+        } catch (error) {
+            console.error("Error creating comment:", error);
+        }
     };
 
     if (loading) {

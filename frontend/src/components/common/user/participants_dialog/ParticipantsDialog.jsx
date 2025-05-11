@@ -4,7 +4,7 @@ import ElementAdditionDialog from "../../../layouts/dialog/ElementAdditionDialog
 import EventInviteContainer from "../invite_dialog/EventInviteContainer";
 import ParticipantBox from "./ParticipantBox";
 
-const ParticipantsDialog = ({ users, pagesCount, page, setPage, handleRemove }) => {
+const ParticipantsDialog = ({ users, pagesCount, page, setPage, handleRemove, isCreator, eventId }) => {
     return (
         <>
             <ElementAdditionDialog
@@ -23,7 +23,7 @@ const ParticipantsDialog = ({ users, pagesCount, page, setPage, handleRemove }) 
                 page={page}
                 setPage={setPage}
                 pagesCount={pagesCount}
-                actions={<EventInviteContainer/>}
+                actions={isCreator && <EventInviteContainer eventId={eventId}/>}
             />
         </>
     );

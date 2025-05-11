@@ -17,13 +17,11 @@ const isDoneSelectOptions = [
 ];
 
 const Tasks = () => {
-    const [searchQuery, setSearchQuery] = useState('');
+    const [tasks, setTasks] = useState([])
 
+    const [searchName, setSearchName] = useState('');
     const [isDone, setIsDone] = useState('');
     const [deadline, setDeadline] = useState('');
-
-
-    const [tasks, setTasks] = useState([])
 
     const [page, setPage] = useState(1);
     const [pagesCount, setPagesCount] = useState(1)
@@ -37,15 +35,19 @@ const Tasks = () => {
         const fetchData = async () => {
             try {
                 const response = await TaskService.getMyTasks(
-                    {
-                        page: page,
-                        size: 15,
+                    page -1,
+                    15,
+                    searchName,
+                    deadline,
+                    isDone,
+                    ''
 
-                    }
             );
+                console.log("tasks:")
                 console.log(response)
+
                 setTasks(response.content);
-                setPagesCount(response.totalPages - 1)
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {
@@ -54,7 +56,7 @@ const Tasks = () => {
         };
 
         fetchData();
-    }, [searchQuery, deadline, isDone, page]);
+    }, [searchName, deadline, isDone, page]);
 
 
     if (loading) {
@@ -81,8 +83,8 @@ const Tasks = () => {
                     <Typography variant="h4">Tasks</Typography>
                     <Box sx={listPanelStyles} gap={0.5}>
                         <Search
-                            searchQuery={searchQuery}
-                            setSearchQuery={setSearchQuery}
+                            searchQuery={searchName}
+                            setSearchQuery={setSearchName}
                         />
                         <OpenFiltersButton
                             isOpenFilterMenu={isOpenFilterMenu}
