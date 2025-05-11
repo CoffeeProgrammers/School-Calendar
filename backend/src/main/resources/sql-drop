@@ -1,21 +1,5 @@
 docker exec -it db psql -U postgres -d db
 
--- Drop constraints
-ALTER TABLE "users_notifications" DROP CONSTRAINT IF EXISTS "users_notifications_notification_id_foreign";
-ALTER TABLE "task_assignments" DROP CONSTRAINT IF EXISTS "task_assignments_user_id_foreign";
-ALTER TABLE "comments" DROP CONSTRAINT IF EXISTS "comments_creator_id_foreign";
-ALTER TABLE "parents_students" DROP CONSTRAINT IF EXISTS "parents_students_student_id_foreign";
-ALTER TABLE "users_events" DROP CONSTRAINT IF EXISTS "users_events_event_id_foreign";
-ALTER TABLE "invitations" DROP CONSTRAINT IF EXISTS "invitations_event_id_foreign";
-ALTER TABLE "invitations" DROP CONSTRAINT IF EXISTS "invitations_receiver_id_foreign";
-ALTER TABLE "tasks" DROP CONSTRAINT IF EXISTS "tasks_creator_id_foreign";
-ALTER TABLE "tasks" DROP CONSTRAINT IF EXISTS "tasks_event_id_foreign";
-ALTER TABLE "task_assignments" DROP CONSTRAINT IF EXISTS "task_assignments_task_id_foreign";
-ALTER TABLE "invitations" DROP CONSTRAINT IF EXISTS "invitations_sender_id_foreign";
-ALTER TABLE "events" DROP CONSTRAINT IF EXISTS "events_creator_id_foreign";
-ALTER TABLE "parents_students" DROP CONSTRAINT IF EXISTS "parents_students_parent_id_foreign";
-ALTER TABLE "users_events" DROP CONSTRAINT IF EXISTS "users_events_user_id_foreign";
-
 -- Drop tables
 DROP TABLE IF EXISTS "users_notifications" CASCADE;
 DROP TABLE IF EXISTS "task_assignments" CASCADE;
