@@ -18,7 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 
 @Slf4j
 @Configuration
@@ -62,7 +62,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .oauth2Login(oauth2 -> oauth2
                         .defaultSuccessUrl("/api/auth/oauth-success", true))
-                .addFilterBefore(authJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(authJwtTokenFilter(), SecurityContextPersistenceFilter.class)
         ;
         return http.build();
     }

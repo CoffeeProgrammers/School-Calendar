@@ -62,15 +62,16 @@ public class JwtUtils {
         return token.getExpirationTimestamp().isBefore(LocalDateTime.now());
     }
 
-    public String refreshAccessToken(String currentToken, String username) {
-        Claims claims = parseClaims(currentToken);
-        if (isTokenExpired(currentToken)) {
-            return generateTokenFromUsername(username, claims);
-        }
-        return currentToken;
+    public String refreshAccessToken(String username) {
+        User user = userService.findByEmail(username);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("token", user.getToken());
+        claims.put("name", user.getFirstName() + " " + user.getLastName());
+        return generateTokenFromUsername(username, claims);
     }
 
     private Claims parseClaims(String token) {
+        log.info("try to parse claims from token: {}", token);
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(getSignInKey())
