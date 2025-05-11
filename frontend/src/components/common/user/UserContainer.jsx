@@ -5,7 +5,6 @@ import UserView from "./UserView";
 import UserService from "../../../services/base/ext/UserService";
 
 const UserContainer = ({userId}) => {
-
     const [user, setUser] = useState(null);
 
     const [loading, setLoading] = useState(true);

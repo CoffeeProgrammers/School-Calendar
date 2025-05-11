@@ -5,6 +5,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {listElementBoxStyle, listElementBoxTextStyle} from "../../../assets/styles";
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import TextUtils from "../../../utils/TextUtils";
 
 const TaskBox = ({task}) => {
     const startDate = new Date(task.deadline);
@@ -21,7 +22,7 @@ const TaskBox = ({task}) => {
     )
 
     return (
-        <Box sx={listElementBoxStyle}>
+        <Box sx={{...listElementBoxStyle, maxWidth: "350px"}}>
             <Typography noWrap variant="subtitle1" sx={listElementBoxTextStyle}>
                 <AssignmentIcon fontSize="small" color="secondary"/>
                 {task.name}
@@ -34,7 +35,7 @@ const TaskBox = ({task}) => {
                     size="small"
                 />
                 <InfoItem icon={CalendarMonthIcon} text={formattedStartDate}/>
-                <InfoItem icon={AccountCircleIcon} text={`${task.creator.first_name} ${task.creator.last_name}`}/>
+                <InfoItem icon={AccountCircleIcon} text={TextUtils.getUserFullName(task.creator)}/>
             </Box>
         </Box>
     );

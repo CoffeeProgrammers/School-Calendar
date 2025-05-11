@@ -8,7 +8,7 @@ import DefaultButton from "../../layouts/DefaultButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import TaskList from "../../common/task/TaskList";
 import TaskService from "../../../services/base/ext/TaskService";
-import {listPanelStyles, mainBoxStyles} from "../../../assets/styles";
+import {listPanelStyles} from "../../../assets/styles";
 
 const isDoneSelectOptions = [
     {value: '', label: <em>None</em>},
@@ -17,13 +17,11 @@ const isDoneSelectOptions = [
 ];
 
 const Tasks = () => {
-    const [searchQuery, setSearchQuery] = useState('');
+    const [tasks, setTasks] = useState([])
 
+    const [searchName, setSearchName] = useState('');
     const [isDone, setIsDone] = useState('');
     const [deadline, setDeadline] = useState('');
-
-
-    const [tasks, setTasks] = useState([])
 
     const [page, setPage] = useState(1);
     const [pagesCount, setPagesCount] = useState(1)
@@ -37,15 +35,19 @@ const Tasks = () => {
         const fetchData = async () => {
             try {
                 const response = await TaskService.getMyTasks(
-                    {
-                        page: page,
-                        size: 15,
+                    page -1,
+                    15,
+                    searchName,
+                    deadline,
+                    isDone,
+                    ''
 
-                    }
             );
+                console.log("tasks:")
                 console.log(response)
+
                 setTasks(response.content);
-                setPagesCount(response.totalPages - 1)
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {
@@ -54,7 +56,7 @@ const Tasks = () => {
         };
 
         fetchData();
-    }, [searchQuery, deadline, isDone, page]);
+    }, [searchName, deadline, isDone, page]);
 
 
     if (loading) {
@@ -67,13 +69,22 @@ const Tasks = () => {
 
     return (
         <>
-            <Box sx={mainBoxStyles}>
+            <Box sx={{
+                width: "1295px",
+                //maxWidth: "1295px",
+                border: '1px solid #ddd',
+                padding: '20px',
+                margin: '10px',
+                borderRadius: "10px",
+                display: "flex",
+                flexDirection: "column"
+            }}>
                 <Stack direction="row"  sx={listPanelStyles}>
                     <Typography variant="h4">Tasks</Typography>
                     <Box sx={listPanelStyles} gap={0.5}>
                         <Search
-                            searchQuery={searchQuery}
-                            setSearchQuery={setSearchQuery}
+                            searchQuery={searchName}
+                            setSearchQuery={setSearchName}
                         />
                         <OpenFiltersButton
                             isOpenFilterMenu={isOpenFilterMenu}
@@ -92,6 +103,7 @@ const Tasks = () => {
                 {isOpenFilterMenu && (
                     <Box sx={{mb: 1}}>
                         <FiltersGroup
+                            //TODO: date
                             filters={[
                                 {
                                     label: "Status",
@@ -101,7 +113,7 @@ const Tasks = () => {
                                 },
                                 {
                                     label: "Date",
-                                    options: [{value: "", label: <em>Todo</em>}]
+                                    options: [{value: "", label: <em>____</em>}]
                                 }
                             ]}
                         />

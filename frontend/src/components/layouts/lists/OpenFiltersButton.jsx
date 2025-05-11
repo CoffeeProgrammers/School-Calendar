@@ -5,6 +5,7 @@ import {IconButton} from "@mui/material";
 const OpenFiltersButton = ({setOpenFilterMenu, isOpenFilterMenu}) => {
     return (
         <IconButton
+            sx={{borderRadius: "5px"}}
             onClick={() => setOpenFilterMenu(!isOpenFilterMenu)}
         >
             <FilterAltIcon

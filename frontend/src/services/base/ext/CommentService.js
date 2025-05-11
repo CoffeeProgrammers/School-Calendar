@@ -1,49 +1,32 @@
 import BaseService from "../BaseService";
 
-const API_URL = 'http://localhost:5000';
-
 class CommentService extends BaseService {
     constructor() {
-        super(API_URL);
+        super("http://localhost:8081/api/events");
     }
 
-    async createComment(text) {
-        return await this.handleRequest(
-            () => this.apiClient.post(`/comments`, {
-                eventId: 1,
-                text: text,
-                time: new Date().toISOString(),
-                creator: {
-                    id: 101,
-                    email: "john.doe@example.com",
-                    role: "consultant",
-                    first_name: "John",
-                    last_name: "Doe"
-                }
-            })
+    createComment(eventId, data) {
+        return this.handleRequest(() =>
+            this.apiClient.post(`/${eventId}/comments/create`, data)
         );
     }
 
-    async updateComment(commentId, newText) {
-        return await this.handleRequest(() =>
-            this.apiClient.patch(`/comments/${commentId}`, { text: newText})
+    updateComment(eventId, commentId, data) {
+        return this.handleRequest(() =>
+            this.apiClient.put(`/${eventId}/comments/update/${commentId}`, data)
         );
     }
 
-    async deleteComment(commentId) {
-        return await this.handleRequest(
-            () => this.apiClient.delete(`/comments/${commentId}`)
+    deleteComment(eventId, commentId) {
+        return this.handleRequest(() =>
+            this.apiClient.delete(`/${eventId}/comments/delete/${commentId}`)
         );
     }
 
-    //TODO: adapt to json-server
-    async getCommentsByEventId({eventId, page, size}){
-        return await this.handleRequest(
-            () => this.apiClient.get(`/comments`, {
-                params: { 
-                    _page: page,
-
-                }
+    getComments(eventId, page, size) {
+        return this.handleRequest(() =>
+            this.apiClient.get(`/${eventId}/comments`, {
+                params: { page, size }
             })
         );
     }

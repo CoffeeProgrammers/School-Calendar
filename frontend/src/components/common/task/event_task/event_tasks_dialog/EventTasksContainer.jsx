@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
-import Loading from "../../../layouts/Loading";
-import TaskService from "../../../../services/base/ext/TaskService";
 import EventTasksDialog from "./EventTasksDialog";
+import TaskService from "../../../../../services/base/ext/TaskService";
+import Loading from "../../../../layouts/Loading";
 
-const EventTasksContainer = () => {
+const EventTasksContainer = ({eventId}) => {
     const [tasks, setTasks] = useState([])
 
     const [page, setPage] = useState(1);
@@ -18,12 +18,16 @@ const EventTasksContainer = () => {
         const fetchData = async () => {
             try {
                 const response = await TaskService.getTasksByEvent(
-                    {
-                        page: page,
-                    }
+                    eventId,
+                    page - 1,
+                    9
+                    
                 );
-                setTasks(response.data);
-                setPagesCount(response.pages)
+                console.log("tasks:")
+                console.log(response)
+                
+                setTasks(response.content);
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {
@@ -32,7 +36,7 @@ const EventTasksContainer = () => {
         };
 
         fetchData();
-    }, [page]);
+    }, [eventId, page]);
 
      const handleToggleTask = async (task) => {
         const updatedTask = await TaskService.toggleTask({

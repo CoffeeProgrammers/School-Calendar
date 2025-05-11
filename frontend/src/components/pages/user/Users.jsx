@@ -12,9 +12,9 @@ import {listPanelStyles} from "../../../assets/styles";
 
 const roleTypes = [
     {value: '', label: <em>None</em>},
-    {value: 'teacher', label: 'Teacher'},
-    {value: 'student', label: 'Student'},
-    {value: 'parents', label: 'Parents'},
+    {value: 'TEACHER', label: 'Teacher'},
+    {value: 'STUDENT', label: 'Student'},
+    {value: 'PARENT', label: 'Parents'},
 
 ];
 
@@ -36,10 +36,12 @@ const Users = () => {
         const fetchData = async () => {
             try {
                 const response = await UserService.getAllUsers(
-                    {
-                        page: page - 1,
-                        size: 15,
-                    }
+                    page - 1,
+                    15,
+                    '',
+                    searchQuery,
+                    '',
+                    //role
                 );
                 console.log(response)
                 setUsers(response.content);

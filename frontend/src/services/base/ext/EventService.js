@@ -1,123 +1,86 @@
 import BaseService from "../BaseService";
 
-const API_URL = 'http://localhost:8081/api/';
-
 class EventService extends BaseService {
     constructor() {
-        super(API_URL);
+        super("http://localhost:8081/api/events");
     }
 
-    async createEvent(
-        { eventCreateRequest:{
-            name,
-            type,
-            start_date,
-            end_date,
-            content,
-            is_content_available_anytime,
-            meeting_type,
-            place
-        }}
+    createEvent(data) {
+        return this.handleRequest(() =>
+            this.apiClient.post("/create", data)
+        );
+    }
+
+    updateEvent(id, data) {
+        return this.handleRequest(() =>
+            this.apiClient.put(`/update/${id}`,data)
+        );
+    }
+
+    deleteEvent(id) {
+        return this.handleRequest(() =>
+            this.apiClient.delete(`/delete/${id}`)
+        );
+    }
+
+    deleteUserFromEvent(eventId, userId) {
+        return this.handleRequest(() =>
+            this.apiClient.delete(`/delete/${eventId}/user/${userId}`)
+        );
+    }
+
+    getEvent(id) {
+        return this.handleRequest(() =>
+            this.apiClient.get(`/${id}`)
+        );
+    }
+
+    getMyEvents(
+        page,
+        size,
+        search = null,
+        startDate = null,
+        endDate = null,
+        isPast = null,
+        typeOfEvent = null
     ) {
-        return await this.handleRequest(
-            () => this.apiClient.post('/',
-                { eventCreateRequest:{
-                        name,
-                        type,
-                        start_date,
-                        end_date,
-                        content,
-                        is_content_available_anytime,
-                        meeting_type,
-                        place
-                }}
-            ));
-    }
-
-    async updateEvent(eventId, {
-        eventUpdateRequest: {
-            name,
-            content,
-            is_content_available_anytime,
-            meeting_type,
-            place
-        }
-    }) {
-        return await this.handleRequest(
-            () => this.apiClient.put(`/${eventId}`, {
-                eventUpdateRequest: {
-                    name,
-                    content,
-                    is_content_available_anytime,
-                    meeting_type,
-                    place
-                }
-            }));
-    }
-
-    async deleteEvent(eventId) {
-        return await this.handleRequest(
-            () => this.apiClient.delete(`/${eventId}`));
-    }
-
-    async getEventById(eventId) {
-        return await this.handleRequest(
-            () => this.apiClient.get(`events/${eventId}`));
-    }
-
-    async getAllMyEvents({
-                             page = 0,
-                             size = 10,
-                             search = '',
-                             startDate = '',
-                             endDate = '',
-                             isPast = '',
-                             type = ''
-                         }) {
-
         const params = {
             page,
             size,
+            ...(search && {search}),
+            ...(startDate && {startDate}),
+            ...(endDate && {endDate}),
+            ...(isPast && {isPast}),
+            ...(typeOfEvent && {typeOfEvent}),
         };
 
-        if (search) params.search = search;
-        if (startDate) params.startDate = startDate;
-        if (endDate) params.endDate = endDate;
-        if (isPast !== null) params.isPast = isPast;
-        if (type) params.typeOfEvent = type;
-
-        return await this.handleRequest(() =>
-            this.apiClient.get('/events', { params })
+        return this.handleRequest(() =>
+            this.apiClient.get("", {params})
         );
     }
 
-    //TODO
-    async getOtherUsersEventsBetweenDates(userId, startDate, endDate, gap) {
-        return await this.handleRequest(() =>
+    getUserEventsBetween(userId, startDate, endDate, gap = 0) {
+        return this.handleRequest(() =>
             this.apiClient.get(`/users/${userId}/between`, {
                 params: {
-                    start_date_gte: startDate,
-                    start_date_lte: endDate,
-                    //TODO: gap
-                },
+                    start_date: startDate,
+                    end_date: endDate,
+                    gap
+                }
             })
         );
     }
 
-    //TODO
-    async getMyEventsBetweenDates(startDate, endDate, gap) {
-        return await this.handleRequest(() =>
-            this.apiClient.get('/between', {
+    getMyEventsBetween(startDate, endDate) {
+        return this.handleRequest(() =>
+            this.apiClient.get("/between", {
                 params: {
-                    start_date_gte: startDate,
-                    start_date_lte: endDate,
-                    //TODO: gap
-                },
+                    start_date: startDate,
+                    end_date: endDate
+                }
             })
         );
     }
-
-
 }
 
 export default new EventService();

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+import EditIcon from '@mui/icons-material/Edit';
 import {Divider, IconButton, Menu, MenuItem} from "@mui/material";
 import ConfirmDialog from "../../layouts/dialog/ConfirmDialog";
 import EditCommentDialog from "./EditCommentDialog";
@@ -42,19 +42,18 @@ const CommentActionsMenu = ({handleDeleteComment, handleEditComment, commentCont
 
     const handleSaveEditDialog = async (content) => {
         handleEditComment(content)
-        handleCloseEditDialog()
+        setOpenEditDialog(false)
     };
 
     const handleCloseEditDialog = () => {
         setOpenEditDialog(false)
-        handleClose()
     };
 
 
     return (
         <>
             <IconButton onClick={handleOpen}>
-                <MoreVertIcon/>
+                <EditIcon fontSize="small"/>
             </IconButton>
 
             <Menu

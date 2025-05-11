@@ -3,6 +3,7 @@ import {Box, Chip, Divider, Typography} from "@mui/material";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import EmailIcon from '@mui/icons-material/Email';
 import {listElementBoxStyle, listElementBoxTextStyle} from "../../../assets/styles";
+import TextUtils from "../../../utils/TextUtils";
 
 
 const UserBox = ({user}) => {
@@ -10,7 +11,7 @@ const UserBox = ({user}) => {
         <Box sx={listElementBoxStyle}>
             <Typography noWrap variant="subtitle1" sx={listElementBoxTextStyle}>
                 <AccountBoxIcon fontSize="medium" color="secondary"/>
-                {user.firstName + " " + user.lastName}
+                {TextUtils.getUserFullName(user)}
             </Typography>
 
             <Divider sx={{marginBottom: "5px"}}/>
@@ -20,7 +21,7 @@ const UserBox = ({user}) => {
                 {user.email}
             </Typography>
 
-            <Chip sx={{ml: -0.5}} label={user.role} size="small"/>
+            <Chip sx={{ml: -0.5}} label={TextUtils.formatEnumText(user.role)} size="small"/>
 
 
         </Box>
