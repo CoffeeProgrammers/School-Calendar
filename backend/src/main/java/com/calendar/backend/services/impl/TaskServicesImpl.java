@@ -80,6 +80,12 @@ public class TaskServicesImpl implements TaskService {
         if(!isPast.isBlank() && !isPast.equals("null") && isPast.equals("true")) {
             filters.put("isPast", isPast);
         }
+        if(isDone != null && !isDone.isBlank() && !isDone.equals("null")) {
+            filters.put("is_done", isDone);
+        }
+        if(userId != 0) {
+            filters.put("user_id", userId);
+        }
         log.info("Finding all tasks for user with id {} and filters {}", userId, filters);
         Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId).and(TaskSpecification.filterTasks(filters)),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));

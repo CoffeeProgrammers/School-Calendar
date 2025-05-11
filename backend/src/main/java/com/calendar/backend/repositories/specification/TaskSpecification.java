@@ -1,10 +1,10 @@
 package com.calendar.backend.repositories.specification;
 
 import com.calendar.backend.models.Task;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import com.calendar.backend.models.TaskAssignment;
+import jakarta.persistence.criteria.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 public class TaskSpecification {
+    private static final Logger log = LoggerFactory.getLogger(TaskSpecification.class);
+
     public static Specification<Task> filterTasks(Map<String, Object> filters) {
         return (Root<Task> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
             if (filters == null || filters.isEmpty()) {
@@ -30,6 +32,16 @@ public class TaskSpecification {
                 LocalDateTime deadline = LocalDateTime.parse(filters.get("deadline").toString());
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("deadline"), deadline));
             }
+
+            if (filters.containsKey("is_done") && filters.containsKey("user_id")) {
+                boolean isDone = Boolean.parseBoolean(filters.get("is_done").toString());
+                Long userId = Long.parseLong(filters.get("user_id").toString());
+
+                Join<Task, TaskAssignment> assignmentJoin = root.join("taskAssignments", JoinType.INNER);
+                predicates.add(criteriaBuilder.equal(assignmentJoin.get("isDone"), isDone));
+                predicates.add(criteriaBuilder.equal(assignmentJoin.get("user").get("id"), userId));
+            }
+
             if (filters.containsKey("is_past")) {
                 boolean isPast = Boolean.parseBoolean(filters.get("is_past").toString());
                 if (isPast) {
