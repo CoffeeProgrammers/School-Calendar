@@ -1,5 +1,7 @@
 package com.calendar.backend.services.impl;
 
+import com.calendar.backend.dto.task.TaskListResponse;
+import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.models.Task;
 import com.calendar.backend.models.TaskAssignment;
 import com.calendar.backend.models.User;
@@ -77,5 +79,14 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     public void unsignAllFromTask(Long taskId) {
         log.info("Unsigning all task assignments for task with id {}", taskId);
         taskAssignmentRepository.deleteAllByTask_Id(taskId);
+    }
+
+    @Override
+    public PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth
+            (PaginationListResponse<TaskListResponse> tasks, Authentication authentication) {
+        tasks.setContent(tasks.getContent().stream().map(task -> {
+            task.setDone(this.isDone(task.getId(), authentication));
+            return task;}).toList());
+        return tasks;
     }
 }

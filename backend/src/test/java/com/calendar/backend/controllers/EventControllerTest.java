@@ -9,8 +9,8 @@
 //import com.calendar.backend.dto.event.EventUpdateRequest;
 //import com.calendar.backend.dto.user.UserListResponse;
 //import com.calendar.backend.dto.wrapper.PaginationListResponse;
-//import com.calendar.backend.models.EventType;
-//import com.calendar.backend.models.MeetingType;
+//import com.calendar.backend.models.enums.EventType;
+//import com.calendar.backend.models.enums.MeetingType;
 //import com.calendar.backend.models.User;
 //import com.calendar.backend.services.impl.EventServiceImpl;
 //import com.calendar.backend.services.impl.TaskServicesImpl;

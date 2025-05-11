@@ -27,12 +27,8 @@ public class TaskSpecification {
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
             }
             if (filters.containsKey("deadline")) {
-                LocalDateTime deadline = (LocalDateTime) filters.get("deadline");
+                LocalDateTime deadline = LocalDateTime.parse(filters.get("deadline").toString());
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("deadline"), deadline));
-            }
-            if (filters.containsKey("is_done")) {
-                Boolean isDone = Boolean.parseBoolean(filters.get("is_done").toString());
-                predicates.add(criteriaBuilder.equal(root.get("event").get("isDone"), isDone));
             }
             if (filters.containsKey("is_past")) {
                 boolean isPast = Boolean.parseBoolean(filters.get("is_past").toString());

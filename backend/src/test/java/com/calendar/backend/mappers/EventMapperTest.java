@@ -5,9 +5,9 @@ import com.calendar.backend.dto.event.EventCreateRequest;
 import com.calendar.backend.dto.event.EventFullResponse;
 import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.models.Event;
-import com.calendar.backend.models.EventType;
-import com.calendar.backend.models.MeetingType;
 import com.calendar.backend.models.User;
+import com.calendar.backend.models.enums.EventType;
+import com.calendar.backend.models.enums.MeetingType;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 

@@ -1,5 +1,7 @@
 package com.calendar.backend.models;
 
+import com.calendar.backend.models.enums.EventType;
+import com.calendar.backend.models.enums.MeetingType;
 import jakarta.persistence.*;
 import lombok.*;
 

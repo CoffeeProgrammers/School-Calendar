@@ -1,4 +1,4 @@
-package com.calendar.backend.models;
+package com.calendar.backend.models.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 

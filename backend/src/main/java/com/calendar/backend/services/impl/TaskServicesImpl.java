@@ -77,9 +77,6 @@ public class TaskServicesImpl implements TaskService {
         if(deadline != null && !deadline.isBlank() && !deadline.equals("null")) {
             filters.put("deadline", deadline);
         }
-        if(isDone != null && !isDone.isBlank() && !isDone.equals("null")) {
-            filters.put("isDone", isDone);
-        }
         if(!isPast.isBlank() && !isPast.equals("null") && isPast.equals("true")) {
             filters.put("isPast", isPast);
         }

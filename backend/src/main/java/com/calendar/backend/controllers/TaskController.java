@@ -41,7 +41,9 @@ public class TaskController {
             @PathVariable Long id,
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
-        return taskService.update(request, id);
+        TaskFullResponse taskFullResponse =  taskService.update(request, id);
+        taskFullResponse.setDone(taskAssignmentService.isDone(id, auth));
+        return taskFullResponse;
     }
 
     @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfTask(#auth, #id)")
@@ -70,7 +72,7 @@ public class TaskController {
             @RequestParam(required = false) String isDone,
             @RequestParam(required = false) String isPast,
             Authentication auth) {
-        return taskService.findAllByUserId(
+        PaginationListResponse<TaskListResponse> taskListResponse = taskService.findAllByUserId(
                 name,
                 deadline,
                 isDone,
@@ -79,6 +81,34 @@ public class TaskController {
                 page,
                 size
         );
+        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
+    }
+
+    @GetMapping("/events/{event_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PaginationListResponse<TaskListResponse> getTasksByEvent(
+            @PathVariable Long event_id,
+            @RequestParam int page,
+            @RequestParam int size,
+            Authentication auth) {
+        PaginationListResponse<TaskListResponse> taskListResponse =
+                taskService.findAllByEventId(event_id, page, size);
+        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
+    }
+
+    @GetMapping("/getMyWithoutEvent")
+    @ResponseStatus(HttpStatus.OK)
+    public PaginationListResponse<TaskListResponse> getMyTasks(
+            @RequestParam int page,
+            @RequestParam int size,
+            Authentication auth) {
+        PaginationListResponse<TaskListResponse> taskListResponse =
+                taskService.findAllByCreatorIdAndEventEmpty(
+                auth,
+                page,
+                size
+        );
+        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
     }
 
     @PutMapping("/toggle/{id}")
@@ -89,33 +119,11 @@ public class TaskController {
         taskAssignmentService.toggleDone(id, auth);
     }
 
-    @GetMapping("/events/{event_id}")
-    @ResponseStatus(HttpStatus.OK)
-    public PaginationListResponse<TaskListResponse> getTasksByEvent(
-            @PathVariable Long event_id,
-            @RequestParam int page,
-            @RequestParam int size) {
-        return taskService.findAllByEventId(event_id, page, size);
-    }
-
     @PutMapping("/assign/{id}/to/{event_id}")
     @ResponseStatus(HttpStatus.OK)
     public void assignTaskToEvent(@PathVariable Long id, @PathVariable Long event_id) {
         taskService.assignTaskToEvent(event_id, id);
         taskAssignmentService.assignTasksToEventUsers(event_id, id);
-    }
-
-    @GetMapping("/getMyWithoutEvent")
-    @ResponseStatus(HttpStatus.OK)
-    public PaginationListResponse<TaskListResponse> getMyTasks(
-            @RequestParam int page,
-            @RequestParam int size,
-            Authentication auth) {
-        return taskService.findAllByCreatorIdAndEventEmpty(
-                auth,
-                page,
-                size
-        );
     }
 
     @PutMapping("/unssign/{id}")

@@ -1,7 +1,7 @@
 package com.calendar.backend.repositories.specification;
 
 import com.calendar.backend.models.Event;
-import com.calendar.backend.models.EventType;
+import com.calendar.backend.models.enums.EventType;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

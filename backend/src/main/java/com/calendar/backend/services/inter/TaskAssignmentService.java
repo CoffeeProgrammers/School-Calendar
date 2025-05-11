@@ -1,5 +1,7 @@
 package com.calendar.backend.services.inter;
 
+import com.calendar.backend.dto.task.TaskListResponse;
+import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import org.springframework.security.core.Authentication;
 
 public interface TaskAssignmentService {
@@ -10,4 +12,6 @@ public interface TaskAssignmentService {
     void assignTasksForNewUserFromEvent(Long eventId, Long userId);
     void assignTasksToEventUsers(Long eventId, Long taskId);
     void unsignAllFromTask(Long taskId);
+    PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth(
+            PaginationListResponse<TaskListResponse> tasks, Authentication authentication);
 }

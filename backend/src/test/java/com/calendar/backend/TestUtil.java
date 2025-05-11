@@ -3,6 +3,8 @@ package com.calendar.backend;
 import com.calendar.backend.dto.user.UserCreateRequest;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.models.*;
+import com.calendar.backend.models.enums.EventType;
+import com.calendar.backend.models.enums.MeetingType;
 import org.instancio.Instancio;
 import org.mapstruct.factory.Mappers;
 

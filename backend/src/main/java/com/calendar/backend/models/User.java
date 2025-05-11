@@ -1,5 +1,6 @@
 package com.calendar.backend.models;
 
+import com.calendar.backend.models.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

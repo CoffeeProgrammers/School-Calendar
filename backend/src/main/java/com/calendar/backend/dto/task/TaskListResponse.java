@@ -9,4 +9,5 @@ public class TaskListResponse {
     private UserListResponse creator;
     private String name;
     private String deadline;
+    private boolean isDone;
 }
