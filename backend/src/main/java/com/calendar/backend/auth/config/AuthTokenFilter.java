@@ -44,7 +44,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             if (hasAuthorizationBearer(request)) {
                 String token = getAccessToken(request);
 
-                // Validate JWT signature and claims
                 if (!jwtUtils.validateToken(token)) {
                     log.warn("Invalid JWT token");
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -63,9 +62,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                         return;
                     }
 
-                    String newAccessToken = jwtUtils.refreshAccessToken(refreshToken.getToken(), username);
+                    String newAccessToken = jwtUtils.refreshAccessToken(username);
                     response.setHeader("Authorization", "Bearer " + newAccessToken);
-                    response.setStatus(HttpServletResponse.SC_RESET_CONTENT); // 205 Reset Content
+                    response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
                     refreshTokenService.deleteAllByUsername(username);
                     refreshTokenService.createRefreshToken(username);
                     return;
