@@ -82,7 +82,6 @@ public class EventServiceImpl implements EventService {
                                                                      String search,
                                                                      String startDate,
                                                                      String endDate,
-                                                                     String isPast,
                                                                      String typeOfEvent,
                                                                      int page, int size) {
         Map<String, Object> filters = new HashMap<>();
@@ -94,9 +93,6 @@ public class EventServiceImpl implements EventService {
         }
         if(endDate != null && !endDate.isBlank() && !endDate.equals("null")) {
             filters.put("endDate", endDate);
-        }
-        if(isPast != null && !isPast.isBlank() && !isPast.equals("null")) {
-            filters.put("isPast", isPast);
         }
         if(typeOfEvent != null && !typeOfEvent.isBlank() && !typeOfEvent.equals("null")) {
             filters.put("typeOfEvent", typeOfEvent);

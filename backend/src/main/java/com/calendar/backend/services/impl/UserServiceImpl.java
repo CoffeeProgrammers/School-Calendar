@@ -6,6 +6,7 @@ import com.calendar.backend.dto.user.UserListResponse;
 import com.calendar.backend.dto.user.UserUpdateRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.UserMapper;
+import com.calendar.backend.models.Role;
 import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.UserRepository;
 import com.calendar.backend.repositories.specification.UserSpecification;
@@ -160,7 +161,7 @@ public class UserServiceImpl implements UserService {
             filters.put("lastName", lastName);
         }
         if(role != null && !role.isBlank() && !role.equals("null")) {
-            filters.put("role", role);
+            filters.put("role", Role.valueOf(role.toUpperCase()).getLevel());
         }
         return filters;
     };

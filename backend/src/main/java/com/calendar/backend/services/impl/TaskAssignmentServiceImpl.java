@@ -72,4 +72,10 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
             create(user.getId(), taskId);
         }
     }
+
+    @Override
+    public void unsignAllFromTask(Long taskId) {
+        log.info("Unsigning all task assignments for task with id {}", taskId);
+        taskAssignmentRepository.deleteAllByTask_Id(taskId);
+    }
 }

@@ -75,7 +75,6 @@ public class EventController {
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) String isPast,
             @RequestParam(required = false) String typeOfEvent,
             Authentication auth) {
         return eventService.findAllByUserId(
@@ -83,7 +82,6 @@ public class EventController {
                 search,
                 startDate,
                 endDate,
-                isPast,
                 typeOfEvent,
                 page,
                 size

@@ -32,7 +32,8 @@ public class UserSpecification {
             }
 
             if (filters.containsKey("role")) {
-                predicates.add(criteriaBuilder.equal(root.get("role"), filters.get("role").toString()));
+                Long roleId = Long.valueOf(filters.get("role").toString());
+                predicates.add(criteriaBuilder.equal(root.get("role"), roleId));
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };

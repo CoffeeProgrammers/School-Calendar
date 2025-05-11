@@ -37,6 +37,9 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
 
+    @OneToMany
+    private List<Comment> comments = new ArrayList<>();
+
     public Event(User creator, String name, String type, LocalDateTime startDate,
                  LocalDateTime endDate, String content, boolean isContentAvailableAnytime,
                  String meetingType, String place) {

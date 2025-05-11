@@ -22,7 +22,8 @@ public interface TaskService {
     List<Task> findAllByEventId(long eventId);
     Task findByIdForServices(long id);
     void assignTaskToEvent(long eventId, long id);
+    void unassignTaskFromEvent(long taskId);
     void unsignAllFromEvent(long eventId);
-    PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(Authentication authentication,
-                                                                             int page, int size);
+    PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty
+            (Authentication authentication, int page, int size);
 }

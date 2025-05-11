@@ -63,6 +63,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void delete(long id) {
         log.info("Deleting comment with id {}", id);
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        Event event = comment.getEvent();
+        event.getComments().remove(comment);
         commentRepository.deleteById(id);
     }
 

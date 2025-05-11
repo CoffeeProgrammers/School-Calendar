@@ -42,14 +42,6 @@ public class EventSpecification {
                 predicates.add(criteriaBuilder.equal(root.get("type"), eventType));
             }
 
-            if (filters.containsKey("isPast")) {
-                boolean isPast = Boolean.parseBoolean(filters.get("isPast").toString());
-                if (isPast) {
-                    predicates.add(criteriaBuilder.lessThan(root.get("endDate"), LocalDateTime.now()));
-                } else {
-                    predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startDate"), LocalDateTime.now()));
-                }
-            }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

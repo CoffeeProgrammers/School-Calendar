@@ -127,6 +127,13 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
+    public void unassignTaskFromEvent(long taskId){
+        Task task = this.findByIdForServices(taskId);
+        task.setEvent(null);
+        taskRepository.save(task);
+    }
+
+    @Override
     public void unsignAllFromEvent(long eventId) {
         List<Task> tasks = findAllByEventId(eventId).stream().map(task -> {task.setEvent(null); return task;}).toList();
         taskRepository.saveAll(tasks);

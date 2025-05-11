@@ -9,4 +9,5 @@ public interface TaskAssignmentService {
     void toggleDone(Long taskId, Authentication authentication);
     void assignTasksForNewUserFromEvent(Long eventId, Long userId);
     void assignTasksToEventUsers(Long eventId, Long taskId);
+    void unsignAllFromTask(Long taskId);
 }

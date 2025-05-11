@@ -48,6 +48,7 @@ public class TaskController {
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTask(@PathVariable Long id, Authentication auth) {
+        taskAssignmentService.unsignAllFromTask(id);
         taskService.delete(id);
     }
 
@@ -115,5 +116,11 @@ public class TaskController {
                 page,
                 size
         );
+    }
+
+    @PutMapping("/unssign/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void unsignTaskFromEvent(@PathVariable Long id) {
+        taskService.unassignTaskFromEvent(id);
     }
 }

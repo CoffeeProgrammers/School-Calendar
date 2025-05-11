@@ -17,7 +17,7 @@ public interface EventService {
     void delete (Long id);
     EventFullResponse findById (Long id);
     PaginationListResponse<EventListResponse> findAllByUserId
-            (long userId, String search, String startDate, String endDate, String isPast,
+            (long userId, String search, String startDate, String endDate,
              String typeOfEvent, int page, int size);
     List<EventListResponse> findAllByUserIdForCalendar
             (long userId, LocalDateTime start, LocalDateTime end);

@@ -14,9 +14,9 @@ public class TaskAssignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne
+    @ManyToOne
     private Task task;
-    @OneToOne
+    @ManyToOne
     private User user;
     private boolean isDone = false;
     public TaskAssignment(Task task, User user) {

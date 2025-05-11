@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -34,11 +35,11 @@ public class TaskSpecification {
                 predicates.add(criteriaBuilder.equal(root.get("event").get("isDone"), isDone));
             }
             if (filters.containsKey("is_past")) {
-                Boolean isPast = Boolean.parseBoolean(filters.get("is_past").toString());
+                boolean isPast = Boolean.parseBoolean(filters.get("is_past").toString());
                 if (isPast) {
-                    predicates.add(criteriaBuilder.lessThan(root.get("deadline"), LocalDateTime.now()));
+                    predicates.add(criteriaBuilder.lessThan(root.get("deadline"), LocalDateTime.now(ZoneId.of("Europe/Kiev"))));
                 } else {
-                    predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("deadline"), LocalDateTime.now()));
+                    predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("deadline"), LocalDateTime.now(ZoneId.of("Europe/Kiev"))));
                 }
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
