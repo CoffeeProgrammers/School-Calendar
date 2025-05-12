@@ -60,7 +60,16 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 if (jwtUtils.isTokenExpired(token)) {
                     log.warn("Access token expired, refreshing...");
 
-                    RefreshToken refreshToken = refreshTokenService.findByUsername(username);
+                    RefreshToken refreshToken;
+
+                    try {
+                        refreshToken = refreshTokenService.findByUsername(username);
+                    }catch (Exception e){
+                        log.error("Can`t find refresh token for username {}", username);
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        setHeaders(response);
+                        return;
+                    }
                     if (refreshToken == null || jwtUtils.isRefreshTokenExpired(refreshToken)) {
                         log.warn("Refresh token is expired or missing");
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -81,6 +90,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     response.setCharacterEncoding("UTF-8");
 
                     PrintWriter out = response.getWriter();
+                    out.print(mapper.writeValueAsString(json));
                     out.print(mapper.writeValueAsString(json));
                     out.flush();
 
