@@ -46,7 +46,7 @@ public class TaskSpecification {
                 boolean isPast = Boolean.parseBoolean(filters.get("is_past").toString());
                 if (isPast) {
                     predicates.add(criteriaBuilder.lessThan(root.get("deadline"), LocalDateTime.now(ZoneId.of("Europe/Kiev"))));
-                } else {
+                } else{
                     predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("deadline"), LocalDateTime.now(ZoneId.of("Europe/Kiev"))));
                 }
             }
