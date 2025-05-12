@@ -84,7 +84,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     out.print(mapper.writeValueAsString(json));
                     out.flush();
 
-
                     refreshTokenService.deleteAllByUsername(username);
                     refreshTokenService.createRefreshToken(username);
                     return;
