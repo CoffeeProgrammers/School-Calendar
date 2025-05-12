@@ -66,11 +66,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     String newAccessToken = jwtUtils.refreshAccessToken(username);
                     response.setHeader("Authorization", "Bearer " + newAccessToken);
                     response.setStatus(498);
+                    response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+                    response.setHeader("Access-Control-Allow-Credentials", "true");
+                    response.setHeader("Access-Control-Allow-Headers", "*");
+                    response.setHeader("Access-Control-Allow-Methods", "*");
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
 
                     PrintWriter out = response.getWriter();
-                    out.print("{\"error\": \"Invalid or expired token\", \"code\": 498}");
+                    out.print("{\"error\": " + newAccessToken +  ", \"code\": 498}");
                     out.flush();
 
                     refreshTokenService.deleteAllByUsername(username);
