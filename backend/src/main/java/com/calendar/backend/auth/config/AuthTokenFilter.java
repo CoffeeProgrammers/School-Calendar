@@ -64,7 +64,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                     String newAccessToken = jwtUtils.refreshAccessToken(username);
                     response.setHeader("Authorization", "Bearer " + newAccessToken);
-                    response.setStatus(HttpServletResponse.SC_RESET_CONTENT);
+                    response.setStatus(498);
                     refreshTokenService.deleteAllByUsername(username);
                     refreshTokenService.createRefreshToken(username);
                     return;
