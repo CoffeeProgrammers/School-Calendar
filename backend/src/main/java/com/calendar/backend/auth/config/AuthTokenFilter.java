@@ -3,6 +3,7 @@ package com.calendar.backend.auth.config;
 import com.calendar.backend.auth.models.RefreshToken;
 import com.calendar.backend.auth.services.impl.RefreshTokenServiceImpl;
 import com.calendar.backend.services.impl.UserServiceImpl;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -48,6 +51,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 if (!jwtUtils.validateToken(token)) {
                     log.warn("Invalid JWT token");
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    setHeaders(response);
                     return;
                 }
 
@@ -60,6 +64,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     if (refreshToken == null || jwtUtils.isRefreshTokenExpired(refreshToken)) {
                         log.warn("Refresh token is expired or missing");
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        setHeaders(response);
                         return;
                     }
 
@@ -67,12 +72,18 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     response.setHeader("Authorization", "Bearer " + newAccessToken);
                     response.setStatus(498);
                     setHeaders(response);
+
+                    ObjectMapper mapper = new ObjectMapper();
+                    Map<String, String> json = new HashMap<>();
+                    json.put("jwt", newAccessToken);
+
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
 
                     PrintWriter out = response.getWriter();
-                    out.print("{jwt: " + newAccessToken);
+                    out.print(mapper.writeValueAsString(json));
                     out.flush();
+
 
                     refreshTokenService.deleteAllByUsername(username);
                     refreshTokenService.createRefreshToken(username);
