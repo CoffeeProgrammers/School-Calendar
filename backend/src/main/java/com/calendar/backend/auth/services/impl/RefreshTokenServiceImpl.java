@@ -3,7 +3,6 @@ package com.calendar.backend.auth.services.impl;
 import com.calendar.backend.auth.models.RefreshToken;
 import com.calendar.backend.auth.repositories.RefreshTokenRepository;
 import com.calendar.backend.auth.services.inter.RefreshTokenService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -46,8 +45,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         repository.deleteAllByUsername(username);
     }
 
-    public RefreshToken findByUsername(String username) {
-        return repository.findByUsername(username).orElseThrow(
-                () -> new EntityNotFoundException("Can`t find refresh token for username " + username));
+    public Optional<RefreshToken> findByUsername(String username) {
+        return repository.findByUsername(username);
     }
 }

@@ -1,6 +1,5 @@
 package com.calendar.backend.auth.config;
 
-import com.calendar.backend.auth.models.RefreshToken;
 import com.calendar.backend.auth.services.impl.RefreshTokenServiceImpl;
 import com.calendar.backend.services.impl.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,17 +59,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 if (jwtUtils.isTokenExpired(token)) {
                     log.warn("Access token expired, refreshing...");
 
-                    RefreshToken refreshToken;
 
-                    try {
-                        refreshToken = refreshTokenService.findByUsername(username);
-                    }catch (Exception e){
-                        log.error("Can`t find refresh token for username {}", username);
-                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                        setHeaders(response);
-                        return;
-                    }
-                    if (refreshToken == null || jwtUtils.isRefreshTokenExpired(refreshToken)) {
+                    if (refreshTokenService.findByUsername(username).isEmpty()
+                            || jwtUtils.isRefreshTokenExpired(
+                                    refreshTokenService.findByUsername(username).get())) {
                         log.warn("Refresh token is expired or missing");
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                         setHeaders(response);
