@@ -8,6 +8,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +31,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final UserServiceImpl userDetailsService;
     private final RefreshTokenServiceImpl refreshTokenService;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public AuthTokenFilter(JwtUtils jwtUtils, UserServiceImpl userDetailsService,
                            RefreshTokenServiceImpl refreshTokenService) {
@@ -64,6 +68,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                             || jwtUtils.isRefreshTokenExpired(
                                     refreshTokenService.findByUsername(username).get())) {
                         log.warn("Refresh token is expired or missing");
+                        jdbcTemplate.update(
+                                "DELETE FROM SPRING_SESSION WHERE PRINCIPAL_NAME = ?",
+                                username);
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                         setHeaders(response);
                         return;
