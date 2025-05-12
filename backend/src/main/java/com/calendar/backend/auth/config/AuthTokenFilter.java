@@ -18,6 +18,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 
 @Slf4j
@@ -65,6 +66,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     String newAccessToken = jwtUtils.refreshAccessToken(username);
                     response.setHeader("Authorization", "Bearer " + newAccessToken);
                     response.setStatus(498);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"error\": \"Invalid or expired token\", \"code\": 498}");
+                    out.flush();
+
                     refreshTokenService.deleteAllByUsername(username);
                     refreshTokenService.createRefreshToken(username);
                     return;
