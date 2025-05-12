@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -53,6 +54,7 @@ public class TaskServicesImpl implements TaskService {
         return taskMapper.fromTaskToTaskResponse(taskRepository.save(task));
     }
 
+    @Transactional
     @Override
     public void delete(long id) {
         log.info("Deleting task with id {}", id);
