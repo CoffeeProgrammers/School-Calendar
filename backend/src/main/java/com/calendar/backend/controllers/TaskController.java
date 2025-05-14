@@ -26,7 +26,7 @@ public class TaskController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskFullResponse createTask(
-            @RequestParam Long event_id,
+            @RequestParam(required = false) Long event_id,
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
         TaskFullResponse task = taskService.create(request, auth, event_id);
