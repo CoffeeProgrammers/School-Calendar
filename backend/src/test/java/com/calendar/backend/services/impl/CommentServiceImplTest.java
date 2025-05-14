@@ -108,6 +108,7 @@ class CommentServiceImplTest {
     @Test
     void delete_success() {
         doNothing().when(commentRepository).deleteById(1L);
+        when(commentRepository.findById(1L)).thenReturn(Optional.of(comment));
         commentService.delete(1L);
         verify(commentRepository).deleteById(1L);
     }
