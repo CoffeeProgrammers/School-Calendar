@@ -1,5 +1,6 @@
 package com.calendar.backend.auth.config;
 
+import com.calendar.backend.auth.models.RefreshToken;
 import com.calendar.backend.auth.services.impl.RefreshTokenServiceImpl;
 import com.calendar.backend.services.impl.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,8 +9,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +22,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Slf4j
@@ -31,8 +31,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
     private final UserServiceImpl userDetailsService;
     private final RefreshTokenServiceImpl refreshTokenService;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     public AuthTokenFilter(JwtUtils jwtUtils, UserServiceImpl userDetailsService,
                            RefreshTokenServiceImpl refreshTokenService) {
@@ -63,20 +61,16 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 if (jwtUtils.isTokenExpired(token)) {
                     log.warn("Access token expired, refreshing...");
 
+                    Optional<RefreshToken> refreshToken = refreshTokenService.findByUsername(username);
 
-                    if (refreshTokenService.findByUsername(username).isEmpty()
-                            || jwtUtils.isRefreshTokenExpired(
-                                    refreshTokenService.findByUsername(username).get())) {
+                    if (refreshToken.isEmpty() || jwtUtils.isRefreshTokenExpired(refreshToken.get())) {
                         log.warn("Refresh token is expired or missing");
-                        jdbcTemplate.update(
-                                "DELETE FROM SPRING_SESSION WHERE PRINCIPAL_NAME = ?",
-                                username);
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                         setHeaders(response);
                         return;
                     }
 
-                    String newAccessToken = jwtUtils.refreshAccessToken(username);
+                    String newAccessToken = jwtUtils.refreshAccessToken(username, refreshToken.get().getToken());
                     response.setHeader("Authorization", "Bearer " + newAccessToken);
                     response.setStatus(498);
                     setHeaders(response);
@@ -90,11 +84,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                     PrintWriter out = response.getWriter();
                     out.print(mapper.writeValueAsString(json));
-                    out.print(mapper.writeValueAsString(json));
                     out.flush();
 
-                    refreshTokenService.deleteAllByUsername(username);
-                    refreshTokenService.createRefreshToken(username);
                     return;
                 } else {
                     setAuthenticationContext(token, request);

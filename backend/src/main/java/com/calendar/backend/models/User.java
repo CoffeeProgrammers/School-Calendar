@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -30,7 +29,6 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private Role role;
-    private String token;
     private String description;
     private LocalDateTime birthday;
 
@@ -44,7 +42,6 @@ public class User implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = Role.valueOf(role);
-        this.token = UUID.randomUUID().toString();
         this.description = "";
         this.birthday = birthday;
     }

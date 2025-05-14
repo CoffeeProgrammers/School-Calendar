@@ -25,7 +25,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -44,7 +47,6 @@ public class UserServiceImpl implements UserService {
                     userCreateRequest.getEmail() + " already exists");
         }
         User userToCreate = userMapper.fromUserRequestToUser(userCreateRequest);
-        userToCreate.setToken(UUID.randomUUID().toString());
         userToCreate.setPassword(passwordEncoder.encode(userToCreate.getPassword()));
         return userMapper.fromUserToUserResponse(userRepository.save(userToCreate));
     }

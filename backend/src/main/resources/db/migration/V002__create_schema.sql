@@ -38,7 +38,6 @@ CREATE TABLE "users"
     "first_name"  VARCHAR(255)                            NOT NULL,
     "last_name"   VARCHAR(255)                            NOT NULL,
     "description" VARCHAR(999),
-    "token"       VARCHAR(255)                            NOT NULL,
     "birthday"    TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 ALTER TABLE

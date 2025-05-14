@@ -59,9 +59,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/oauth-success").authenticated()
                         .anyRequest().authenticated())
                 .sessionManagement(s -> s
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-                .oauth2Login(oauth2 -> oauth2
-                        .defaultSuccessUrl("/api/auth/oauth-success", true))
+                        .sessionCreationPolicy(SessionCreationPolicy.NEVER))
                 .addFilterBefore(authJwtTokenFilter(), SecurityContextPersistenceFilter.class)
         ;
         return http.build();

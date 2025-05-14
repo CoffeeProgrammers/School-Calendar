@@ -4,7 +4,6 @@ import com.calendar.backend.auth.config.JwtUtils;
 import com.calendar.backend.auth.dto.auth.AuthResponse;
 import com.calendar.backend.auth.dto.auth.LogInRequest;
 import com.calendar.backend.auth.services.impl.RefreshTokenServiceImpl;
-import com.calendar.backend.auth.services.inter.AuthService;
 import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.dto.wrapper.StringRequest;
 import com.calendar.backend.mappers.UserMapper;
@@ -19,7 +18,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.login.LoginException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +32,6 @@ public class AuthController {
     private final RefreshTokenServiceImpl refreshTokenService;
     private final JwtUtils jwtUtils;
     private final UserMapper userMapper;
-    private final AuthService authService;
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/checks")
@@ -58,31 +55,17 @@ public class AuthController {
                         loginRequest.getPassword()));
         User user = (User) authentication.getPrincipal();
 
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("token", user.getToken());
-        claims.put("name", user.getFirstName() + " " + user.getLastName());
+        String username =user.getUsername();
 
-        String jwtToken = jwtUtils.generateTokenFromUsername(user.getUsername(), claims);
-        refreshTokenService.deleteAllByUsername(user.getUsername());
-        refreshTokenService.createRefreshToken(user.getUsername());
-
-        return new AuthResponse(user.getId(), user.getUsername(), jwtToken,
-                user.getRole().getAuthority());
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/oauth-success")
-    public AuthResponse handleOAuthLogin(Authentication authentication) throws LoginException {
-        log.info("try to work oauth-success");
-
-        User user = authService.handleOAuthLogin(authentication);
+        refreshTokenService.deleteAllByUsername(username);
+        String token = refreshTokenService.createRefreshToken(username);
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("name", user.getFirstName() + " " + user.getLastName());
+        claims.put("token", token);
 
-        String jwtToken = jwtUtils.generateTokenFromUsername(user.getEmail(), claims);
+        String jwtToken = jwtUtils.generateTokenFromUsername(username, claims);
 
-        return new AuthResponse(user.getId(), user.getEmail(), jwtToken,
+        return new AuthResponse(user.getId(), username, jwtToken,
                 user.getRole().getAuthority());
     }
 }

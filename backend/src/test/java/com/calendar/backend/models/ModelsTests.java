@@ -35,7 +35,6 @@ public class ModelsTests {
     void testUser() {
         User user1 = TestUtil.createUser("TEACHER");
         User user2 = new User(user1.getEmail(), user1.getPassword(), user1.getFirstName(), user1.getLastName(), user1.getRole().name(), user1.getBirthday());
-        user2.setToken(user1.getToken());
         user2.setDescription(user1.getDescription());
 
         assertEquals(user1, user2);

@@ -1,13 +1,13 @@
 package com.calendar.backend.auth.config;
 
 import com.calendar.backend.auth.models.RefreshToken;
-import com.calendar.backend.models.User;
-import com.calendar.backend.services.impl.UserServiceImpl;
+import com.calendar.backend.auth.services.inter.RefreshTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -29,10 +29,10 @@ public class JwtUtils {
     @Value("${JWT_TIME}")
     private long jwtExpirationMs;
 
-    private final UserServiceImpl userService;
+    private final RefreshTokenService refreshTokenService;
 
-    public JwtUtils(UserServiceImpl userService) {
-        this.userService = userService;
+    public JwtUtils(RefreshTokenService refreshTokenService) {
+        this.refreshTokenService = refreshTokenService;
     }
 
     private static final String ISSUER = "com.todo.app";
@@ -62,11 +62,9 @@ public class JwtUtils {
         return token.getExpirationTimestamp().isBefore(LocalDateTime.now());
     }
 
-    public String refreshAccessToken(String username) {
-        User user = userService.findByEmail(username);
+    public String refreshAccessToken(String username, String token) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("token", user.getToken());
-        claims.put("name", user.getFirstName() + " " + user.getLastName());
+        claims.put("token", token);
         return generateTokenFromUsername(username, claims);
     }
 
@@ -84,7 +82,7 @@ public class JwtUtils {
 
             return claims;
         } catch (ExpiredJwtException e) {
-            System.out.println("Token has expired: " + e.getMessage());
+            log.info("Token has expired: {}", e.getMessage());
             return e.getClaims();
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid token", e);
@@ -104,41 +102,36 @@ public class JwtUtils {
         try {
             Claims claims = parseClaims(token);
 
-            // Validate standard claims
             if (!ISSUER.equals(claims.getIssuer())) {
-                System.out.println("Invalid issuer: " + claims.getIssuer());
+                log.error("Invalid issuer: {}", claims.getIssuer());
                 return false;
             }
             if (!AUDIENCE.equals(claims.getAudience())) {
-                System.out.println("Invalid audience: " + claims.getAudience());
+                log.error("Invalid audience: {}", claims.getAudience());
                 return false;
             }
 
-            // Extract user details
             String username = this.getSubject(token);
-            User user = userService.findByEmail(username);
 
-            // Prepare expected claims
             Map<String, Object> claimsToCheck = new HashMap<>();
-            claimsToCheck.put("token", user.getToken());
-            claimsToCheck.put("name", user.getFirstName() + " " + user.getLastName());
+            claimsToCheck.put("token", refreshTokenService.findByUsername(username).orElseThrow(() ->
+                    new EntityNotFoundException("Cannt find refresh token to validate jwt")).getToken());
 
-            // Validate claims in token
             for (Map.Entry<String, Object> entry : claimsToCheck.entrySet()) {
                 String key = entry.getKey();
                 Object expectedValue = entry.getValue();
                 Object actualValue = claims.get(key);
 
                 if (actualValue == null || !actualValue.equals(expectedValue)) {
-                    System.out.println("Claim mismatch: key = " + key + ", expected = "
-                            + expectedValue + ", actual = " + actualValue);
+                    log.info("Claim mismatch: key = {}, expected = {}, actual = {}",
+                            key, expectedValue, actualValue);
                     return false;
                 }
             }
 
-            return true; // All validations passed
+            return true;
         } catch (Exception e) {
-            System.out.println("Token validation failed: " + e.getMessage());
+            log.error("Token validation failed: {}", e.getMessage());
             return false;
         }
     }
