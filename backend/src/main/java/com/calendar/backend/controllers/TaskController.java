@@ -29,7 +29,7 @@ public class TaskController {
             @RequestParam(required = false) Long event_id,
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
-        TaskFullResponse task = taskService.create(request, auth, event_id);
+        TaskFullResponse task = taskService.create(request, auth, event_id != null ? event_id : 0);
         taskAssignmentService.create(task.getId(), userService.findUserByAuth(auth).getId());
         return task;
     }
