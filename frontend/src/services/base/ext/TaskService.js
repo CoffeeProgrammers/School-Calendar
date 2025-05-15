@@ -29,11 +29,26 @@ class TaskService extends BaseService {
         );
     }
 
-    //TODO: isDone
     getMyTasks(page, size, name, deadline, isDone, isPast) {
         return this.handleRequest(() =>
             this.apiClient.get("", {
-                params: {page, size, name, deadline, isDone, isPast}
+                params: { page, size, name, deadline, isDone, isPast }
+            })
+        );
+    }
+
+    getMyTasksWithoutEvent(page, size) {
+        return this.handleRequest(() =>
+            this.apiClient.get(`/getMyWithoutEvent`, {
+                params: { page, size }
+            })
+        );
+    }
+
+    getTasksByEvent(eventId, page, size) {
+        return this.handleRequest(() =>
+            this.apiClient.get(`/events/${eventId}`, {
+                params: { page, size }
             })
         );
     }
@@ -44,25 +59,21 @@ class TaskService extends BaseService {
         );
     }
 
-    getTasksByEvent(eventId, page, size) {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/events/${eventId}`, {
-                params: {page, size}
-            })
-        );
-    }
-
     assignTaskToEvent(taskId, eventId) {
         return this.handleRequest(() =>
             this.apiClient.put(`/assign/${taskId}/to/${eventId}`)
         );
     }
 
-    getMyTasksWithoutEvent(page, size) {
+    unsignTaskFromEvent(taskId) {
         return this.handleRequest(() =>
-            this.apiClient.get(`/getMyWithoutEvent`, {
-                params: {page, size}
-            })
+            this.apiClient.put(`/unsign/${taskId}`)
+        );
+    }
+
+    countAllUserTasks(userId) {
+        return this.handleRequest(() =>
+            this.apiClient.get(`/countAllMy/user/${userId}`)
         );
     }
 }

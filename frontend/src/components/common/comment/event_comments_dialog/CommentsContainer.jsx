@@ -1,11 +1,9 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
-import Loading from "../../../layouts/Loading";
 import CommentService from "../../../../services/base/ext/CommentService";
 import CommentsDialog from "./CommentsDialog";
 
-//TODO: update|delete|create for comment creator, delete for event creator
 const CommentsContainer = ({eventId}) => {
 
     const [comments, setComments] = useState([])
@@ -13,7 +11,6 @@ const CommentsContainer = ({eventId}) => {
     const [page, setPage] = useState(1);
     const [pagesCount, setPagesCount] = useState(1)
 
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -28,8 +25,6 @@ const CommentsContainer = ({eventId}) => {
                 setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
-            } finally {
-                setLoading(false);
             }
         };
 
@@ -73,9 +68,6 @@ const CommentsContainer = ({eventId}) => {
         }
     };
 
-    if (loading) {
-        return <Loading/>;
-    }
 
     if (error) {
         return <Typography color={"error"}>Error: {error.message}</Typography>;

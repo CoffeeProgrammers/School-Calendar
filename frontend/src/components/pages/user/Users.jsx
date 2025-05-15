@@ -8,15 +8,7 @@ import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import UserService from "../../../services/base/ext/UserService";
 import UserList from "../../common/user/UserList";
 import {listPanelStyles} from "../../../assets/styles";
-
-
-const roleTypes = [
-    {value: '', label: <em>None</em>},
-    {value: 'TEACHER', label: 'Teacher'},
-    {value: 'STUDENT', label: 'Student'},
-    {value: 'PARENT', label: 'Parents'},
-
-];
+import {roleTypes} from "../../../utils/constants";
 
 const Users = () => {
     const [users, setUsers] = useState([])
@@ -139,8 +131,6 @@ const Users = () => {
                         />
                     </Box>
                 )}
-
-
             </Box>
         </>
     );

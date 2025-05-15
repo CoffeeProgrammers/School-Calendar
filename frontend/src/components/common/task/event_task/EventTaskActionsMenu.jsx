@@ -11,7 +11,7 @@ const EventTaskActionsMenu = ({ anchorPosition, onClose, task, handleRemove }) =
     };
 
     const handleRemoveOption = () => {
-        handleRemove(task.id)
+        handleRemove()
         onClose();
     };
 

@@ -13,7 +13,7 @@ const styles= {
         },
         size: 'small',
         sx: {
-            width: 150,
+            width: 200,
             '& input': {
                 color: 'green',
             },
@@ -52,7 +52,9 @@ const GreenDatePicker = ({label,value, setValue}) => {
             onChange={(newValue) => setValue(newValue ? newValue.format('YYYY-MM-DDTHH:mm:ss') : null)}
             enableAccessibleFieldDOMStructure={false}
             slots={{ textField: TextField }}
-            slotProps={styles}
+            slotProps={{
+                ...styles, field: { clearable: true},
+            }}
         />
     );
 };
