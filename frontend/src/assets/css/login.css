@@ -47,3 +47,9 @@
 .login-container button:hover {
     background-color: #5aa04d;
 }
+
+.login-container button:focus {
+    outline: none;
+}
+
+

@@ -41,7 +41,6 @@ class EventService extends BaseService {
         search = null,
         startDate = null,
         endDate = null,
-        isPast = null,
         typeOfEvent = null
     ) {
         const params = {
@@ -50,7 +49,6 @@ class EventService extends BaseService {
             ...(search && {search}),
             ...(startDate && {startDate}),
             ...(endDate && {endDate}),
-            ...(isPast && {isPast}),
             ...(typeOfEvent && {typeOfEvent}),
         };
 

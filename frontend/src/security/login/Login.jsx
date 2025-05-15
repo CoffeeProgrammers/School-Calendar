@@ -66,7 +66,7 @@ const Login = () => {
                         ))}
                     </Box>
                 )}
-                <button type="submit">Login</button>
+                <button autoFocus type="submit">Login</button>
             </form>
         </Box>
     );

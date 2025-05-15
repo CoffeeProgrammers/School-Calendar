@@ -3,19 +3,16 @@ import {Typography} from "@mui/material";
 import Loading from "../../../layouts/Loading";
 import EventInviteDialog from "./EventInviteDialog";
 import UserService from "../../../../services/base/ext/UserService";
+import InvitationService from "../../../../services/base/ext/InvitationService";
 
-const eventTypes = [
-    {value: '', label: <em>None</em>},
-    {value: 'teacher', label: 'Teacher'},
-    {value: 'student', label: 'Student'},
-    {value: 'parents', label: 'Parents'},
-
-];
 
 const EventInviteContainer = ({eventId}) => {
     const [users, setUsers] = useState([])
 
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchFirstName, setSearchFirstName] = useState('');
+    const [searchLastName, setSearchLastName] = useState('');
+    const [searchEmail, setSearchEmail] = useState('');
+
     const [role, setRole] = useState('');
     const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
 
@@ -31,9 +28,11 @@ const EventInviteContainer = ({eventId}) => {
                 const response = await UserService.getUsersByNotEvent(
                     eventId,
                     page - 1,
-                    10,
-                    searchQuery,
-                    role,
+                    15,
+                    searchFirstName,
+                    searchLastName,
+                    searchEmail,
+                    role
                 );
                 setUsers(response.content);
                 setPagesCount(response.totalPages)
@@ -45,12 +44,26 @@ const EventInviteContainer = ({eventId}) => {
         };
 
         fetchData();
-    }, [searchQuery, role, page, eventId]);
+    }, [role, page, eventId, searchFirstName, searchLastName, searchEmail]);
 
-    //TODO: method invite + dialog
-    const handleInvite =  (invitedUser) => {
-        console.log("handleInvite " + invitedUser.first_name + " " + invitedUser.last_name);
-        setUsers((prevUsers) => prevUsers.filter(user => user.id !== invitedUser.id));
+
+    const handleInvite = async (invitedUser, text) => {
+        try {
+            console.log(
+                "inviting user: ",
+                invitedUser,
+                "to event: ",
+                eventId,
+                "with text: ",
+                text)
+            const response = await InvitationService.createInvitation(eventId, invitedUser.id, {description: text});
+            console.log(
+                "invitation response: ",
+                response)
+            setUsers((prevUsers) => prevUsers.filter(user => user.id !== invitedUser.id));
+        } catch (error) {
+            console.error("Error inviting user: ", error);
+        }
     }
 
     if (loading) {
@@ -69,9 +82,12 @@ const EventInviteContainer = ({eventId}) => {
             pagesCount={pagesCount}
             page={page}
             setPage={setPage}
-            eventTypes={eventTypes}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
+            searchFirstName={searchFirstName}
+            setSearchFirstName={setSearchFirstName}
+            searchLastName={searchLastName}
+            setSearchLastName={setSearchLastName}
+            searchEmail={searchEmail}
+            setSearchEmail={setSearchEmail}
             isOpenFilterMenu={isOpenFilterMenu}
             setOpenFilterMenu={setOpenFilterMenu}
             handleInvite={handleInvite}

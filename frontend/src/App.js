@@ -14,28 +14,38 @@ import UserPage from './components/pages/user/UserPage';
 import MyProfile from './components/pages/user/MyProfile';
 import NotificationsPage from './components/pages/notifications/NotificationsPage';
 import TaskPage from './components/pages/task/TaskPage';
-import PrivateRoute from "./security/PrivateRoute";
 import EventPage from "./components/pages/event/EventPage";
 import Login from "./security/login/Login";
 
+
 function App() {
+    const privateRoutes = [
+        {path: "", element: <Page><Main/></Page>},
+        {path: "/events", element: <Page><Events/></Page>},
+        {path: "/users", element: <Page><Users/></Page>},
+        {path: "/tasks", element: <Page><Tasks/></Page>},
+        {path: "/events/:id", element: <Page><EventPage/></Page>},
+        {path: "/profile", element: <Page><MyProfile/></Page>},
+        {path: "/users/:id", element: <Page><UserPage/></Page>},
+        {path: "/tasks/:id", element: <TaskPage/>},
+        {path: "/notifications", element: <Page><NotificationsPage/></Page>}
+    ];
     return (
         <Router>
             <ThemeProvider theme={theme}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Routes>
                         <Route path={"/login"} element={<Login/>}/>
-                        <Route element={<PrivateRoute/>}>
-                            <Route path={""} element={<Page><Main/></Page>}/>
-                            <Route path={"/events"} element={<Page><Events/></Page>}/>
-                            <Route path={"/users"} element={<Page><Users/></Page>}/>
-                            <Route path={"/tasks"} element={<Page><Tasks/></Page>}/>
-                            <Route path={"/events/:id"} element={<Page><EventPage/></Page>}/>
-                            <Route path={'/profile'} element={<Page><MyProfile/></Page>} />
-                            <Route path={"/users/:id"} element={<Page><UserPage/></Page>}/>
-                            <Route path="/tasks/:id" element={<TaskPage/>}/>
-                            <Route path="/notifications" element={<Page><NotificationsPage/></Page>}/>
-                        </Route>
+
+                        {privateRoutes.map((route, index) => (
+                           // <Route element={<PrivateRoute/>}>
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={route.element}
+                                />
+                         //   </Route>
+                        ))}
                     </Routes>
                 </LocalizationProvider>
             </ThemeProvider>

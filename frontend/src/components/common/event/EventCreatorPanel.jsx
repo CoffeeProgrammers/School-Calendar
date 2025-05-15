@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Typography} from "@mui/material";
-import UpdateEventDialog from "./UpdateEventDialog";
+import UpdateEventDialog from "./update/UpdateEventDialog";
 import EventDeleteDialog from "./EventDeleteDialog";
 
 const EventCreatorPanel = ({event, handleUpdate, handleDelete}) => {

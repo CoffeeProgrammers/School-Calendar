@@ -1,7 +1,7 @@
 import React from 'react';
 import IconButton from "@mui/material/IconButton";
-import FullScreenFunctionDialog from "../../../layouts/FullScreenFunctionDialog";
-import UpdateAppBar from "../../../layouts/update/UpdateAppBar";
+import FullScreenFunctionDialog from "../../../layouts/full_screen_dialog/FullScreenFunctionDialog";
+import FullScreenDialogAppBar from "../../../layouts/full_screen_dialog/FullScreenDialogAppBar";
 import UpdateUserBox from "./UpdateUserBox";
 import SettingsIcon from '@mui/icons-material/Settings';
 
@@ -31,7 +31,7 @@ const UpdateUserDialog = ({user}) => {
             </IconButton>
 
             <FullScreenFunctionDialog open={open} handleClose={handleClose}>
-                <UpdateAppBar handleClose={handleClose} handleSave={handleSave}/>
+                <FullScreenDialogAppBar handleClose={handleClose} handleSave={handleSave}/>
                 <UpdateUserBox user={user}/>
             </FullScreenFunctionDialog>
         </>

@@ -5,7 +5,7 @@ class BaseService {
     constructor(baseURL) {
         this.apiClient = axios.create({
             baseURL,
-             withCredentials: true,
+            withCredentials: true,
         });
 
         this.apiClient.interceptors.request.use(
@@ -23,9 +23,41 @@ class BaseService {
     async handleRequest(request) {
         try {
             const response = await request();
+            // console.log("RESPONSE")
+            // Cookies.remove('accessToken')
+            //
+            // console.log(Cookies.get('accessToken'))
             return response.data;
         } catch (error) {
-            console.error("API Error:", error.response?.data || error.message);
+            // console.log("ERROR")
+            // if (error.response.status === 498) {
+            //     try {
+            //         console.log("Refreshing token")
+            //         Cookies.set('accessToken', error.response.data.jwt)
+            //         const response = await request();
+            //         return response.data;
+            //     } catch (error) {
+            //         console.log("ERROR 1")
+            //         if (error.response.status === 401) {
+            //             console.log("Unauthorized")
+            //             Cookies.remove('accessToken')
+            //             console.log(Cookies.get('accessToken'))
+            //         } else {
+            //             console.log("ERROR 4")
+            //             throw error;
+            //         }
+            //     }
+            // }
+            // } else {
+            //     if (error.response.status === 401) {
+            //         console.log("Unauthorized")
+            //         Cookies.remove('accessToken')
+            //         console.log(Cookies.get('accessToken'))
+            //     } else {
+            //         console.log("ERROR 2")
+            //         throw error;
+            //     }
+            // }
             throw error;
         }
     }

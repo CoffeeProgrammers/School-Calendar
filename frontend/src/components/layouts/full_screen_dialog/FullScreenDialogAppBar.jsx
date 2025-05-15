@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import {defaultButtonStyles} from "../../../assets/styles";
 import AppBar from "@mui/material/AppBar";
 
-const UpdateAppBar = ({handleClose, handleSave}) => {
+const FullScreenDialogAppBar = ({handleClose, handleSave}) => {
     return (
         <AppBar sx={{
             position: 'relative',
@@ -50,4 +50,4 @@ const UpdateAppBar = ({handleClose, handleSave}) => {
     );
 };
 
-export default UpdateAppBar;
+export default FullScreenDialogAppBar;

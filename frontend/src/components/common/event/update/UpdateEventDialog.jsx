@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import IconButton from "@mui/material/IconButton";
 import {Edit} from "@mui/icons-material";
-import FullScreenFunctionDialog from "../../layouts/FullScreenFunctionDialog";
-import UpdateAppBar from "../../layouts/update/UpdateAppBar";
+import FullScreenFunctionDialog from "../../../layouts/full_screen_dialog/FullScreenFunctionDialog";
+import FullScreenDialogAppBar from "../../../layouts/full_screen_dialog/FullScreenDialogAppBar";
 import UpdateEventBox from "./UpdateEventBox";
 
 const UpdateEventDialog = ({event, handleUpdate}) => {
@@ -44,7 +44,7 @@ const UpdateEventDialog = ({event, handleUpdate}) => {
             </IconButton>
 
             <FullScreenFunctionDialog open={open} handleClose={handleClose}>
-                <UpdateAppBar handleClose={handleClose} handleSave={handleSave}/>
+                <FullScreenDialogAppBar handleClose={handleClose} handleSave={handleSave}/>
                 <UpdateEventBox
                     name={name}
                     setName={setName}

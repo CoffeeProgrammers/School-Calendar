@@ -65,8 +65,7 @@ const UpdateEventBox = (
                             onChange={(e) => setMeetingType(e.target.value)}
                         >
                             <MenuItem value="ONLINE">Online</MenuItem>
-                            {/*TODO: OFFLINE*/}
-                            <MenuItem value="OFFLINE_REAL">Offline</MenuItem>
+                            <MenuItem value="OFFLINE">Offline</MenuItem>
                         </TextField>
                         <TextField
                             label="Content"

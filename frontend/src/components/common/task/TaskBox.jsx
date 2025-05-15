@@ -30,8 +30,8 @@ const TaskBox = ({task}) => {
             <Divider sx={{marginBottom: "5px"}}/>
             <Box sx={{ml: -0.25}}>
                 <Chip
-                    sx={{ml: -0.25, backgroundColor: task.isDone ? "success.main" : "default"}}
-                    label={task.isDone ? "Done" : "To-Do"}
+                    sx={{ml: -0.25, backgroundColor: task.done ? "success.main" : "default"}}
+                    label={task.done ? "Done" : "To-Do"}
                     size="small"
                 />
                 <InfoItem icon={CalendarMonthIcon} text={formattedStartDate}/>

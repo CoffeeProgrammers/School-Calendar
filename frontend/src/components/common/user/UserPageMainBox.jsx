@@ -6,6 +6,7 @@ import Options from "../../layouts/Options";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EmailIcon from "@mui/icons-material/Email";
 import UpdateUserDialog from "./creator_panel/UpdateUserDialog";
+import TextUtils from "../../../utils/TextUtils";
 
 const mainBoxStyles = {
     border: '1px solid #ddd',
@@ -22,7 +23,8 @@ const UserPageMainBox = ({user}) => {
         {
             icon: <CalendarMonthIcon color="primary"/>,
             label: "Birthday:",
-            value: user.birthday
+            // TODO formatDate
+            value: user.birthday.split("T")[0].replace(/-/g, ".")
         },
         {
             icon: <EmailIcon color="primary"/>,
@@ -32,7 +34,7 @@ const UserPageMainBox = ({user}) => {
         {
             icon: <PersonIcon color="primary"/>,
             label: "Role:",
-            value: user.role
+            value: TextUtils.formatEnumText(user.role)
         },
     ]
 
@@ -48,7 +50,7 @@ const UserPageMainBox = ({user}) => {
                     </Box>
 
                     <Box className="user-name">
-                        <Typography variant="h4" mb={2}>{user.first_name} {user.last_name}</Typography>
+                        <Typography variant="h4" mb={2}>{TextUtils.getUserFullName(user)}</Typography>
                     </Box>
 
                     <Box>

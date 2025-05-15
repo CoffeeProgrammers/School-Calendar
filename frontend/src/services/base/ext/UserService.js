@@ -44,11 +44,12 @@ class UserService extends BaseService {
         size,
         firstName = "",
         lastName = "",
+        email = "",
         role = ""
     ) {
         return this.handleRequest(() =>
             this.apiClient.get(`/events/${eventId}`, {
-                params: {page, size, firstName, lastName, role}
+                params: {page, size, firstName, lastName, email, role}
             })
         );
     }

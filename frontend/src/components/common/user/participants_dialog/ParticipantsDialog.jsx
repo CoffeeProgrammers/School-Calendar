@@ -4,6 +4,7 @@ import ElementAdditionDialog from "../../../layouts/dialog/ElementAdditionDialog
 import EventInviteContainer from "../invite_dialog/EventInviteContainer";
 import ParticipantBox from "./ParticipantBox";
 
+//TODO: clear
 const ParticipantsDialog = ({ users, pagesCount, page, setPage, handleRemove, isCreator, eventId }) => {
     return (
         <>
