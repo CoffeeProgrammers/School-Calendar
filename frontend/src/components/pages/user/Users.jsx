@@ -19,15 +19,18 @@ const roleTypes = [
 ];
 
 const Users = () => {
-    const [searchQuery, setSearchQuery] = useState('');
-    const [role, setRole] = useState('');
-
     const [users, setUsers] = useState([])
+
+    const [searchFirstName, setSearchFirstName] = useState('');
+    const [searchLastName, setSearchLastName] = useState('');
+    const [searchEmail, setSearchEmail] = useState('');
+
+
+    const [role, setRole] = useState('');
+    const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
 
     const [page, setPage] = useState(1);
     const [pagesCount, setPagesCount] = useState(1)
-
-    const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -38,12 +41,14 @@ const Users = () => {
                 const response = await UserService.getAllUsers(
                     page - 1,
                     15,
-                    '',
-                    searchQuery,
-                    '',
-                    //role
+                    searchEmail,
+                    searchFirstName,
+                    searchLastName,
+                    role
                 );
+                console.log("users:")
                 console.log(response)
+
                 setUsers(response.content);
                 setPagesCount(response.totalPages)
             } catch (error) {
@@ -54,7 +59,7 @@ const Users = () => {
         };
 
         fetchData();
-    }, [searchQuery, role, page]);
+    }, [searchFirstName, role, page, searchEmail, searchLastName]);
 
 
     if (loading) {
@@ -80,9 +85,21 @@ const Users = () => {
                     <Typography variant="h4">Users</Typography>
                     <Box sx={listPanelStyles} gap={0.5}>
                         <Search
-                            searchQuery={searchQuery}
-                            setSearchQuery={setSearchQuery}
+                            label={"First Name"}
+                            searchQuery={searchFirstName}
+                            setSearchQuery={setSearchFirstName}
                         />
+                        <Search
+                            label={"Last Name"}
+                            searchQuery={searchLastName}
+                            setSearchQuery={setSearchLastName}
+                        />
+                        <Search
+                            label={"Email"}
+                            searchQuery={searchEmail}
+                            setSearchQuery={setSearchEmail}
+                        />
+
                         <OpenFiltersButton
                             isOpenFilterMenu={isOpenFilterMenu}
                             setOpenFilterMenu={setOpenFilterMenu}
@@ -91,7 +108,7 @@ const Users = () => {
                 </Stack>
 
 
-                <Divider sx={{mb: 1}}/>
+                <Divider sx={{mb: 1, mt: 0.5}}/>
 
                 {isOpenFilterMenu && (
                     <Box sx={{mb: 1}}>
@@ -101,7 +118,8 @@ const Users = () => {
                                     label: "Role",
                                     value: role,
                                     setValue: setRole,
-                                    options: roleTypes
+                                    options: roleTypes,
+                                    type: "select"
                                 }
                             ]}
                         />

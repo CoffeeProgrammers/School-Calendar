@@ -30,10 +30,10 @@ class TaskService extends BaseService {
     }
 
     //TODO: isDone
-    getMyTasks(page, size, name, deadline, done, isPast) {
+    getMyTasks(page, size, name, deadline, isDone, isPast) {
         return this.handleRequest(() =>
             this.apiClient.get("", {
-                params: {page, size, name, deadline, done, isPast}
+                params: {page, size, name, deadline, isDone, isPast}
             })
         );
     }

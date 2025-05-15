@@ -9,9 +9,10 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {SpaceDashboard} from "@mui/icons-material";
 import DateUtils from "../../../../utils/DateUtils";
+import TextUtils from "../../../../utils/TextUtils";
 
 
-const TaskPageMainBox = ({task}) => {
+const TaskPageMainBox = ({task, handleToggleTask}) => {
 
     const formattedDate = DateUtils.formatDateToMDYT(task.deadline)
 
@@ -21,6 +22,7 @@ const TaskPageMainBox = ({task}) => {
             label: "IsDone:",
             value: <TaskCheckbox
                 task={task}
+                handleToggleTask={handleToggleTask}
                 sx={{borderRadius: '5px', width: '20px', height: '20px'}}
             />
         },
@@ -33,11 +35,11 @@ const TaskPageMainBox = ({task}) => {
             icon: <AccountCircleIcon fontSize="small"/>,
             label: "Creator:",
             //TODO: TextUtils
-            value: `${task.creator.first_name} ${task.creator.last_name}`
+            value: TextUtils.getUserFullName(task.creator)
         },
         {
             icon: <SpaceDashboard fontSize="small"/>,
-            label: "EventPage:",
+            label: "Event:",
             value: "---" //TODO task.event.name
         },
     ]

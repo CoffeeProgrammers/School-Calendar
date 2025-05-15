@@ -5,29 +5,11 @@ import Loading from "../../layouts/Loading";
 import PaginationBox from "../../layouts/lists/PaginationBox";
 import Search from "../../layouts/lists/Search";
 import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
-import DefaultButton from "../../layouts/DefaultButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import EventBox from "../../common/event/EventBox";
 import {useNavigate} from "react-router-dom";
-
-const eventTypes = [
-    { value: '', label: <em>None</em> },
-    { value: 'TEACHERS_MEETING', label: 'Teachers meeting' },
-    { value: 'STUDENTS_MEETING', label: 'Students meeting' },
-    { value: 'PARENTS_MEETING', label: 'Parents meeting' },
-    { value: 'TEST', label: 'Test' },
-    { value: 'ENTERTAINMENT', label: 'Entertainment' },
-    { value: 'PERSONAL', label: 'Personal' },
-    { value: 'COUNCIL_MEETING', label: 'Council meeting' }
-];
-
-const isPastFilterOptions = [
-    { value: "", label: <em>None</em> },
-    { value: true, label: 'Is past' },
-    { value: false, label: 'Is coming' },
-
-];
-
+import {eventTypes} from "../../../utils/constants";
+import CreateEventDialog from "../../common/event/create/CreateEventDialog";
 
 const Events = () => {
     const navigate = useNavigate();
@@ -36,7 +18,8 @@ const Events = () => {
 
     const [searchQuery, setSearchQuery] = useState('');
     const [eventType, setEventType] = useState('');
-    const [isPastFilter, setIsPastFilter] = useState("")
+    const [startDateFilter, setStartDateFilter] = useState('')
+    const [endDateFilter, setEndDateFilter] = useState('')
 
     const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
 
@@ -53,9 +36,8 @@ const Events = () => {
                     page - 1,
                     10,
                     searchQuery,
-                    "",
-                    "",
-                    isPastFilter,
+                    startDateFilter,
+                    endDateFilter,
                     eventType
                 );
 
@@ -72,9 +54,27 @@ const Events = () => {
         };
 
         fetchData();
-    }, [searchQuery, eventType, page, isPastFilter]);
+    }, [searchQuery, eventType, page, startDateFilter, endDateFilter]);
 
 
+    const handleCreate = async (newEvent) => {
+        try {
+            console.log(newEvent)
+            setLoading(true);
+            const createdEvent = await EventService.createEvent(newEvent);
+            setEvents(prevEvents => [createdEvent, ...prevEvents]);
+            setPage(1);
+            setSearchQuery('');
+            setStartDateFilter('');
+            setEndDateFilter('');
+            setEventType('');
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
     if (loading) {
         return <Loading/>;
     }
@@ -97,13 +97,12 @@ const Events = () => {
                             isOpenFilterMenu={isOpenFilterMenu}
                             setOpenFilterMenu={setOpenFilterMenu}
                         />
-                        <DefaultButton>
-                            New
-                        </DefaultButton>
+
+                       <CreateEventDialog handleCreate={handleCreate}/>
                     </Box>
                 </Stack>
 
-                <Divider sx={{mb: 1}}/>
+                <Divider sx={{mb: 1, mt: 0.5}}/>
 
                 {isOpenFilterMenu && (
                     <Box sx={{mb: 1}}>
@@ -113,14 +112,21 @@ const Events = () => {
                                     label: "Type",
                                     value: eventType,
                                     setValue: setEventType,
-                                    options: eventTypes
+                                    options: eventTypes,
+                                    type: "select"
                                 },
                                 {
-                                    label: "Is past",
-                                    value: isPastFilter,
-                                    setValue: setIsPastFilter,
-                                    options: isPastFilterOptions
-                                }
+                                    label: "Start date >",
+                                    value: startDateFilter,
+                                    setValue: setStartDateFilter,
+                                    type: "date"
+                                },
+                                {
+                                    label: "End date <",
+                                    value: endDateFilter,
+                                    setValue: setEndDateFilter,
+                                    type: "date"
+                                },
                             ]}
                         />
                     </Box>

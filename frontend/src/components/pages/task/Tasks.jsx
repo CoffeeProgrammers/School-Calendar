@@ -4,16 +4,22 @@ import Loading from "../../layouts/Loading";
 import PaginationBox from "../../layouts/lists/PaginationBox";
 import Search from "../../layouts/lists/Search";
 import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
-import DefaultButton from "../../layouts/DefaultButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import TaskList from "../../common/task/TaskList";
 import TaskService from "../../../services/base/ext/TaskService";
 import {listPanelStyles} from "../../../assets/styles";
+import CreateTaskDialog from "../../common/task/create/CreateTaskDialog";
 
 const isDoneSelectOptions = [
     {value: '', label: <em>None</em>},
     {value: true, label: 'Done'},
     {value: false, label: 'To-Do'}
+];
+
+const isPastSelectOptions = [
+    {value: '', label: <em>None</em>},
+    {value: true, label: 'Is past'},
+    {value: false, label: 'Is future'}
 ];
 
 const Tasks = () => {
@@ -22,27 +28,31 @@ const Tasks = () => {
     const [searchName, setSearchName] = useState('');
     const [isDone, setIsDone] = useState('');
     const [deadline, setDeadline] = useState('');
+    const [isPast, setIsPast] = useState('');
+
+    const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
 
     const [page, setPage] = useState(1);
     const [pagesCount, setPagesCount] = useState(1)
 
-    const [isOpenFilterMenu, setOpenFilterMenu] = useState(false);
-
     const [loading, setLoading] = useState(true);
+    const [listLoading, setListLoading] = useState(true);
+
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setListLoading(true);
+                console.log("isDone" + isDone)
                 const response = await TaskService.getMyTasks(
-                    page -1,
+                    page - 1,
                     15,
                     searchName,
                     deadline,
                     isDone,
-                    ''
-
-            );
+                    isPast
+                );
                 console.log("tasks:")
                 console.log(response)
 
@@ -52,12 +62,28 @@ const Tasks = () => {
                 setError(error);
             } finally {
                 setLoading(false);
+                setListLoading(false);
             }
         };
 
         fetchData();
-    }, [searchName, deadline, isDone, page]);
+    }, [searchName, deadline, isDone, page, isPast]);
 
+
+    const handleCreate = async (newTask) => {
+        try {
+            setLoading(true);
+            const createdTask = await TaskService.createTask(0, newTask);
+            setTasks((prevTasks) => [createdTask, ...prevTasks]);
+            setPage(1);
+            setSearchName('');
+            setDeadline('');
+            setIsDone('');
+            setIsPast('');
+        } catch (error) {
+            setError(error);
+        }
+    };
 
     if (loading) {
         return <Loading/>;
@@ -71,7 +97,6 @@ const Tasks = () => {
         <>
             <Box sx={{
                 width: "1295px",
-                //maxWidth: "1295px",
                 border: '1px solid #ddd',
                 padding: '20px',
                 margin: '10px',
@@ -79,7 +104,7 @@ const Tasks = () => {
                 display: "flex",
                 flexDirection: "column"
             }}>
-                <Stack direction="row"  sx={listPanelStyles}>
+                <Stack direction="row" sx={listPanelStyles}>
                     <Typography variant="h4">Tasks</Typography>
                     <Box sx={listPanelStyles} gap={0.5}>
                         <Search
@@ -91,41 +116,55 @@ const Tasks = () => {
                             setOpenFilterMenu={setOpenFilterMenu}
                         />
 
-                        <DefaultButton>
-                            New
-                        </DefaultButton>
+                        <CreateTaskDialog handleCreate={handleCreate}/>
                     </Box>
                 </Stack>
 
 
-                <Divider sx={{mb: 1}}/>
+                <Divider sx={{mb: 1, mt: 0.5}}/>
 
                 {isOpenFilterMenu && (
                     <Box sx={{mb: 1}}>
                         <FiltersGroup
-                            //TODO: date
                             filters={[
                                 {
                                     label: "Status",
                                     value: isDone,
                                     setValue: setIsDone,
-                                    options: isDoneSelectOptions
+                                    options: isDoneSelectOptions,
+                                    type: "select"
                                 },
                                 {
-                                    label: "Date",
-                                    options: [{value: "", label: <em>____</em>}]
+                                    label: "Is past",
+                                    value: isPast,
+                                    setValue: setIsPast,
+                                    options: isPastSelectOptions,
+                                    type: "select"
+                                },
+                                {
+                                    label: "Deadline <",
+                                    value: deadline,
+                                    setValue: setDeadline,
+                                    type: "date"
                                 }
                             ]}
                         />
                     </Box>
                 )}
 
-                <TaskList
-                    tasks={tasks}
-                />
+                {listLoading ? (
+                    <Loading/>
+                ) : (
+                    <TaskList
+                        tasks={tasks}
+                    />
+                )
+
+                }
+
 
                 {pagesCount > 1 && (
-                    <Box sx={{ marginTop: "auto" }}>
+                    <Box sx={{marginTop: "auto"}}>
                         <PaginationBox
                             page={page}
                             pagesCount={pagesCount}

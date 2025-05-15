@@ -130,6 +130,7 @@ public class EventServiceImpl implements EventService {
         notificationServices.create(new Notification(List.of(user),
                 "You have been removed from " + event.getName()));
         event.deleteUser(user);
+        eventRepository.save(event);
     }
 
 }

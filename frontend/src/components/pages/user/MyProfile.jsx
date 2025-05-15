@@ -1,8 +1,10 @@
 import React from 'react';
 import UserContainer from "../../common/user/UserContainer";
+import Cookies from "js-cookie";
 
 const MyProfile = () => {
-    const userId = 1;
+    //TODO: refactor for getMyUser
+    const userId = Cookies.get('userId');
     return (
         <UserContainer userId={userId}/>
     );

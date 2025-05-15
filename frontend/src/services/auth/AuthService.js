@@ -6,12 +6,6 @@ const API_URL = 'http://localhost:8081/api/'
 const apiClient = axios.create({
     baseURL: API_URL,
 });
-// {
-//     "id": 2,
-//     "username": "john.doe@example.com",
-//     "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJ0b2tlbiI6InNvbWV0b2tlbnZhbHVlMTIzIiwic3ViIjoiam9obi5kb2VAZXhhbXBsZS5jb20iLCJpc3MiOiJjb20udG9kby5hcHAiLCJhdWQiOiJ0b2RvLXVzZXJzIiwiaWF0IjoxNzQ0MTM4ODc2LCJleHAiOjE3NDQxMzk3NzZ9.nixDlVKL0thRib8G6EORN-Z1HDT164QPyphJZOzrjws",
-//     "role": "STUDENT"
-// }
 
 class AuthService {
     static async handleRequest(request) {

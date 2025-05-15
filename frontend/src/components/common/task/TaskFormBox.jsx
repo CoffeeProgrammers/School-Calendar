@@ -1,15 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Box, Container, Divider, TextField} from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Typography from "@mui/material/Typography";
-import {DateTimePicker} from "@mui/x-date-pickers/DateTimePicker";
-import dayjs from "dayjs";
-import theme from "../../../assets/theme";
+import DefaultDateTimePicker from "../../layouts/DefaultDateTimePicker";
 
-const UpdateTaskBox = ({task}) => {
-    const [name, setName] = useState(task.name);
-    const [deadline, setDeadline] = useState(task.deadline);
-    const [content, setContent] = useState(task.content);
+const TaskFormBox = (
+    {
+        name,
+        setName,
+        deadline,
+        setDeadline,
+        content,
+        setContent,
+        boxName
+    }) => {
 
     return (
         <Box sx={{
@@ -29,7 +33,7 @@ const UpdateTaskBox = ({task}) => {
                     <Box sx={{display: 'flex', alignItems: 'center', gap: 0.5}}>
                         <AssignmentIcon fontSize="medium" color="secondary"/>
                         <Typography variant="h6">
-                            Task Update
+                            {boxName}
                         </Typography>
                     </Box>
 
@@ -45,24 +49,10 @@ const UpdateTaskBox = ({task}) => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
-                        <DateTimePicker
-                            label="Deadline"
-                            views={['month', 'day', 'hours', 'minutes']}
-                            ampm={false}
-                            defaultValue={deadline ? dayjs(deadline) : null}
-                            onChange={(newValue) => setDeadline(newValue)}
-                            slotProps={{
-                                textField: {
-                                    sx: {
-                                        '& .MuiInputAdornment-root .MuiIconButton-root': {
-                                            color: theme.palette.secondary.main,
-                                        },
-                                        '& .MuiInputAdornment-root .MuiIconButton-root:hover': {
-                                            color: theme.palette.secondary.light,
-                                        },
-                                    },
-                                }
-                            }}
+                        <DefaultDateTimePicker
+                            label={"Deadline"}
+                            value={deadline}
+                            setValue={setDeadline}
                         />
                         <TextField
                             label="Content"
@@ -80,4 +70,4 @@ const UpdateTaskBox = ({task}) => {
     );
 };
 
-export default UpdateTaskBox;
+export default TaskFormBox;

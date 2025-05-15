@@ -5,23 +5,33 @@ import {defaultButtonStyles, listPanelStyles} from "../../../../assets/styles";
 import Search from "../../../layouts/lists/Search";
 import OpenFiltersButton from "../../../layouts/lists/OpenFiltersButton";
 import FiltersGroup from "../../../layouts/lists/FiltersGroup";
-import InviteUserBox from "./InviteUserBox";
 import Cookies from "js-cookie";
+import InviteUserBox from "./InviteUserBox";
 
+const roles = [
+    {value: '', label: <em>None</em>},
+    {value: 'teacher', label: 'Teacher'},
+    {value: 'student', label: 'Student'},
+    {value: 'parents', label: 'Parents'},
+
+];
 const EventInviteDialog = (
     {
-        searchQuery,
-        setSearchQuery,
+        searchEmail,
+        setSearchEmail,
         isOpenFilterMenu,
         setOpenFilterMenu,
         role,
         setRole,
-        eventTypes,
         users,
         page,
         setPage,
         pagesCount,
-        handleInvite
+        handleInvite,
+        searchFirstName,
+        setSearchFirstName,
+        searchLastName,
+        setSearchLastName,
     }) => {
 
     const isTeacher = "TEACHER" === Cookies.get("role");
@@ -37,7 +47,7 @@ const EventInviteDialog = (
         setPage(1);
     };
 
-    if(isStudent){
+    if (isStudent) {
         setRole("STUDENT");
     }
 
@@ -59,9 +69,21 @@ const EventInviteDialog = (
                         <Stack direction="row" sx={listPanelStyles}>
                             <Box sx={listPanelStyles} gap={0.5}>
                                 <Search
-                                    searchQuery={searchQuery}
-                                    setSearchQuery={setSearchQuery}
+                                    label={"First Name"}
+                                    searchQuery={searchFirstName}
+                                    setSearchQuery={setSearchFirstName}
                                 />
+                                <Search
+                                    label={"Last Name"}
+                                    searchQuery={searchLastName}
+                                    setSearchQuery={setSearchLastName}
+                                />
+                                <Search
+                                    label={"Email"}
+                                    searchQuery={searchEmail}
+                                    setSearchQuery={setSearchEmail}
+                                />
+
                                 {isTeacher && (
                                     <OpenFiltersButton
                                         isOpenFilterMenu={isOpenFilterMenu}
@@ -72,7 +94,7 @@ const EventInviteDialog = (
                         </Stack>
 
 
-                        <Divider sx={{mb: 1}}/>
+                        <Divider sx={{mb: 1, mt: 0.5}}/>
 
                         {isOpenFilterMenu && isTeacher && (
                             <Box sx={{mb: 1}}>
@@ -82,17 +104,19 @@ const EventInviteDialog = (
                                             label: "Role",
                                             value: role,
                                             setValue: setRole,
-                                            options: eventTypes
+                                            options: roles,
+                                            type: "select"
                                         }
                                     ]}
                                 />
                             </Box>
                         )}
+
                         {/*TODO: list optimize*/}
                         <Grid container spacing={1.5}>
                             {users.map(user => (
                                 <Grid size={{ xs: 12, sm: 6, md: 4}} key={user.id}>
-                                   <InviteUserBox user={user} handleInvite={handleInvite}/>
+                                    <InviteUserBox user={user} handleInvite={handleInvite}/>
                                 </Grid>
                             ))}
                         </Grid>

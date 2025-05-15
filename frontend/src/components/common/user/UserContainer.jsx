@@ -13,7 +13,7 @@ const UserContainer = ({userId}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await UserService.getUserById(userId);
+                const response = await UserService.getUser(userId);
                 setUser(response);
             } catch (error) {
                 setError(error);

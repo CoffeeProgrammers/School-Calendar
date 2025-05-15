@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import theme from "../../../assets/theme";
 import {Box, Button, DialogActions, TextField} from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -24,11 +23,7 @@ const CreateCommentDialog = ({handleCreate}) => {
 
     return (
         <>
-            <Button onClick={() => setOpen(true)} variant="contained" sx={{
-                backgroundColor: theme.palette.secondary.main,
-                '&:hover': {backgroundColor: theme.palette.secondary.light},
-                color: "white",
-            }}>
+            <Button onClick={() => setOpen(true)} sx={defaultButtonStyles}>
                 Create
             </Button>
 

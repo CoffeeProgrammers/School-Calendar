@@ -1,18 +1,23 @@
-import * as React from 'react';
-import {useState} from 'react';
-import IconButton from '@mui/material/IconButton';
-import {Edit} from "@mui/icons-material";
+import React, {useState} from 'react';
+import FullScreenFunctionDialog from "../../../layouts/full_screen_dialog/FullScreenFunctionDialog";
 import FullScreenDialogAppBar from "../../../layouts/full_screen_dialog/FullScreenDialogAppBar";
 import TaskFormBox from "../TaskFormBox";
-import FullScreenFunctionDialog from "../../../layouts/full_screen_dialog/FullScreenFunctionDialog";
+import {Button} from "@mui/material";
+import {defaultButtonStyles} from "../../../../assets/styles";
 
-const UpdateTaskDialog = ({task, handleUpdate}) => {
+const CreateTaskDialog = ({handleCreate}) => {
     const [open, setOpen] = React.useState(false);
 
-    const [name, setName] = useState(task.name);
-    const [deadline, setDeadline] = useState(task.deadline);
-    const [content, setContent] = useState(task.content);
+    const [name, setName] = useState('');
+    const [deadline, setDeadline] = useState('');
+    const [content, setContent] = useState('');
 
+
+    const clearFields = () => {
+        setName('');
+        setDeadline('');
+        setContent('');
+    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -20,31 +25,32 @@ const UpdateTaskDialog = ({task, handleUpdate}) => {
 
     const handleClose = () => {
         setOpen(false);
-
+        clearFields()
     };
 
     const handleSave = () => {
-        handleUpdate({
+        handleCreate({
             name: name,
             deadline: deadline,
             content: content
         })
         setOpen(false);
+        clearFields()
     }
 
     return (
         <>
-            <IconButton
-                onClick={handleClickOpen} color="secondary"
-                sx={{borderRadius: '5px', width: '30px', height: '30px'}}
+            <Button
+                onClick={handleClickOpen}
+                sx={{...defaultButtonStyles, height: "40px",}}
             >
-                <Edit/>
-            </IconButton>
+                New
+            </Button>
 
             <FullScreenFunctionDialog open={open} handleClose={handleClose}>
                 <FullScreenDialogAppBar handleClose={handleClose} handleSave={handleSave}/>
                 <TaskFormBox
-                    boxName={"Update Task"}
+                    boxName={"Create Task"}
                     name={name}
                     setName={setName}
                     deadline={deadline}
@@ -57,4 +63,4 @@ const UpdateTaskDialog = ({task, handleUpdate}) => {
     );
 };
 
-export default UpdateTaskDialog;
+export default CreateTaskDialog;
