@@ -3,6 +3,7 @@ package com.calendar.backend.services.impl;
 import com.calendar.backend.dto.task.TaskFullResponse;
 import com.calendar.backend.dto.task.TaskListResponse;
 import com.calendar.backend.dto.task.TaskRequest;
+import com.calendar.backend.dto.wrapper.CountAllTaskAndCompleted;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.TaskMapper;
 import com.calendar.backend.models.Task;
@@ -155,5 +156,13 @@ public class TaskServicesImpl implements TaskService {
         response.setTotalPages(tasks.getTotalPages());
         response.setContent(tasks.map(taskMapper::fromTaskToTaskListResponse).toList());
         return response;
+    }
+
+    @Override
+    public CountAllTaskAndCompleted countAllTaskAndCompleted(long userId) {
+        CountAllTaskAndCompleted countAllTaskAndCompleted = new CountAllTaskAndCompleted();
+        countAllTaskAndCompleted.setCountCompleted(taskRepository.countAllByUserIdAndDone(userId));
+        countAllTaskAndCompleted.setCountAll(taskRepository.countAllByUserId(userId));
+        return countAllTaskAndCompleted;
     }
 }

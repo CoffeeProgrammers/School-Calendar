@@ -29,6 +29,7 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private Role role;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private LocalDateTime birthday;
 

@@ -26,6 +26,7 @@ public class Event {
     private EventType type;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+    @Column(columnDefinition = "TEXT")
     private String content;
     private boolean isContentAvailableAnytime;
     private MeetingType meetingType;

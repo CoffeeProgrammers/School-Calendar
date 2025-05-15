@@ -18,4 +18,11 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
             nativeQuery = true)
     List<Event> findAllByUserIdAndDateRange(Long userId, LocalDateTime startDate,
                                             LocalDateTime endDate, Sort sort);
+
+    @Query(value =
+            "SELECT count(e.id)" +
+                    "FROM events e INNER JOIN users_events ue ON e.id=ue.event_id " +
+                    "WHERE ue.user_id = :userId " +
+                    "AND e.end_date <= :now", nativeQuery = true)
+    Long countAllByUserAndPast(long userId, LocalDateTime now);
 }

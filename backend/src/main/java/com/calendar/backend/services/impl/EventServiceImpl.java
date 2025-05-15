@@ -4,6 +4,7 @@ import com.calendar.backend.dto.event.EventCreateRequest;
 import com.calendar.backend.dto.event.EventFullResponse;
 import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.dto.event.EventUpdateRequest;
+import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.EventMapper;
 import com.calendar.backend.models.Event;
@@ -24,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,4 +135,11 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(event);
     }
 
+    @Override
+    public LongResponse countAllEventsByUserAndPast(long userId) {
+        LongResponse longResponse = new LongResponse();
+        longResponse.setCount(eventRepository.countAllByUserAndPast(userId,
+                LocalDateTime.now(ZoneId.of("Europe/Kiev"))));
+        return longResponse;
+    }
 }

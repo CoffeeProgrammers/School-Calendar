@@ -20,6 +20,7 @@ public class Comment {
     private User creator;
     @ManyToOne
     private Event event;
+    @Column(columnDefinition = "TEXT")
     private String text;
     private LocalDateTime date;
 

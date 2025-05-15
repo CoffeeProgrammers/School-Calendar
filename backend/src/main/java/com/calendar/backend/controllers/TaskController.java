@@ -3,6 +3,7 @@ package com.calendar.backend.controllers;
 import com.calendar.backend.dto.task.TaskFullResponse;
 import com.calendar.backend.dto.task.TaskListResponse;
 import com.calendar.backend.dto.task.TaskRequest;
+import com.calendar.backend.dto.wrapper.CountAllTaskAndCompleted;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.TaskAssignmentService;
 import com.calendar.backend.services.inter.TaskService;
@@ -130,5 +131,10 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public void unsignTaskFromEvent(@PathVariable Long id) {
         taskService.unassignTaskFromEvent(id);
+    }
+
+    @GetMapping("/countAllMy/user/{userId}")
+    public CountAllTaskAndCompleted countAllUsersTask(@PathVariable long userId) {
+        return taskService.countAllTaskAndCompleted(userId);
     }
 }

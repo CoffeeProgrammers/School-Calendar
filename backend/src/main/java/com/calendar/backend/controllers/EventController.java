@@ -4,6 +4,7 @@ import com.calendar.backend.dto.event.EventCreateRequest;
 import com.calendar.backend.dto.event.EventFullResponse;
 import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.dto.event.EventUpdateRequest;
+import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.EventService;
 import com.calendar.backend.services.inter.TaskService;
@@ -115,4 +116,10 @@ public class EventController {
         );
     }
 
+    @GetMapping("/count/user/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    public LongResponse getEventsByEvent(
+            @PathVariable Long userId) {
+        return eventService.countAllEventsByUserAndPast(userId);
+    }
 }

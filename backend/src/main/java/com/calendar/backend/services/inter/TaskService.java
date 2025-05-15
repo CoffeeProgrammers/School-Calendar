@@ -3,6 +3,7 @@ package com.calendar.backend.services.inter;
 import com.calendar.backend.dto.task.TaskFullResponse;
 import com.calendar.backend.dto.task.TaskListResponse;
 import com.calendar.backend.dto.task.TaskRequest;
+import com.calendar.backend.dto.wrapper.CountAllTaskAndCompleted;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.models.Task;
 import org.springframework.security.core.Authentication;
@@ -26,4 +27,5 @@ public interface TaskService {
     void unsignAllFromEvent(long eventId);
     PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty
             (Authentication authentication, int page, int size);
+    CountAllTaskAndCompleted countAllTaskAndCompleted(long userId);
 }

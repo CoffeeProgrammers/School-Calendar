@@ -25,6 +25,7 @@ public class Notification {
             joinColumns = @JoinColumn(name = "notification_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
+    @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime time;
 

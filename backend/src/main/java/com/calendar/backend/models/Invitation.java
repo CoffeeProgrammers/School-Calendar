@@ -23,6 +23,7 @@ public class Invitation {
     private User sender;
     @ManyToOne
     private Event event;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String warning;
     private LocalDateTime time;

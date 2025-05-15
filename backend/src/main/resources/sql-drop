@@ -13,5 +13,3 @@ DROP TABLE IF EXISTS "parents_students" CASCADE;
 DROP TABLE IF EXISTS "users" CASCADE;
 DROP TABLE IF EXISTS "refresh_tokens" CASCADE;
 DROP TABLE IF EXISTS flyway_schema_history;
-
-INSERT INTO refresh_tokens ("token", "username", "expiration_timestamp") VALUES ('b5895409-7813-421f-aaba-b99774281ef4', 'john.doe@example.com', '2025-05-10 09:30:35');

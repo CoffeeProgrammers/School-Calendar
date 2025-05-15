@@ -22,6 +22,7 @@ public class Task {
     @ManyToOne
     private User creator;
     private String name;
+    @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime deadline;
     @OneToMany(mappedBy = "task")

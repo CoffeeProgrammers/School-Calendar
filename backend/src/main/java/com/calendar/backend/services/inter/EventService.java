@@ -4,6 +4,7 @@ import com.calendar.backend.dto.event.EventCreateRequest;
 import com.calendar.backend.dto.event.EventFullResponse;
 import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.dto.event.EventUpdateRequest;
+import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.models.Event;
 import org.springframework.security.core.Authentication;
@@ -23,4 +24,5 @@ public interface EventService {
             (long userId, LocalDateTime start, LocalDateTime end);
     Event findByIdForServices(long id);
     void deleteUserById(long id, long userId);
+    LongResponse countAllEventsByUserAndPast(long userId);
 }
