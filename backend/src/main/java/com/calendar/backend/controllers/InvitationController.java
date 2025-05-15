@@ -13,7 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/events/{event_id}/invitations")
+@RequestMapping("/api/invitations")
 @RequiredArgsConstructor
 public class InvitationController {
 
@@ -21,7 +21,7 @@ public class InvitationController {
     private final UserService userService;
 
     @PreAuthorize("@userSecurity.checkCreatorOfEvent(#auth, #event_id)")
-    @PostMapping("/create/receivers/{receiver_id}")
+    @PostMapping("/create/events/{event_id}/receivers/{receiver_id}")
     @ResponseStatus(HttpStatus.CREATED)
     public InvitationResponse createInvitation(
             @PathVariable Long event_id,
