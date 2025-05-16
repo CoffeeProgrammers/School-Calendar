@@ -14,17 +14,18 @@ import TextUtils from "../../../../utils/TextUtils";
 
 const TaskPageMainBox = ({task, handleToggleTask}) => {
 
-    const formattedDate = DateUtils.formatDateToMDYT(task.deadline)
+    const formattedDate = DateUtils.formatDate(task.deadline)
 
     const optionsList = [
         {
             icon: <CheckCircleIcon fontSize="small"/>,
             label: "IsDone:",
-            value: <TaskCheckbox
-                task={task}
-                handleToggleTask={handleToggleTask}
-                sx={{borderRadius: '5px', width: '20px', height: '20px'}}
-            />
+            value:
+                <TaskCheckbox
+                    task={task}
+                    handleToggleTask={handleToggleTask}
+                    sx={{borderRadius: '5px', width: '20px', height: '20px'}}
+                />
         },
         {
             icon: <CalendarMonthIcon fontSize="small"/>,
@@ -34,18 +35,31 @@ const TaskPageMainBox = ({task, handleToggleTask}) => {
         {
             icon: <AccountCircleIcon fontSize="small"/>,
             label: "Creator:",
-            //TODO: TextUtils
             value: TextUtils.getUserFullName(task.creator)
         },
         {
             icon: <SpaceDashboard fontSize="small"/>,
             label: "Event:",
-            value: "---" //TODO task.event.name
+            value: (task.event ? (
+                //TODO: Link
+
+                // <Link to={`/events/${task.event.id}`}>
+                task.event.name
+                // </Link>
+            ) : "---")
         },
     ]
 
     return (
-        <Box sx={{width: "90%", border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "10px", display: "flex", flexDirection: "column"}}>
+        <Box sx={{
+            width: "90%",
+            border: '1px solid #ddd',
+            padding: '20px',
+            margin: '10px',
+            borderRadius: "10px",
+            display: "flex",
+            flexDirection: "column"
+        }}>
             <Container maxWidth="md">
                 <Box sx={{display: 'flex', alignItems: 'top', gap: 0.5}}>
                     <Box mt={0.5}>

@@ -36,14 +36,12 @@ const Tasks = () => {
     const [pagesCount, setPagesCount] = useState(1)
 
     const [loading, setLoading] = useState(true);
-    const [listLoading, setListLoading] = useState(true);
 
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                setListLoading(true);
                 console.log("isDone" + isDone)
                 const response = await TaskService.getMyTasks(
                     page - 1,
@@ -62,7 +60,6 @@ const Tasks = () => {
                 setError(error);
             } finally {
                 setLoading(false);
-                setListLoading(false);
             }
         };
 
@@ -72,7 +69,6 @@ const Tasks = () => {
 
     const handleCreate = async (newTask) => {
         try {
-            setLoading(true);
             const createdTask = await TaskService.createTask(0, newTask);
             setTasks((prevTasks) => [createdTask, ...prevTasks]);
             setPage(1);
@@ -152,16 +148,10 @@ const Tasks = () => {
                     </Box>
                 )}
 
-                {listLoading ? (
-                    <Loading/>
-                ) : (
-                    <TaskList
-                        tasks={tasks}
-                    />
-                )
 
-                }
-
+                <TaskList
+                    tasks={tasks}
+                />
 
                 {pagesCount > 1 && (
                     <Box sx={{marginTop: "auto"}}>

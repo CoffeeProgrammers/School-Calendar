@@ -64,8 +64,6 @@ const TaskContainer = () => {
         try {
             await TaskService.toggleTaskDone(task.id);
             console.log("toggle task");
-            const updatedTask = {...task, done: !task.done};
-            setTask(updatedTask);
         } catch (error) {
             console.error("Error toggling task:", error);
         }

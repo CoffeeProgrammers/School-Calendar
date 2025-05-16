@@ -1,12 +1,12 @@
 import React from 'react';
-import UserContainer from "../../common/user/user_page/UserContainer";
-import {useParams} from "react-router-dom";
+import UserContainer from "../../common/user/page/user/UserContainer";
+import Page from "../../layouts/Page";
 
 const UserPage = () => {
-    const {id} = useParams();
-
     return (
-        <UserContainer userId={id}/>
+        <Page>
+            <UserContainer/>
+        </Page>
     );
 };
 

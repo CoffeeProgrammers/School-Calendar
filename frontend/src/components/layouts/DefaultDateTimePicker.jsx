@@ -7,7 +7,7 @@ const DefaultDateTimePicker = ({label, value, setValue}) => {
     return (
         <DateTimePicker
             label={label}
-            views={['month', 'day', 'hours', 'minutes']}
+            views={['year', 'month', 'day', 'hours', 'minutes']}
             ampm={false}
             defaultValue={value ? dayjs(value) : null}
             onChange={(newValue) => setValue(newValue ? newValue.format('YYYY-MM-DDTHH:mm:ss') : null)}

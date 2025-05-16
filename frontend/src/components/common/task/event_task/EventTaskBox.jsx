@@ -70,7 +70,7 @@ const EventTaskBox = ({task, handleToggleTask, handleRemove}) => {
                     </ListItemIcon>
                     <ListItemText sx={{mr: 2}} primary={task.name}/>
                     <Box sx={{marginLeft: 'auto', minWidth: '100px'}}>
-                        <ListItemText secondary={DateUtils.formatDateToMDT(task.deadline)}/>
+                        <ListItemText secondary={DateUtils.formatDate(task.deadline)}/>
                     </Box>
                 </ListItemButton>
             </ListItem>

@@ -9,9 +9,9 @@ import TextUtils from "../../../../utils/TextUtils";
 
 const InvitationListBox = ({ invitation, handleRejectInvitation, handleAcceptInvitation }) => {
     const formattedDate =
-        DateUtils.formatDateToMDT(invitation.event.startDate)
+        DateUtils.formatDate(invitation.event.startDate)
         + "  ⭢  " +
-        DateUtils.formatDateToMDT(invitation.event.endDate)
+        DateUtils.formatDate(invitation.event.endDate)
 
     const onReject = () => {
         handleRejectInvitation()
@@ -32,7 +32,7 @@ const InvitationListBox = ({ invitation, handleRejectInvitation, handleAcceptInv
                         <AccountCircleIcon sx={{ fontSize: "40px" }} color="secondary" />
                     }
                     title={TextUtils.getUserFullName(invitation.sender)}
-                    subheader={DateUtils.formatDateToMDT(invitation.time)}
+                    subheader={DateUtils.formatDate(invitation.time)}
                     sx={{ paddingBottom: "0" }}
                 />
                 <CardContent sx={{ paddingTop: "10px" }}>

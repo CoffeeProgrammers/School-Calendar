@@ -25,7 +25,7 @@ class EventService extends BaseService {
 
     deleteUserFromEvent(eventId, userId) {
         return this.handleRequest(() =>
-            this.apiClient.delete(`/delete/${eventId}/user/${userId}`)
+            this.apiClient.put(`/delete/${eventId}/user/${userId}`)
         );
     }
 

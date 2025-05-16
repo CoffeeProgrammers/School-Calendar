@@ -79,6 +79,15 @@ class UserService extends BaseService {
             this.apiClient.put("/update", data)
         );
     }
+
+    updateMyPassword(password, newPassword) {
+        return this.handleRequest(() =>
+            this.apiClient.put("/update/password", {
+                oldPassword: password,
+                newPassword: newPassword}
+            )
+        );
+    }
 }
 
 export default new UserService();

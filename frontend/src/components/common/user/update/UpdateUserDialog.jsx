@@ -1,13 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import IconButton from "@mui/material/IconButton";
 import FullScreenFunctionDialog from "../../../layouts/full_screen_dialog/FullScreenFunctionDialog";
 import FullScreenDialogAppBar from "../../../layouts/full_screen_dialog/FullScreenDialogAppBar";
 import UpdateUserBox from "./UpdateUserBox";
 import SettingsIcon from '@mui/icons-material/Settings';
 
-const UpdateUserDialog = ({user}) => {
+const UpdateUserDialog = ({user, handleUpdate}) => {
     const [open, setOpen] = React.useState(false);
 
+    const [firstName, setFirstName] = useState(user.firstName || '');
+    const [lastName, setLastName] = useState(user.lastName || '');
+    const [description, setDescription] = useState(user.description || '');
+    const [birthday, setBirthday] = useState(user.birthday || '');
+    
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -17,7 +22,12 @@ const UpdateUserDialog = ({user}) => {
     };
 
     const handleSave = () => {
-        //TODO: handleSave
+        handleUpdate({
+            firstName: firstName,
+            lastName: lastName,
+            description: description,
+            birthday: birthday
+        })
         setOpen(false);
     }
 
@@ -32,7 +42,16 @@ const UpdateUserDialog = ({user}) => {
 
             <FullScreenFunctionDialog open={open} handleClose={handleClose}>
                 <FullScreenDialogAppBar handleClose={handleClose} handleSave={handleSave}/>
-                <UpdateUserBox user={user}/>
+                <UpdateUserBox
+                    firstName={firstName}
+                    setFirstName={setFirstName}
+                    lastName={lastName}
+                    setLastName={setLastName}
+                    description={description}
+                    setDescription={setDescription}
+                    birthdayDate={birthday}
+                    setBirthdayDate={setBirthday}
+                />
             </FullScreenFunctionDialog>
         </>
     );

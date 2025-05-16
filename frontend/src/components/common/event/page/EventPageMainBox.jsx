@@ -14,14 +14,16 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
 import DateUtils from "../../../../utils/DateUtils";
 import TextUtils from "../../../../utils/TextUtils";
-
+import LockIcon from '@mui/icons-material/Lock';
 
 const EventPageMainBox = ({event, isCreator}) => {
 
+    const isEventStart = new Date(event.startDate) <= new Date()
+
     const formattedDate =
-        DateUtils.formatDateToMDYT(event.startDate)
+        DateUtils.formatDate(event.startDate)
         + "  ⭢  " +
-        DateUtils.formatDateToMDYT(event.endDate)
+        DateUtils.formatDate(event.endDate)
 
     const optionList = [
         {
@@ -57,7 +59,15 @@ const EventPageMainBox = ({event, isCreator}) => {
     ]
 
     return (
-        <Box sx={{width: "800px", border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "10px", display: "flex", flexDirection: "column"}}>
+        <Box sx={{
+            width: "800px",
+            border: '1px solid #ddd',
+            padding: '20px',
+            margin: '10px',
+            borderRadius: "10px",
+            display: "flex",
+            flexDirection: "column"
+        }}>
             <Container maxWidth="md">
                 <Typography variant="h4" sx={{display: 'flex', alignItems: 'center', gap: 0.5}}>
                     <SpaceDashboard fontSize="large" color="secondary"/>
@@ -76,20 +86,36 @@ const EventPageMainBox = ({event, isCreator}) => {
                     <EventTasksContainer eventId={event.id}/>
                 </Stack>
 
-                <Divider sx={{mt: 0.7, mb: 2}}/>
 
-                <Typography variant="h6" sx={listElementBoxTextStyle}>
-                    <SubjectIcon color="primary"/>
-                    Content:
-                </Typography>
-                <Container>
-                    <Typography variant="body1" color="primary">
-                        {event.content}
-                    </Typography>
-                </Container>
+                {event.isContentAvailableAnytime || isEventStart ? (
+                    <>
+                        <Divider sx={{mt: 0.7, mb: 0.5}}/>
+                        <Box sx={listElementBoxTextStyle}>
+                            <SubjectIcon color="primary"/>
+                            <Typography variant="h6">
+                                Content:
+                            </Typography>
+                        </Box>
+                        <Container>
+                            <Typography variant="body1">
+                                {event.content}
+                            </Typography>
+                        </Container>
+                    </>
+                ) : (
+                    <>
+                        <Divider sx={{mt: 0.7, mb: 1}}/>
+                        <Box sx={listElementBoxTextStyle}>
+                            <LockIcon color="primary"/>
+                            <Typography variant="subtitle1">
+                                Content is not available at this time. Please wait for the event to start
+                            </Typography>
+                        </Box>
+                    </>
+                )}
             </Container>
         </Box>
-    );
+    )
 };
 
 export default EventPageMainBox;

@@ -1,18 +1,20 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Checkbox from '@mui/material/Checkbox';
 
 const TaskCheckbox = ({task, handleToggleTask, sx = {}}) => {
+    const [checked, setChecked] = useState(task.done ?? false)
 
     const handleChange =  () => {
        handleToggleTask()
+        setChecked(!checked)
     };
 
     return (
         <Checkbox
             color="secondary"
-            checked={task.done}
+            checked={checked}
             onChange={handleChange}
-            inputProps={{'aria-label': 'controlled'}}
             sx={sx}
         />
     );

@@ -59,6 +59,18 @@ const CreateEventBox = (
                             onChange={(e) => setName(e.target.value)}
                         />
 
+                        <DefaultDateTimePicker
+                            label={"Start Date"}
+                            value={startDate}
+                            setValue={setStartDate}
+                        />
+
+                        <DefaultDateTimePicker
+                            label={"End Date"}
+                            value={endDate}
+                            setValue={setEndDate}
+                        />
+
                         <TextField
                             label="Type"
                             fullWidth
@@ -85,6 +97,8 @@ const CreateEventBox = (
                             <MenuItem value="ONLINE">Online</MenuItem>
                             <MenuItem value="OFFLINE">Offline</MenuItem>
                         </TextField>
+
+
 
                         <TextField
                             label="Place"
@@ -113,20 +127,9 @@ const CreateEventBox = (
                             fullWidth
                             variant="outlined"
                             multiline
+                            rows={4}
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
-                        />
-
-                        <DefaultDateTimePicker
-                            label={"Start Date"}
-                            value={startDate}
-                            setValue={setStartDate}
-                        />
-
-                        <DefaultDateTimePicker
-                            label={"End Date"}
-                            value={endDate}
-                            setValue={setEndDate}
                         />
 
                     </Box>

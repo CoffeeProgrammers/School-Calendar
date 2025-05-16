@@ -34,7 +34,7 @@ const Events = () => {
             try {
                 const response = await EventService.getMyEvents(
                     page - 1,
-                    10,
+                    15,
                     searchQuery,
                     startDateFilter,
                     endDateFilter,

@@ -7,7 +7,7 @@ import TextUtils from "../../../utils/TextUtils";
 import Cookies from "js-cookie";
 
 const CommentBox = ({comment, handleDeleteComment, handleEditComment}) => {
-    const formattedDate = DateUtils.formatDateToMDYT(comment.date)
+    const formattedDate = DateUtils.formatDate(comment.date)
     const isCreator = comment.creator.id.toString() === Cookies.get('userId')
 
     return (

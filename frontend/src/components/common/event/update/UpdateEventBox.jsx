@@ -72,6 +72,7 @@ const UpdateEventBox = (
                             fullWidth
                             variant="outlined"
                             multiline
+                            rows={4}
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                         />

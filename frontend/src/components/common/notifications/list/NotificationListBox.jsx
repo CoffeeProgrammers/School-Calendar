@@ -11,7 +11,7 @@ const NotificationListBox = ({ notification }) => {
                 <CardContent >
                     <Typography variant='body1'>{notification.content}</Typography>
                     <Box sx={{ display: "flex", justifyContent: "end" }}>
-                        <Typography variant='body2' color='grey'>{DateUtils.formatDateToMDT(notification.time)}</Typography>
+                        <Typography variant='body2' color='grey'>{DateUtils.formatDate(notification.time)}</Typography>
                     </Box>
                 </CardContent>
             </Box>

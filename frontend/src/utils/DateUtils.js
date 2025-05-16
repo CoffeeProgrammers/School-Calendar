@@ -1,26 +1,37 @@
 
 class DateUtils {
 
-    static formatDateToMDYT(date) {
-        return new Date(date).toLocaleString('en-US', {
-            month: 'long',
+    static formatDate(date) {
+        const dateObj = new Date(date);
+        const now = new Date();
+
+        const isCurrentYear = dateObj.getFullYear() === now.getFullYear();
+
+        const dateFormatter = new Intl.DateTimeFormat('en-US', {
             day: 'numeric',
-            year: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
+            month: 'long',
+            ...(isCurrentYear ? {} : { year: 'numeric' })
+        });
+        const timeFormatter = new Intl.DateTimeFormat('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
             hour12: false
-        })
+        });
+
+        return `${dateFormatter.format(dateObj)}, ${timeFormatter.format(dateObj)}`;
     }
 
-    static formatDateToMDT(date) {
-        return new Date(date).toLocaleString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: false
-        })
+    static formatBirthdayDate(date) {
+        const dateObj = new Date(date);
+
+        const day = dateObj.getDate().toString().padStart(2, '0');
+        const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+        const year = dateObj.getFullYear();
+
+        return `${day}.${month}.${year}`;
     }
+
+
 }
 
 export default DateUtils;

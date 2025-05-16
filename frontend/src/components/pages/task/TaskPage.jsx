@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from "../../layouts/Page";
-import TaskContainer from "../../common/task/task_page/TaskContainer";
+import TaskContainer from "../../common/task/page/TaskContainer";
 
 const TaskPage = () => {
     return (

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import UserListBox from "../users_list/UserListBox";
+import UserListBox from "../list/UserListBox";
 import {Box, Button, DialogActions, TextField} from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
