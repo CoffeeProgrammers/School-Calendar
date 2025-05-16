@@ -101,28 +101,35 @@ public class InvitationServiceImpl implements InvitationService {
         return response;
     }
 
-    private List<InvitationResponse> checkAndAddWarning
-            (List<InvitationResponse> response) {
+    private List<InvitationResponse> checkAndAddWarning(List<InvitationResponse> response) {
         log.info("Service: Checking invitations for warning");
-        for(InvitationResponse invitationResponse : response){
+
+        for (InvitationResponse invitationResponse : response) {
             long userId = invitationResponse.getReceiver().getId();
             LocalDateTime start = LocalDateTime.parse(invitationResponse.getEvent().getStartDate());
             LocalDateTime end = LocalDateTime.parse(invitationResponse.getEvent().getEndDate());
-            if(invitationRepository.existsAllByReceiver_IdAndEvent_StartDateAfterAndEvent_EndDateBefore(
-                    userId, start, end)){
-                invitationResponse.setWarning("You have already invitation to events on this time.");
+
+            StringBuilder warningMessage = new StringBuilder();
+
+            if (invitationRepository.existsAllByReceiver_IdAndEvent_StartDateAfterAndEvent_EndDateBefore(userId, start, end)) {
+                warningMessage.append("You already have an invitation to events at this time. ");
             }
-            List<String> warning = eventService.findForInvitationCheck(userId, start, end);
-            if(!warning.isEmpty()){
-                StringBuilder warningString = new StringBuilder();
-                for(String s : warning){
-                    warningString.append(s).append(", ");
-                }
-                invitationResponse.setWarning("You have already invitation to events on this time." + warningString + ".");
+
+            List<String> warnings = eventService.findForInvitationCheck(userId, start, end);
+            if (!warnings.isEmpty()) {
+                warningMessage.append("Conflicting events: ");
+                warningMessage.append(String.join(", ", warnings));
+                warningMessage.append(".");
+            }
+
+            if (!warningMessage.isEmpty()) {
+                invitationResponse.setWarning(warningMessage.toString().trim());
             }
         }
+
         return response;
     }
+
 
     @Override
     public void acceptInvitation(Long id) {
