@@ -49,6 +49,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
     public AuthResponse login(@RequestBody @Valid LogInRequest loginRequest) {
+        log.info("Login user {}", loginRequest);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsername(),

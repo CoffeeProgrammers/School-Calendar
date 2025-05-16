@@ -38,7 +38,7 @@ public class TaskServicesImpl implements TaskService {
 
     @Override
     public TaskFullResponse create(TaskRequest taskRequest, Authentication authentication, long eventId) {
-        log.info("Saving new task {}", taskRequest);
+        log.info("Service: Saving new task {}", taskRequest);
         Task task = taskMapper.fromTaskRequestToTask(taskRequest);
         task.setCreator(userService.findUserByAuth(authentication));
         task.setEvent(eventId != 0 ? eventService.findByIdForServices(eventId) : null);
@@ -47,7 +47,7 @@ public class TaskServicesImpl implements TaskService {
 
     @Override
     public TaskFullResponse update(TaskRequest taskRequest, long id) {
-        log.info("Updating task with id {}", id);
+        log.info("Service: Updating task with id {}", id);
         Task task = findByIdForServices(id);
         task.setName(taskRequest.getName());
         task.setContent(taskRequest.getContent());
@@ -58,13 +58,13 @@ public class TaskServicesImpl implements TaskService {
     @Transactional
     @Override
     public void delete(long id) {
-        log.info("Deleting task with id {}", id);
+        log.info("Service: Deleting task with id {}", id);
         taskRepository.deleteById(id);
     }
 
     @Override
     public TaskFullResponse findById(long id) {
-        log.info("Finding task with id {}", id);
+        log.info("Service: Finding task with id {}", id);
         return taskMapper.fromTaskToTaskResponse(findByIdForServices(id));
     }
 
@@ -89,7 +89,7 @@ public class TaskServicesImpl implements TaskService {
         if(userId != 0) {
             filters.put("user_id", userId);
         }
-        log.info("Finding all tasks for user with id {} and filters {}", userId, filters);
+        log.info("Service: Finding all tasks for user with id {} and filters {}", userId, filters);
         Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId).and(TaskSpecification.filterTasks(filters)),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
         PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
@@ -102,7 +102,7 @@ public class TaskServicesImpl implements TaskService {
     @Override
     public PaginationListResponse<TaskListResponse> findAllByEventId(
             long eventId, int page, int size) {
-        log.info("Finding all tasks for event with id {}", eventId);
+        log.info("Service: Finding all tasks for event with id {}", eventId);
         Page<Task> tasks = taskRepository.findAllByEvent_Id(eventId,
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
         PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
@@ -114,19 +114,20 @@ public class TaskServicesImpl implements TaskService {
 
     @Override
     public List<Task> findAllByEventId(long eventId) {
-        log.info("Finding all tasks in list for event with id {}", eventId);
+        log.info("Service: Finding all tasks in list for event with id {}", eventId);
         return taskRepository.findAllByEvent_Id(eventId);
     }
 
 
     public Task findByIdForServices(long id) {
-        log.info("Finding task for services with id {}", id);
+        log.info("Service: Finding task for services with id {}", id);
         return taskRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Task not found"));
     }
 
     @Override
     public void assignTaskToEvent(long eventId, long id) {
+        log.info("Service: Assigning task with id {} to event with id {}", id, eventId);
         Task task = findByIdForServices(id);
         task.setEvent(eventService.findByIdForServices(id));
         taskRepository.save(task);
@@ -134,6 +135,7 @@ public class TaskServicesImpl implements TaskService {
 
     @Override
     public void unassignTaskFromEvent(long taskId){
+        log.info("Service: Unassigning task with id {} from event", taskId);
         Task task = this.findByIdForServices(taskId);
         task.setEvent(null);
         taskRepository.save(task);
@@ -141,6 +143,7 @@ public class TaskServicesImpl implements TaskService {
 
     @Override
     public void unsignAllFromEvent(long eventId) {
+        log.info("Service: Unassigning all tasks from event with id {}", eventId);
         List<Task> tasks = findAllByEventId(eventId).stream().map(task -> {task.setEvent(null); return task;}).toList();
         taskRepository.saveAll(tasks);
     }
@@ -148,7 +151,7 @@ public class TaskServicesImpl implements TaskService {
     @Override
     public PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(Authentication authentication,
                                                                                     int page, int size) {
-        log.info("Finding all tasks for auth user with no events");
+        log.info("Service: Finding all tasks for auth user with no events");
         PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
         Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsNull(
                 userService.findUserByAuth(authentication).getId(),
@@ -160,6 +163,7 @@ public class TaskServicesImpl implements TaskService {
 
     @Override
     public CountAllTaskAndCompleted countAllTaskAndCompleted(long userId) {
+        log.info("Service: Counting all tasks by user id {} and completed", userId);
         CountAllTaskAndCompleted countAllTaskAndCompleted = new CountAllTaskAndCompleted();
         countAllTaskAndCompleted.setCountCompleted(taskRepository.countAllByUserIdAndDone(userId));
         countAllTaskAndCompleted.setCountAll(taskRepository.countAllByUserId(userId));

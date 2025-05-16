@@ -28,7 +28,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
 
     @Override
     public void create(Long taskId, Long userId) {
-        log.info("Saving new task assignment for task with id {} and user with id {}", taskId, userId);
+        log.info("Service: Saving new task assignment for task with id {} and user with id {}", taskId, userId);
         taskAssignmentRepository.save(new TaskAssignment(taskService.findByIdForServices(taskId),
                 userService.findByIdForServices(userId)));
     }
@@ -36,21 +36,21 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Override
     public void createWithNewTask(Authentication authentication, Long taskId) {
         User user = userService.findUserByAuth(authentication);
-        log.info("Saving new task assignment for task with id {} and user with id {}", taskId, user.getId());
+        log.info("Service: Saving new task assignment for task with id {} and my user", taskId);
         taskAssignmentRepository.save(new TaskAssignment(taskService.findByIdForServices(taskId),
                 userService.findByIdForServices(user.getId())));
     }
 
     @Override
     public boolean isDone(Long taskId, Authentication authentication) {
-        log.info("Try to determine if task assignment is done for {}", taskId);
+        log.info("Service: Try to determine if task assignment is done for {}", taskId);
         return taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,
                 userService.findUserByAuth(authentication).getId()).get().isDone();
     }
 
     @Override
     public void toggleDone(Long taskId, Authentication authentication) {
-        log.info("Toggling done status for task assignment with task id {} and auth user", taskId);
+        log.info("Service: Toggling done status for task assignment with task id {} and auth user", taskId);
         TaskAssignment taskAssignment = taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,
                         userService.findUserByAuth(authentication).getId())
                 .orElseThrow(() -> new EntityNotFoundException("Task assignment not found"));
@@ -60,7 +60,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
 
     @Override
     public void assignTasksForNewUserFromEvent(Long eventId, Long userId) {
-        log.info("Assigning tasks for new user with id {} from event with id {}", userId, eventId);
+        log.info("Service: Assigning tasks for new user with id {} from event with id {}", userId, eventId);
         List<Task> tasksFromEvent = taskService.findAllByEventId(eventId);
         for(Task task : tasksFromEvent) {
             create(task.getId(), userId);
@@ -69,7 +69,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
 
     @Override
     public void assignTasksToEventUsers(Long eventId, Long taskId) {
-        log.info("Assigning tasks for users from event with id {}", eventId);
+        log.info("Service: Assigning tasks for users from event with id {}", eventId);
         List<User> users = userService.findAllByEventIdForServices(eventId);
         for(User user : users) {
             create(user.getId(), taskId);
@@ -79,13 +79,14 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Transactional
     @Override
     public void unsignAllFromTask(Long taskId) {
-        log.info("Unsigning all task assignments for task with id {}", taskId);
+        log.info("Service: Unsigning all task assignments for task with id {}", taskId);
         taskAssignmentRepository.deleteAllByTask_Id(taskId);
     }
 
     @Override
     public PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth
             (PaginationListResponse<TaskListResponse> tasks, Authentication authentication) {
+        log.info("Service: Setting all task assignments done for all tasks and auth user");
         tasks.setContent(tasks.getContent().stream().map(task -> {
             task.setDone(this.isDone(task.getId(), authentication));
             return task;}).toList());

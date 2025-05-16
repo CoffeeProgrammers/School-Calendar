@@ -42,7 +42,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventFullResponse create(EventCreateRequest eventCreateRequest, Authentication authentication) {
-        log.info("Saving new event {}", eventCreateRequest);
+        log.info("Service: Saving new event {}", eventCreateRequest);
         Event event = eventMapper.fromEventRequestToEvent(eventCreateRequest);
         User user = userService.findUserByAuth(authentication);
         event.addUser(user);
@@ -52,7 +52,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventFullResponse update(EventUpdateRequest eventUpdateRequest, long eventId) {
-        log.info("Updating event with id{}", eventId);
+        log.info("Service: Updating event with id{}", eventId);
         Event event = eventRepository.findById(eventId).orElseThrow(
                 () -> new EntityNotFoundException("Event not found"));
         event.setName(eventUpdateRequest.getName());
@@ -67,7 +67,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void delete(Long id) {
-        log.info("Deleting event with id {}", id);
+        log.info("Service: Deleting event with id {}", id);
         notificationServices.create(new Notification(new ArrayList<>(findByIdForServices(id).getUsers()),
                 "Event " + findByIdForServices(id).getName() + " was updated"));
         eventRepository.deleteById(id);
@@ -75,7 +75,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventFullResponse findById(Long id) {
-        log.info("Finding event with id {}", id);
+        log.info("Service: Finding event with id {}", id);
         return eventMapper.fromEventToEventResponse(findByIdForServices(id));
     }
 
@@ -99,7 +99,7 @@ public class EventServiceImpl implements EventService {
         if(typeOfEvent != null && !typeOfEvent.isBlank() && !typeOfEvent.equals("null")) {
             filters.put("typeOfEvent", typeOfEvent);
         }
-        log.info("Finding all events for user with id {} and filters {}", userId, filters);
+        log.info("Service: Finding all events for user with id {} and filters {}", userId, filters);
         Page<Event> events = eventRepository.findAll(EventSpecification.hasUser(userId).and(EventSpecification.filterEvents(filters)), PageRequest.of(page, size,
                         Sort.by(Sort.Direction.ASC, "startDate")));
         PaginationListResponse<EventListResponse> response = new PaginationListResponse<>();
@@ -113,7 +113,7 @@ public class EventServiceImpl implements EventService {
     public List<EventListResponse> findAllByUserIdForCalendar(long userId,
                                                                                 LocalDateTime start,
                                                                                 LocalDateTime end) {
-        log.info("Finding all events for user with id {} and date range {} - {}", userId, start, end);
+        log.info("Service: Finding all events for user with id {} and date range {} - {}", userId, start, end);
         List<Event> events = eventRepository.findAllByUserIdAndDateRange(userId,
                 start, end, Sort.by(Sort.Direction.ASC, "start_date"));
         return events.stream().map(eventMapper::fromEventToEventListResponse).toList();
@@ -121,12 +121,14 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event findByIdForServices(long id) {
+        log.info("Service: Finding event for service with id {}", id);
         return eventRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Event not found"));
     }
 
     @Override
     public void deleteUserById(long id, long userId) {
+        log.info("Service: Deleting user with id {} from event with id {}", userId, id);
         Event event = findByIdForServices(id);
         User user = userService.findByIdForServices(userId);
         notificationServices.create(new Notification(List.of(user),
@@ -137,6 +139,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public LongResponse countAllEventsByUserAndPast(long userId) {
+        log.info("Service: Counting all events by user id {} and past", userId);
         LongResponse longResponse = new LongResponse();
         longResponse.setCount(eventRepository.countAllByUserAndPast(userId,
                 LocalDateTime.now(ZoneId.of("Europe/Kiev"))));

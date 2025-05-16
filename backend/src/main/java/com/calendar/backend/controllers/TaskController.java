@@ -10,11 +10,13 @@ import com.calendar.backend.services.inter.TaskService;
 import com.calendar.backend.services.inter.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/tasks")
 @RequiredArgsConstructor
@@ -30,6 +32,7 @@ public class TaskController {
             @RequestParam(required = false) Long event_id,
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
+        log.info("Controller: Create task with body: {}", request);
         TaskFullResponse task = taskService.create(request, auth, event_id != null ? event_id : 0);
         taskAssignmentService.create(task.getId(), userService.findUserByAuth(auth).getId());
         return task;
@@ -42,6 +45,7 @@ public class TaskController {
             @PathVariable Long id,
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
+        log.info("Controller: Update task with id: {} with body: {}", id, request);
         TaskFullResponse taskFullResponse =  taskService.update(request, id);
         taskFullResponse.setDone(taskAssignmentService.isDone(id, auth));
         return taskFullResponse;
@@ -51,6 +55,7 @@ public class TaskController {
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTask(@PathVariable Long id, Authentication auth) {
+        log.info("Controller: Delete task with id: {}", id);
         taskAssignmentService.unsignAllFromTask(id);
         taskService.delete(id);
     }
@@ -58,6 +63,7 @@ public class TaskController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TaskFullResponse getTask(@PathVariable Long id, Authentication auth) {
+        log.info("Controller: Get task with id: {}", id);
         TaskFullResponse taskFullResponse = taskService.findById(id);
         taskFullResponse.setDone(taskAssignmentService.isDone(id, auth));
         return taskFullResponse;
@@ -73,6 +79,8 @@ public class TaskController {
             @RequestParam(required = false) String isDone,
             @RequestParam(required = false) String isPast,
             Authentication auth) {
+        log.info("Controller: Get all my tasks with name: {} deadline: {} isDone: {} isPast: {}",
+                name, deadline, isDone, isPast);
         PaginationListResponse<TaskListResponse> taskListResponse = taskService.findAllByUserId(
                 name,
                 deadline,
@@ -92,6 +100,7 @@ public class TaskController {
             @RequestParam int page,
             @RequestParam int size,
             Authentication auth) {
+        log.info("Controller: Get all tasks for event with id: {}", event_id);
         PaginationListResponse<TaskListResponse> taskListResponse =
                 taskService.findAllByEventId(event_id, page, size);
         return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
@@ -103,6 +112,7 @@ public class TaskController {
             @RequestParam int page,
             @RequestParam int size,
             Authentication auth) {
+        log.info("Controller: Get all my tasks without event");
         PaginationListResponse<TaskListResponse> taskListResponse =
                 taskService.findAllByCreatorIdAndEventEmpty(
                 auth,
@@ -118,6 +128,7 @@ public class TaskController {
     public void toggleTaskDone(
             @PathVariable Long id,
             Authentication auth) {
+        log.info("Controller: Toggle task with id: {} done", id);
         taskAssignmentService.toggleDone(id, auth);
     }
 
@@ -126,6 +137,7 @@ public class TaskController {
     @PutMapping("/assign/{id}/to/{event_id}")
     @ResponseStatus(HttpStatus.OK)
     public void assignTaskToEvent(@PathVariable Long id, @PathVariable Long event_id, Authentication auth) {
+        log.info("Controller: Assign task with id: {} to event with id: {}", id, event_id);
         taskService.assignTaskToEvent(event_id, id);
         taskAssignmentService.assignTasksToEventUsers(event_id, id);
     }
@@ -134,11 +146,13 @@ public class TaskController {
     @PutMapping("/unassign/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void unsignTaskFromEvent(@PathVariable Long id, Authentication auth) {
+        log.info("Controller: Unassign task with id: {} from event", id);
         taskService.unassignTaskFromEvent(id);
     }
 
     @GetMapping("/countAllMy/user/{userId}")
     public CountAllTaskAndCompleted countAllUsersTask(@PathVariable long userId) {
+        log.info("Controller: Get count of all tasks and completed for user with id: {}", userId);
         return taskService.countAllTaskAndCompleted(userId);
     }
 }

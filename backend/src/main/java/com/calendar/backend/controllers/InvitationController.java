@@ -7,11 +7,13 @@ import com.calendar.backend.services.inter.InvitationService;
 import com.calendar.backend.services.inter.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/invitations")
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class InvitationController {
             @PathVariable Long receiver_id,
             @Valid @RequestBody InvitationRequest request,
             Authentication auth) {
+        log.info("Controller: Create invitation for event with id: {} to user with id: {}", event_id, receiver_id);
         return invitationService.create(request, auth, event_id, receiver_id);
     }
 
@@ -38,6 +41,7 @@ public class InvitationController {
             @PathVariable Long id,
             @RequestBody InvitationRequest request,
             Authentication auth) {
+        log.info("Controller: Update invitation with id: {}", id);
         return invitationService.update(id, request);
     }
 
@@ -45,6 +49,7 @@ public class InvitationController {
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteInvitation(@PathVariable Long id, Authentication auth) {
+        log.info("Controller: Delete invitation with id: {}", id);
         invitationService.delete(id);
     }
 
@@ -54,6 +59,7 @@ public class InvitationController {
             @RequestParam int page,
             @RequestParam int size,
             Authentication auth) {
+        log.info("Controller: Get all invitations for user with id: {}", userService.findUserByAuth(auth).getId());
         return invitationService.findAllByRecieverId(
                 userService.findUserByAuth(auth).getId(),
                 page,
@@ -65,6 +71,7 @@ public class InvitationController {
     @PostMapping("/accept/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void acceptInvitation(@PathVariable Long id, Authentication auth) {
+        log.info("Controller: Accept invitation with id: {}", id);
         invitationService.acceptInvitation(id);
     }
 
@@ -72,6 +79,7 @@ public class InvitationController {
     @PostMapping("/reject/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void rejectInvitation(@PathVariable Long id, Authentication auth) {
+        log.info("Controller: Reject invitation with id: {}", id);
         invitationService.rejectInvitation(id);
     }
 

@@ -39,6 +39,7 @@ public class JwtUtils {
     private static final String AUDIENCE = "todo-users";
 
     public String generateTokenFromUsername(String username, Map<String, Object> claims) {
+        log.info("Auth: generate token for user: {}", username);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
@@ -63,13 +64,14 @@ public class JwtUtils {
     }
 
     public String refreshAccessToken(String username, String token) {
+        log.info("Auth: try to refresh access token(jwt) for user: {}", username);
         Map<String, Object> claims = new HashMap<>();
         claims.put("token", token);
         return generateTokenFromUsername(username, claims);
     }
 
     private Claims parseClaims(String token) {
-        log.info("try to parse claims from token: {}", token);
+        log.info("Auth: try to parse claims from token: {}", token);
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(getSignInKey())
@@ -77,12 +79,13 @@ public class JwtUtils {
                     .getBody();
 
             if (!ISSUER.equals(claims.getIssuer()) || !AUDIENCE.equals(claims.getAudience())) {
+                log.error("Auth: Invalid issuer or audience");
                 throw new IllegalArgumentException("Invalid token claims");
             }
 
             return claims;
         } catch (ExpiredJwtException e) {
-            log.info("Token has expired: {}", e.getMessage());
+            log.warn("Auth: Token has expired: {}", e.getMessage());
             return e.getClaims();
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid token", e);
@@ -103,11 +106,11 @@ public class JwtUtils {
             Claims claims = parseClaims(token);
 
             if (!ISSUER.equals(claims.getIssuer())) {
-                log.error("Invalid issuer: {}", claims.getIssuer());
+                log.error("Auth: Invalid issuer: {}", claims.getIssuer());
                 return false;
             }
             if (!AUDIENCE.equals(claims.getAudience())) {
-                log.error("Invalid audience: {}", claims.getAudience());
+                log.error("Auth: Invalid audience: {}", claims.getAudience());
                 return false;
             }
 
@@ -115,7 +118,7 @@ public class JwtUtils {
 
             Map<String, Object> claimsToCheck = new HashMap<>();
             claimsToCheck.put("token", refreshTokenService.findByUsername(username).orElseThrow(() ->
-                    new EntityNotFoundException("Cannt find refresh token to validate jwt")).getToken());
+                    new EntityNotFoundException("Can`t find refresh token to validate jwt")).getToken());
 
             for (Map.Entry<String, Object> entry : claimsToCheck.entrySet()) {
                 String key = entry.getKey();
@@ -123,7 +126,7 @@ public class JwtUtils {
                 Object actualValue = claims.get(key);
 
                 if (actualValue == null || !actualValue.equals(expectedValue)) {
-                    log.info("Claim mismatch: key = {}, expected = {}, actual = {}",
+                    log.error("Auth: Claim mismatch: key = {}, expected = {}, actual = {}",
                             key, expectedValue, actualValue);
                     return false;
                 }
@@ -131,7 +134,7 @@ public class JwtUtils {
 
             return true;
         } catch (Exception e) {
-            log.error("Token validation failed: {}", e.getMessage());
+            log.error("Auth: Token validation failed: {}", e.getMessage());
             return false;
         }
     }
