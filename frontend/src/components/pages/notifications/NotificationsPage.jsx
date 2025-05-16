@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
-import NotificationsList from '../../common/notifications/NotificationsList';
-import InvitationsList from '../../common/invitations/InvitationsList';
+import NotificationsList from '../../common/notifications/list/NotificationsList';
+import InvitationsList from '../../common/invitations/list/InvitationsList';
 
 const NotificationsPage = () => {
     const [tabValue, setTabValue] = React.useState('notifications');

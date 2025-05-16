@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {IconButton} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ConfirmDialog from "../../layouts/dialog/ConfirmDialog";
+import ConfirmDialog from "../../../layouts/dialog/ConfirmDialog";
 
 const EventDeleteDialog = ({eventId, handleDelete}) => {
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false)

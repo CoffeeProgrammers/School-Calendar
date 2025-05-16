@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import UserBox from "../UserBox";
+import UserListBox from "../users_list/UserListBox";
 import {Box, Button, DialogActions, TextField} from "@mui/material";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -25,7 +25,7 @@ const InviteUserBox = ({user, handleInvite}) => {
     return (
         <>
             <Box onClick={() => setOpen(true)}>
-                <UserBox user={user}/>
+                <UserListBox user={user}/>
             </Box>
 
             <Dialog

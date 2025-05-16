@@ -65,9 +65,9 @@ class TaskService extends BaseService {
         );
     }
 
-    unsignTaskFromEvent(taskId) {
+    unassignTaskFromEvent(taskId) {
         return this.handleRequest(() =>
-            this.apiClient.put(`/unsign/${taskId}`)
+            this.apiClient.put(`/unassign/${taskId}`)
         );
     }
 

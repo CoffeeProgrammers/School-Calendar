@@ -1,6 +1,6 @@
 import React from 'react';
-import EventPageMainBox from "../user/EventPageMainBox";
-import EventCreatorPanel from "./EventCreatorPanel";
+import EventPageMainBox from "./EventPageMainBox";
+import EventCreatorPanel from "../creator_panel/EventCreatorPanel";
 import {Box, Divider} from "@mui/material";
 import Cookies from "js-cookie";
 

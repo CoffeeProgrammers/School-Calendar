@@ -1,19 +1,19 @@
 import React from 'react';
 import {Box, Chip, Container, Divider, Stack, Typography} from "@mui/material";
 import {SpaceDashboard} from "@mui/icons-material";
-import Options from "../../layouts/Options";
-import ParticipantsContainer from "./participants_dialog/ParticipantsContainer";
-import CommentsContainer from "../comment/event_comments_dialog/CommentsContainer";
-import EventTasksContainer from "../task/event_task/event_tasks_dialog/EventTasksContainer";
-import {listElementBoxTextStyle} from "../../../assets/styles";
+import Options from "../../../layouts/Options";
+import ParticipantsContainer from "../../user/participants_dialog/ParticipantsContainer";
+import CommentsContainer from "../../comment/event_comments_dialog/CommentsContainer";
+import EventTasksContainer from "../../task/event_task/event_tasks_dialog/EventTasksContainer";
+import {listElementBoxTextStyle} from "../../../../assets/styles";
 import SubjectIcon from "@mui/icons-material/Subject";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PlaceIcon from "@mui/icons-material/Place";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
-import DateUtils from "../../../utils/DateUtils";
-import TextUtils from "../../../utils/TextUtils";
+import DateUtils from "../../../../utils/DateUtils";
+import TextUtils from "../../../../utils/TextUtils";
 
 
 const EventPageMainBox = ({event, isCreator}) => {

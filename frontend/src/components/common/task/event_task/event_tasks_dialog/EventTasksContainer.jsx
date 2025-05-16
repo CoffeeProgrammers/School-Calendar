@@ -48,7 +48,7 @@ const EventTasksContainer = ({eventId}) => {
 
     const handleRemove = async (taskId) => {
         try {
-            await TaskService.unsignTaskFromEvent(taskId);
+            await TaskService.unassignTaskFromEvent(taskId);
             setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
         } catch (error) {
             console.error("Failed to remove task:", error);

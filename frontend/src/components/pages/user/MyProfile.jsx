@@ -1,5 +1,5 @@
 import React from 'react';
-import UserContainer from "../../common/user/UserContainer";
+import UserContainer from "../../common/user/user_page/UserContainer";
 import Cookies from "js-cookie";
 
 const MyProfile = () => {
