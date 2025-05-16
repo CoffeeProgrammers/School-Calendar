@@ -16,6 +16,7 @@ import NotificationsPage from './components/pages/notifications/NotificationsPag
 import TaskPage from './components/pages/task/TaskPage';
 import EventPage from "./components/pages/event/EventPage";
 import Login from "./security/login/Login";
+import InvitationsPage from "./components/pages/invitations/InvitationsPage";
 
 
 function App() {
@@ -28,7 +29,9 @@ function App() {
         {path: "/profile", element: <ProfilePage/>},
         {path: "/users/:id", element: <Page><UserPage/></Page>},
         {path: "/tasks/:id", element: <TaskPage/>},
-        {path: "/notifications", element: <Page><NotificationsPage/></Page>}
+        {path: "/notifications", element: <Page><NotificationsPage/></Page>},
+        {path: "/invitations", element: <InvitationsPage/>}
+
     ];
     return (
         <Router>

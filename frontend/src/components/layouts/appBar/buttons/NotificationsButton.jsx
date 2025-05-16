@@ -3,7 +3,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import {IconButton} from "@mui/material";
 import {useLocation, useNavigate} from "react-router-dom";
 
-const NotificationButton = () => {
+const NotificationsButton = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -16,4 +16,4 @@ const NotificationButton = () => {
     );
 };
 
-export default NotificationButton;
+export default NotificationsButton;

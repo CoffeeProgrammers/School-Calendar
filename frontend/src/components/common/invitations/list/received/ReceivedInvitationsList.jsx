@@ -1,13 +1,13 @@
 import {Stack} from '@mui/material';
-import InvitationListBox from "./InvitationListBox";
+import ReceivedInvitationListBox from "./ReceivedInvitationListBox";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import React, {useEffect, useState} from 'react';
-import Loading from "../../../layouts/Loading";
-import PaginationBox from "../../../layouts/lists/PaginationBox";
-import InvitationService from "../../../../services/base/ext/InvitationService";
+import Loading from "../../../../layouts/Loading";
+import PaginationBox from "../../../../layouts/lists/PaginationBox";
+import InvitationService from "../../../../../services/base/ext/InvitationService";
 
-const InvitationsList = () => {
+const ReceivedInvitationsList = () => {
     const [invitations, setInvitations] = useState([])
 
     const [page, setPage] = useState(1);
@@ -71,7 +71,8 @@ const InvitationsList = () => {
         <>
             <Stack spacing={1} mt={-1}>
                 {invitations.map(invitation => (
-                    <InvitationListBox
+                    <ReceivedInvitationListBox
+                        key={invitation.id}
                         invitation={invitation}
                         handleRejectInvitation={() => handleRejectInvitation(invitation.id)}
                         handleAcceptInvitation={() => handleAcceptInvitation(invitation.id)}
@@ -91,4 +92,4 @@ const InvitationsList = () => {
     )
 }
 
-export default InvitationsList
+export default ReceivedInvitationsList

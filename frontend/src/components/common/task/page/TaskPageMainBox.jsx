@@ -75,7 +75,7 @@ const TaskPageMainBox = ({task, handleToggleTask}) => {
 
                 <Options optionsList={optionsList}/>
 
-                <Divider sx={{mt: 0.7, mb: 2}}/>
+                <Divider sx={{mt: 0.7, mb: 0.5}}/>
 
                 <Typography variant="h6" sx={{display: 'flex', alignItems: 'center', gap: 1}}>
                     <SubjectIcon color="primary"/>

@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Stack} from '@mui/material';
+import {Divider, Stack} from '@mui/material';
 import NotificationListBox from "./NotificationListBox";
 import Loading from "../../../layouts/Loading";
 import PaginationBox from "../../../layouts/lists/PaginationBox";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import NotificationService from "../../../../services/base/ext/NotificationService";
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
-const NotificationsList = () => {
+const NotificationsContainer = () => {
 
     const [notifications, setNotifications] = useState([])
 
@@ -47,11 +48,23 @@ const NotificationsList = () => {
 
     return (
         <>
-            <Stack spacing={1} mt={-1}>
+            <Box sx={{display: 'flex', alignItems: 'top', gap: 0.5, mt: 1, ml: 1}}>
+                <Box mt={0.5}>
+                    <NotificationsIcon fontSize="medium" color="secondary"/>
+                </Box>
+                <Typography variant="h5">
+                    Notifications
+                </Typography>
+            </Box>
+
+            <Divider sx={{mb: 1, mt: 0.5}}/>
+
+            <Stack spacing={1}>
                 {notifications.map(notification => (
-                    <NotificationListBox notification={notification}/>
+                    <NotificationListBox key={notification.id} notification={notification}/>
                 ))}
             </Stack>
+
             {pagesCount > 1 && (
                 <Box sx={{marginTop: "auto"}}>
                     <PaginationBox
@@ -65,4 +78,4 @@ const NotificationsList = () => {
     )
 }
 
-export default NotificationsList
+export default NotificationsContainer

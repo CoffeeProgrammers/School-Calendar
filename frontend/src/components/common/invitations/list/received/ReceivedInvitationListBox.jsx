@@ -3,11 +3,12 @@ import Box from "@mui/material/Box";
 import {Button, Card, CardContent, CardHeader} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Typography from "@mui/material/Typography";
-import {defaultButtonStyles, disagreeButtonStyles} from "../../../../assets/styles";
-import DateUtils from "../../../../utils/DateUtils";
-import TextUtils from "../../../../utils/TextUtils";
+import {defaultButtonStyles, disagreeButtonStyles} from "../../../../../assets/styles";
+import DateUtils from "../../../../../utils/DateUtils";
+import TextUtils from "../../../../../utils/TextUtils";
+import MessageIcon from '@mui/icons-material/Message';
 
-const InvitationListBox = ({ invitation, handleRejectInvitation, handleAcceptInvitation }) => {
+const ReceivedInvitationListBox = ({ invitation, handleRejectInvitation, handleAcceptInvitation }) => {
     const formattedDate =
         DateUtils.formatDate(invitation.event.startDate)
         + "  ⭢  " +
@@ -37,11 +38,19 @@ const InvitationListBox = ({ invitation, handleRejectInvitation, handleAcceptInv
                 />
                 <CardContent sx={{ paddingTop: "10px" }}>
                     <Typography>
-                        You have been invited to
-                        event {invitation.event.name} at {formattedDate}.
+                        <i>You have been invited to
+                            event {invitation.event.name} at {formattedDate}.</i>
                     </Typography>
-
-                    <Typography mt={1.5}>{invitation.description}</Typography>
+                    {invitation.description && (
+                        <>
+                            <Box mt={1.5} sx={{display: 'flex', alignItems: 'top', gap: 0.5}}>
+                                <Box mt={0.45}>
+                                    <MessageIcon fontSize="small" color="secondary"/>
+                                </Box>
+                                <Typography >{invitation.description}</Typography>
+                            </Box>
+                        </>
+                    )}
 
                     {invitation.warning && (
                         <Box mt={1} p={2} border={"2px solid #d11507"} borderRadius={"10px"}>
@@ -72,4 +81,4 @@ const InvitationListBox = ({ invitation, handleRejectInvitation, handleAcceptInv
     );
 };
 
-export default InvitationListBox;
+export default ReceivedInvitationListBox;

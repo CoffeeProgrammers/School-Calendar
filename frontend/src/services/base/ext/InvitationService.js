@@ -31,6 +31,14 @@ class InvitationService extends BaseService {
         );
     }
 
+    getMySentInvitations(page, size) {
+        return this.handleRequest(() =>
+            this.apiClient.get("/getMySent", {
+                params: { page, size }
+            })
+        );
+    }
+
     acceptInvitation(invitationId) {
         return this.handleRequest(() =>
             this.apiClient.post(`/accept/${invitationId}`)

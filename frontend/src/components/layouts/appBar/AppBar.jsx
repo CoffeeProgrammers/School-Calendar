@@ -5,8 +5,9 @@ import * as React from "react";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import NotificationButton from "./buttons/NotificationButton";
+import NotificationsButton from "./buttons/NotificationsButton";
 import AccountMenu from "./buttons/AccountMenu";
+import InvitationsButton from "./buttons/InvitationsButton";
 
 const appBarStyles = {
     width: '100%',
@@ -71,7 +72,8 @@ const AppBar = () => {
                 </Stack>
 
                 <Box sx={toolbarIconsContainer}>
-                    <NotificationButton/>
+                    <NotificationsButton/>
+                    <InvitationsButton/>
                     <AccountMenu/>
                 </Box>
 

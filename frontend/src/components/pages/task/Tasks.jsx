@@ -148,7 +148,6 @@ const Tasks = () => {
                     </Box>
                 )}
 
-
                 <TaskList
                     tasks={tasks}
                 />
