@@ -59,7 +59,7 @@ public class InvitationServiceImpl implements InvitationService {
         List<Invitation> invitations = invitationRepository.
                 findAllByReceiver_IdAndEvent_StartDateAfterAndEvent_EndDateBefore(receiverId,
                         event.getStartDate(), event.getEndDate());
-        if(!events.isEmpty() && !invitations.isEmpty()){
+        if(!events.isEmpty() || !invitations.isEmpty()){
             StringBuilder eventsText = new StringBuilder();
             StringBuilder invitationsText = new StringBuilder();
             for(EventListResponse eventResponse : events){
