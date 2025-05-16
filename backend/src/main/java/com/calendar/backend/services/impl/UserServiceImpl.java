@@ -89,8 +89,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PaginationListResponse<UserListResponse> findAll(String email, String firstName, String lastName, String role,
-                                                            int page, int size) {
+    public PaginationListResponse<UserListResponse> findAll(
+            String email, String firstName, String lastName, String role, int page, int size) {
         Map<String, Object> filters = createFilters(email, firstName, lastName, role);
         log.info("Service: Finding all users with filters {}", filters);
         Page<User> users = userRepository.findAll(UserSpecification.filterUsers(filters),
@@ -140,8 +140,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PaginationListResponse<UserListResponse> findAllByEventsNotContains(String email, String firstName, String lastName, String role,
-                                                                               long eventId, int page, int size) {
+    public PaginationListResponse<UserListResponse> findAllByEventsNotContains(
+            String email, String firstName, String lastName, String role, long eventId, int page, int size) {
         Map<String, Object> filters = createFilters(email, firstName, lastName, role);
         log.info("Service: Finding all users with events not contains event with id {}", eventId);
         Page<User> users = userRepository.findAll(UserSpecification.doesNotHaveEvent(eventId).and(UserSpecification.filterUsers(filters)),
@@ -153,11 +153,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PaginationListResponse<UserListResponse> findAllByEventId(String email, String firstName, String lastName, String role,
-                                                                     long eventId, int page, int size) {
+    public PaginationListResponse<UserListResponse> findAllByEventId(
+            String email, String firstName, String lastName, String role,
+            long eventId, int page, int size, Authentication auth) {
+        User user = findUserByAuth(auth);
         Map<String, Object> filters = createFilters(email, firstName, lastName, role);
-        log.info("Service: Finding all users with filters {} and event id {}", filters, eventId);
-        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId).and(UserSpecification.filterUsers(filters)),
+        log.info("Service: Finding all users disincluding me with filters {} and event id {}", filters, eventId);
+        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId)
+                        .and(UserSpecification.notUser(user.getId())).and(UserSpecification.filterUsers(filters)),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
         PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(users.getTotalPages());
