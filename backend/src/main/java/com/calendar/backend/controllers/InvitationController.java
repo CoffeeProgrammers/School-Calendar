@@ -61,7 +61,21 @@ public class InvitationController {
             Authentication auth) {
         log.info("Controller: Get all invitations for user with id: {}", userService.findUserByAuth(auth).getId());
         return invitationService.findAllByRecieverId(
-                userService.findUserByAuth(auth).getId(),
+                auth,
+                page,
+                size
+        );
+    }
+
+    @GetMapping("/getMySent")
+    @ResponseStatus(HttpStatus.OK)
+    public PaginationListResponse<InvitationResponse> getMySentInvitations(
+            @RequestParam int page,
+            @RequestParam int size,
+            Authentication auth) {
+        log.info("Controller: Get all sent invitations by my user");
+        return invitationService.findAllBySenderId(
+                auth,
                 page,
                 size
         );

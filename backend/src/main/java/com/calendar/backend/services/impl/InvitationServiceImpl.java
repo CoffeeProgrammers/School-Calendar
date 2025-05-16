@@ -97,7 +97,7 @@ public class InvitationServiceImpl implements InvitationService {
 
     @Override
     public PaginationListResponse<InvitationResponse> findAllBySenderId(Authentication authentication, int page, int size) {
-        log.info("Service: Finding all invitations from auth user with id");
+        log.info("Service: Finding all invitations sent by my user");
         Page<Invitation> invitations = invitationRepository.findAllBySender_Id
                 (userServices.findUserByAuth(authentication).getId(),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
@@ -109,9 +109,10 @@ public class InvitationServiceImpl implements InvitationService {
     }
 
     @Override
-    public PaginationListResponse<InvitationResponse> findAllByRecieverId(long userId, int page, int size) {
-        log.info("Service: Finding all invitations for user with id {}", userId);
-        Page<Invitation> invitations = invitationRepository.findAllByReceiver_Id(userId,
+    public PaginationListResponse<InvitationResponse> findAllByRecieverId(Authentication authentication, int page, int size) {
+        log.info("Service: Finding all invitations for my user");
+        Page<Invitation> invitations = invitationRepository.findAllByReceiver_Id(
+                userServices.findUserByAuth(authentication).getId(),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
         PaginationListResponse<InvitationResponse> response = new PaginationListResponse<>();
         response.setTotalPages(invitations.getTotalPages());

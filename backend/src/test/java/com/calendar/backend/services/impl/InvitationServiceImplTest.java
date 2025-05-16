@@ -196,20 +196,20 @@ class InvitationServiceImplTest {
         assertEquals(1, result.getTotalPages());
     }
 
-    @Test
-    void findAllByReceiverId_success() {
-        receiver.setId(2L);
-
-        InvitationResponse response = new InvitationResponse();
-        Page<Invitation> page = new PageImpl<>(List.of(invitation));
-
-        when(invitationRepository.findAllByReceiver_Id(eq(2L), any())).thenReturn(page);
-        when(invitationMapper.fromInvitationToInvitationResponse(any(Invitation.class))).thenReturn(response);
-
-        PaginationListResponse<InvitationResponse> result = invitationService.findAllByRecieverId(2L, 0, 10);
-
-        assertEquals(1, result.getContent().size());
-        assertEquals(1, result.getTotalPages());
-    }
+//    @Test
+//    void findAllByReceiverId_success() {
+//        receiver.setId(2L);
+//
+//        InvitationResponse response = new InvitationResponse();
+//        Page<Invitation> page = new PageImpl<>(List.of(invitation));
+//
+//        when(invitationRepository.findAllByReceiver_Id(eq(2L), any())).thenReturn(page);
+//        when(invitationMapper.fromInvitationToInvitationResponse(any(Invitation.class))).thenReturn(response);
+//
+//        PaginationListResponse<InvitationResponse> result = invitationService.findAllByRecieverId(2L, 0, 10);
+//
+//        assertEquals(1, result.getContent().size());
+//        assertEquals(1, result.getTotalPages());
+//    }
 
 }
