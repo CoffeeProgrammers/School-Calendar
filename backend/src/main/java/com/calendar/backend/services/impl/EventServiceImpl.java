@@ -145,4 +145,9 @@ public class EventServiceImpl implements EventService {
                 LocalDateTime.now(ZoneId.of("Europe/Kiev"))));
         return longResponse;
     }
+
+    @Override
+    public List<String> findForInvitationCheck(long userId, LocalDateTime start, LocalDateTime end) {
+        return eventRepository.existWarningInvitation(userId, start, end);
+    }
 }

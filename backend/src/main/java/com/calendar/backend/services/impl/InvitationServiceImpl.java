@@ -1,6 +1,5 @@
 package com.calendar.backend.services.impl;
 
-import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.dto.invitation.InvitationRequest;
 import com.calendar.backend.dto.invitation.InvitationResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
@@ -53,25 +52,6 @@ public class InvitationServiceImpl implements InvitationService {
         invitation.setReceiver(userServices.findByIdForServices(receiverId));
         invitation.setTime(LocalDateTime.now(ZoneId.of("Europe/Kiev")));
 
-        log.info("Service: Checking if user already invited to events on this time");
-        List<EventListResponse> events = eventService.findAllByUserIdForCalendar(receiverId,
-                event.getStartDate(), event.getEndDate());
-        List<Invitation> invitations = invitationRepository.
-                findAllByReceiver_IdAndEvent_StartDateAfterAndEvent_EndDateBefore(receiverId,
-                        event.getStartDate(), event.getEndDate());
-        if(!events.isEmpty() || !invitations.isEmpty()){
-            StringBuilder eventsText = new StringBuilder();
-            StringBuilder invitationsText = new StringBuilder();
-            for(EventListResponse eventResponse : events){
-                eventsText.append(eventResponse.getName()).append(", ");
-            }
-            for(Invitation invitationResponse : invitations){
-                invitationsText.append(invitationResponse.getEvent().getName()).append(", ");
-            }
-            invitation.setWarning("You have already invited to events on this time" + eventsText.toString() +
-                    "and invitations to events on this time " + invitationsText.toString() + ".");
-        }
-
         return invitationMapper.fromInvitationToInvitationResponse(invitationRepository.save(invitation));
     }
 
@@ -116,8 +96,31 @@ public class InvitationServiceImpl implements InvitationService {
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
         PaginationListResponse<InvitationResponse> response = new PaginationListResponse<>();
         response.setTotalPages(invitations.getTotalPages());
-        response.setContent(invitations.getContent().stream().map(
-                invitationMapper::fromInvitationToInvitationResponse).toList());
+        response.setContent(checkAndAddWarning(invitations.getContent().stream().map(
+                invitationMapper::fromInvitationToInvitationResponse).toList()));
+        return response;
+    }
+
+    private List<InvitationResponse> checkAndAddWarning
+            (List<InvitationResponse> response) {
+        log.info("Service: Checking invitations for warning");
+        for(InvitationResponse invitationResponse : response){
+            long userId = invitationResponse.getReceiver().getId();
+            LocalDateTime start = LocalDateTime.parse(invitationResponse.getEvent().getStartDate());
+            LocalDateTime end = LocalDateTime.parse(invitationResponse.getEvent().getEndDate());
+            if(invitationRepository.existsAllByReceiver_IdAndEvent_StartDateAfterAndEvent_EndDateBefore(
+                    userId, start, end)){
+                invitationResponse.setWarning("You have already invitation to events on this time.");
+            }
+            List<String> warning = eventService.findForInvitationCheck(userId, start, end);
+            if(!warning.isEmpty()){
+                StringBuilder warningString = new StringBuilder();
+                for(String s : warning){
+                    warningString.append(s).append(", ");
+                }
+                invitationResponse.setWarning("You have already invitation to events on this time." + warningString + ".");
+            }
+        }
         return response;
     }
 

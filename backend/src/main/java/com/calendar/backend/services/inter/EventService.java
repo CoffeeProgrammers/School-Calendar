@@ -25,4 +25,5 @@ public interface EventService {
     Event findByIdForServices(long id);
     void deleteUserById(long id, long userId);
     LongResponse countAllEventsByUserAndPast(long userId);
+    List<String> findForInvitationCheck(long userId, LocalDateTime start, LocalDateTime end);
 }
