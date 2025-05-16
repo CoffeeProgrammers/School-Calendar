@@ -145,7 +145,7 @@ public class TaskController {
     @PreAuthorize("@userSecurity.checkCreatorOfTask(#auth, #id)")
     @PutMapping("/unassign/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void unsignTaskFromEvent(@PathVariable Long id, Authentication auth) {
+    public void unassignTaskFromEvent(@PathVariable Long id, Authentication auth) {
         log.info("Controller: Unassign task with id: {} from event", id);
         taskService.unassignTaskFromEvent(id);
     }
