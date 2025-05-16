@@ -40,6 +40,11 @@ public class UserSpecification {
         };
     }
 
+    public static Specification<User> notUser(Long userId) {
+        return (root, query, cb) ->
+                cb.notEqual(root.get("id"), userId);
+    }
+
     public static Specification<User> hasEvent(Long eventId) {
         return (root, query, cb) ->
                 cb.equal(root.join("events").get("id"), eventId);

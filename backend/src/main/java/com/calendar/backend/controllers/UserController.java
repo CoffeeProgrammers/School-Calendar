@@ -73,9 +73,10 @@ public class UserController {
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String role) {
+            @RequestParam(required = false) String role,
+            Authentication auth) {
         log.info("Controller: Get all users for event with id: {}", event_id);
-        return userService.findAllByEventId(email, firstName, lastName, role, event_id, page, size);
+        return userService.findAllByEventId(email, firstName, lastName, role, event_id, page, size, auth);
     }
 
     @GetMapping("/not_events/{event_id}")
