@@ -11,6 +11,6 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
     Page<Invitation> findAllByReceiver_Id(Long userId, Pageable pageable);
     Page<Invitation> findAllBySender_Id(Long userId, Pageable pageable);
     boolean existsByReceiver_IdAndEvent_Id(Long userId, Long eventId);
-    boolean existsAllByReceiver_IdAndEvent_StartDateAfterAndEvent_EndDateBefore
-            (Long userId, LocalDateTime startDate, LocalDateTime endDate);
+    boolean existsByReceiver_IdAndEvent_StartDateLessThanAndEvent_EndDateGreaterThan(
+            Long userId, LocalDateTime endDate, LocalDateTime startDate);
 }

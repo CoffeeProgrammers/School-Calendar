@@ -113,7 +113,7 @@ public class InvitationServiceImpl implements InvitationService {
             log.debug("Checking invitation for userId={} from {} to {}", userId, start, end);
 
             // Перевірка через репозиторій
-            if (invitationRepository.existsAllByReceiver_IdAndEvent_StartDateAfterAndEvent_EndDateBefore(userId, start, end)) {
+            if (invitationRepository.existsByReceiver_IdAndEvent_StartDateLessThanAndEvent_EndDateGreaterThan(userId, start, end)) {
                 warningMessage.append("You already have an invitation to events at this time. ");
                 log.debug("Repository check triggered warning for userId={}", userId);
             }
