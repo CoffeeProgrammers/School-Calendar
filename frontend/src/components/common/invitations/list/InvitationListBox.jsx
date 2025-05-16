@@ -3,21 +3,22 @@ import Box from "@mui/material/Box";
 import {Button, Card, CardContent, CardHeader} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Typography from "@mui/material/Typography";
-import {defaultButtonStyles, disagreeButtonStyles} from "../../../assets/styles";
-import DateUtils from "../../../utils/DateUtils";
+import {defaultButtonStyles, disagreeButtonStyles} from "../../../../assets/styles";
+import DateUtils from "../../../../utils/DateUtils";
+import TextUtils from "../../../../utils/TextUtils";
 
-const InvitationBox = ({ invitation, handleRejectInvitation, handleAcceptInvitation }) => {
+const InvitationListBox = ({ invitation, handleRejectInvitation, handleAcceptInvitation }) => {
     const formattedDate =
-        DateUtils.formatDateToMDT(invitation.event.start_date)
+        DateUtils.formatDateToMDT(invitation.event.startDate)
         + "  ⭢  " +
-        DateUtils.formatDateToMDT(invitation.event.end_date)
+        DateUtils.formatDateToMDT(invitation.event.endDate)
 
     const onReject = () => {
-        handleRejectInvitation(invitation.id)
+        handleRejectInvitation()
     }
 
     const onAccept = () => {
-        handleAcceptInvitation(invitation.id)
+        handleAcceptInvitation()
     }
     return (
         <Card variant='outlined' sx={{ borderRadius: "10px" }}>
@@ -30,8 +31,7 @@ const InvitationBox = ({ invitation, handleRejectInvitation, handleAcceptInvitat
                     avatar={
                         <AccountCircleIcon sx={{ fontSize: "40px" }} color="secondary" />
                     }
-                    //TODO TextUtils
-                    title={invitation.creator.first_name + " " + invitation.creator.last_name}
+                    title={TextUtils.getUserFullName(invitation.sender)}
                     subheader={DateUtils.formatDateToMDT(invitation.time)}
                     sx={{ paddingBottom: "0" }}
                 />
@@ -72,4 +72,4 @@ const InvitationBox = ({ invitation, handleRejectInvitation, handleAcceptInvitat
     );
 };
 
-export default InvitationBox;
+export default InvitationListBox;

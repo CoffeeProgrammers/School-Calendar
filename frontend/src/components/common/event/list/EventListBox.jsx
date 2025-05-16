@@ -5,11 +5,11 @@ import PlaceIcon from '@mui/icons-material/Place';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {SpaceDashboard} from "@mui/icons-material";
-import {listElementBoxStyle, listElementBoxTextStyle} from "../../../assets/styles";
-import TextUtils from "../../../utils/TextUtils";
+import {listElementBoxStyle, listElementBoxTextStyle} from "../../../../assets/styles";
+import TextUtils from "../../../../utils/TextUtils";
 
 
-const EventBox = ({event}) => {
+const EventListBox = ({event}) => {
     //TODO date to utils
     const startDate = new Date(event.startDate);
     const formattedStartDate = startDate.toLocaleString('en-US', {
@@ -39,10 +39,10 @@ const EventBox = ({event}) => {
                 />
                 <InfoItem icon={PlaceIcon} text={event.place}/>
                 <InfoItem icon={CalendarMonthIcon} text={formattedStartDate}/>
-                <InfoItem icon={AccountCircleIcon} text={`${event.creator.firstName} ${event.creator.lastName}`}/>
+                <InfoItem icon={AccountCircleIcon} text={TextUtils.getUserFullName(event.creator)}/>
             </Box>
         </Box>
     );
 };
 
-export default EventBox;
+export default EventListBox;

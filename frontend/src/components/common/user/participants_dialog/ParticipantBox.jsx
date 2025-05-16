@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import UserBox from "../UserBox";
+import UserListBox from "../users_list/UserListBox";
 import {Box} from "@mui/material";
 import ParticipantsActionsMenu from "./ParticipantsActionsMenu";
 
@@ -23,7 +23,7 @@ const ParticipantBox = ({user, handleRemove}) => {
     return (
         <>
             <Box onClick={(e) => handleUserClick(e, user)}>
-                <UserBox user={user} />
+                <UserListBox user={user} />
             </Box>
 
             <ParticipantsActionsMenu

@@ -2,11 +2,11 @@ import React from 'react';
 import {Box, Chip, Divider, Typography} from "@mui/material";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import EmailIcon from '@mui/icons-material/Email';
-import {listElementBoxStyle, listElementBoxTextStyle} from "../../../assets/styles";
-import TextUtils from "../../../utils/TextUtils";
+import {listElementBoxStyle, listElementBoxTextStyle} from "../../../../assets/styles";
+import TextUtils from "../../../../utils/TextUtils";
 
 
-const UserBox = ({user}) => {
+const UserListBox = ({user}) => {
     return (
         <Box sx={listElementBoxStyle}>
             <Typography noWrap variant="subtitle1" sx={listElementBoxTextStyle}>
@@ -28,4 +28,4 @@ const UserBox = ({user}) => {
     );
 };
 
-export default UserBox;
+export default UserListBox;

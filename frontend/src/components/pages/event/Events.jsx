@@ -6,7 +6,7 @@ import PaginationBox from "../../layouts/lists/PaginationBox";
 import Search from "../../layouts/lists/Search";
 import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
-import EventBox from "../../common/event/EventBox";
+import EventListBox from "../../common/event/list/EventListBox";
 import {useNavigate} from "react-router-dom";
 import {eventTypes} from "../../../utils/constants";
 import CreateEventDialog from "../../common/event/create/CreateEventDialog";
@@ -137,7 +137,7 @@ const Events = () => {
                     {events.map(event => (
                         <Grid size={{ xs: 12, sm: 6, md: 4, lg: 2.4}} key={event.id}>
                             <Box onClick={() => navigate(`${event.id}`)}>
-                                <EventBox event={event}/>
+                                <EventListBox event={event}/>
                             </Box>
                         </Grid>
                     ))}

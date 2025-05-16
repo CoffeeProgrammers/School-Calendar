@@ -1,18 +1,14 @@
 import BaseService from "../BaseService";
 
-const API_URL = 'http://localhost:5000/notifications';
-
 class NotificationService extends BaseService {
     constructor() {
-        super(API_URL);
+        super("http://localhost:8081/api/notifications");
     }
 
-    async getMyNotifications({ page }) {
-        return await this.handleRequest(
-            () => this.apiClient.get(`/`, {
-                params: {
-                    _page: page,
-                }
+    getMyNotifications(page, size) {
+        return this.handleRequest(() =>
+            this.apiClient.get("", {
+                params: { page, size }
             })
         );
     }

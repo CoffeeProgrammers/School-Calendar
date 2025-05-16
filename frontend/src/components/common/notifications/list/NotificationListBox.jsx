@@ -2,9 +2,9 @@ import React from 'react';
 import Box from "@mui/material/Box";
 import {Card, CardContent} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import DateUtils from "../../../utils/DateUtils";
+import DateUtils from "../../../../utils/DateUtils";
 
-const NotificationBox = ({ notification }) => {
+const NotificationListBox = ({ notification }) => {
     return (
         <Card variant='outlined' sx={{ borderRadius: "10px" }}>
             <Box mb={-2}>
@@ -19,4 +19,4 @@ const NotificationBox = ({ notification }) => {
     );
 };
 
-export default NotificationBox;
+export default NotificationListBox;

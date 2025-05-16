@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import Loading from "../../layouts/Loading";
+import Loading from "../../../layouts/Loading";
 import {Typography} from "@mui/material";
 import EventView from "./EventView";
-import EventService from "../../../services/base/ext/EventService";
+import EventService from "../../../../services/base/ext/EventService";
 import {useNavigate} from "react-router-dom";
 
 const EventContainer = ({eventId}) => {

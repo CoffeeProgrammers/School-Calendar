@@ -3,7 +3,6 @@ import {Box, Button, Divider, Grid, Stack} from "@mui/material";
 import {defaultButtonStyles, listPanelStyles} from "../../../../../assets/styles";
 import Search from "../../../../layouts/lists/Search";
 import OpenFiltersButton from "../../../../layouts/lists/OpenFiltersButton";
-import DefaultButton from "../../../../layouts/DefaultButton";
 import FiltersGroup from "../../../../layouts/lists/FiltersGroup";
 import BasicDataDialog from "../../../../layouts/dialog/BasicDataDialog";
 import AddTaskBox from "./AddTaskBox";
@@ -12,18 +11,33 @@ import AddTaskBox from "./AddTaskBox";
 const EventTasksAddDialog = (
     {
         tasks,
+        page,
+        pagesCount,
+        setPage,
+        searchName,
+        setSearchName,
         isDone,
         setIsDone,
-        isDoneSelectOptions,
-        searchQuery,
-        setSearchQuery,
+        deadline,
+        setDeadline,
+        isPast,
+        setIsPast,
         isOpenFilterMenu,
         setOpenFilterMenu,
-        page,
-        setPage,
-        pagesCount,
-        handleAdd
+        handleAdd,
     }) => {
+
+    const isDoneSelectOptions = [
+        {value: '', label: <em>None</em>},
+        {value: true, label: 'Done'},
+        {value: false, label: 'To-Do'}
+    ];
+
+    const isPastSelectOptions = [
+        {value: '', label: <em>None</em>},
+        {value: true, label: 'Is past'},
+        {value: false, label: 'Is future'}
+    ];
 
     const [open, setOpen] = useState(false);
 
@@ -51,21 +65,18 @@ const EventTasksAddDialog = (
                         <Stack direction="row" sx={listPanelStyles}>
                             <Box sx={listPanelStyles} gap={0.5}>
                                 <Search
-                                    searchQuery={searchQuery}
-                                    setSearchQuery={setSearchQuery}
+                                    searchQuery={searchName}
+                                    setSearchQuery={setSearchName}
                                 />
                                 <OpenFiltersButton
                                     isOpenFilterMenu={isOpenFilterMenu}
                                     setOpenFilterMenu={setOpenFilterMenu}
                                 />
-                                <DefaultButton>
-                                    New
-                                </DefaultButton>
                             </Box>
                         </Stack>
 
 
-                        <Divider sx={{mb: 1}}/>
+                        <Divider sx={{mb: 1, mt: 0.5}}/>
 
                         {isOpenFilterMenu && (
                             <Box sx={{mb: 1}}>
@@ -75,24 +86,35 @@ const EventTasksAddDialog = (
                                             label: "Status",
                                             value: isDone,
                                             setValue: setIsDone,
-                                            options: isDoneSelectOptions
+                                            options: isDoneSelectOptions,
+                                            type: "select"
                                         },
                                         {
-                                            label: "Date",
-                                            options: [{value: "", label: <em>Todo</em>}]
+                                            label: "Is past",
+                                            value: isPast,
+                                            setValue: setIsPast,
+                                            options: isPastSelectOptions,
+                                            type: "select"
+                                        },
+                                        {
+                                            label: "Deadline <",
+                                            value: deadline,
+                                            setValue: setDeadline,
+                                            type: "date"
                                         }
                                     ]}
                                 />
                             </Box>
                         )}
-                        {/*//TODO: list optimize*/}
+
                         <Grid container spacing={1.5}>
                             {tasks.map(task => (
-                                <Grid size={{ xs: 12, sm: 6, md: 4}} key={task.id}>
-                                    <AddTaskBox task={task} handleAdd={handleAdd}/>
+                                <Grid size={{xs: 12, sm: 6, md: 4}} key={task.id}>
+                                    <AddTaskBox task={task} handleAdd={() => handleAdd(task.id)}/>
                                 </Grid>
                             ))}
                         </Grid>
+
                     </>
 
                 }

@@ -2,9 +2,18 @@ import * as React from 'react';
 import {List, Stack} from "@mui/material";
 import ElementAdditionDialog from "../../../../layouts/dialog/ElementAdditionDialog";
 import EventTaskBox from "../EventTaskBox";
-import EventTasksDialogContainer from "../even_task_add_dialog/EventTasksDialogContainer";
+import EventTasksAddDialogContainer from "../even_task_add_dialog/EventTasksAddDialogContainer";
 
-const EventTasksDialog = ({tasks, pagesCount, page, setPage, handleToggleTask, handleRemove, handleAddTask}) => {
+const EventTasksDialog = (
+    {
+        eventId,
+        tasks,
+        pagesCount,
+        page, setPage,
+        handleToggleTask,
+        handleRemove,
+        handleAddTask
+    }) => {
     return (
         <ElementAdditionDialog
             size={"md"}
@@ -13,9 +22,9 @@ const EventTasksDialog = ({tasks, pagesCount, page, setPage, handleToggleTask, h
                 <List>
                     <Stack spacing={1}>
                         {tasks.map(task => (
-                            <EventTaskBox 
+                            <EventTaskBox
                                 task={task}
-                                handleToggleTask={() => handleToggleTask(task)}
+                                handleToggleTask={() => handleToggleTask(task.id)}
                                 handleRemove={() => handleRemove(task.id)}
                                 key={task.id}
                             />
@@ -26,7 +35,7 @@ const EventTasksDialog = ({tasks, pagesCount, page, setPage, handleToggleTask, h
             page={page}
             setPage={setPage}
             pagesCount={pagesCount}
-            actions={<EventTasksDialogContainer handleAddTask={handleAddTask}/>}
+            actions={<EventTasksAddDialogContainer handleAddTask={handleAddTask} eventId={eventId}/>}
         />
     );
 }

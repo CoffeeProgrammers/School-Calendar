@@ -7,7 +7,7 @@ const AddTaskBox = ({task, handleAdd}) => {
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
     const onConfirmInvite = () => {
-        handleAdd(task)
+        handleAdd()
         console.log("Add");
         setOpenConfirmDialog(false);
     }

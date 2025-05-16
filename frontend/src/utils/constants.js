@@ -10,3 +10,11 @@ export const eventTypes = [
     { value: 'PERSONAL', label: 'Personal' },
     { value: 'COUNCIL_MEETING', label: 'Council meeting' }
 ];
+
+export const roleTypes = [
+    {value: '', label: <em>None</em>},
+    {value: 'TEACHER', label: 'Teacher'},
+    {value: 'STUDENT', label: 'Student'},
+    {value: 'PARENT', label: 'Parents'},
+
+];

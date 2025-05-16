@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Stack} from '@mui/material';
-import NotificationBox from "./NotificationBox";
-import Loading from "../../layouts/Loading";
-import PaginationBox from "../../layouts/lists/PaginationBox";
+import NotificationListBox from "./NotificationListBox";
+import Loading from "../../../layouts/Loading";
+import PaginationBox from "../../../layouts/lists/PaginationBox";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import NotificationService from "../../../services/base/ext/NotificationService";
+import NotificationService from "../../../../services/base/ext/NotificationService";
 
 const NotificationsList = () => {
 
@@ -21,12 +21,11 @@ const NotificationsList = () => {
         const fetchData = async () => {
             try {
                 const response = await NotificationService.getMyNotifications(
-                    {
-                        page: page
-                    }
-                ); console.log(response.data)
-                setNotifications(response.data);
-                setPagesCount(response.pages)
+                    page - 1,
+                    10
+                );
+                setNotifications(response.content);
+                setPagesCount(response.totalPages)
             } catch (error) {
                 setError(error);
             } finally {
@@ -39,7 +38,7 @@ const NotificationsList = () => {
 
 
     if (loading) {
-        return <Loading />;
+        return <Loading/>;
     }
 
     if (error) {
@@ -50,11 +49,11 @@ const NotificationsList = () => {
         <>
             <Stack spacing={1} mt={-1}>
                 {notifications.map(notification => (
-                    <NotificationBox notification={notification} />
+                    <NotificationListBox notification={notification}/>
                 ))}
             </Stack>
             {pagesCount > 1 && (
-                <Box sx={{ marginTop: "auto" }}>
+                <Box sx={{marginTop: "auto"}}>
                     <PaginationBox
                         page={page}
                         pagesCount={pagesCount}

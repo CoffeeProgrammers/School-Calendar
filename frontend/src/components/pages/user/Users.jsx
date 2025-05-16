@@ -6,17 +6,9 @@ import Search from "../../layouts/lists/Search";
 import OpenFiltersButton from "../../layouts/lists/OpenFiltersButton";
 import FiltersGroup from "../../layouts/lists/FiltersGroup";
 import UserService from "../../../services/base/ext/UserService";
-import UserList from "../../common/user/UserList";
+import UserList from "../../common/user/users_list/UserList";
 import {listPanelStyles} from "../../../assets/styles";
-
-
-const roleTypes = [
-    {value: '', label: <em>None</em>},
-    {value: 'TEACHER', label: 'Teacher'},
-    {value: 'STUDENT', label: 'Student'},
-    {value: 'PARENT', label: 'Parents'},
-
-];
+import {roleTypes} from "../../../utils/constants";
 
 const Users = () => {
     const [users, setUsers] = useState([])
@@ -139,8 +131,6 @@ const Users = () => {
                         />
                     </Box>
                 )}
-
-
             </Box>
         </>
     );
