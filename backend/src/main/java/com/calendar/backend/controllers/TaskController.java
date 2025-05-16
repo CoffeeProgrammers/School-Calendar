@@ -127,7 +127,7 @@ public class TaskController {
         taskAssignmentService.assignTasksToEventUsers(event_id, id);
     }
 
-    @PutMapping("/unssign/{id}")
+    @PutMapping("/unassign/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void unsignTaskFromEvent(@PathVariable Long id) {
         taskService.unassignTaskFromEvent(id);

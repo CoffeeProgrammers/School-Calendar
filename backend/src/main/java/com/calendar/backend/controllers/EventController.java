@@ -55,7 +55,7 @@ public class EventController {
     }
 
     @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
-    @DeleteMapping("/delete/{id}/user/{user_id}")
+    @PutMapping("/delete/{id}/user/{user_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserById(@PathVariable Long id, @PathVariable Long user_id, Authentication auth) {
         eventService.deleteUserById(id, user_id);
@@ -118,7 +118,7 @@ public class EventController {
 
     @GetMapping("/count/user/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public LongResponse getEventsByEvent(
+    public LongResponse getEventsByUserAndPast(
             @PathVariable Long userId) {
         return eventService.countAllEventsByUserAndPast(userId);
     }
