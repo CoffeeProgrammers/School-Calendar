@@ -60,7 +60,7 @@ public class InvitationServiceImpl implements InvitationService {
         log.info("Service: Updating invitation with id {}", invitationId);
         Invitation invitation = findInvitationById(invitationId);
         invitation.setDescription(invitationRequest.getDescription());
-        return invitationMapper.fromInvitationToInvitationResponse(invitation);
+        return invitationMapper.fromInvitationToInvitationResponse(invitationRepository.save(invitation));
     }
 
     @Override
