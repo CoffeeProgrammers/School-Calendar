@@ -23,13 +23,13 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void create(Notification notification) {
-        log.info("Saving new notification {}", notification);
+        log.info("Service: Saving new notification {}", notification);
         notificationRepository.save(notification);
     }
 
     @Override
     public NotificationResponse findById(Long id) {
-        log.info("Finding notification with id {}", id);
+        log.info("Service: Finding notification with id {}", id);
         return notificationMapper.fromNotificationToNotificationResponse(
                 notificationRepository.findById(id).orElseThrow(
                         () -> new EntityNotFoundException("Notification not found")));
@@ -37,7 +37,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public PaginationListResponse<NotificationResponse> findAllByUserId(long userId, int page, int size) {
-        log.info("Finding all notifications for user with id {}", userId);
+        log.info("Service: Finding all notifications for user with id {}", userId);
         Page<Notification> notifications = notificationRepository.findAllNotificationsByUserId(userId,
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
         PaginationListResponse<NotificationResponse> response = new PaginationListResponse<>();
@@ -49,7 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void delete(long notificationId) {
-        log.info("Deleting notification with id {}", notificationId);
+        log.info("Service: Deleting notification with id {}", notificationId);
         notificationRepository.deleteById(notificationId);
     }
 }

@@ -9,11 +9,13 @@ import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.services.inter.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -26,6 +28,7 @@ public class UserController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public UserFullResponse createUser(@Valid @RequestBody UserCreateRequest request) {
+        log.info("Controller: Create user with body: {}", request);
         return userService.create(request);
     }
 
@@ -35,12 +38,14 @@ public class UserController {
     public UserFullResponse updateUser(
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateRequest request) {
+        log.info("Controller: Update user with id: {} with body: {}", id, request);
         return userService.updateUser(request, id);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserFullResponse getUser(@PathVariable Long id) {
+        log.info("Controller: Get user with id: {}", id);
         return userService.findById(id);
     }
 
@@ -54,6 +59,7 @@ public class UserController {
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String role
     ) {
+        log.info("Controller: Get all users");
         return userService.findAll(email, firstName, lastName, role, page, size);
     }
 
@@ -67,6 +73,7 @@ public class UserController {
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String role) {
+        log.info("Controller: Get all users for event with id: {}", event_id);
         return userService.findAllByEventId(email, firstName, lastName, role, event_id, page, size);
     }
 
@@ -80,12 +87,14 @@ public class UserController {
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String role) {
+        log.info("Controller: Get all users for not event with id: {}", event_id);
         return userService.findAllByEventsNotContains(email, firstName, lastName, role, event_id, page, size);
     }
 
     @GetMapping("/my")
     @ResponseStatus(HttpStatus.OK)
     public UserFullResponse getMyUser(Authentication auth) {
+        log.info("Controller: Get my user");
         return userMapper.fromUserToUserResponse(userService.findUserByAuth(auth));
     }
 
@@ -93,6 +102,7 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {
+        log.info("Controller: Delete user with id: {}", id);
         userService.delete(id);
     }
 
@@ -101,6 +111,7 @@ public class UserController {
     public UserFullResponse updateMyUser(
             @RequestBody UserUpdateRequest request,
             Authentication auth) {
+        log.info("Controller: Update my user with body: {}", request);
         return userService.updateUser(
                 request,
                 userService.findUserByAuth(auth).getId()

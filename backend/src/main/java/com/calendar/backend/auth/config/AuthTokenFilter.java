@@ -50,7 +50,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 String token = getAccessToken(request);
 
                 if (!jwtUtils.validateToken(token)) {
-                    log.warn("Invalid JWT token");
+                    log.error("Auth: Invalid JWT token");
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     setHeaders(response);
                     return;
@@ -59,12 +59,12 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 String username = jwtUtils.getSubject(token);
 
                 if (jwtUtils.isTokenExpired(token)) {
-                    log.warn("Access token expired, refreshing...");
+                    log.warn("Auth: Access token expired, refreshing...");
 
                     Optional<RefreshToken> refreshToken = refreshTokenService.findByUsername(username);
 
                     if (refreshToken.isEmpty() || jwtUtils.isRefreshTokenExpired(refreshToken.get())) {
-                        log.warn("Refresh token is expired or missing");
+                        log.error("Auth: Refresh token is expired or missing");
                         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                         setHeaders(response);
                         return;
@@ -92,7 +92,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            log.error("An error occurred during JWT token processing", e);
+            log.error("Auth: An error occurred during JWT token processing", e);
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }

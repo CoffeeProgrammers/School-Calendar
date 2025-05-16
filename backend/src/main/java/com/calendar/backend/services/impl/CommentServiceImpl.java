@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentResponse create(CommentRequest commentRequest, Authentication authentication,
                                   long eventId) {
-        log.info("Saving new comment {}", commentRequest);
+        log.info("Service: Saving new comment {}", commentRequest);
         Comment comment = commentMapper.fromCommentRequestToComment(commentRequest);
         User user = userService.findByEmail(authentication.getName());
         Event event = eventService.findByIdForServices(eventId);
@@ -54,7 +54,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentResponse update(CommentRequest commentRequest, long id) {
-        log.info("Updating comment with id {}", id);
+        log.info("Service: Updating comment with id {}", id);
         Comment comment = commentRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Comment not found"));
         comment.setText(commentRequest.getText());
@@ -63,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void delete(long id) {
-        log.info("Deleting comment with id {}", id);
+        log.info("Service: Deleting comment with id {}", id);
         Comment comment = commentRepository.findById(id).orElseThrow();
         Event event = comment.getEvent();
         event.getComments().remove(comment);
@@ -72,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public PaginationListResponse<CommentResponse> findAllByEventId(long eventId, int page, int size) {
-        log.info("Finding all comments for event with id {}", eventId);
+        log.info("Service: Finding all comments for event with id {}", eventId);
         Page<Comment> comments = commentRepository.findAllByEvent_Id(eventId, PageRequest.of(page, size,
                 Sort.by(Sort.Direction.DESC, "date")));
         PaginationListResponse<CommentResponse> response = new PaginationListResponse<>();
@@ -84,6 +84,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment findByIdForServices(long id) {
+        log.info("Service: Finding comment for service with id {}", id);
         return commentRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Comment not found"));
     }
