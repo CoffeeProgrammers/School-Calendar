@@ -61,14 +61,14 @@ public class InvitationController {
         );
     }
 
-    @PreAuthorize("@userSecurity.checkCreatorOfInvitation(#auth, #id)")
+    @PreAuthorize("@userSecurity.checkReceiverOfInvitation(#auth, #id)")
     @PostMapping("/accept/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void acceptInvitation(@PathVariable Long id, Authentication auth) {
         invitationService.acceptInvitation(id);
     }
 
-    @PreAuthorize("@userSecurity.checkCreatorOfInvitation(#auth, #id)")
+    @PreAuthorize("@userSecurity.checkReceiverOfInvitation(#auth, #id)")
     @PostMapping("/reject/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void rejectInvitation(@PathVariable Long id, Authentication auth) {

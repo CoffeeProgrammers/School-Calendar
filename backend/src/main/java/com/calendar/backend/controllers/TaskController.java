@@ -112,6 +112,7 @@ public class TaskController {
         return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
     }
 
+    @PreAuthorize("@userSecurity.checkCreatorOfTask(#auth, #id)")
     @PutMapping("/toggle/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void toggleTaskDone(
@@ -120,16 +121,19 @@ public class TaskController {
         taskAssignmentService.toggleDone(id, auth);
     }
 
+    @PreAuthorize("@userSecurity.checkCreatorOfTask(#auth, #id) " +
+            "&& @userSecurity.checkCreatorOfEvent(#auth, #event_id)")
     @PutMapping("/assign/{id}/to/{event_id}")
     @ResponseStatus(HttpStatus.OK)
-    public void assignTaskToEvent(@PathVariable Long id, @PathVariable Long event_id) {
+    public void assignTaskToEvent(@PathVariable Long id, @PathVariable Long event_id, Authentication auth) {
         taskService.assignTaskToEvent(event_id, id);
         taskAssignmentService.assignTasksToEventUsers(event_id, id);
     }
 
+    @PreAuthorize("@userSecurity.checkCreatorOfTask(#auth, #id)")
     @PutMapping("/unassign/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void unsignTaskFromEvent(@PathVariable Long id) {
+    public void unsignTaskFromEvent(@PathVariable Long id, Authentication auth) {
         taskService.unassignTaskFromEvent(id);
     }
 
