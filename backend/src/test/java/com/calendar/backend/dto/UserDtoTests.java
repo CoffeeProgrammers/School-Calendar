@@ -82,7 +82,6 @@ class UserDtoTests {
     @Test
     void testUserUpdateRequest() {
         UserUpdateRequest request1 = new UserUpdateRequest();
-        request1.setPassword("Password1");
         request1.setRole("USER");
         request1.setFirstName("John");
         request1.setLastName("Doe");
@@ -90,7 +89,6 @@ class UserDtoTests {
         request1.setDescription("Description");
 
         UserUpdateRequest request2 = new UserUpdateRequest();
-        request2.setPassword(request1.getPassword());
         request2.setRole(request1.getRole());
         request2.setFirstName(request1.getFirstName());
         request2.setLastName(request1.getLastName());

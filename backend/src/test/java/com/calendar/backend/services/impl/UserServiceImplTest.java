@@ -69,7 +69,6 @@ class UserServiceImplTest {
         updatedUser.setDescription(user.getDescription());
         userUpdateRequest = new UserUpdateRequest();
         userUpdateRequest.setDescription(user.getDescription());
-        userUpdateRequest.setPassword(user.getPassword());
         userUpdateRequest.setFirstName(user.getFirstName() + "SD");
         userUpdateRequest.setLastName(user.getLastName());
         if (user.getBirthday() != null) {
