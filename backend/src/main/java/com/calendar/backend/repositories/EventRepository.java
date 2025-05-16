@@ -29,8 +29,8 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
     @Query(value = "SELECT e.name FROM events e " +
             "JOIN users_events ue ON e.id = ue.event_id " +
             "WHERE ue.user_id = :userId " +
-            "AND e.start_date >= :startDate " +
-            "AND e.end_date <= :endDate",
+            "AND e.start_date >= :start " +
+            "AND e.end_date <= :end",
             nativeQuery = true)
     List<String> existWarningInvitation(long userId, LocalDateTime start, LocalDateTime end);
 }
