@@ -98,7 +98,6 @@ class InvitationServiceImplTest {
         when(userService.findUserByAuth(any(Authentication.class))).thenReturn(sender);
         when(userService.findByIdForServices(anyLong())).thenReturn(receiver);
         when(eventService.findByIdForServices(anyLong())).thenReturn(event);
-        when(eventService.findAllByUserIdForCalendar(2L, event.getStartDate(), event.getEndDate())).thenReturn(List.of(eventListResponse));
         when(invitationRepository.save(any(Invitation.class))).thenReturn(invitation);
         when(invitationMapper.fromInvitationToInvitationResponse(any(Invitation.class)))
                 .thenReturn(new InvitationResponse());
