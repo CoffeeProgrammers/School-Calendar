@@ -5,6 +5,7 @@ import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.dto.user.UserListResponse;
 import com.calendar.backend.dto.user.UserUpdateRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
+import com.calendar.backend.dto.wrapper.PasswordRequest;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.services.inter.UserService;
 import jakarta.validation.Valid;
@@ -118,4 +119,12 @@ public class UserController {
         );
     }
 
+    @PutMapping("/update/password")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean updateMyPassword(
+            @RequestBody PasswordRequest password,
+            Authentication auth) {
+        log.info("Controller: Update my password");
+        return userService.updatePassword(password, auth);
+    }
 }

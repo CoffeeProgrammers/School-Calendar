@@ -5,6 +5,7 @@ import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.dto.user.UserListResponse;
 import com.calendar.backend.dto.user.UserUpdateRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
+import com.calendar.backend.dto.wrapper.PasswordRequest;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.models.User;
 import com.calendar.backend.models.enums.Role;
@@ -64,10 +65,21 @@ public class UserServiceImpl implements UserService {
                 new EntityNotFoundException("User with id " + userId + " not found"));
         userToUpdate.setFirstName(userUpdateRequest.getFirstName());
         userToUpdate.setLastName(userUpdateRequest.getLastName());
-        userToUpdate.setPassword(passwordEncoder.encode(userUpdateRequest.getPassword()));
         userToUpdate.setDescription(userUpdateRequest.getDescription());
         userToUpdate.setBirthday(LocalDateTime.parse(userUpdateRequest.getBirthday()));
         return userMapper.fromUserToUserResponse(userRepository.save(userToUpdate));
+    }
+
+    @Override
+    public boolean updatePassword(PasswordRequest passwordRequest, Authentication authentication) {
+        log.info("Service: Updating password for user with email {}", authentication.getName());
+        User user = findUserByAuth(authentication);
+        if (!passwordEncoder.matches(passwordRequest.getOldPassword(), user.getPassword())) {
+            return false;
+        }
+        user.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
+        userRepository.save(user);
+        return true;
     }
 
     @Override
