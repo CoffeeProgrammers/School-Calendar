@@ -224,8 +224,9 @@ class UserServiceImplTest {
         Page<User> page = new PageImpl<>(List.of(user));
         when(userRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
         when(userMapper.fromUserToUserListResponse(user)).thenReturn(new UserListResponse());
+        when(userRepository.findByEmail(any())).thenReturn(Optional.of(user));
 
-        PaginationListResponse<UserListResponse> result = userService.findAllByEventId("", "", "", "", 1L, 0, 10);
+        PaginationListResponse<UserListResponse> result = userService.findAllByEventId("", "", "", "", 1L, 0, 10, mock(Authentication.class));
 
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalPages());

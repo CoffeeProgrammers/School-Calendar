@@ -67,7 +67,7 @@ class TaskServiceImplTest {
         taskRequest = new TaskRequest();
         taskRequest.setName("Updated Task");
         taskRequest.setContent("Updated Content");
-        taskRequest.setDeadline(LocalDateTime.now().toString());
+        taskRequest.setDeadline(task.getDeadline().toString());
 
         updatedTask = new Task();
         updatedTask.setId(1L);
