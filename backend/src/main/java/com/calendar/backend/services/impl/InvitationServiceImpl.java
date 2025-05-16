@@ -11,6 +11,7 @@ import com.calendar.backend.models.Notification;
 import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.InvitationRepository;
 import com.calendar.backend.services.inter.*;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +41,9 @@ public class InvitationServiceImpl implements InvitationService {
                                      long eventId, long receiverId) {
         log.info("Service: Saving new invitation {}", invitationRequest);
 
-        if(invitationRepository.existsByReceiver_IdAndEvent_Id(eventId, receiverId)){
+        if(invitationRepository.existsByReceiver_IdAndEvent_Id(receiverId, eventId)){
             log.error("Service: Invitation already exists");
-            throw new IllegalArgumentException("Invitation already exists");
+            throw new EntityExistsException("Invitation already exists");
         }
 
         Invitation invitation = invitationMapper.fromInvitationRequestToInvitation(invitationRequest);
