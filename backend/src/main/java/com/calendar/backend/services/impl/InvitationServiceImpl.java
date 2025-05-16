@@ -102,7 +102,7 @@ public class InvitationServiceImpl implements InvitationService {
     }
 
     private List<InvitationResponse> checkAndAddWarning(List<InvitationResponse> response) {
-        log.info("Service: Checking invitations for warning");
+        log.info("Service: Checking invitations for warnings");
 
         for (InvitationResponse invitationResponse : response) {
             long userId = invitationResponse.getReceiver().getId();
@@ -110,25 +110,35 @@ public class InvitationServiceImpl implements InvitationService {
             LocalDateTime end = LocalDateTime.parse(invitationResponse.getEvent().getEndDate());
 
             StringBuilder warningMessage = new StringBuilder();
+            log.debug("Checking invitation for userId={} from {} to {}", userId, start, end);
 
+            // Перевірка через репозиторій
             if (invitationRepository.existsAllByReceiver_IdAndEvent_StartDateAfterAndEvent_EndDateBefore(userId, start, end)) {
                 warningMessage.append("You already have an invitation to events at this time. ");
+                log.debug("Repository check triggered warning for userId={}", userId);
             }
 
+            // Перевірка через сервіс
             List<String> warnings = eventService.findForInvitationCheck(userId, start, end);
             if (!warnings.isEmpty()) {
+                log.debug("EventService returned {} conflicts for userId={}", warnings.size(), userId);
                 warningMessage.append("Conflicting events: ");
                 warningMessage.append(String.join(", ", warnings));
                 warningMessage.append(".");
             }
 
             if (!warningMessage.isEmpty()) {
-                invitationResponse.setWarning(warningMessage.toString().trim());
+                String finalWarning = warningMessage.toString().trim();
+                invitationResponse.setWarning(finalWarning);
+                log.info("Added warning for userId={}: {}", userId, finalWarning);
+            } else {
+                log.info("No warning for userId={} from {} to {}", userId, start, end);
             }
         }
 
         return response;
     }
+
 
 
     @Override
