@@ -7,6 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 @Slf4j
 @Component("userSecurity")
 @RequiredArgsConstructor
@@ -53,5 +55,16 @@ public class UserSecurity {
         log.info("preAuth: Checking receiver of invitation {}", invitationId);
         return this.checkUser(authentication,
                 invitationService.findById(invitationId).getReceiver().getEmail());
+    }
+
+    public boolean checkUserInPart(Authentication authentication, long eventId) {
+        log.info("preAuth: Checking user in participations {}", eventId);
+        AtomicBoolean isUserInPart = new AtomicBoolean(false);
+        eventService.findByIdForServices(eventId).getUsers().forEach(user -> {
+            if (this.checkUser(authentication, user.getEmail())) {
+                isUserInPart.set(true);
+            }
+        });
+        return isUserInPart.get();
     }
 }
