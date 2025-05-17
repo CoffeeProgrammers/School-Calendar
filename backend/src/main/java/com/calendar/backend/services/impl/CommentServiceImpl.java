@@ -2,6 +2,7 @@ package com.calendar.backend.services.impl;
 
 import com.calendar.backend.dto.comment.CommentRequest;
 import com.calendar.backend.dto.comment.CommentResponse;
+import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.CommentMapper;
 import com.calendar.backend.models.Comment;
@@ -87,5 +88,14 @@ public class CommentServiceImpl implements CommentService {
         log.info("Service: Finding comment for service with id {}", id);
         return commentRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Comment not found"));
+    }
+
+    @Override
+    public LongResponse countAllCommentsByCreatorId(Authentication authentication) {
+        User user = userService.findUserByAuth(authentication);
+        log.info("Service: Counting all comments for creator with id {}", user.getId());
+        LongResponse longResponse = new LongResponse();
+        longResponse.setCount(commentRepository.countAllByCreator_Id(user.getId()));
+        return longResponse;
     }
 }

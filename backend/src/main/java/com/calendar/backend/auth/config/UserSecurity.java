@@ -57,8 +57,9 @@ public class UserSecurity {
     }
 
     public boolean checkUserOfEvent(Authentication authentication, long eventId) {
-        log.info("preAuth: Checking user of event {}", eventId);
+        log.info("preAuth: Checking is auth user in participants of event {}", eventId);
         User user = userService.findUserByAuth(authentication);
-        return eventService.findByIdForServices(eventId).getUsers().stream().anyMatch(u -> u.getId() == user.getId());
+        return eventService.findByIdForServices(eventId).getUsers().stream()
+                .anyMatch(u -> u.getId() == user.getId());
     }
 }

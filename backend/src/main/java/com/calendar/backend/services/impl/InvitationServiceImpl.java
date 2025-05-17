@@ -80,7 +80,7 @@ public class InvitationServiceImpl implements InvitationService {
         log.info("Service: Finding all invitations sent by my user");
         Page<Invitation> invitations = invitationRepository.findAllBySender_Id
                 (userServices.findUserByAuth(authentication).getId(),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
+                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "time")));
         PaginationListResponse<InvitationResponse> response = new PaginationListResponse<>();
         response.setTotalPages(invitations.getTotalPages());
         response.setContent(invitations.getContent().stream().map(
@@ -93,7 +93,7 @@ public class InvitationServiceImpl implements InvitationService {
         log.info("Service: Finding all invitations for my user");
         Page<Invitation> invitations = invitationRepository.findAllByReceiver_Id(
                 userServices.findUserByAuth(authentication).getId(),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
+                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "time")));
         PaginationListResponse<InvitationResponse> response = new PaginationListResponse<>();
         response.setTotalPages(invitations.getTotalPages());
         response.setContent(checkAndAddWarning(invitations.getContent().stream().map(
