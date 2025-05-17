@@ -7,7 +7,7 @@ class TaskService extends BaseService {
 
     createTask(eventId, data) {
         return this.handleRequest(() =>
-            this.apiClient.post(`/create?event_id=${eventId}`, data)
+            this.apiClient.post(`/create?eventId=${eventId}`, data)
         );
     }
 

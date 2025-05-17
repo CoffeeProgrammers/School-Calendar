@@ -61,8 +61,8 @@ class EventService extends BaseService {
         return this.handleRequest(() =>
             this.apiClient.get(`/users/${userId}/between`, {
                 params: {
-                    start_date: startDate,
-                    end_date: endDate,
+                    startDate: startDate,
+                    endDate: endDate,
                     gap,
                 }
             })
@@ -73,8 +73,8 @@ class EventService extends BaseService {
         return this.handleRequest(() =>
             this.apiClient.get("/between", {
                 params: {
-                    start_date: startDate,
-                    end_date: endDate,
+                    startDate: startDate,
+                    endDate: endDate,
                     gap,
                 }
             })
