@@ -59,6 +59,10 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .sessionManagement(s -> s
                         .sessionCreationPolicy(SessionCreationPolicy.NEVER))
+                .logout(logout -> logout
+                        .logoutUrl("/api/auth/logout")
+                        .invalidateHttpSession(true)
+                )
                 .addFilterBefore(authJwtTokenFilter(), SecurityContextPersistenceFilter.class)
         ;
         return http.build();
