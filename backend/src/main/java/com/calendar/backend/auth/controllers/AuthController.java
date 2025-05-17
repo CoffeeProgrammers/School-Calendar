@@ -65,8 +65,8 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/logout")
-    public void logout(@RequestBody @Valid LogInRequest loginRequest) {
-        log.info("Logout user {}", loginRequest);
-        refreshTokenService.deleteAllByUsername(loginRequest.getUsername());
+    public void logout(Authentication authentication) {
+        log.info("Logout user {}", authentication);
+        refreshTokenService.deleteAllByUsername(userService.findUserByAuth(authentication).getUsername());
     }
 }
