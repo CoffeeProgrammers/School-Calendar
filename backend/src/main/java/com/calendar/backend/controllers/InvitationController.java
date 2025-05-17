@@ -26,12 +26,12 @@ public class InvitationController {
     @PostMapping("/create/events/{event_id}/receivers/{receiver_id}")
     @ResponseStatus(HttpStatus.CREATED)
     public InvitationResponse createInvitation(
-            @PathVariable Long event_id,
-            @PathVariable Long receiver_id,
+            @PathVariable(value = "event_id") Long eventId,
+            @PathVariable(value = "receiver_id") Long receiverId,
             @Valid @RequestBody InvitationRequest request,
             Authentication auth) {
-        log.info("Controller: Create invitation for event with id: {} to user with id: {}", event_id, receiver_id);
-        return invitationService.create(request, auth, event_id, receiver_id);
+        log.info("Controller: Create invitation for event with id: {} to user with id: {}", eventId, receiverId);
+        return invitationService.create(request, auth, eventId, receiverId);
     }
 
     @PreAuthorize("@userSecurity.checkCreatorOfInvitation(#auth, #id)")

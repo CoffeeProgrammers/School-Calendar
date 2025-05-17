@@ -29,11 +29,14 @@ public class TaskController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskFullResponse createTask(
-            @RequestParam(required = false) Long event_id,
+            @RequestParam(required = false) Long eventId,
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
         log.info("Controller: Create task with body: {}", request);
-        TaskFullResponse task = taskService.create(request, auth, event_id != null ? event_id : 0);
+        TaskFullResponse task = taskService.create(request, auth, eventId != null ? eventId : 0);
+        if(eventId != null) {
+            taskAssignmentService.assignTasksToEventUsers(eventId, task.getId());
+        }
         taskAssignmentService.create(task.getId(), userService.findUserByAuth(auth).getId());
         return task;
     }
@@ -148,6 +151,7 @@ public class TaskController {
     public void unassignTaskFromEvent(@PathVariable Long id, Authentication auth) {
         log.info("Controller: Unassign task with id: {} from event", id);
         taskService.unassignTaskFromEvent(id);
+        // TODO unassign task from event users
     }
 
     @GetMapping("/countAllMy/user/{userId}")

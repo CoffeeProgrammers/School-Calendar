@@ -1,13 +1,12 @@
 package com.calendar.backend.auth.config;
 
+import com.calendar.backend.models.User;
 import com.calendar.backend.services.inter.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Component("userSecurity")
@@ -57,14 +56,9 @@ public class UserSecurity {
                 invitationService.findById(invitationId).getReceiver().getEmail());
     }
 
-    public boolean checkUserInPart(Authentication authentication, long eventId) {
-        log.info("preAuth: Checking user in participations {}", eventId);
-        AtomicBoolean isUserInPart = new AtomicBoolean(false);
-        eventService.findByIdForServices(eventId).getUsers().forEach(user -> {
-            if (this.checkUser(authentication, user.getEmail())) {
-                isUserInPart.set(true);
-            }
-        });
-        return isUserInPart.get();
+    public boolean checkUserOfEvent(Authentication authentication, long eventId) {
+        log.info("preAuth: Checking user of event {}", eventId);
+        User user = userService.findUserByAuth(authentication);
+        return eventService.findByIdForServices(eventId).getUsers().stream().anyMatch(u -> u.getId() == user.getId());
     }
 }

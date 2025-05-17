@@ -20,14 +20,15 @@ public class CommentController {
 
     private final CommentService commentService;
 
+    @PreAuthorize("@userSecurity.checkUserOfEvent(#auth, #eventId)")
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public CommentResponse createComment(
-            @PathVariable Long event_id,
+            @PathVariable(value = "event_id") Long eventId,
             @Valid @RequestBody CommentRequest request,
             Authentication auth) {
-        log.info("Controller: Create comment for event with id: {} with body: {}", event_id, request);
-        return commentService.create(request, auth, event_id);
+        log.info("Controller: Create comment for event with id: {} with body: {}", eventId, request);
+        return commentService.create(request, auth, eventId);
     }
 
     @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfComment(#auth, #id)")
@@ -52,11 +53,11 @@ public class CommentController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public PaginationListResponse<CommentResponse> getAllComments(
-            @PathVariable Long event_id,
+            @PathVariable(value = "event_id") Long eventId,
             @RequestParam int page,
             @RequestParam int size) {
-        log.info("Controller: Get all comments for event with id: {}", event_id);
-        return commentService.findAllByEventId(event_id, page, size);
+        log.info("Controller: Get all comments for event with id: {}", eventId);
+        return commentService.findAllByEventId(eventId, page, size);
     }
 
 }
