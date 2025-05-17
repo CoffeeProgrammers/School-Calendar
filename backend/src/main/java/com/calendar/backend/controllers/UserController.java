@@ -16,6 +16,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/users")
@@ -127,5 +129,12 @@ public class UserController {
             Authentication auth) {
         log.info("Controller: Update my password");
         return userService.updatePassword(password, auth);
+    }
+
+    @GetMapping("/countTop5")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserListResponse> getTopFiveUsersCount() {
+        log.info("Controller: Get top five users count");
+        return userService.findTop5UsersByUpcomingEvents();
     }
 }

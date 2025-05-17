@@ -26,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,6 +138,14 @@ public class UserServiceImpl implements UserService {
     public List<User> findAllByEventIdForServices(long eventId){
         log.info("Service: Finding all users for event with id {}", eventId);
         return userRepository.findAllByEventId(eventId);
+    }
+
+    @Override
+    public List<UserListResponse> findTop5UsersByUpcomingEvents() {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Kiev"));
+        log.info("Service: Finding top 5 users with upcoming events");
+        List<User> users = userRepository.findTop5UsersByUpcomingEvents(now);
+        return users.stream().map(userMapper::fromUserToUserListResponse).toList();
     }
 
     @Override

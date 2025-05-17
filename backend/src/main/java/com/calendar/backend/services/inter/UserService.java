@@ -28,4 +28,5 @@ public interface UserService extends UserDetailsService {
     User findUserByAuth(Authentication authentication);
     User findByIdForServices(long id);
     List<User> findAllByEventIdForServices(long eventId);
+    List<UserListResponse> findTop5UsersByUpcomingEvents();
 }
