@@ -5,7 +5,7 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 
 import theme from './assets/theme';
 
-import Main from './components/pages/main/Main';
+import MainPage from './components/pages/main/MainPage';
 import Page from './components/layouts/Page';
 import Users from './components/pages/user/Users';
 import Tasks from './components/pages/task/Tasks';
@@ -21,7 +21,7 @@ import InvitationsPage from "./components/pages/invitations/InvitationsPage";
 
 function App() {
     const privateRoutes = [
-        {path: "", element: <Page><Main/></Page>},
+        {path: "", element: <MainPage/>},
         {path: "/events", element: <Page><Events/></Page>},
         {path: "/users", element: <Page><Users/></Page>},
         {path: "/tasks", element: <Page><Tasks/></Page>},

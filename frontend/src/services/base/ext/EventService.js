@@ -63,18 +63,19 @@ class EventService extends BaseService {
                 params: {
                     start_date: startDate,
                     end_date: endDate,
-                    gap
+                    gap,
                 }
             })
         );
     }
 
-    getMyEventsBetween(startDate, endDate) {
+    getMyEventsBetween(startDate, endDate, gap = 0) {
         return this.handleRequest(() =>
             this.apiClient.get("/between", {
                 params: {
                     start_date: startDate,
-                    end_date: endDate
+                    end_date: endDate,
+                    gap,
                 }
             })
         );
