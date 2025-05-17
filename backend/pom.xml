@@ -26,8 +26,8 @@
         </developer>
         <developer>
             <id>aliakravets</id>
-<!--            <name></name>-->
-<!--            <email></email>-->
+            <name>Kravets Albina</name>
+            <email>aliakravets2008@gmail.com</email>
             <organization>CoffeeProgrammers</organization>
         </developer>
         <developer>
@@ -39,7 +39,7 @@
         <developer>
             <id>Yaroslav-Holobyn</id>
             <name>Yaroslav Holobyn</name>
-<!--            <email></email>-->
+            <email>slavaholobyn@gmail.com</email>
             <organization>CoffeeProgrammers</organization>
         </developer>
     </developers>
