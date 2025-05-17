@@ -101,37 +101,37 @@ public class EventController {
     @GetMapping("/users/{user_id}/between")
     @ResponseStatus(HttpStatus.OK)
     public List<EventListResponse> getUserEventsBetween(
-            @PathVariable Long user_id,
-            @RequestParam String start_date,
-            @RequestParam String end_date,
+            @PathVariable(value = "user_id") Long userId,
+            @RequestParam String startDate,
+            @RequestParam String endDate,
             @RequestParam(required = false) Integer gap) {
         log.info("Controller: Get user events with id: {} between dates: {} and {}",
-                user_id, start_date, end_date);
-        return eventService.findAllByUserIdForCalendar(user_id,
-                LocalDateTime.parse(start_date).minusDays(gap),
-                LocalDateTime.parse(end_date).plusDays(gap)
+                userId, startDate, endDate);
+        return eventService.findAllByUserIdForCalendar(userId,
+                LocalDateTime.parse(startDate).minusDays(gap),
+                LocalDateTime.parse(endDate).plusDays(gap)
         );
     }
 
     @GetMapping("/between")
     @ResponseStatus(HttpStatus.OK)
     public List<EventListResponse> getMyEventsBetween(
-            @RequestParam String start_date,
-            @RequestParam String end_date,
+            @RequestParam String startDate,
+            @RequestParam String endDate,
             Authentication auth,
             @RequestParam(required = false) Integer gap) {
-        log.info("Controller: Get my events between dates: {} and {}", start_date, end_date);
+        log.info("Controller: Get my events between dates: {} and {}", startDate, endDate);
         return eventService.findAllByUserIdForCalendar(
                 userService.findUserByAuth(auth).getId(),
-                LocalDateTime.parse(start_date).minusDays(gap),
-                LocalDateTime.parse(end_date).plusDays(gap)
+                LocalDateTime.parse(startDate).minusDays(gap),
+                LocalDateTime.parse(endDate).plusDays(gap)
         );
     }
 
-    @GetMapping("/count/user/{userId}")
+    @GetMapping("/count/user/{user_id}")
     @ResponseStatus(HttpStatus.OK)
     public LongResponse getEventsByUserAndPast(
-            @PathVariable Long userId) {
+            @PathVariable(value = "user_id") Long userId) {
         log.info("Controller: Get events count by user id: {}", userId);
         return eventService.countAllEventsByUserAndPast(userId);
     }

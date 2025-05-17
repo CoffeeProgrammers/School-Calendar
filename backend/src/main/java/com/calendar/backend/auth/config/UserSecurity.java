@@ -1,5 +1,6 @@
 package com.calendar.backend.auth.config;
 
+import com.calendar.backend.models.User;
 import com.calendar.backend.services.inter.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,5 +54,11 @@ public class UserSecurity {
         log.info("preAuth: Checking receiver of invitation {}", invitationId);
         return this.checkUser(authentication,
                 invitationService.findById(invitationId).getReceiver().getEmail());
+    }
+
+    public boolean checkUserOfEvent(Authentication authentication, long eventId) {
+        log.info("preAuth: Checking user of event {}", eventId);
+        User user = userService.findUserByAuth(authentication);
+        return eventService.findByIdForServices(eventId).getUsers().stream().anyMatch(u -> u.getId() == user.getId());
     }
 }
