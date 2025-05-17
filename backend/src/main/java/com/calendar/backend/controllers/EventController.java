@@ -68,7 +68,7 @@ public class EventController {
     }
 
 
-    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkUserInPart(#auth, #id)")
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkUserOfEvent(#auth, #id)")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullResponse getEvent(@PathVariable Long id, Authentication auth) {
