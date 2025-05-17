@@ -1,2 +1,265 @@
-# Calendar-School
+# School-Calendar
 
+---
+
+## Overview
+
+School-Calendar is a Java-based application designed to simplify 
+and optimize various activities within a school environment. 
+It supports event planning and task management for different user roles—students, 
+teachers and parents—providing a structured and user-friendly way 
+to organize educational and extracurricular processes in the form of a calendar. The 
+system enhances communication, coordination and engagement across the school 
+community.
+
+---
+
+## Key Roles and Functionalities
+
+- Students:
+  - Participate in teacher- or student-organized events and view related information. 
+  - Complete tasks assigned by teachers. 
+  - Create and delete student-only events.
+
+- Teachers:
+  - Participate in events created by teachers. 
+  - Create and delete events and tasks. 
+  - Assign tasks to students and associate them with events. 
+  - Create and delete users (students, teachers and parents). 
+  - Manage events.
+
+- Parents:
+  - Can only join an event as an invitee; 
+  - View accessible information regarding the events.
+
+## Functionalities of the Project:
+
+- Events:
+  - Allows creation, managing and deletion of event;
+  - Handles assignation of participants and defines accessibility 
+rules based on user roles; 
+  - Manages a commentary section.
+
+- Tasks:
+  - Allows creation, managing and deletion of tasks;
+  - Links tasks to specific events and assign them to students.
+
+- Invitations:
+  - Handles sending, accepting and refusing the invitations.
+  - 
+- Notifications: 
+  - Manages user-specific news about events, assigned tasks and 
+invitations tailored for users of the system (e.g., teachers or students).
+
+---
+## Technologies Used
+
+- Java: 21
+- Spring Boot: 3.4.2
+- React: 19.0.0
+- MUI: library of React components
+- H2: database for our project tests
+- PostgreSQL: database for our project
+
+---
+
+## Installation Instructions
+0. Install docker desktop
+
+https://www.docker.com/products/docker-desktop/
+
+1. Clone the repository:
+```
+git clone https://github.com/dexipua/CoffeeProgrammers.git
+```
+2. Navigate to the project directory:
+```
+cd CoffeeProgrammers
+```
+3. Build the project:
+```
+docker-compose up --build            
+```
+
+4. Open your browser and go to http://localhost:3000 to access the application.
+
+---
+
+## Contribution Guidelines
+
+1. Fork the repository.
+
+2. Create a new branch for your feature or bugfix:
+```
+git checkout -b feature-name
+```
+3. Commit your changes:
+```
+git commit -m "Description of your changes"
+```
+4. Push to your branch:
+```
+git push origin feature-name
+```
+5. Create a pull request.
+
+---
+
+## **Functional requirements:**
+
+| **ID** | Role             | **Requirement**                                                                                                                                                         |
+|--------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        | **Auth**         |                                                                                                                                                                         |
+| 1      | User             | As a user I want to be able to ***log in***                                                                                                                             |
+| 2      | User             | As a user I want to be able to ***log out***                                                                                                                            |
+|        | **Event**        |                                                                                                                                                                         |
+| 3      | Teacher/Student  | As a teacher/student I want to be able to ***create*** event                                                                                                            |
+| 4      | Teacher/Student  | As a teacher/student I want to be able to ***delete*** my event                                                                                                         |
+| 5      | Teacher/Student  | As a teacher/student I want to be able to ***update*** my event                                                                                                         |
+| 6      | Teacher/Student  | As a teacher/student I want to be able to ***delete*** an user from event                                                                                               |
+| 7      | User             | As a user I want to be able to ***get*** my event                                                                                                                       |
+| 8      | User             | As a user I want to be able to ***get all*** my events ***with search & filter*** (***pagination***) ***(sorted: date) (search: name, date), (filter: is_past)***       |
+| 9      | User             | As a user I want to be able to ***get*** all events between dates (days +- 4, week +- 2, month +- 1, year +- 0)                                                         |
+| 10     | User             | As a user I want to be able to ***get*** all my events between dates (days +- 4, week +- 2, month +- 1, year +- 0)                                                      |
+| 11     | User             | As a user I want to be able to ***get*** count of visited events                                                                                                        |
+|        | **Invitation**   |                                                                                                                                                                         |
+| 12     | Teacher/Student  | As a teacher/student I want to be able to ***create*** an invitation to my event                                                                                        |
+| 13     | User             | As a user I want to be able to ***get all*** my invitations (***pagination) (sort: date)***                                                                             |
+| 14     | Teacher/Student  | As a teacher/student I want to be able to ***delete*** my invitation                                                                                                    |
+| 15     | Teacher/Student  | As a teacher/student I want to be able to ***update*** my invitation                                                                                                    |
+| 16     | User             | As a user I want to be able to ***accept*** an invitation                                                                                                               |
+| 17     | User             | As a user I want to be able to ***reject*** an invitation                                                                                                               |
+| 18     | User             | As a user i want to be able to ***get*** all my sent invitations                                                                                                        |
+|        | **Comment**      |                                                                                                                                                                         |
+| 19     | User             | As a user I want to be able to ***create*** a comment                                                                                                                   |
+| 20     | User             | As a user I want to be able to ***delete*** comment                                                                                                                     |
+| 21     | User             | As a user I want to be able to ***update*** my comment                                                                                                                  |
+| 22     | User             | As a user I want to be able to ***get all*** by event (***pagination) (sort: date)***                                                                                   |
+|        | **Task**         |                                                                                                                                                                         |
+| 23     | User             | As a user I want to be able to ***create*** a task                                                                                                                      |
+| 24     | User             | As a user I want to be able to ***update*** my task                                                                                                                     |
+| 25     | User             | As a user I want to be able to ***delete*** my task                                                                                                                     |
+| 26     | User             | As a user I want to be able to ***get*** a task                                                                                                                         |
+| 27     | User             | As a user I want to be able to ***get all*** my tasks  ***with search & filter*** (***pagination) (sort:  date)  (search: name, deadline) (filter: is_done, is_past)*** |
+| 28     | User             | As a user I want to be able to ***toggle done*** in task                                                                                                                |
+| 29     | User             | As a user I want to be able to ***get all*** tasks by event (***pagination) (sort)***                                                                                   |
+| 30     | User             | As a user I want to be able to ***get all*** my tasks without event (***pagination) (sort)***                                                                           |
+| 31     | User             | As a user I want to be able to ***assign*** task to event                                                                                                               |
+| 32     | User             | As a user I want to be able to ***unassign*** task to event                                                                                                             |
+| 33     | User             | As a user I want to be able to ***count*** all users tasks                                                                                                              |
+|        | **User**         |                                                                                                                                                                         |
+| 34     | Teacher          | As a teacher I want to be able to ***create*** an user                                                                                                                  |
+| 35     | Teacher          | As a teacher I want to be able to ***delete*** an user                                                                                                                  |
+| 36     | Teacher          | As a teacher I want to be able to ***update*** an user                                                                                                                  |
+| 37     | User             | As a user I want to be able to ***get*** an user                                                                                                                        |
+| 38     | User             | As a user I want to be able to ***get** my* user                                                                                                                        |
+| 39     | User             | As a user I want to be able to ***update*** my information                                                                                                              |
+| 40     | User             | As a user I want to be able to ***get all*** users ***with search** **& filter*** (***pagination***) ***(sort) (search: firstName, lastName) (filter: role)***          |
+| 41     | User             | As a user I want to be able to ***get all*** users by event (***pagination) (sort)***                                                                                   |
+| 42     | User             | As a user I want to be able to ***get all*** users by not event (***pagination) (sort)***                                                                               |
+| 43     | User             | As a user I want to be able to ***update*** my password                                                                                                                 |
+| 44     | User             | As a user I want to be able to ***get*** top five users                                                                                                                 |
+|        | **Notification** |                                                                                                                                                                         |
+| 45     | User             | As a user I want to be able to ***get all*** my notifications (***pagination***) ***(sort)***                                                                           |
+
+## **System operations(API):**
+
+| **ID** | Name                                | Endpoint                                          | **Roles**                     | Operation Type | FR ID | Request                                                                                                                                                   | Response                                    |
+|--------|-------------------------------------|---------------------------------------------------|-------------------------------|----------------|-------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|
+|        | **Auth**                            | /api/auth                                         |                               |                |       |                                                                                                                                                           |
+| 1      | Check for existing email            | /checks                                           | User                          | QUERY          | —     | StringRequest                                                                                                                                             | boolean                                     |
+| 2      | Log in                              | /login                                            | User                          | COMMAND        | 1     | LogInRequest                                                                                                                                              | AuthResponse                                |
+| 3      | Log out                             | /logout                                           | User                          | COMMAND        | 2     | —                                                                                                                                                         | boolean                                     |
+|        | **Event**                           | /api/events                                       |                               |                |       |                                                                                                                                                           |
+| 4      | Create an event                     | /create                                           | Teacher/Student               | COMMAND        | 3     | EventCreateRequest                                                                                                                                        | EventFullResponse                           |
+| 5      | Update an event                     | /update/{id}                                      | Teacher/Student(owner)        | COMMAND        | 5     | path_varible: id EventUpdateRequest                                                                                                                       | EventFullResponse                           |                      
+| 6      | Delete an event                     | /delete/{id}                                      | Teacher/Student(owner)        | COMMAND        | 4     | path_varible: id                                                                                                                                          | —                                           |
+| 7      | Delete an user from event           | /delete/{id}/user/{user_id}                       | Teacher/Student(owner)        | COMMAND        | 6     | path_varible: id path_varible: user_id                                                                                                                    | —                                           |                          
+| 8      | Get an event                        | /{id}                                             | Teacher/User(my)              | QUERY          | 7     | path_varible: id                                                                                                                                          | EventFullResponse                           |
+| 9      | Get all my event (search, filter)   | —                                                 | User(me)                      | QUERY          | 8     | request_param: page request_param: size request_param: search request_param: startDate request_param: endDate request_param: typeOfEvent                  | PaginationListResponse<EventListResponse>   |                           
+| 10     | Get all not my events between dates | /users/{user_id}/between                          | User                          | QUERY          | 9     | path_variable: user_id request_param: startDate request_param: endDate request_param: gap                                                                 | List<EventListResponse>                     |                                    
+| 11     | Get all my events between dates     | /between                                          | User(me)                      | QUERY          | 10    | request_param: startDate request_param: endDate                                                                                                           | List<EventListResponse>                     |                                              
+| 12     | Get count of visited events         | /count/user/{user_id}                             | User                          | QUERY          | 11    | path_variable: user_id                                                                                                                                    | LongResponse                                |
+|        | **Invitation**                      | /api/invitations                                  |                               |                |       |                                                                                                                                                           |
+| 13     | Create an invitation                | /create/events/{event_id}/receivers/{receiver_id} | User(owner of event)          | COMMAND        | 12    | path_varible: event_id path_varible: receiver_id InvitationRequest                                                                                        | InvitationResponse                          |  
+| 14     | Update an invitation                | /update/{id}                                      | User(owner)                   | COMMAND        | 15    | path_varible: id InvitationRequest                                                                                                                        | InvitationResponse                          |              
+| 15     | Delete an invitation                | /delete/{id}                                      | User(owner)                   | COMMAND        | 14    | path_varible: id                                                                                                                                          | —                                           |
+| 16     | Get all my invitations              | —-                                                | User(me)                      | QUERY          | 13    | request_param: page request_param: size                                                                                                                   | PaginationListResponse<InvitationResponse>  |  
+| 17     | Get all my sent invitations         | /getMySent                                        | User(me)                      | QUERY          | 18    | request_param: page request_param: size                                                                                                                   | PaginationListResponse<InvitationResponse>  |    
+| 18     | Accept an invitation                | /accept/{id}                                      | User(me)                      | COMMAND        | 16    | path_varible: id                                                                                                                                          | —                                           |
+| 19     | Reject an invitation                | /reject/{id}                                      | User(me)                      | COMMAND        | 17    | path_varible: id                                                                                                                                          | —                                           |
+|        | **Comment**                         | /api/events/{event_id}/comments                   |                               |                |       |                                                                                                                                                           |
+| 20     | Create a comment                    | /create                                           | User(member)                  | COMMAND        | 19    | path_varible: event_id CommentRequest                                                                                                                     | CommentResponse                             |                    
+| 21     | Update a comment                    | /update/{id}                                      | Teacher/User(owner)           | COMMAND        | 21    | path_varible: id CommentRequest                                                                                                                           | CommentResponse                             |   
+| 22     | Delete a comment                    | /delete/{id}                                      | Teacher/User(owner)           | COMMAND        | 22    | path_varible: id                                                                                                                                          | —                                           |
+| 23     | Get all comments                    | —-                                                | User                          | QUERRY         | 22    | path_varible: event_id request_param: page request_param: size                                                                                            | PaginationListResponse<CommentResponse>     |               
+|        | **Task**                            | /api/tasks                                        |                               |                |       |                                                                                                                                                           |
+| 24     | Create a task                       | /create                                           | User                          | COMMAND        | 23    | request_param: eventId TaskCreateRequest                                                                                                                  | TaskFullResponse                            |                                       
+| 25     | Update a task                       | /update/{id}                                      | User(owner)                   | COMMAND        | 24    | path_varible: id TaskUpdateRequest                                                                                                                        | TaskFullResponse                            |                        
+| 26     | Delete a task                       | /delete/{id}                                      | User(owner)                   | COMMAND        | 25    | path_varible: id                                                                                                                                          | TaskFullResponse                            |
+| 27     | Get a task                          | /{id}                                             | User(me)                      | QUERY          | 26    | path_varible: id                                                                                                                                          | TaskFullResponse                            |
+| 28     | Get my all tasks                    | —-                                                | User(me)                      | QUERY          | 27    | request_param: page request_param: size request_param: name request_param: deadline request_param: isDone request_param: isPast                           | PaginationListResponse<TaskListResponse>    |
+| 29     | Get my without event                | /getMyWithoutEvent                                | User(me)                      | QUERY          | 30    | request_param: page request_param: size                                                                                                                   | PaginationListResponse<TaskListResponse>    |                                     
+| 30     | Toggle done a task                  | /toggle/{id}                                      | User(me)                      | COMMAND        | 28    | path_varible: id                                                                                                                                          | —                                           |
+| 31     | Get all tasks by event              | /events/{event_id}                                | User(member of event)         | QUERY          | 29    | path_variable: event_id request_param: page request_param: size                                                                                           | PaginationListResponse<TaskListResponse>    |                                      
+| 32     | Assign task to event                | /assign/{id}/to/{event_id}                        | User(owner of task and event) | COMMAND        | 31    | path_variable: id path_variable: event_id                                                                                                                 | —                                           |            
+| 33     | Unassign task from event            | /unassign/{id}                                    | User(owner of task)           | COMMAND        | 32    | path_variable: id                                                                                                                                         | —                                           |
+| 34     | Count all users tasks               | /countAllMy/user/{userId}                         | User                          | QUERY          | 33    | path_variable: userId                                                                                                                                     | CountAllTaskAndCompleted                    |
+|        | **User**                            | /api/users                                        |                               |                |       |                                                                                                                                                           |
+| 35     | Create an user                      | /create                                           | Teacher                       | COMMAND        | 34    | UserCreateRequest                                                                                                                                         | UserFullResponse                            |
+| 36     | Update an user                      | /update/{id}                                      | Teacher                       | COMMAND        | 36    | path_varible: id UserUpdateRequest                                                                                                                        | UserFullResponse                            |                         
+| 37     | Get user                            | /{id}                                             | User                          | QUERY          | 37    | path_varible: id                                                                                                                                          | UserFullResponse                            |
+| 38     | Get all users (search)              | —-                                                | User                          | QUERY          | 40    | request_param: page request_param: size request_param: email request_param: lastName request_param: firstName FilterRequest                               | PaginationListResponse<UserListResponse>    |
+| 39     | Get all users by event              | /events/{event_id}                                | User(member of event)         | QUERY          | 41    | path_variable: event_id request_param: page request_param: size request_param: email request_param: firstName request_param: lastName request_param: role | PaginationListResponse<UserListResponse>    |                
+| 40     | Get all users by not event          | /not_events/{event_id}                            | User(member of event)         | QUERY          | 42    | path_variable: event_id request_param: page request_param: size request_param: email request_param: firstName request_param: lastName request_param: role | PaginationListResponse<UserListResponse>    |                
+| 41     | Get my user                         | /my                                               | User(me)                      | QUERY          | 38    | —                                                                                                                                                         | UserFullResponse                            |
+| 42     | Delete an user                      | /delete/{id}                                      | Teacher                       | COMMAND        | 35    | path_variable: id                                                                                                                                         | —-                                          |
+| 43     | Update my user                      | /update                                           | User(owner)                   | COMMAND        | 39    | UserUpdateRequest                                                                                                                                         | UserFullResponse                            |
+| 44     | Update my password                  | /update/password                                  | User(me)                      | COMMAND        | 43    | PasswordRequest                                                                                                                                           | boolean                                     |
+| 45     | Get top five users                  | /countTop5                                        | User                          | QUERY          | 44    | —                                                                                                                                                         | List<UserListResponse>                      |
+|        | **Notification**                    | /api/notifications                                |                               |                |       |                                                                                                                                                           |
+| 46     | Get all my notification             | —-                                                | User(me)                      | QUERY          | 45    | request_param: page request_param: size                                                                                                                   | PaginationListResponse<NotificationResonse> |                    
+
+## DTO’s
+
+| Name                      | Fields                                                                                            |
+|---------------------------|---------------------------------------------------------------------------------------------------|
+| **Auth**                  |                                                                                                   |
+| LogInRequest              | username password                                                                                 |            
+| AuthResponse              | id email accessToken role                                                                         |            
+| **Event**                 |                                                                                                   |
+| EventCreateRequest        | name type startDate endDate content isContentAvailableAnytime meetingType place                   |          
+| EventUpdateRequest        | name content isContentAvailableAnytime meetingType place                                          |        
+| EventFullResponse         | id name type creator startDate endDate content isContentAvailableAnytime meetingType place        |       
+| EventListResponse         | id name type creator startDate endDate meetingType place                                          |      
+| **Invitation**            |                                                                                                   |
+| InvitationRequest         | description                                                                                       |
+| InvitationResponse        | id sender receiver event description warning time                                                 |       
+| **Comment**               |                                                                                                   |
+| CommentRequest            | text                                                                                              |
+| CommentResponse           | id creator text date                                                                              |        
+| **Task**                  |                                                                                                   |
+| TaskRequest               | name content deadline                                                                             |       
+| TaskFullResponse          | id creator event isDone name content deadline                                                     |       
+| TaskListResponse          | id creator name deadline isDone                                                                   |    
+| **User**                  |                                                                                                   |
+| UserCreateRequest         | email password role firstName lastName birthday                                                   |        
+| UserUpdateRequest         | role firstName lastName birthday description                                                      |       
+| UserFullResponse          | id email role firstName lastName description birthday                                             |        
+| UserListResponse          | id email role firstName lastName                                                                  |        
+| **Notification**          |                                                                                                   |
+| NotificationResponse      | id                                                                                                |
+| content time              |                                                                                                   |
+| **Wrapper**               |                                                                                                   |
+| PaginationListResponse<T> | totalPages                                                                                        |
+| List<T> content           |                                                                                                   |
+| StringRequest             | text                                                                                              |
+| PasswordRequest           | oldPassword newPassword                                                                           |      
+| LongResponse              | count                                                                                             |
+| CountAllTaskAndCompleted  | countAll                                                                           countCompleted |         
+
+
+## Database:
+[School-Calendar-v2 | DrawSQL](https://drawsql.app/teams/team-3890/diagrams/school-calendar-v2)
+
+(Now can be changed because of adding additional features)
