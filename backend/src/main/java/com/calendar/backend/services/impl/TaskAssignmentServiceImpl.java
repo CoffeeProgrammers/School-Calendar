@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -91,7 +92,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
         log.info("Service: Setting all task assignments done for all tasks and auth user");
         tasks.setContent(tasks.getContent().stream().map(task -> {
             task.setDone(this.isDone(task.getId(), authentication));
-            return task;}).toList());
+            return task;}).sorted(Comparator.comparing(TaskListResponse::isDone)).toList());
         return tasks;
     }
 
