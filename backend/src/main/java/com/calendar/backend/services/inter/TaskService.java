@@ -18,6 +18,7 @@ public interface TaskService {
     PaginationListResponse<TaskListResponse> findAllByUserId(
             String name, String deadline, String is_done, String is_past,
             long userId, int page, int size);
+    List<Task> findAllByUserIdForServices(long userId);
     PaginationListResponse<TaskListResponse> findAllByEventId(
             long eventId, int page, int size);
     List<Task> findAllByEventId(long eventId);

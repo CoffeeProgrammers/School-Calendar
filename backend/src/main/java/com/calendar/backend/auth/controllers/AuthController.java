@@ -4,7 +4,6 @@ import com.calendar.backend.auth.config.JwtUtils;
 import com.calendar.backend.auth.dto.auth.AuthResponse;
 import com.calendar.backend.auth.dto.auth.LogInRequest;
 import com.calendar.backend.auth.services.impl.RefreshTokenServiceImpl;
-import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.dto.wrapper.StringRequest;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.models.User;
@@ -38,12 +37,6 @@ public class AuthController {
     public boolean checkEmail(@RequestBody StringRequest requestEmail) {
         userService.loadUserByUsername(requestEmail.getText());
         return true;
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/getAuth")
-    public UserFullResponse getAuth(Authentication authentication) {
-        return userMapper.fromUserToUserResponse(userService.findUserByAuth(authentication));
     }
 
     @ResponseStatus(HttpStatus.OK)

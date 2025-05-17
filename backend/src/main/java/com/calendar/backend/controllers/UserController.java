@@ -66,10 +66,11 @@ public class UserController {
         return userService.findAll(email, firstName, lastName, role, page, size);
     }
 
+    @PreAuthorize("@userSecurity.checkUserOfEvent(#auth, #eventId)")
     @GetMapping("/events/{event_id}")
     @ResponseStatus(HttpStatus.OK)
     public PaginationListResponse<UserListResponse> getUsersByEvent(
-            @PathVariable Long event_id,
+            @PathVariable(value = "event_id") Long eventId,
             @RequestParam Integer page,
             @RequestParam Integer size,
             @RequestParam(required = false) String email,
@@ -77,22 +78,23 @@ public class UserController {
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String role,
             Authentication auth) {
-        log.info("Controller: Get all users for event with id: {}", event_id);
-        return userService.findAllByEventId(email, firstName, lastName, role, event_id, page, size, auth);
+        log.info("Controller: Get all users for event with id: {}", eventId);
+        return userService.findAllByEventId(email, firstName, lastName, role, eventId, page, size, auth);
     }
 
+    @PreAuthorize("@userSecurity.checkUserOfEvent(#auth, #eventId)")
     @GetMapping("/not_events/{event_id}")
     @ResponseStatus(HttpStatus.OK)
     public PaginationListResponse<UserListResponse> getUsersByNotEvent(
-            @PathVariable Long event_id,
+            @PathVariable(value = "event_id") Long eventId,
             @RequestParam Integer page,
             @RequestParam Integer size,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String role) {
-        log.info("Controller: Get all users for not event with id: {}", event_id);
-        return userService.findAllByEventsNotContains(email, firstName, lastName, role, event_id, page, size);
+        log.info("Controller: Get all users for not event with id: {}", eventId);
+        return userService.findAllByEventsNotContains(email, firstName, lastName, role, eventId, page, size);
     }
 
     @GetMapping("/my")

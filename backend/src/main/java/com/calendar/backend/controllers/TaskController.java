@@ -41,7 +41,7 @@ public class TaskController {
         return task;
     }
 
-    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfTask(#auth, #id)")
+    @PreAuthorize("@userSecurity.checkCreatorOfTask(#auth, #id)")
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public TaskFullResponse updateTask(
@@ -54,7 +54,7 @@ public class TaskController {
         return taskFullResponse;
     }
 
-    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfTask(#auth, #id)")
+    @PreAuthorize("@userSecurity.checkCreatorOfTask(#auth, #id)")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTask(@PathVariable Long id, Authentication auth) {
@@ -99,13 +99,13 @@ public class TaskController {
     @GetMapping("/events/{event_id}")
     @ResponseStatus(HttpStatus.OK)
     public PaginationListResponse<TaskListResponse> getTasksByEvent(
-            @PathVariable Long event_id,
+            @PathVariable(value = "event_id") Long eventId,
             @RequestParam int page,
             @RequestParam int size,
             Authentication auth) {
-        log.info("Controller: Get all tasks for event with id: {}", event_id);
+        log.info("Controller: Get all tasks for event with id: {}", eventId);
         PaginationListResponse<TaskListResponse> taskListResponse =
-                taskService.findAllByEventId(event_id, page, size);
+                taskService.findAllByEventId(eventId, page, size);
         return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
     }
 
@@ -125,7 +125,7 @@ public class TaskController {
         return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
     }
 
-    @PreAuthorize("@userSecurity.checkCreatorOfTask(#auth, #id)")
+    @PreAuthorize("@userSecurity.checkUserOfTask(#auth, #id)")
     @PutMapping("/toggle/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void toggleTaskDone(
@@ -154,8 +154,8 @@ public class TaskController {
         taskService.unassignTaskFromEvent(id);
     }
 
-    @GetMapping("/countAllMy/user/{userId}")
-    public CountAllTaskAndCompleted countAllUsersTask(@PathVariable long userId) {
+    @GetMapping("/countAllMy/user/{user_id}")
+    public CountAllTaskAndCompleted countAllUsersTask(@PathVariable(value = "user_id") Long userId) {
         log.info("Controller: Get count of all tasks and completed for user with id: {}", userId);
         return taskService.countAllTaskAndCompleted(userId);
     }

@@ -62,4 +62,10 @@ public class UserSecurity {
         return eventService.findByIdForServices(eventId).getUsers().stream()
                 .anyMatch(u -> u.getId() == user.getId());
     }
+
+    public boolean checkUserOfTask(Authentication authentication, long taskId) {
+        log.info("preAuth: Checking is auth user member of task {}", taskId);
+        User user = userService.findUserByAuth(authentication);
+        return taskService.findAllByUserIdForServices(user.getId()).stream().anyMatch(t -> t.getId() == taskId);
+    }
 }

@@ -100,6 +100,11 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
+    public List<Task> findAllByUserIdForServices(long userId) {
+        return taskRepository.findAll(TaskSpecification.assignedToUser(userId));
+    }
+
+    @Override
     public PaginationListResponse<TaskListResponse> findAllByEventId(
             long eventId, int page, int size) {
         log.info("Service: Finding all tasks for event with id {}", eventId);
