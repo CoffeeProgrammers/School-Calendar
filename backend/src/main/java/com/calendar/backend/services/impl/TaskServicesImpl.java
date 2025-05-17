@@ -134,7 +134,7 @@ public class TaskServicesImpl implements TaskService {
     public void assignTaskToEvent(long eventId, long id) {
         log.info("Service: Assigning task with id {} to event with id {}", id, eventId);
         Task task = findByIdForServices(id);
-        task.setEvent(eventService.findByIdForServices(id));
+        task.setEvent(eventService.findByIdForServices(eventId));
         taskRepository.save(task);
     }
 
