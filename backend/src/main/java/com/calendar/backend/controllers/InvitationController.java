@@ -22,7 +22,7 @@ public class InvitationController {
     private final InvitationService invitationService;
     private final UserService userService;
 
-    @PreAuthorize("@userSecurity.checkCreatorOfEvent(#auth, #event_id)")
+    @PreAuthorize("@userSecurity.checkCreatorOfEvent(#auth, #eventId)")
     @PostMapping("/create/events/{event_id}/receivers/{receiver_id}")
     @ResponseStatus(HttpStatus.CREATED)
     public InvitationResponse createInvitation(
