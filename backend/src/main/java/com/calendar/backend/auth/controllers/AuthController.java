@@ -62,4 +62,11 @@ public class AuthController {
         return new AuthResponse(user.getId(), username, jwtToken,
                 user.getRole().getAuthority());
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/logout")
+    public void logout(@RequestBody @Valid LogInRequest loginRequest) {
+        log.info("Logout user {}", loginRequest);
+        refreshTokenService.deleteAllByUsername(loginRequest.getUsername());
+    }
 }

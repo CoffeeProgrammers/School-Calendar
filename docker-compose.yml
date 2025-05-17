@@ -30,18 +30,18 @@ services:
     ports:
       - "5431:5432"
 
-  # frontend:
-  #   build: ./frontend
-  #   restart: always
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #     - calendar-net
-  #   depends_on:
-  #     - backend
-  #   volumes:
-  #     - ./frontend:/app
-  #     - /app/node_modules
+  frontend:
+     build: ./frontend
+     restart: always
+     ports:
+       - "3000:3000"
+     networks:
+       - calendar-net
+     depends_on:
+       - backend
+     volumes:
+       - ./frontend:/app
+       - /app/node_modules
 
 
 networks:
