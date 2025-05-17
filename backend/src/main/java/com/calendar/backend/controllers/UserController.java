@@ -27,7 +27,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @PreAuthorize("hasRole('CHIEF_TEACHER')")
+    @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public UserFullResponse createUser(@Valid @RequestBody UserCreateRequest request) {
@@ -35,7 +35,7 @@ public class UserController {
         return userService.create(request);
     }
 
-    @PreAuthorize("hasRole('CHIEF_TEACHER')")
+    @PreAuthorize("hasRole('TEACHER')")
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserFullResponse updateUser(
@@ -92,7 +92,8 @@ public class UserController {
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String role) {
+            @RequestParam(required = false) String role,
+            Authentication auth) {
         log.info("Controller: Get all users for not event with id: {}", eventId);
         return userService.findAllByEventsNotContains(email, firstName, lastName, role, eventId, page, size);
     }
@@ -104,7 +105,7 @@ public class UserController {
         return userMapper.fromUserToUserResponse(userService.findUserByAuth(auth));
     }
 
-    @PreAuthorize("hasRole('CHIEF_TEACHER')")
+    @PreAuthorize("hasRole('TEACHER')")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {

@@ -29,7 +29,7 @@ public class EventController {
     private final UserService userService;
     private final TaskService taskService;
 
-    @PreAuthorize("hasAnyRole('CHIEF_TEACHER', 'TEACHER', 'STUDENT')")
+    @PreAuthorize("hasAnyRole('TEACHER', 'STUDENT')")
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullResponse createEvent(
@@ -39,7 +39,7 @@ public class EventController {
         return eventService.create(request, auth);
     }
 
-    @PreAuthorize("hasRole('CHIEF_TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullResponse updateEvent(
@@ -50,7 +50,7 @@ public class EventController {
         return eventService.update(request, id);
     }
 
-    @PreAuthorize("hasRole('CHIEF_TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEvent(@PathVariable Long id, Authentication auth) {
@@ -59,7 +59,7 @@ public class EventController {
         eventService.delete(id);
     }
 
-    @PreAuthorize("hasRole('CHIEF_TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
     @PutMapping("/delete/{id}/user/{user_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserById(@PathVariable Long id, @PathVariable Long user_id, Authentication auth) {
@@ -68,7 +68,7 @@ public class EventController {
     }
 
 
-    @PreAuthorize("hasRole('CHIEF_TEACHER') or @userSecurity.checkUserOfEvent(#auth, #id)")
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkUserOfEvent(#auth, #id)")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public EventFullResponse getEvent(@PathVariable Long id, Authentication auth) {

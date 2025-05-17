@@ -1,7 +1,7 @@
 INSERT INTO "users" ("email", "password", "role", "first_name", "last_name", "description", "birthday")
 VALUES ('john.doe@example.com',
         '$2a$12$tCc7xjpcZZg0PT57MxYmX.3Pp2gedmXUHfS86IHz5Y8RUoIKq.Ma6',
-        3,
+        0,
         'John',
         'Doe',
         'Example user for testing.',

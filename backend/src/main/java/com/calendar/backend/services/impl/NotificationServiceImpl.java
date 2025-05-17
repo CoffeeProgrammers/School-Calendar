@@ -39,7 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
     public PaginationListResponse<NotificationResponse> findAllByUserId(long userId, int page, int size) {
         log.info("Service: Finding all notifications for user with id {}", userId);
         Page<Notification> notifications = notificationRepository.findAllNotificationsByUserId(userId,
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "time")));
+                PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "time")));
         PaginationListResponse<NotificationResponse> response = new PaginationListResponse<>();
         response.setTotalPages(notifications.getTotalPages());
         response.setContent(notifications.getContent().stream()
