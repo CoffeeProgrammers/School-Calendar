@@ -2,6 +2,7 @@ package com.calendar.backend.controllers;
 
 import com.calendar.backend.dto.comment.CommentRequest;
 import com.calendar.backend.dto.comment.CommentResponse;
+import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.CommentService;
 import jakarta.validation.Valid;
@@ -60,5 +61,11 @@ public class CommentController {
         return commentService.findAllByEventId(eventId, page, size);
     }
 
+    @GetMapping("/getMyCount")
+    @ResponseStatus(HttpStatus.OK)
+    public LongResponse getMyCommentsCount(Authentication auth) {
+        log.info("Controller: Get my comments count");
+        return commentService.countAllCommentsByCreatorId(auth);
+    }
 }
 
