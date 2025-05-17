@@ -7,6 +7,20 @@ class BaseService {
             baseURL,
             withCredentials: true,
         });
+        this.apiClient.interceptors.response.use(
+          response => response,
+          async error => {
+            console.log("error");
+            if (error.response && error.response.status === 498 && !error.config._retried) {
+              error.config._retried = true;
+              return this.apiClient(error.config);
+            }
+            if(error.response && error.response.status === 401) {
+              console.log("401");
+            }
+            return Promise.reject(error);
+          }
+        );
 
         this.apiClient.interceptors.request.use(
             (config) => {
