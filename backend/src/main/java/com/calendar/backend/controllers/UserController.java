@@ -27,7 +27,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('CHIEF_TEACHER')")
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public UserFullResponse createUser(@Valid @RequestBody UserCreateRequest request) {
@@ -35,7 +35,7 @@ public class UserController {
         return userService.create(request);
     }
 
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('CHIEF_TEACHER')")
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserFullResponse updateUser(
@@ -104,7 +104,7 @@ public class UserController {
         return userMapper.fromUserToUserResponse(userService.findUserByAuth(auth));
     }
 
-    @PreAuthorize("hasRole('TEACHER')")
+    @PreAuthorize("hasRole('CHIEF_TEACHER')")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {

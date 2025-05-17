@@ -32,7 +32,7 @@ public class CommentController {
         return commentService.create(request, auth, eventId);
     }
 
-    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfComment(#auth, #id)")
+    @PreAuthorize("hasRole('CHIEF_TEACHER') or @userSecurity.checkCreatorOfComment(#auth, #id)")
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CommentResponse updateComment(
@@ -43,7 +43,7 @@ public class CommentController {
         return commentService.update(request, id);
     }
 
-    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfComment(#auth, #id)")
+    @PreAuthorize("hasRole('CHIEF_TEACHER') or @userSecurity.checkCreatorOfComment(#auth, #id)")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable Long id) {
