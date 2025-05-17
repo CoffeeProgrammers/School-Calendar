@@ -71,8 +71,9 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     public void assignTasksToEventUsers(Long eventId, Long taskId) {
         log.info("Service: Assigning tasks for users from event with id {}", eventId);
         List<User> users = userService.findAllByEventIdForServices(eventId);
+        System.out.println(users);
         for(User user : users) {
-            create(user.getId(), taskId);
+            create(taskId, user.getId());
         }
     }
 
