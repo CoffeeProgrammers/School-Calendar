@@ -139,10 +139,12 @@ public class TaskController {
             "&& @userSecurity.checkCreatorOfEvent(#auth, #event_id)")
     @PutMapping("/assign/{id}/to/{event_id}")
     @ResponseStatus(HttpStatus.OK)
-    public TaskListResponse assignTaskToEvent(@PathVariable Long id, @PathVariable Long event_id, Authentication auth) {
+    public TaskListResponse assignTaskToEvent(
+            @PathVariable Long id, @PathVariable Long event_id, Authentication auth) {
         log.info("Controller: Assign task with id: {} to event with id: {}", id, event_id);
         TaskListResponse taskListResponse = taskService.assignTaskToEvent(event_id, id);
         taskAssignmentService.assignTasksToEventUsers(event_id, id);
+        taskListResponse.setDone(taskAssignmentService.isDone(id, auth));
         return taskListResponse;
     }
 
