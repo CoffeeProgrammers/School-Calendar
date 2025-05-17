@@ -68,9 +68,10 @@ public class EventController {
     }
 
 
+    @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkUserInPart(#auth, #id)")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EventFullResponse getEvent(@PathVariable Long id) {
+    public EventFullResponse getEvent(@PathVariable Long id, Authentication auth) {
         log.info("Controller: Get event with id: {}", id);
         return eventService.findById(id);
     }
