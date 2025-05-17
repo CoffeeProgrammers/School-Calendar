@@ -71,8 +71,9 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     public void assignTasksToEventUsers(Long eventId, Long taskId) {
         log.info("Service: Assigning tasks for users from event with id {}", eventId);
         List<User> users = userService.findAllByEventIdForServices(eventId);
-        System.out.println(users);
+        Long creatorId = taskService.findById(taskId).getCreator().getId();
         for(User user : users) {
+            if(user.getId() == creatorId) continue;
             create(taskId, user.getId());
         }
     }
@@ -92,5 +93,16 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
             task.setDone(this.isDone(task.getId(), authentication));
             return task;}).toList());
         return tasks;
+    }
+
+    @Override
+    @Transactional
+    public void unassignTasksFromEventUsers(Long id) {
+        log.info("Service: Unsigning all task assignments for event users for task with id {}", id);
+        Task task = taskService.findByIdForServices(id);
+        for(User user : task.getEvent().getUsers()) {
+            if(user.getId() == task.getCreator().getId()) continue;
+            taskAssignmentRepository.deleteByTask_IdAndUser_Id(task.getId(), user.getId());
+        }
     }
 }

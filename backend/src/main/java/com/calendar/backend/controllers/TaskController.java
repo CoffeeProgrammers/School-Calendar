@@ -37,7 +37,7 @@ public class TaskController {
         if(eventId != null) {
             taskAssignmentService.assignTasksToEventUsers(eventId, task.getId());
         }
-        taskAssignmentService.create(task.getId(), userService.findUserByAuth(auth).getId());
+        taskAssignmentService.create(task.getId(), task.getCreator().getId());
         return task;
     }
 
@@ -150,8 +150,8 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public void unassignTaskFromEvent(@PathVariable Long id, Authentication auth) {
         log.info("Controller: Unassign task with id: {} from event", id);
+        taskAssignmentService.unassignTasksFromEventUsers(id);
         taskService.unassignTaskFromEvent(id);
-        // TODO unassign task from event users
     }
 
     @GetMapping("/countAllMy/user/{userId}")
