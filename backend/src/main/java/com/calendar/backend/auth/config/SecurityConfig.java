@@ -60,7 +60,7 @@ public class SecurityConfig {
                 .sessionManagement(s -> s
                         .sessionCreationPolicy(SessionCreationPolicy.NEVER))
                 .logout(logout -> logout
-                        .logoutUrl("/api/logout")
+                        .logoutUrl("/api/auth/logout")
                         .invalidateHttpSession(true)
                 )
                 .addFilterBefore(authJwtTokenFilter(), SecurityContextPersistenceFilter.class)
