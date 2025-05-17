@@ -66,6 +66,9 @@ const Tasks = () => {
         fetchData();
     }, [searchName, deadline, isDone, page, isPast]);
 
+    useEffect(() => {
+        setPage(1);
+    }, [searchName, deadline, isDone, isPast]);
 
     const handleCreate = async (newTask) => {
         try {

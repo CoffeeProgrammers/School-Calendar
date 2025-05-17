@@ -13,6 +13,12 @@
     font-weight: normal;
 }
 
+.rbc-header {
+    flex: 1 1 14.2857143% !important;
+    max-width: 14.2857143% !important;
+    min-width: 0 !important;
+}
+
 .rbc-event {
     background-color: #f4f4f4 !important;
     border-radius: 10px !important;

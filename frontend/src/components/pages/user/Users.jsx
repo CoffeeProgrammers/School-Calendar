@@ -53,6 +53,9 @@ const Users = () => {
         fetchData();
     }, [searchFirstName, role, page, searchEmail, searchLastName]);
 
+    useEffect(() => {
+        setPage(1);
+    }, [searchFirstName, searchLastName, searchEmail, role]);
 
     if (loading) {
         return <Loading/>;

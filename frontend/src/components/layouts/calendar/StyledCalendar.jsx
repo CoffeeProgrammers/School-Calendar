@@ -1,7 +1,7 @@
 import React from 'react';
 import {Calendar, momentLocalizer} from 'react-big-calendar';
 import moment from 'moment';
-// import 'moment/locale/en-gb';
+import 'moment/locale/en-gb';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import {Box, Divider, Typography} from "@mui/material";
 import '../../../assets/css/calendar.css';
@@ -16,7 +16,7 @@ const localizer = momentLocalizer(moment);
 
 const mapEventToCalendarEvent = (event) => ({
     id: event.id,
-    title: `${event.name}`,
+    title: event.name,
     start: new Date(event.startDate),
     end: new Date(event.endDate),
     resource: {

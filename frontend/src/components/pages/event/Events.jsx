@@ -54,9 +54,12 @@ const Events = () => {
         };
 
         fetchData();
-    }, [searchQuery, eventType, page, startDateFilter, endDateFilter]);
+    }, [endDateFilter, eventType, page, searchQuery, startDateFilter]);
 
-
+    useEffect(() => {
+        setPage(1);
+    }, [searchQuery, eventType, startDateFilter, endDateFilter]);
+    
     const handleCreate = async (newEvent) => {
         try {
             console.log(newEvent)

@@ -27,7 +27,7 @@ const ProfileContainer = () => {
 
     const handleUpdate = async (updatedUser) => {
         try {
-            const response = await UserService.updateUser(user.id, updatedUser);
+            const response = await UserService.updateMyUser(updatedUser);
             setUser(response);
         } catch (error) {
             setError(error);

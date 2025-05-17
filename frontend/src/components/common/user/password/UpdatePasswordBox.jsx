@@ -37,7 +37,7 @@ const UpdatePasswordBox = (
 
                     <Box sx={{display: 'flex', flexDirection: 'column', gap: 1.5}}>
                         <TextField
-                            type="password"
+                            type='password'
                             label="Password"
                             fullWidth
                             variant="outlined"
@@ -46,17 +46,16 @@ const UpdatePasswordBox = (
                         />
 
                         <TextField
-                            type="password"
+                            type='password'
                             label="New password"
                             fullWidth
                             variant="outlined"
-                            multiline
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                         />
 
                         <TextField
-                            type="password"
+                            type='password'
                             label="Confirm New Password"
                             fullWidth
                             variant="outlined"
