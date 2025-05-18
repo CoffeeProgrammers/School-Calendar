@@ -7,7 +7,6 @@ import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.CommentMapper;
 import com.calendar.backend.models.Comment;
 import com.calendar.backend.models.Event;
-import com.calendar.backend.models.Notification;
 import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.CommentRepository;
 import com.calendar.backend.services.inter.EventService;
@@ -68,18 +67,18 @@ class CommentServiceImplTest {
         request.setText("New comment");
         Authentication auth = mock(Authentication.class);
 
-        when(auth.getName()).thenReturn(user.getEmail());
-        when(userService.findByEmailForServices(user.getEmail())).thenReturn(user);
+        event.setCreator(user);
         when(eventService.findByIdForServices(event.getId())).thenReturn(event);
         when(commentMapper.fromCommentRequestToComment(request)).thenReturn(comment);
         when(commentRepository.save(any(Comment.class))).thenReturn(comment);
         when(commentMapper.fromCommentToCommentResponse(comment)).thenReturn(new CommentResponse());
+        when(userService.findUserByAuth(auth)).thenReturn(user);
 
         CommentResponse result = commentService.create(request, auth, event.getId());
 
         assertNotNull(result);
         verify(commentRepository).save(any(Comment.class));
-        verify(notificationService).create(any(Notification.class));
+        verify(notificationService).create(List.of(user), "New comment to event " + event.getName());
     }
 
     @Test

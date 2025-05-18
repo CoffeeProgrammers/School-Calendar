@@ -166,7 +166,7 @@ public class InvitationServiceImpl implements InvitationService {
     }
 
 
-    private List<InvitationResponse> checkAndAddWarning(List<InvitationResponse> response) {
+    public List<InvitationResponse> checkAndAddWarning(List<InvitationResponse> response) {
         log.info("Service: Checking invitations for warnings");
 
         for (InvitationResponse invitationResponse : response) {

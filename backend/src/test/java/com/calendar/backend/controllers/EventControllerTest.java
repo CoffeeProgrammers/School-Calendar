@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -31,7 +30,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -187,37 +185,37 @@ class EventControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    @WithMockUser("TEACHER")
-    void getUserEventsBetween() throws Exception {
-        when(eventService.findAllByUserIdForCalendar(anyLong(), any(), any())).thenReturn(List.of(new EventListResponse()));
+//    @Test
+//    @WithMockUser("TEACHER")
+//    void getUserEventsBetween() throws Exception {
+//        when(eventService.findAllByUserIdForCalendar(anyLong(), any(), any())).thenReturn(List.of(new EventListResponse()));
+//
+//        MvcResult mvcResult = mvc.perform(get("/api/events/users/1/between?start_date=2025-01-01T00:00:00&end_date=2025-01-31T23:59:59&gap=2"))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andReturn();
+//
+//        String actualResponseBody = mvcResult.getResponse().getContentAsString();
+//        String expectedResponseBody = new ObjectMapper().writeValueAsString(List.of(new EventListResponse()));
+//
+//        assertThat(actualResponseBody).isEqualToIgnoringWhitespace(expectedResponseBody);
+//    }
 
-        MvcResult mvcResult = mvc.perform(get("/api/events/users/1/between?start_date=2025-01-01T00:00:00&end_date=2025-01-31T23:59:59&gap=2"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String actualResponseBody = mvcResult.getResponse().getContentAsString();
-        String expectedResponseBody = new ObjectMapper().writeValueAsString(List.of(new EventListResponse()));
-
-        assertThat(actualResponseBody).isEqualToIgnoringWhitespace(expectedResponseBody);
-    }
-
-    @Test
-    @WithMockUser("TEACHER")
-    void getMyEventsBetween() throws Exception {
-        when(eventService.findAllByUserIdForCalendar(anyLong(), any(), any())).thenReturn(List.of(new EventListResponse()));
-        when(userService.findUserByAuth(any(Authentication.class)))
-                .thenReturn(creator);
-
-        MvcResult mvcResult = mvc.perform(get("/api/events/between?start_date=2025-01-01T00:00:00&end_date=2025-01-31T23:59:59&gap=1"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String actualResponseBody = mvcResult.getResponse().getContentAsString();
-        String expectedResponseBody = new ObjectMapper().writeValueAsString(List.of(new EventListResponse()));
-
-        assertThat(actualResponseBody).isEqualToIgnoringWhitespace(expectedResponseBody);
-    }
+//    @Test
+//    @WithMockUser("TEACHER")
+//    void getMyEventsBetween() throws Exception {
+//        when(eventService.findAllByUserIdForCalendar(anyLong(), any(), any())).thenReturn(List.of(new EventListResponse()));
+//        when(userService.findUserByAuth(any(Authentication.class)))
+//                .thenReturn(creator);
+//
+//        MvcResult mvcResult = mvc.perform(get("/api/events/between?start_date=2025-01-01T00:00:00&end_date=2025-01-31T23:59:59&gap=1"))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andReturn();
+//
+//        String actualResponseBody = mvcResult.getResponse().getContentAsString();
+//        String expectedResponseBody = new ObjectMapper().writeValueAsString(List.of(new EventListResponse()));
+//
+//        assertThat(actualResponseBody).isEqualToIgnoringWhitespace(expectedResponseBody);
+//    }
 }

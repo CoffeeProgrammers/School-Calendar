@@ -5,11 +5,12 @@ import com.calendar.backend.dto.event.EventCreateRequest;
 import com.calendar.backend.dto.event.EventFullResponse;
 import com.calendar.backend.dto.event.EventListResponse;
 import com.calendar.backend.dto.event.EventUpdateRequest;
+import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.EventMapper;
 import com.calendar.backend.models.Event;
-import com.calendar.backend.models.Notification;
 import com.calendar.backend.models.User;
+import com.calendar.backend.models.enums.EventType;
 import com.calendar.backend.repositories.EventRepository;
 import com.calendar.backend.services.inter.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +28,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,8 +58,15 @@ class EventServiceImplTest {
     @BeforeEach
     void setUp() {
         user = TestUtil.createUser("TEACHER");
+
         student = TestUtil.createUser("STUDENT");
         event = TestUtil.createEvent("Sample Event", student);
+        user.setEvents(new ArrayList<>(List.of(
+                TestUtil.createEvent("Sample Event", student),
+                TestUtil.createEvent("Sample Event", student),
+                TestUtil.createEvent("Sample Event", student),
+                TestUtil.createEvent("Sample Event", student),
+                event)));
     }
 
     @Test
@@ -114,7 +123,7 @@ class EventServiceImplTest {
 
         eventService.delete(event.getId());
 
-        verify(notificationService).create(any(Notification.class));
+        verify(notificationService).create(any(), anyString());
         verify(eventRepository).deleteById(event.getId());
     }
 
@@ -132,7 +141,7 @@ class EventServiceImplTest {
 
         eventService.deleteUserById(event.getId(), student.getId());
 
-        verify(notificationService).create(any(Notification.class));
+        verify(notificationService).create(any(), anyString());
         verify(eventRepository).findById(event.getId());
         verify(userService).findByIdForServices(student.getId());
     }
@@ -143,7 +152,7 @@ class EventServiceImplTest {
 
         assertThrows(EntityNotFoundException.class, () -> eventService.deleteUserById(event.getId(), student.getId()));
 
-        verify(notificationService, times(0)).create(any(Notification.class));
+        verify(notificationService, times(0)).create(any(), anyString());
         verify(userService, times(0)).findByIdForServices(student.getId());
     }
 
@@ -173,7 +182,53 @@ class EventServiceImplTest {
         when(eventRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
         when(eventMapper.fromEventToEventListResponse(any(Event.class))).thenReturn(new EventListResponse());
 
-        PaginationListResponse<EventListResponse> result = eventService.findAllByUserId(userId, "", "", "", "", 0, 10);
+        Event first = user.getEvents().get(0);
+        first.setStartDate(LocalDateTime.now().minusDays(1));
+        first.setEndDate(LocalDateTime.now().plusDays(1));
+        first.setType(EventType.TEST);
+        PaginationListResponse<EventListResponse> result = eventService.findAllByUserId(userId, first.getName(),first.getStartDate().toString(), first.getEndDate().toString(), first.getType().toString(), 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+    }
+
+    @Test
+    void findAllByUserId_successFiltersBlank() {
+        long userId = 1L;
+        Page<Event> page = new PageImpl<>(List.of(event));
+
+        when(eventRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
+        when(eventMapper.fromEventToEventListResponse(any(Event.class))).thenReturn(new EventListResponse());
+
+        PaginationListResponse<EventListResponse> result = eventService.findAllByUserId(userId, "","","","", 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+    }
+
+    @Test
+    void filtersNullStringCheck() {
+        long userId = 1L;
+        Page<Event> page = new PageImpl<>(List.of(event));
+
+        when(eventRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
+        when(eventMapper.fromEventToEventListResponse(any(Event.class))).thenReturn(new EventListResponse());
+
+        PaginationListResponse<EventListResponse> result = eventService.findAllByUserId(userId, "null", "null", "null", "null", 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+    }
+
+    @Test
+    void filtersNullCheck() {
+        long userId = 1L;
+        Page<Event> page = new PageImpl<>(List.of(event));
+
+        when(eventRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
+        when(eventMapper.fromEventToEventListResponse(any(Event.class))).thenReturn(new EventListResponse());
+
+        PaginationListResponse<EventListResponse> result = eventService.findAllByUserId(userId, null, null, null, null, 0, 10);
 
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalPages());
@@ -194,4 +249,43 @@ class EventServiceImplTest {
 
         assertEquals(1, result.size());
     }
+
+    @Test
+    void countAllEventsByUserAndPast_success() {
+        long count = user.getEvents().stream().filter(e -> e.getEndDate().isBefore(LocalDateTime.now())).count();
+        when(eventRepository.countAllByUserAndPast(eq(user.getId()), any())).thenReturn(count);
+        System.out.println(user.getEvents());
+        System.out.println(count);
+        LongResponse longResponse = eventService.countAllEventsByUserAndPast(user.getId());
+
+        assertEquals(count, longResponse.getCount());
+        verify(eventRepository, times(1)).countAllByUserAndPast(eq(user.getId()), any());
+    }
+
+    @Test
+    void findForInvitationCheck_success() {
+        LocalDateTime start = LocalDateTime.now().minusDays(1);
+        LocalDateTime end = LocalDateTime.now().plusDays(1);
+        List<String> warnings = List.of("Warning1", "Warning2");
+
+        when(eventRepository.existWarningInvitation(user.getId(), start, end)).thenReturn(warnings);
+
+        List<String> result = eventService.findForInvitationCheck(user.getId(), start, end);
+
+        assertEquals(2, result.size());
+        assertEquals("Warning1", result.get(0));
+        verify(eventRepository).existWarningInvitation(user.getId(), start, end);
+    }
+
+    @Test
+    void unsignUserAndCreatorFromAll() {
+        when(eventRepository.findAll(any(Specification.class))).thenReturn(user.getEvents());
+        when(userService.findByEmailForServices("!deleted-user!@deleted.com")).thenReturn(new User());
+
+        eventService.unsignUserAndCreatorFromAll(user.getId());
+
+        verify(eventRepository, times(2)).saveAll(any());
+    }
+
+
 }

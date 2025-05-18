@@ -6,9 +6,11 @@ import com.calendar.backend.dto.user.UserFullResponse;
 import com.calendar.backend.dto.user.UserListResponse;
 import com.calendar.backend.dto.user.UserUpdateRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
+import com.calendar.backend.dto.wrapper.PasswordRequest;
 import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.UserRepository;
+import com.calendar.backend.repositories.specification.UserSpecification;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,8 +32,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -52,10 +53,13 @@ class UserServiceImplTest {
     private UserCreateRequest userCreateRequest;
     private UserFullResponse userFullResponse;
     private UserFullResponse userFullResponseUpdate;
+    private String rawPassword;
 
     @BeforeEach
     void setUp() {
         user = TestUtil.createUser("TEACHER");
+        rawPassword = user.getPassword();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userCreateRequest = new UserCreateRequest();
         userCreateRequest.setEmail(user.getEmail());
         userCreateRequest.setPassword(user.getPassword());
@@ -161,6 +165,21 @@ class UserServiceImplTest {
 
         assertEquals(captured, userFullResponseUpdate);
     }
+    @Test
+    void updateUser_deleted() {
+        // when
+        user.setEmail("!deleted-user!@deleted.com");
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+
+        ArgumentCaptor<User> argumentCaptor = ArgumentCaptor.forClass(User.class);
+        assertThrows(EntityExistsException.class, () -> userService.updateUser(userUpdateRequest, user.getId()));
+
+        // then
+        verify(userRepository, times(0)).save(argumentCaptor.capture());
+        verify(userRepository, times(1)).findById(user.getId());
+
+        verify(userMapper, times(0)).fromUserToUserResponse(updatedUser);
+    }
 
     @Test
     void updateUser_notExists() {
@@ -175,6 +194,41 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).findById(user.getId());
 
         verify(userMapper, times(0)).fromUserToUserResponse(updatedUser);
+    }
+
+    @Test
+    void updatePassword_success() {
+        // when
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn(user.getEmail());
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+
+        PasswordRequest passwordRequest = new PasswordRequest();
+        passwordRequest.setOldPassword(rawPassword);
+        passwordRequest.setNewPassword("newPassword1");
+
+        when(passwordEncoder.matches(passwordRequest.getOldPassword(), user.getPassword())).thenReturn(true);
+        assertTrue(userService.updatePassword(passwordRequest, authentication));
+
+        // then
+        verify(userRepository, times(1)).save(any(User.class));
+        verify(userRepository, times(1)).findByEmail(user.getEmail());
+    }
+
+    @Test
+    void updatePassword_notMatch() {
+        // when
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn(user.getEmail());
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        PasswordRequest passwordRequest = new PasswordRequest();
+        passwordRequest.setOldPassword(user.getPassword() + "123");
+        passwordRequest.setNewPassword("newPassword1");
+        assertFalse(userService.updatePassword(passwordRequest, authentication));
+
+        // then
+        verify(userRepository, times(0)).save(any(User.class));
+        verify(userRepository, times(1)).findByEmail(user.getEmail());
     }
 
     @Test
@@ -206,18 +260,37 @@ class UserServiceImplTest {
         verify(userMapper, times(0)).fromUserToUserResponse(updatedUser);
     }
 
-//    @Test
-//    void findAll_success() {
-//        Page<User> page = new PageImpl<>(List.of(user));
-//        when(userRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
-//        when(userMapper.fromUserToUserListResponse(user)).thenReturn(new UserListResponse());
-//
-//        PaginationListResponse<UserListResponse> result = userService.findAll("", "", "", "", 0, 10);
-//
-//        assertEquals(1, result.getContent().size());
-//        assertEquals(1, result.getTotalPages());
-//        verify(userRepository).findAll(any(Specification.class), any(PageRequest.class));
-//    }
+    @Test
+    void findAll_success() {
+        Page<User> page = new PageImpl<>(List.of(user));
+        Authentication authentication = mock(Authentication.class);
+        when(userRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
+        when(userRepository.findByEmail("myEmail@gmail.com")).thenReturn(Optional.of(user));
+        when(userMapper.fromUserToUserListResponse(user)).thenReturn(new UserListResponse());
+        when(authentication.getName()).thenReturn("myEmail@gmail.com");
+
+        PaginationListResponse<UserListResponse> result = userService.findAll("myEmail@gmail.com", user.getFirstName(), user.getLastName(), user.getRole().toString(), 0, 10, authentication);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(userRepository).findAll(any(Specification.class), any(PageRequest.class));
+    }
+
+    @Test
+    void filtersNullCheck() {
+        Page<User> page = new PageImpl<>(List.of(user));
+        Authentication authentication = mock(Authentication.class);
+        when(userRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
+        when(userRepository.findByEmail("myEmail@gmail.com")).thenReturn(Optional.of(user));
+        when(userMapper.fromUserToUserListResponse(user)).thenReturn(new UserListResponse());
+        when(authentication.getName()).thenReturn("myEmail@gmail.com");
+
+        PaginationListResponse<UserListResponse> result = userService.findAll("null", "null", "null", "null", 0, 10, authentication);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(userRepository).findAll(any(Specification.class), any(PageRequest.class));
+    }
 
     @Test
     void findAllByEventId_success() {
@@ -234,7 +307,36 @@ class UserServiceImplTest {
     }
 
     @Test
+    void findAllByNotEventId_success() {
+        Page<User> page = new PageImpl<>(List.of(user));
+        when(userRepository.findAll(UserSpecification.doesNotHaveEvent(1L)
+                .and(UserSpecification.filterUsers(any())), any(PageRequest.class))).thenReturn(page);
+        when(userMapper.fromUserToUserListResponse(user)).thenReturn(new UserListResponse());
+
+        PaginationListResponse<UserListResponse> result = userService.findAllByEventsNotContains(null, null, null, null, 1L, 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(userRepository).findAll(any(Specification.class), any(PageRequest.class));
+    }
+
+    @Test
+    void findTop5Users_success() {
+        List<UserListResponse> result = List.of(new UserListResponse());
+        when(userRepository.findTop5UsersByUpcomingEvents(any())).thenReturn(List.of(new User()));
+        when(userMapper.fromUserToUserListResponse(new User())).thenReturn(new UserListResponse());
+
+        List<UserListResponse> result2 = userService.findTop5UsersByUpcomingEvents();
+
+        assertEquals(result.get(0), result2.get(0));
+        assertEquals(1, result.size());
+        verify(userRepository).findTop5UsersByUpcomingEvents(any());
+    }
+
+    @Test
     void delete_success() {
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+
         userService.delete(user.getId());
 
         verify(userRepository).deleteById(user.getId());

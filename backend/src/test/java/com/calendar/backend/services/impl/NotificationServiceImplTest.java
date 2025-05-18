@@ -5,6 +5,7 @@ import com.calendar.backend.dto.notification.NotificationResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.NotificationMapper;
 import com.calendar.backend.models.Notification;
+import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.NotificationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,9 +49,10 @@ class NotificationServiceImplTest {
     void create_success() {
         when(notificationRepository.save(any(Notification.class))).thenReturn(notification);
 
-        notificationService.create(notification);
+        User user = TestUtil.createUser("TEACHER");
+        notificationService.create(List.of(user), "123456");
 
-        verify(notificationRepository).save(notification);
+        verify(notificationRepository).save(any());
     }
 
     @Test

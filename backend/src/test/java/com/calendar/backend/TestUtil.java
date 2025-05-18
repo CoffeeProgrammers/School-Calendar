@@ -25,6 +25,7 @@ public class TestUtil {
     public static Event createEvent(String name) {
         Event event = new Event();
         event.setName(name);
+        event.setEndDate(LocalDateTime.now().plusDays((int)((Math.random()-0.5f) * 10)));
         return event;
     }
 
