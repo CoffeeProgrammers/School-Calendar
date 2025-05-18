@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService {
     public UserFullResponse updateUser(UserUpdateRequest userUpdateRequest, long userId) {
         log.info("Service: Updating user with id {}", userId);
 
-        checkForDeletedUser(userId);
         User userToUpdate = findByIdForServices(userId);
+        checkForDeletedUser(userToUpdate);
 
         userToUpdate.setFirstName(userUpdateRequest.getFirstName());
         userToUpdate.setLastName(userUpdateRequest.getLastName());
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
     public void delete(long id) {
         log.info("Service: Deleting user with id {}", id);
 
-        checkForDeletedUser(id);
+        checkForDeletedUser(findByIdForServices(id));
 
         userRepository.deleteById(id);
     }
@@ -156,11 +156,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserListResponse> findTop5UsersByUpcomingEvents() {
+    public List<UserListResponse> findTop5UsersBySentComments() {
+        log.info("Service: Finding top 5 users with sent comments");
+
+        List<User> users = userRepository.findTop5UsersBySentComments();
+
+        return users.stream().map(userMapper::fromUserToUserListResponse).toList();
+    }
+
+    @Override
+    public List<UserListResponse> findTop5UsersByPastEvents() {
         log.info("Service: Finding top 5 users with upcoming events");
 
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Kiev"));
-        List<User> users = userRepository.findTop5UsersByUpcomingEvents(now);
+        List<User> users = userRepository.findTop5UsersByPastEvents(now);
+
+        return users.stream().map(userMapper::fromUserToUserListResponse).toList();
+    }
+
+    @Override
+    public List<UserListResponse> findTop5UsersByDoneTasks() {
+        log.info("Service: Finding top 5 users with done tasks");
+
+        List<User> users = userRepository.findTop5UsersByDoneTasks();
 
         return users.stream().map(userMapper::fromUserToUserListResponse).toList();
     }
@@ -230,11 +248,11 @@ public class UserServiceImpl implements UserService {
         return filters;
     }
 
-    private void checkForDeletedUser(long userId){
-        log.info("Service: Checking for deleted user with id {}", userId);
+    private void checkForDeletedUser(User user){
+        log.info("Service: Checking for deleted user with id {}", user.getId());
 
-        if (findByIdForServices(userId).getEmail().equals("!deleted-user!@deleted.com")) {
-            log.info("Service: User with id {} is deleted", userId);
+        if (user.getEmail().equals("!deleted-user!@deleted.com")) {
+            log.info("Service: User with id {} is deleted", user.getId());
             throw new EntityExistsException("Can`t do anything with deleted user");
         }
     }

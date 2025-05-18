@@ -29,5 +29,22 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
             "GROUP BY u.id " +
             "ORDER BY COUNT(e.id) DESC " +
             "LIMIT 5", nativeQuery = true)
-    List<User> findTop5UsersByUpcomingEvents(LocalDateTime now);
+    List<User> findTop5UsersByPastEvents(LocalDateTime now);
+
+    @Query(value = "SELECT u.* " +
+            "FROM users u " +
+            "INNER JOIN comments c ON u.id = c.creator_id " +
+            "GROUP BY u.id " +
+            "ORDER BY COUNT(c.id) DESC " +
+            "LIMIT 5", nativeQuery = true)
+    List<User> findTop5UsersBySentComments();
+
+    @Query(value = "SELECT u.* " +
+            "FROM users u " +
+            "INNER JOIN task_assignments ta ON u.id = ta.user_id " +
+            "WHERE ta.is_done=true " +
+            "GROUP BY u.id " +
+            "ORDER BY COUNT(ta.id) DESC " +
+            "LIMIT 5", nativeQuery = true)
+    List<User> findTop5UsersByDoneTasks();
 }

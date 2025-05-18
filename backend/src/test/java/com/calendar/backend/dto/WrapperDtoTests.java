@@ -1,7 +1,6 @@
 package com.calendar.backend.dto;
 
-import com.calendar.backend.dto.wrapper.PaginationListResponse;
-import com.calendar.backend.dto.wrapper.StringRequest;
+import com.calendar.backend.dto.wrapper.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,29 +11,72 @@ class WrapperDtoTests {
 
     @Test
     void testPaginationListResponse() {
-        PaginationListResponse<String> response1 = new PaginationListResponse<>();
-        response1.setTotalPages(5);
-        response1.setContent(List.of("Item1", "Item2"));
+        PaginationListResponse<String> dto1 = new PaginationListResponse<>();
+        dto1.setTotalPages(5);
+        dto1.setContent(List.of("Item1", "Item2"));
 
-        PaginationListResponse<String> response2 = new PaginationListResponse<>();
-        response2.setTotalPages(response1.getTotalPages());
-        response2.setContent(response1.getContent());
+        PaginationListResponse<String> dto2 = new PaginationListResponse<>();
+        dto2.setTotalPages(dto1.getTotalPages());
+        dto2.setContent(dto1.getContent());
 
-        assertEquals(response1, response2);
-        assertEquals(response1.toString(), response2.toString());
-        assertEquals(response1.hashCode(), response2.hashCode());
+        assertEquals(dto1, dto2);
+        assertEquals(dto1.toString(), dto2.toString());
+        assertEquals(dto1.hashCode(), dto2.hashCode());
     }
 
     @Test
     void testStringRequest() {
-        StringRequest request1 = new StringRequest();
-        request1.setText("Sample text");
+        StringRequest dto1 = new StringRequest();
+        dto1.setText("Sample text");
 
-        StringRequest request2 = new StringRequest();
-        request2.setText(request1.getText());
+        StringRequest dto2 = new StringRequest();
+        dto2.setText(dto1.getText());
 
-        assertEquals(request1, request2);
-        assertEquals(request1.toString(), request2.toString());
-        assertEquals(request1.hashCode(), request2.hashCode());
+        assertEquals(dto1, dto2);
+        assertEquals(dto1.toString(), dto2.toString());
+        assertEquals(dto1.hashCode(), dto2.hashCode());
+    }
+
+    @Test
+    void testCountAllTaskAndCompleted() {
+        CountAllTaskAndCompleted dto1 = new CountAllTaskAndCompleted();
+        dto1.setCountAll(10L);
+        dto1.setCountCompleted(7L);
+
+        CountAllTaskAndCompleted dto2 = new CountAllTaskAndCompleted();
+        dto2.setCountAll(dto1.getCountAll());
+        dto2.setCountCompleted(dto1.getCountCompleted());
+
+        assertEquals(dto1, dto2);
+        assertEquals(dto1.toString(), dto2.toString());
+        assertEquals(dto1.hashCode(), dto2.hashCode());
+    }
+
+    @Test
+    void testLongResponse() {
+        LongResponse dto1 = new LongResponse();
+        dto1.setCount(42L);
+
+        LongResponse dto2 = new LongResponse();
+        dto2.setCount(dto1.getCount());
+
+        assertEquals(dto1, dto2);
+        assertEquals(dto1.toString(), dto2.toString());
+        assertEquals(dto1.hashCode(), dto2.hashCode());
+    }
+
+    @Test
+    void testPasswordRequest() {
+        PasswordRequest dto1 = new PasswordRequest();
+        dto1.setOldPassword("OldPass123");
+        dto1.setNewPassword("NewPass123");
+
+        PasswordRequest dto2 = new PasswordRequest();
+        dto2.setOldPassword(dto1.getOldPassword());
+        dto2.setNewPassword(dto1.getNewPassword());
+
+        assertEquals(dto1, dto2);
+        assertEquals(dto1.toString(), dto2.toString());
+        assertEquals(dto1.hashCode(), dto2.hashCode());
     }
 }

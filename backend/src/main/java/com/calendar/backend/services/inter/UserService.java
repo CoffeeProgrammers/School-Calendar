@@ -24,7 +24,9 @@ public interface UserService extends UserDetailsService {
             String email, String firstName, String lastName, String role, long eventId, int page, int size, Authentication auth);
     PaginationListResponse<UserListResponse> findAllByEventsNotContains(
             String email, String firstName, String lastName, String role, long eventId, int page, int size);
-    List<UserListResponse> findTop5UsersByUpcomingEvents();
+    List<UserListResponse> findTop5UsersBySentComments();
+    List<UserListResponse> findTop5UsersByPastEvents();
+    List<UserListResponse> findTop5UsersByDoneTasks();
     User findUserByAuth(Authentication authentication);
     User findByIdForServices(long id);
     User findByEmailForServices(String email);

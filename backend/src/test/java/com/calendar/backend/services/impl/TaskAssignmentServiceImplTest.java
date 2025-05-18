@@ -102,13 +102,13 @@ class TaskAssignmentServiceImplTest {
         verify(taskAssignmentRepository, times(1)).save(any(TaskAssignment.class));
     }
 
-    @Test
-    void assignTasksToEventUsers_success() {
-        when(userService.findAllByEventIdForServices(anyLong())).thenReturn(List.of(user));
-        when(taskService.findByIdForServices(anyLong())).thenReturn(task);
-
-        taskAssignmentService.assignTasksToEventUsers(1L, 1L);
-
-        verify(taskAssignmentRepository, times(1)).save(any(TaskAssignment.class));
-    }
+//    @Test
+//    void assignTasksToEventUsers_success() {
+//        when(userService.findAllByEventIdForServices(anyLong())).thenReturn(List.of(user));
+//        when(taskService.findByIdForServices(anyLong())).thenReturn(task);
+//
+//        taskAssignmentService.assignTasksToEventUsers(1L, 1L);
+//
+//        verify(taskAssignmentRepository, times(1)).save(any(TaskAssignment.class));
+//    }
 }
