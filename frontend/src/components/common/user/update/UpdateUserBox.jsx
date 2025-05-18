@@ -62,6 +62,18 @@ const UpdateUserBox = (
                                 onChange={(e) => setLastName(e.target.value)}
                             />
 
+
+
+                            <TextField
+                                label="Description"
+                                fullWidth
+                                variant="outlined"
+                                multiline
+                                rows={4}
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                            />
+
                             <DateTimePicker
                                 label="Birthday"
                                 views={['year', 'month', 'day']}
@@ -79,16 +91,6 @@ const UpdateUserBox = (
                                         },
                                     }
                                 }}
-                            />
-
-                            <TextField
-                                label="Description"
-                                fullWidth
-                                variant="outlined"
-                                multiline
-                                rows={4}
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
                             />
 
                         </Box>

@@ -5,7 +5,6 @@ const API_URL = 'http://localhost:8081/api/'
 
 const apiClient = axios.create({
     baseURL: API_URL,
-    withCredentials: true
 });
 
 class AuthService {
@@ -45,7 +44,13 @@ class AuthService {
 
     static async logout() {
         try {
-            await apiClient.post("auth/logout");
+            const accessToken = Cookies.get('accessToken');
+            await axios.post(`${API_URL}auth/logout`, {}, {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
 
             Cookies.remove('accessToken');
             Cookies.remove('role');
