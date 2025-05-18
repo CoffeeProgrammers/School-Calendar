@@ -92,7 +92,7 @@ public class TaskServicesImpl implements TaskService {
 
     @Override
     public PaginationListResponse<TaskListResponse> findAllByEventId(
-            long eventId, int page, int size) {
+            long eventId, int page, int size, Authentication authentication) {
 
         log.info("Service: Finding all tasks for event with id {}", eventId);
 

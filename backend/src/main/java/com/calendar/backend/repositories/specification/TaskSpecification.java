@@ -53,17 +53,8 @@ public class TaskSpecification {
     }
 
     public static Specification<Task> assignedToUser(Long userId) {
-        return (root, query, cb) -> {
-            query.distinct(true);
-
-            Join<Task, TaskAssignment> assignmentJoin = root.join("taskAssignments");
-
-            query.orderBy(
-                    cb.asc(assignmentJoin.get("isDone")),
-                    cb.asc(root.get("deadline")));
-
-            return cb.equal(assignmentJoin.get("user").get("id"), userId);
-        };
+        return (root, query, cb) ->
+                cb.equal(root.join("taskAssignments").get("user").get("id"), userId);
     }
 
     public static Specification<Task> hasCreator(Long userId) {

@@ -16,13 +16,17 @@ public interface TaskService {
     TaskFullResponse update(TaskRequest taskRequest, long id);
     void delete(long id);
     TaskFullResponse findById(long id);
+    ////////////////
     PaginationListResponse<TaskListResponse> findAllByUserId(
             String name, String deadline, String is_done, String is_past, long userId, int page, int size);
-    PaginationListResponse<TaskListResponse> findAllByEventId(long eventId, int page, int size);
+    PaginationListResponse<TaskListResponse> findAllByEventId(long eventId, int page, int size, Authentication auth);
+    ////////////////------------------
     PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty
             (Authentication authentication, int page, int size);
+    ////////////////------------------
     PaginationListResponse<TaskListSmallResponse> findAllByDeadlineToday
             (Authentication authentication, int page, int size);
+    /////////////////
     CountAllTaskAndCompleted countAllTaskAndCompleted(long userId);
     void changeCreatorToDeletedUser(long userId);
     TaskListResponse assignTaskToEvent(long eventId, long id);
