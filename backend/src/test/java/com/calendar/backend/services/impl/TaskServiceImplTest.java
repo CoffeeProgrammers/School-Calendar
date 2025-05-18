@@ -22,6 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.Authentication;
 
@@ -192,6 +193,20 @@ class TaskServiceImplTest {
     }
 
     @Test
+    void testFiltersBlank() {
+        Page<Task> taskPage = new PageImpl<>(List.of(task));
+        when(taskRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(taskPage);
+        when(taskMapper.fromTaskToTaskListResponse(task)).thenReturn(new TaskListResponse());
+
+        task.getCreator().setId(0);
+        PaginationListResponse<TaskListResponse> result = taskService.findAllByUserId("", "", "", "", 0L, 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(taskRepository).findAll(any(Specification.class), any(PageRequest.class));
+    }
+
+    @Test
     void testFiltersNullString() {
         Page<Task> taskPage = new PageImpl<>(List.of(task));
         when(taskRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(taskPage);
@@ -342,6 +357,26 @@ class TaskServiceImplTest {
 
         assertEquals(2, result.size());
         verify(taskRepository).findAll(any(Specification.class));
+    }
+
+    @Test
+    void findAllByDeadlineToday_success() {
+        User user = new User();
+        user.setId(1L);
+
+        Page<Task> taskPage = new PageImpl<>(List.of(task));
+        TaskListResponse listResponse = new TaskListResponse();
+
+        when(userService.findUserByAuth(authentication)).thenReturn(user);
+        when(taskRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(taskPage);
+        when(taskMapper.fromTaskToTaskListResponse(any(Task.class))).thenReturn(listResponse);
+
+        PaginationListResponse<TaskListResponse> result = taskService.findAllByDeadlineToday(authentication, 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(userService).findUserByAuth(authentication);
+        verify(taskRepository).findAll(any(Specification.class), eq(PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "deadline"))));
     }
 
 }
