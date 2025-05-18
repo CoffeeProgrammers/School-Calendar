@@ -49,6 +49,19 @@ class EventService extends BaseService {
             params: { startDate, endDate, gap }
         });
     }
+
+    getMyCreatedEvents(page, size, search = null, startDate = null, endDate = null, typeOfEvent = null) {
+        const params = {
+            page,
+            size,
+            ...(search && { search }),
+            ...(startDate && { startDate }),
+            ...(endDate && { endDate }),
+            ...(typeOfEvent && { typeOfEvent }),
+        };
+
+        return this.get("/getCreatorIsMe", { params });
+    }
 }
 
 export default new EventService();
