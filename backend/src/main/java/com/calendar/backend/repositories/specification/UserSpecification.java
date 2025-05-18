@@ -37,9 +37,6 @@ public class UserSpecification {
                 predicates.add(criteriaBuilder.equal(root.get("role"), roleId));
             }
 
-            String emailOdDeletedUser = "deleted-user!@deleted.com";
-            predicates.add(criteriaBuilder.notEqual(root.get("email"), emailOdDeletedUser));
-
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
@@ -52,6 +49,12 @@ public class UserSpecification {
     public static Specification<User> hasEvent(Long eventId) {
         return (root, query, cb) ->
                 cb.equal(root.join("events").get("id"), eventId);
+    }
+
+    public static Specification<User> notIncludeDeleted(){
+        String emailOfDeletedUser = "!deleted-user!@deleted.com";
+        return (root, query, cb) ->
+                cb.notEqual(root.get("email"), emailOfDeletedUser);
     }
 
     public static Specification<User> doesNotHaveEvent(Long eventId) {

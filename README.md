@@ -64,24 +64,29 @@ invitations tailored for users of the system (e.g., teachers or students).
 ---
 
 ## Installation Instructions
-0. Install docker desktop
+0. Install docker desktop and git (if you don`t have it already downloaded to your computer)
 
-https://www.docker.com/products/docker-desktop/
+- [docker-desktop](https://www.docker.com/products/docker-desktop/)
 
-1. Clone the repository:
+- [git](https://git-scm.com/downloads)
+
+1. Open the docker desktop and start it
+
+
+2. Clone the repository:
 ```
 git clone https://github.com/CoffeeProgrammers/School-Calendar.git
 ```
-2. Navigate to the project directory:
+3. Navigate to the project directory:
 ```
 cd School-Calendar
 ```
-3. Build the project:
+4. Build the project:
 ```
 docker-compose up --build            
 ```
 
-4. Open your browser and go to http://localhost:3000 to access the application.
+5. Open your browser and go to http://localhost:3000 to access the application.
 
 ---
 
@@ -259,5 +264,4 @@ git push origin feature-name
 
 ## Database:
 [School-Calendar-v2 | DrawSQL](https://drawsql.app/teams/team-3890/diagrams/school-calendar-v2)
-
 (Now can be changed because of adding additional features)
