@@ -60,7 +60,7 @@ const CreateTaskDialog = ({handleCreate}) => {
                     content={content}
                     setContent={setContent}
                     event={event}
-                    setEventId={setEvent}
+                    setEvent={setEvent}
                     isCreate={true}
                 />
             </FullScreenFunctionDialog>

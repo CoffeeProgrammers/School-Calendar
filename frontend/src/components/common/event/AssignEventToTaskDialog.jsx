@@ -34,7 +34,7 @@ const AssignEventToTaskDialog = ({event, setEvent}) => {
             try {
                 const response = await EventService.getMyEvents(
                     page - 1,
-                    15,
+                    12,
                     searchQuery,
                     startDateFilter,
                     endDateFilter,
@@ -58,9 +58,18 @@ const AssignEventToTaskDialog = ({event, setEvent}) => {
         setPage(1);
     }, [searchQuery, eventType, startDateFilter, endDateFilter]);
 
+    if (error) {
+        return <Typography color={"error"}>Error: {error.message}</Typography>;
+    }
 
-    const handleClear = () => {
-        setEvent(null);
+    const handleClear = (e) => {
+        e.stopPropagation();
+        setEvent('');
+    }
+
+    const handleChooseEvent = (event) => {
+        setEvent(event);
+        setOpen(false);
     }
 
     return (
@@ -71,19 +80,22 @@ const AssignEventToTaskDialog = ({event, setEvent}) => {
                     fullWidth
                     variant="outlined"
                     multiline
-                    value={event ? event.name : "---"}
+                    value={event ? event.name : ''}
 
                     slotProps={{
                         input: {
                             readOnly: true,
                             endAdornment: (
-                                <IconButton
-                                    size="large"
-                                    onClick={handleClear}
-                                    sx={{cursor: "pointer", padding: 0}}
-                                >
-                                    <CloseIcon/>
-                                </IconButton>
+                                event && (
+                                    <IconButton
+                                        size="large"
+                                        onClick={handleClear}
+                                        sx={{cursor: "pointer", padding: 0}}
+                                    >
+                                        <CloseIcon/>
+                                    </IconButton>
+                                )
+
                             ),
                         },
                     }}
@@ -97,7 +109,6 @@ const AssignEventToTaskDialog = ({event, setEvent}) => {
                 content={
                     <>
                         <Stack direction="row" sx={{alignItems: 'center', display: "flex", justifyContent: "space-between "}}>
-                            <Typography variant="h4">Events</Typography>
                             <Box sx={{alignItems: 'center', display: "flex", justifyContent: "space-between"}} gap={0.5}>
                                 <Search
                                     searchQuery={searchQuery}
@@ -144,7 +155,7 @@ const AssignEventToTaskDialog = ({event, setEvent}) => {
                         <Grid container spacing={1.5}>
                             {events.map(event => (
                                 <Grid size={{ xs: 12, sm: 6, md: 4}} key={event.id}>
-                                    <Box onClick={() => navigate(`${event.id}`)}>
+                                    <Box onClick={() => handleChooseEvent(event)}>
                                         <EventListBox event={event}/>
                                     </Box>
                                 </Grid>

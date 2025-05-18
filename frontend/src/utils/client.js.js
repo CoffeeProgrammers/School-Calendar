@@ -1,7 +1,7 @@
 // src/api/client.js
 import axios from "axios";
 import Cookies from "js-cookie";
-import {history} from "../utils/history";
+import {history} from "./history";
 
 export const client = axios.create({
     baseURL: "http://localhost:8081/api",

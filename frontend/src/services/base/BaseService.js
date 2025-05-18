@@ -1,4 +1,4 @@
-import {client} from "../../api/client.js";
+import {client} from "../../utils/client.js.js";
 
 class BaseService {
     constructor(endpoint) {
