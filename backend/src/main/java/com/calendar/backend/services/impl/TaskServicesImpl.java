@@ -2,10 +2,8 @@ package com.calendar.backend.services.impl;
 
 import com.calendar.backend.dto.task.TaskFullResponse;
 import com.calendar.backend.dto.task.TaskListResponse;
-import com.calendar.backend.dto.task.TaskListSmallResponse;
 import com.calendar.backend.dto.task.TaskRequest;
 import com.calendar.backend.dto.wrapper.CountAllTaskAndCompleted;
-import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.TaskMapper;
 import com.calendar.backend.models.Task;
 import com.calendar.backend.models.User;
@@ -17,17 +15,12 @@ import com.calendar.backend.services.inter.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -71,66 +64,59 @@ public class TaskServicesImpl implements TaskService {
         taskRepository.deleteById(id);
     }
 
-    @Override
-    public TaskFullResponse findById(long id) {
-        log.info("Service: Finding task with id {}", id);
-
-        return taskMapper.fromTaskToTaskResponse(findByIdForServices(id));
-    }
-
-    @Override
-    public PaginationListResponse<TaskListResponse> findAllByUserId(
-            String name, String deadline, String isDone, String isPast, long userId, int page, int size) {
-        Map<String, Object> filters = createFilters(name, deadline, isDone, isPast, userId);
-
-        log.info("Service: Finding all tasks for user with id {} and filters {}", userId, filters);
-        Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId).and(TaskSpecification.filterTasks(filters)),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-
-        return createResponse(tasks);
-    }
-
-    @Override
-    public PaginationListResponse<TaskListResponse> findAllByEventId(
-            long eventId, int page, int size, Authentication authentication) {
-
-        log.info("Service: Finding all tasks for event with id {}", eventId);
-
-        Page<Task> tasks = taskRepository.findAllByEvent_Id(eventId,
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-
-        return createResponse(tasks);
-    }
-
-    @Override
-    public PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(
-            Authentication authentication, int page, int size) {
-        log.info("Service: Finding all tasks for auth user with no events");
-
-        Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsNull(
-                userService.findUserByAuth(authentication).getId(),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-
-        return createResponse(tasks);
-    }
-
-    @Override
-    public PaginationListResponse<TaskListSmallResponse> findAllByDeadlineToday(
-            Authentication authentication, int page, int size) {
-        log.info("Service: Finding all tasks for auth user with deadline today");
-
-        User user = userService.findUserByAuth(authentication);
-
-        Page<Task> tasks = taskRepository.findAll(
-                TaskSpecification.DeadlineToday()
-                        .and(TaskSpecification.assignedToUser(user.getId())),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-
-        PaginationListResponse<TaskListSmallResponse> response = new PaginationListResponse<>();
-        response.setTotalPages(tasks.getTotalPages());
-        response.setContent(tasks.getContent().stream().map(taskMapper::fromTaskToTaskListResponseSmall).toList());
-        return response;
-    }
+//    @Override
+//    public PaginationListResponse<TaskListResponse> findAllByUserId(
+//            String name, String deadline, String isDone, String isPast, long userId, int page, int size) {
+//        Map<String, Object> filters = createFilters(name, deadline, isDone, isPast, userId);
+//
+//        log.info("Service: Finding all tasks for user with id {} and filters {}", userId, filters);
+//        Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId).and(TaskSpecification.filterTasks(filters)),
+//                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+//
+//        return createResponse(tasks);
+//    }
+//
+//    @Override
+//    public PaginationListResponse<TaskListResponse> findAllByEventId(
+//            long eventId, int page, int size, Authentication authentication) {
+//
+//        log.info("Service: Finding all tasks for event with id {}", eventId);
+//
+//        Page<Task> tasks = taskRepository.findAllByEvent_Id(eventId,
+//                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+//
+//        return createResponse(tasks);
+//    }
+//
+//    @Override
+//    public PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(
+//            Authentication authentication, int page, int size) {
+//        log.info("Service: Finding all tasks for auth user with no events");
+//
+//        Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsNull(
+//                userService.findUserByAuth(authentication).getId(),
+//                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+//
+//        return createResponse(tasks);
+//    }
+//
+//    @Override
+//    public PaginationListResponse<TaskListSmallResponse> findAllByDeadlineToday(
+//            Authentication authentication, int page, int size) {
+//        log.info("Service: Finding all tasks for auth user with deadline today");
+//
+//        User user = userService.findUserByAuth(authentication);
+//
+//        Page<Task> tasks = taskRepository.findAll(
+//                TaskSpecification.DeadlineToday()
+//                        .and(TaskSpecification.assignedToUser(user.getId())),
+//                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+//
+//        PaginationListResponse<TaskListSmallResponse> response = new PaginationListResponse<>();
+//        response.setTotalPages(tasks.getTotalPages());
+//        response.setContent(tasks.getContent().stream().map(taskMapper::fromTaskToTaskListResponseSmall).toList());
+//        return response;
+//    }
 
     @Override
     public CountAllTaskAndCompleted countAllTaskAndCompleted(long userId) {
@@ -207,33 +193,5 @@ public class TaskServicesImpl implements TaskService {
         log.info("Service: Finding all tasks for user with id {}", userId);
 
         return taskRepository.findAll(TaskSpecification.assignedToUser(userId));
-    }
-
-    private PaginationListResponse<TaskListResponse> createResponse(Page<Task> tasks){
-        PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
-        response.setTotalPages(tasks.getTotalPages());
-        response.setContent(tasks.getContent().stream().map(taskMapper::fromTaskToTaskListResponse).toList());
-        return response;
-    }
-
-    private Map<String, Object> createFilters(String name, String deadline, String isDone, String isPast, long userId) {
-        Map<String, Object> filters = new HashMap<>();
-
-        if(name != null && !name.isBlank() && !name.equals("null")) {
-            filters.put("name", name);
-        }
-        if(deadline != null && !deadline.isBlank() && !deadline.equals("null")) {
-            filters.put("deadline", deadline);
-        }
-        if(isPast != null && !isPast.isBlank() && !isPast.equals("null")) {
-            filters.put("is_past", isPast);
-        }
-        if(isDone != null && !isDone.isBlank() && !isDone.equals("null")) {
-            filters.put("is_done", isDone);
-        }
-        if(userId != 0) {
-            filters.put("user_id", userId);
-        }
-        return filters;
     }
 }

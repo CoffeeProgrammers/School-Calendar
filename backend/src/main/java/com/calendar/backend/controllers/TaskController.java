@@ -69,9 +69,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public TaskFullResponse getTask(@PathVariable Long id, Authentication auth) {
         log.info("Controller: Get task with id: {}", id);
-        TaskFullResponse taskFullResponse = taskService.findById(id);
-        taskFullResponse.setDone(taskAssignmentService.isDone(id, auth));
-        return taskFullResponse;
+        return taskAssignmentService.findById(id, auth);
     }
 
     @GetMapping("/events/{event_id}")
@@ -82,9 +80,7 @@ public class TaskController {
             @RequestParam int size,
             Authentication auth) {
         log.info("Controller: Get all tasks for event with id: {}", eventId);
-        PaginationListResponse<TaskListResponse> taskListResponse =
-                taskService.findAllByEventId(eventId, page, size, auth);
-        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
+        return taskAssignmentService.findAllByEventId(eventId, page, size, auth);
     }
 
     @GetMapping
@@ -99,16 +95,8 @@ public class TaskController {
             Authentication auth) {
         log.info("Controller: Get all my tasks with name: {} deadline: {} isDone: {} isPast: {}",
                 name, deadline, isDone, isPast);
-        PaginationListResponse<TaskListResponse> taskListResponse = taskService.findAllByUserId(
-                name,
-                deadline,
-                isDone,
-                isPast,
-                userService.findUserByAuth(auth).getId(),
-                page,
-                size
-        );
-        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
+        return taskAssignmentService.findAllByUserId(name, deadline, isDone, isPast,
+                userService.findUserByAuth(auth).getId(), page, size);
     }
 
     @GetMapping("/getMyWithoutEvent")
@@ -118,13 +106,7 @@ public class TaskController {
             @RequestParam int size,
             Authentication auth) {
         log.info("Controller: Get all my tasks without event");
-        PaginationListResponse<TaskListResponse> taskListResponse =
-                taskService.findAllByCreatorIdAndEventEmpty(
-                auth,
-                page,
-                size
-        );
-        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
+        return taskAssignmentService.findAllByCreatorIdAndEventEmpty(auth, page, size);
     }
 
     @GetMapping("/today")
@@ -134,13 +116,7 @@ public class TaskController {
             @RequestParam int size,
             Authentication auth){
         log.info("Controller: Get all tasks for today");
-        PaginationListResponse<TaskListSmallResponse> taskListResponse =
-                taskService.findAllByDeadlineToday(
-                auth,
-                page,
-                size
-        );
-        return taskAssignmentService.setAllDoneByTasksSmallAndAuth(taskListResponse, auth);
+        return taskAssignmentService.findAllByDeadlineToday(auth, page, size);
     }
 
     @GetMapping("/countAllMy/user/{user_id}")
