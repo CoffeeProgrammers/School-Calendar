@@ -70,9 +70,9 @@ const Tasks = () => {
         setPage(1);
     }, [searchName, deadline, isDone, isPast]);
 
-    const handleCreate = async (newTask) => {
+    const handleCreate = async (eventId, newTask) => {
         try {
-            const createdTask = await TaskService.createTask(0, newTask);
+            const createdTask = await TaskService.createTask(eventId, newTask);
             setTasks((prevTasks) => [createdTask, ...prevTasks]);
             setPage(1);
             setSearchName('');

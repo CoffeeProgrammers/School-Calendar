@@ -2,91 +2,56 @@ import BaseService from "../BaseService";
 
 class UserService extends BaseService {
     constructor() {
-        super("http://localhost:8081/api/users");
+        super("/users");
     }
 
     createUser(data) {
-        return this.handleRequest(() =>
-            this.apiClient.post("/create", data)
-        );
+        return this.post("/create", data);
     }
 
     updateUser(id, data) {
-        return this.handleRequest(() =>
-            this.apiClient.put(`/update/${id}`, data)
-        );
+        return this.put(`/update/${id}`, data);
     }
 
     getUser(id) {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/${id}`)
-        );
+        return this.get(`/${id}`);
     }
 
-    getAllUsers(
-        page,
-        size,
-        email = "",
-        firstName = "",
-        lastName = "",
-        role = ""
-    ) {
-        return this.handleRequest(() =>
-            this.apiClient.get("", {
-                params: {page, size, email, firstName, lastName, role}
-            })
-        );
+    getAllUsers(page, size, email = "", firstName = "", lastName = "", role = "") {
+        return this.get("", {
+            params: { page, size, email, firstName, lastName, role }
+        });
     }
 
-    getUsersByEvent(
-        eventId,
-        page,
-        size,
-        firstName = "",
-        lastName = "",
-        email = "",
-        role = ""
-    ) {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/events/${eventId}`, {
-                params: {page, size, firstName, lastName, email, role}
-            })
-        );
+    getUsersByEvent(eventId, page, size, firstName = "", lastName = "", email = "", role = "") {
+        return this.get(`/events/${eventId}`, {
+            params: { page, size, firstName, lastName, email, role }
+        });
     }
 
     getUsersByNotEvent(eventId, page, size, email = "", firstName = "", lastName = "", role = "") {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/not_events/${eventId}`, {
-                params: {page, size, email, firstName, lastName, role}
-            })
-        );
+        return this.get(`/not_events/${eventId}`, {
+            params: { page, size, email, firstName, lastName, role }
+        });
     }
 
     getMyUser() {
-        return this.handleRequest(() =>
-            this.apiClient.get("/my")
-        );
+        return this.get("/my");
     }
 
     deleteUser(id) {
-        return this.handleRequest(() =>
-            this.apiClient.delete(`/delete/${id}`)
-        );
+        return this.delete(`/delete/${id}`);
     }
 
     updateMyUser(data) {
-        return this.handleRequest(() =>
-            this.apiClient.put("/update", data)
-        );
+        return this.put("/update", data);
     }
 
     updateMyPassword(password, newPassword) {
-        return this.handleRequest(() =>
-            this.apiClient.put("/update/password", {
-                oldPassword: password,
-                newPassword: newPassword}
-            )
-        );
+        return this.put("/update/password", {
+            oldPassword: password,
+            newPassword: newPassword,
+        });
     }
 }
 

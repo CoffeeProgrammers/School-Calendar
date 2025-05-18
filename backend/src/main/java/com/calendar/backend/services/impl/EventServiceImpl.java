@@ -108,15 +108,32 @@ public class EventServiceImpl implements EventService {
 
         log.info("Service: Finding all events for user with id {} and filters {}", userId, filters);
 
-        Page<Event> events = eventRepository.findAll(EventSpecification.hasUser(userId).and(EventSpecification.filterEvents(filters)), PageRequest.of(page, size,
-                        Sort.by(Sort.Direction.ASC, "startDate")));
+        Page<Event> events = eventRepository.findAll(EventSpecification.hasUser(userId)
+                .and(EventSpecification.filterEvents(filters)),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "startDate")));
 
         PaginationListResponse<EventListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(events.getTotalPages());
         response.setContent(events.getContent().stream().map(
                 eventMapper::fromEventToEventListResponse).toList());
 
-        return response;
+        return createResponse(events);
+    }
+
+    @Override
+    public PaginationListResponse<EventListResponse> findAllByCreatorId(
+            Authentication authentication, String search, String startDate, String endDate, String typeOfEvent,
+            int page, int size) {
+        Map<String, Object> filters = createFilter(search, startDate, endDate, typeOfEvent);
+        User user = userService.findUserByAuth(authentication);
+
+        log.info("Service: Finding all events for creator with id {} and filters {}", user.getId(), filters);
+
+        Page<Event> events = eventRepository.findAll(EventSpecification.hasCreator(user.getId())
+                        .and(EventSpecification.filterEvents(filters)),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "startDate")));
+
+        return createResponse(events);
     }
 
     @Override
@@ -185,6 +202,13 @@ public class EventServiceImpl implements EventService {
     private List<Event> findAllByCreatorIdForServices(long creatorId){
         log.info("Service: Finding all events for services by creator with id {}", creatorId);
         return eventRepository.findAll(EventSpecification.hasCreator(creatorId));
+    }
+
+    private PaginationListResponse<EventListResponse> createResponse(Page<Event> events){
+        PaginationListResponse<EventListResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(events.getTotalPages());
+        response.setContent(events.getContent().stream().map(eventMapper::fromEventToEventListResponse).toList());
+        return response;
     }
 
     private Map<String, Object> createFilter(String search, String startDate, String endDate, String typeOfEvent){

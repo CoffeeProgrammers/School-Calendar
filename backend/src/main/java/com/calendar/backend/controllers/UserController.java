@@ -154,10 +154,24 @@ public class UserController {
     }
 
 
-    @GetMapping("/countTop5")
+    @GetMapping("/countTop5ByPastEvents")
     @ResponseStatus(HttpStatus.OK)
     public List<UserListResponse> getTopFiveUsersCount() {
         log.info("Controller: Get top five users count");
-        return userService.findTop5UsersByUpcomingEvents();
+        return userService.findTop5UsersByPastEvents();
+    }
+
+    @GetMapping("/countTop5ByDoneTasks")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserListResponse> getDoneTasksCount() {
+        log.info("Controller: Get done tasks count");
+        return userService.findTop5UsersByDoneTasks();
+    }
+
+    @GetMapping("/countTop5BySentComments")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserListResponse> getSentCommentsCount() {
+        log.info("Controller: Get sent comments count");
+        return userService.findTop5UsersBySentComments();
     }
 }

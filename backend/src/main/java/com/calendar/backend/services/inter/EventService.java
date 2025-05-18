@@ -20,6 +20,8 @@ public interface EventService {
     EventFullResponse findById (Long id);
     PaginationListResponse<EventListResponse> findAllByUserId
             (long userId, String search, String startDate, String endDate, String typeOfEvent, int page, int size);
+    PaginationListResponse<EventListResponse> findAllByCreatorId
+            (Authentication authentication, String search, String startDate, String endDate, String typeOfEvent, int page, int size);
     List<EventListResponse> findAllByUserIdForCalendar
             (long userId, LocalDateTime start, LocalDateTime end);
     List<String> findForInvitationCheck(long userId, LocalDateTime start, LocalDateTime end);

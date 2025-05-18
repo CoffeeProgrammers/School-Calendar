@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -31,7 +32,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public void create(List<User> users, String message) {
         log.info("Service: Saving new notification {} for users {}", message, users);
-        notificationRepository.save(new Notification(users, message));
+        notificationRepository.save(new Notification(new ArrayList<>(users), message));
     }
 
     @Override

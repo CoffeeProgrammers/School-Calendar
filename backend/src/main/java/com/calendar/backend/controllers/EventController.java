@@ -92,12 +92,27 @@ public class EventController {
                 search, startDate, endDate, typeOfEvent);
         return eventService.findAllByUserId(
                 userService.findUserByAuth(auth).getId(),
-                search,
-                startDate,
-                endDate,
-                typeOfEvent,
-                page,
-                size
+                search, startDate, endDate, typeOfEvent,
+                page, size
+        );
+    }
+
+    @GetMapping("/getCreatorIsMe")
+    @ResponseStatus(HttpStatus.OK)
+    public PaginationListResponse<EventListResponse> getMyCreatorEvents(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) String typeOfEvent,
+            Authentication auth) {
+        log.info("Controller: Get my(creator) events with search: {} startDate: {} endDate: {} typeOfEvent: {}",
+                search, startDate, endDate, typeOfEvent);
+        return eventService.findAllByCreatorId(
+                auth,
+                search, startDate, endDate, typeOfEvent,
+                page, size
         );
     }
 
