@@ -23,19 +23,19 @@ class TaskService extends BaseService {
 
     getMyTasks(page, size, name, deadline, isDone, isPast) {
         return this.get("", {
-            params: { page, size, name, deadline, isDone, isPast }
+            params: {page, size, name, deadline, isDone, isPast}
         });
     }
 
     getMyTasksWithoutEvent(page, size) {
         return this.get(`/getMyWithoutEvent`, {
-            params: { page, size }
+            params: {page, size}
         });
     }
 
     getTasksByEvent(eventId, page, size) {
         return this.get(`/events/${eventId}`, {
-            params: { page, size }
+            params: {page, size}
         });
     }
 
@@ -49,6 +49,12 @@ class TaskService extends BaseService {
 
     unassignTaskFromEvent(taskId) {
         return this.put(`/unassign/${taskId}`);
+    }
+
+    getTodayTasks(page, size) {
+        return this.get("/today", {
+            params: {page, size}
+        });
     }
 
     countAllUserTasks(userId) {

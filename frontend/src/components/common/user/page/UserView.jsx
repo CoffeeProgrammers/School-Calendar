@@ -63,7 +63,7 @@ const UserView = ({user, handleUpdate, handleUpdatePassword}) => {
                         <Box mb={2} sx={{display: 'flex', alignItems: 'center',}}>
                             {(isTeacher || isMyUser) && (
                                 <>
-                                    {!isTeacher && (
+                                    {isMyUser && (
                                         <Box mt={1}>
                                             <UpdatePasswordDialog handleUpdatePassword={handleUpdatePassword}/>
                                         </Box>)}
