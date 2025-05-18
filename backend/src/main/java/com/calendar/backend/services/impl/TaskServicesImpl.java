@@ -64,60 +64,6 @@ public class TaskServicesImpl implements TaskService {
         taskRepository.deleteById(id);
     }
 
-//    @Override
-//    public PaginationListResponse<TaskListResponse> findAllByUserId(
-//            String name, String deadline, String isDone, String isPast, long userId, int page, int size) {
-//        Map<String, Object> filters = createFilters(name, deadline, isDone, isPast, userId);
-//
-//        log.info("Service: Finding all tasks for user with id {} and filters {}", userId, filters);
-//        Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId).and(TaskSpecification.filterTasks(filters)),
-//                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-//
-//        return createResponse(tasks);
-//    }
-//
-//    @Override
-//    public PaginationListResponse<TaskListResponse> findAllByEventId(
-//            long eventId, int page, int size, Authentication authentication) {
-//
-//        log.info("Service: Finding all tasks for event with id {}", eventId);
-//
-//        Page<Task> tasks = taskRepository.findAllByEvent_Id(eventId,
-//                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-//
-//        return createResponse(tasks);
-//    }
-//
-//    @Override
-//    public PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(
-//            Authentication authentication, int page, int size) {
-//        log.info("Service: Finding all tasks for auth user with no events");
-//
-//        Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsNull(
-//                userService.findUserByAuth(authentication).getId(),
-//                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-//
-//        return createResponse(tasks);
-//    }
-//
-//    @Override
-//    public PaginationListResponse<TaskListSmallResponse> findAllByDeadlineToday(
-//            Authentication authentication, int page, int size) {
-//        log.info("Service: Finding all tasks for auth user with deadline today");
-//
-//        User user = userService.findUserByAuth(authentication);
-//
-//        Page<Task> tasks = taskRepository.findAll(
-//                TaskSpecification.DeadlineToday()
-//                        .and(TaskSpecification.assignedToUser(user.getId())),
-//                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
-//
-//        PaginationListResponse<TaskListSmallResponse> response = new PaginationListResponse<>();
-//        response.setTotalPages(tasks.getTotalPages());
-//        response.setContent(tasks.getContent().stream().map(taskMapper::fromTaskToTaskListResponseSmall).toList());
-//        return response;
-//    }
-
     @Override
     public CountAllTaskAndCompleted countAllTaskAndCompleted(long userId) {
         log.info("Service: Counting all tasks by user id {} and completed", userId);
