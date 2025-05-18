@@ -2,6 +2,7 @@ package com.calendar.backend.controllers;
 
 import com.calendar.backend.dto.task.TaskFullResponse;
 import com.calendar.backend.dto.task.TaskListResponse;
+import com.calendar.backend.dto.task.TaskListSmallResponse;
 import com.calendar.backend.dto.task.TaskRequest;
 import com.calendar.backend.dto.wrapper.CountAllTaskAndCompleted;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
@@ -128,18 +129,18 @@ public class TaskController {
 
     @GetMapping("/today")
     @ResponseStatus(HttpStatus.OK)
-    public PaginationListResponse<TaskListResponse> getTodayTasks(
+    public PaginationListResponse<TaskListSmallResponse> getTodayTasks(
             @RequestParam int page,
             @RequestParam int size,
             Authentication auth){
         log.info("Controller: Get all tasks for today");
-        PaginationListResponse<TaskListResponse> taskListResponse =
+        PaginationListResponse<TaskListSmallResponse> taskListResponse =
                 taskService.findAllByDeadlineToday(
                 auth,
                 page,
                 size
         );
-        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
+        return taskAssignmentService.setAllDoneByTasksSmallAndAuth(taskListResponse, auth);
     }
 
     @GetMapping("/countAllMy/user/{user_id}")
