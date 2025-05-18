@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import EventService from "../../../services/base/ext/EventService";
-import {useNavigate} from "react-router-dom";
-import StyledCalendar from "../../layouts/calendar/StyledCalendar";
-import Loading from "../../layouts/Loading";
+import EventService from "../../../../services/base/ext/EventService";
+import Loading from "../../../layouts/Loading";
 import {Typography} from "@mui/material";
+import StyledCalendar from "../../../layouts/calendar/StyledCalendar";
 
-const MainPageContent = () => {
-    const navigate = useNavigate();
-
+const CalendarContent = () => {
     const [events, setEvents] = useState([])
 
     const [loading, setLoading] = useState(true);
@@ -42,10 +39,9 @@ const MainPageContent = () => {
     if (error) {
         return <Typography color={"error"}>Error: {error.message}</Typography>;
     }
-
     return (
         <StyledCalendar events={events}/>
     );
 };
 
-export default MainPageContent;
+export default CalendarContent;

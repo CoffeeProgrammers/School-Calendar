@@ -55,15 +55,7 @@ const StyledCalendar = ({events}) => {
     const calendarEvents = events.map(mapEventToCalendarEvent);
 
     return (
-        <Box sx={{
-            width: '75%',
-            border: '1px solid #ddd',
-            padding: '10px',
-            margin: '10px',
-            borderRadius: "10px",
-            display: "flex",
-            flexDirection: "column"
-        }}>
+        <>
             <Box className="calendar-wrapper">
                 <Calendar
                     localizer={localizer}
@@ -79,7 +71,7 @@ const StyledCalendar = ({events}) => {
                     }}
                 />
             </Box>
-        </Box>
+        </>
     );
 };
 

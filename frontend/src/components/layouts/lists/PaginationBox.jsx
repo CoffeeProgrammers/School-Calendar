@@ -1,6 +1,15 @@
 import {Box, Pagination} from "@mui/material";
 
-const PaginationBox = ({pagesCount, page, setPage}) => {
+const PaginationBox = (
+    {
+        pagesCount,
+        page,
+        setPage,
+        size = 'large',
+        siblingCount = 1,
+        sx = {}
+    }
+) => {
 
     const handlePaginationChange = (event, value) => {
         setPage(value);
@@ -13,13 +22,15 @@ const PaginationBox = ({pagesCount, page, setPage}) => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                ...sx
             }}
         >
             <Pagination
                 count={pagesCount}
                 variant="outlined"
                 shape="rounded"
-                size="large"
+                siblingCount={siblingCount}
+                size={size}
                 page={page}
                 onChange={handlePaginationChange}
             />
