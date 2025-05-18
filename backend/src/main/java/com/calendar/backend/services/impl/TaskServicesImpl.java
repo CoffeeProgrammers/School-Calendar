@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,32 +83,39 @@ public class TaskServicesImpl implements TaskService {
         Map<String, Object> filters = createFilters(name, deadline, isDone, isPast, userId);
 
         log.info("Service: Finding all tasks for user with id {} and filters {}", userId, filters);
-        Page<Task> tasks = taskRepository.findAll(TaskSpecification.assignedToUser(userId).and(TaskSpecification.filterTasks(filters)),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+        Page<Task> tasks = taskRepository.findAll(
+                TaskSpecification.assignedToUser(userId)
+                        .and(TaskSpecification.orderByIsDoneAndDeadline(userId))
+                        .and(TaskSpecification.filterTasks(filters)),
+                PageRequest.of(page, size));
 
         return createResponse(tasks);
     }
 
     @Override
     public PaginationListResponse<TaskListResponse> findAllByEventId(
-            long eventId, int page, int size) {
+            long eventId, int page, int size, Authentication auth) {
+        User user = userService.findUserByAuth(auth);
 
         log.info("Service: Finding all tasks for event with id {}", eventId);
 
         Page<Task> tasks = taskRepository.findAllByEvent_Id(eventId,
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+                PageRequest.of(page, size), TaskSpecification.orderByIsDoneAndDeadline(user.getId()));
 
         return createResponse(tasks);
     }
 
     @Override
     public PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(
-            Authentication authentication, int page, int size) {
+            Authentication auth, int page, int size) {
+        User user = userService.findUserByAuth(auth);
+
         log.info("Service: Finding all tasks for auth user with no events");
 
         Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsNull(
-                userService.findUserByAuth(authentication).getId(),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+                userService.findUserByAuth(auth).getId(),
+                PageRequest.of(page, size),
+                TaskSpecification.orderByIsDoneAndDeadline(user.getId()));
 
         return createResponse(tasks);
     }
@@ -123,8 +129,9 @@ public class TaskServicesImpl implements TaskService {
 
         Page<Task> tasks = taskRepository.findAll(
                 TaskSpecification.DeadlineToday()
+                        .and(TaskSpecification.orderByIsDoneAndDeadline(user.getId()))
                         .and(TaskSpecification.assignedToUser(user.getId())),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+                PageRequest.of(page, size));
 
         PaginationListResponse<TaskListSmallResponse> response = new PaginationListResponse<>();
         response.setTotalPages(tasks.getTotalPages());

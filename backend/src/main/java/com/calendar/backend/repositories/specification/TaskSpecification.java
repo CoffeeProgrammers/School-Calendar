@@ -58,13 +58,27 @@ public class TaskSpecification {
 
             Join<Task, TaskAssignment> assignmentJoin = root.join("taskAssignments");
 
-            query.orderBy(
-                    cb.asc(assignmentJoin.get("isDone")),
-                    cb.asc(root.get("deadline")));
-
             return cb.equal(assignmentJoin.get("user").get("id"), userId);
         };
     }
+
+
+    public static Specification<Task> orderByIsDoneAndDeadline(Long userId) {
+        return (root, query, cb) -> {
+            if (Task.class.equals(query.getResultType())) {
+                Join<Task, TaskAssignment> assignmentJoin = root.join("taskAssignments");
+
+                query.orderBy(
+                        cb.asc(cb.selectCase()
+                                .when(cb.equal(assignmentJoin.get("user").get("id"), userId), assignmentJoin.get("isDone"))
+                                .otherwise(true)),
+                        cb.asc(root.get("deadline"))
+                );
+            }
+            return null;
+        };
+    }
+
 
     public static Specification<Task> hasCreator(Long userId) {
         return (root, query, cb) ->

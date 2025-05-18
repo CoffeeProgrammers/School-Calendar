@@ -83,7 +83,7 @@ public class TaskController {
             Authentication auth) {
         log.info("Controller: Get all tasks for event with id: {}", eventId);
         PaginationListResponse<TaskListResponse> taskListResponse =
-                taskService.findAllByEventId(eventId, page, size);
+                taskService.findAllByEventId(eventId, page, size, auth);
         return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
     }
 
