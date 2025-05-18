@@ -287,5 +287,32 @@ class EventServiceImplTest {
         verify(eventRepository, times(2)).saveAll(any());
     }
 
+    @Test
+    void findAllByCreatorId_success() {
+        Authentication auth = mock(Authentication.class);
+        Page<Event> page = new PageImpl<>(List.of(event));
+
+        event.setStartDate(LocalDateTime.now().minusDays(3));
+        event.setEndDate(LocalDateTime.now().plusDays(3));
+        event.setType(EventType.TEST);
+        when(userService.findUserByAuth(auth)).thenReturn(user);
+        when(eventRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(page);
+        when(eventMapper.fromEventToEventListResponse(any(Event.class))).thenReturn(new EventListResponse());
+
+        PaginationListResponse<EventListResponse> result = eventService.findAllByCreatorId(
+                auth,
+                "Sample Event",
+                event.getStartDate().toString(),
+                event.getEndDate().toString(),
+                event.getType().toString(),
+                0,
+                10
+        );
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(userService).findUserByAuth(auth);
+        verify(eventRepository).findAll(any(Specification.class), any(PageRequest.class));
+    }
 
 }

@@ -421,4 +421,42 @@ class UserServiceImplTest {
         assertEquals(users, result);
     }
 
+    @Test
+    void findTop5UsersByDoneTasks_success() {
+        List<User> users = List.of(user, updatedUser);
+        List<UserListResponse> responses = List.of(
+                new UserListResponse(), new UserListResponse()
+        );
+
+        when(userRepository.findTop5UsersByDoneTasks()).thenReturn(users);
+        when(userMapper.fromUserToUserListResponse(user)).thenReturn(responses.get(0));
+        when(userMapper.fromUserToUserListResponse(updatedUser)).thenReturn(responses.get(1));
+
+        List<UserListResponse> result = userService.findTop5UsersByDoneTasks();
+
+        verify(userRepository, times(1)).findTop5UsersByDoneTasks();
+        verify(userMapper, times(1)).fromUserToUserListResponse(user);
+        verify(userMapper, times(1)).fromUserToUserListResponse(updatedUser);
+
+        assertEquals(2, result.size());
+        assertEquals(responses, result);
+    }
+
+    @Test
+    void findTop5UsersBySentComments_success() {
+        List<User> users = List.of(user);
+        List<UserListResponse> responses = List.of(new UserListResponse());
+
+        when(userRepository.findTop5UsersBySentComments()).thenReturn(users);
+        when(userMapper.fromUserToUserListResponse(user)).thenReturn(responses.get(0));
+
+        List<UserListResponse> result = userService.findTop5UsersBySentComments();
+
+        verify(userRepository, times(1)).findTop5UsersBySentComments();
+        verify(userMapper, times(1)).fromUserToUserListResponse(user);
+
+        assertEquals(1, result.size());
+        assertEquals(responses, result);
+    }
+
 }
