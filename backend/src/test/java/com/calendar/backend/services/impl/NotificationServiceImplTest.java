@@ -7,6 +7,7 @@ import com.calendar.backend.mappers.NotificationMapper;
 import com.calendar.backend.models.Notification;
 import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.NotificationRepository;
+import com.calendar.backend.services.inter.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,11 +18,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -32,6 +33,8 @@ class NotificationServiceImplTest {
     private NotificationRepository notificationRepository;
     @Mock
     private NotificationMapper notificationMapper;
+    @Mock
+    private UserService userService;
     @InjectMocks
     private NotificationServiceImpl notificationService;
 
@@ -93,5 +96,26 @@ class NotificationServiceImplTest {
 
         verify(notificationRepository).deleteById(1L);
     }
+
+    @Test
+    void deleteAllLinksToUser_success() {
+        long userId = 1L;
+        User user = TestUtil.createUser("TEACHER");
+        Notification notification1 = new Notification();
+        Notification notification2 = new Notification();
+        notification1.setUsers(new ArrayList<>(List.of(user)));
+        notification2.setUsers(new ArrayList<>(List.of(user)));
+        List<Notification> notifications = List.of(notification1, notification2);
+
+        when(userService.findByIdForServices(userId)).thenReturn(user);
+        when(notificationRepository.findAllByUserId(userId)).thenReturn(notifications);
+
+        notificationService.deleteAllLinksToUser(userId);
+
+        assertTrue(notification1.getUsers().isEmpty());
+        assertTrue(notification2.getUsers().isEmpty());
+        verify(notificationRepository).saveAll(notifications);
+    }
+
 }
 

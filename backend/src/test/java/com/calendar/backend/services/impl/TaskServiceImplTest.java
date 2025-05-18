@@ -62,6 +62,7 @@ class TaskServiceImplTest {
         task.setContent("Content of task");
         task.setDeadline(LocalDateTime.now());
         task.setCreator(new User());
+        task.getCreator().setId(1L);
         task.setEvent(new Event());
 
         taskRequest = new TaskRequest();
@@ -95,6 +96,20 @@ class TaskServiceImplTest {
         verify(taskRepository, times(1)).save(task);
         assertEquals(taskFullResponse, response);
     }
+
+    @Test
+    void createTask_eventNull() {
+        when(taskMapper.fromTaskRequestToTask(any(TaskRequest.class))).thenReturn(task);
+        when(userService.findUserByAuth(authentication)).thenReturn(task.getCreator());
+        when(taskRepository.save(any(Task.class))).thenReturn(task);
+        when(taskMapper.fromTaskToTaskResponse(task)).thenReturn(taskFullResponse);
+
+        TaskFullResponse response = taskService.create(taskRequest, authentication, 0L);
+
+        verify(taskRepository, times(1)).save(task);
+        assertEquals(taskFullResponse, response);
+    }
+
 
     @Test
     void updateTask_success() {
@@ -155,7 +170,34 @@ class TaskServiceImplTest {
         when(taskRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(taskPage);
         when(taskMapper.fromTaskToTaskListResponse(task)).thenReturn(new TaskListResponse());
 
-        PaginationListResponse<TaskListResponse> result = taskService.findAllByUserId("", "", "", "", 1L, 0, 10);
+        PaginationListResponse<TaskListResponse> result = taskService.findAllByUserId(task.getName(), task.getDeadline().toString(), "true", "true", 1L, 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(taskRepository).findAll(any(Specification.class), any(PageRequest.class));
+    }
+
+    @Test
+    void testFiltersNull() {
+        Page<Task> taskPage = new PageImpl<>(List.of(task));
+        when(taskRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(taskPage);
+        when(taskMapper.fromTaskToTaskListResponse(task)).thenReturn(new TaskListResponse());
+
+        task.getCreator().setId(0);
+        PaginationListResponse<TaskListResponse> result = taskService.findAllByUserId(null, null, null, null, 0L, 0, 10);
+
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalPages());
+        verify(taskRepository).findAll(any(Specification.class), any(PageRequest.class));
+    }
+
+    @Test
+    void testFiltersNullString() {
+        Page<Task> taskPage = new PageImpl<>(List.of(task));
+        when(taskRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(taskPage);
+        when(taskMapper.fromTaskToTaskListResponse(task)).thenReturn(new TaskListResponse());
+
+        PaginationListResponse<TaskListResponse> result = taskService.findAllByUserId("null", "null", "null", "null", 1L, 0, 10);
 
         assertEquals(1, result.getContent().size());
         assertEquals(1, result.getTotalPages());
@@ -195,4 +237,111 @@ class TaskServiceImplTest {
         assertEquals(1, result.size());
         verify(taskRepository).findAllByEvent_Id(eq(1L));
     }
+
+    @Test
+    void unassignTaskFromEvent_success() {
+        when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
+        when(taskRepository.save(any(Task.class))).thenReturn(task);
+
+        taskService.unassignTaskFromEvent(1L);
+
+        ArgumentCaptor<Task> captor = ArgumentCaptor.forClass(Task.class);
+        verify(taskRepository).save(captor.capture());
+
+        Task savedTask = captor.getValue();
+        assertEquals(null, savedTask.getEvent());
+        verify(taskRepository, times(1)).save(any(Task.class));
+    }
+
+    @Test
+    void unassignTaskFromEvent_taskNotFound() {
+        when(taskRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> taskService.unassignTaskFromEvent(1L));
+    }
+
+    @Test
+    void unsignAllFromEvent_success() {
+        List<Task> tasks = List.of(task, new Task());
+        when(taskRepository.findAllByEvent_Id(1L)).thenReturn(tasks);
+        when(taskRepository.saveAll(anyList())).thenReturn(tasks);
+
+        taskService.unsignAllFromEvent(1L);
+
+        ArgumentCaptor<List<Task>> captor = ArgumentCaptor.forClass(List.class);
+        verify(taskRepository).saveAll(captor.capture());
+
+        List<Task> savedTasks = captor.getValue();
+        for (Task t : savedTasks) {
+            assertEquals(null, t.getEvent());
+        }
+
+        verify(taskRepository, times(1)).saveAll(anyList());
+    }
+
+    @Test
+    void unsignAllFromEvent_noTasks() {
+        when(taskRepository.findAllByEvent_Id(1L)).thenReturn(List.of());
+
+        taskService.unsignAllFromEvent(1L);
+
+        verify(taskRepository, times(1)).saveAll(anyList());
+    }
+
+    @Test
+    void findAllByCreatorIdAndEventEmpty_success() {
+        User user = new User();
+        user.setId(1L);
+        Task taskWithoutEvent = new Task();
+        Page<Task> taskPage = new PageImpl<>(List.of(taskWithoutEvent));
+
+        when(userService.findUserByAuth(authentication)).thenReturn(user);
+        when(taskRepository.findAllByCreator_IdAndEventIsNull(eq(1L), any())).thenReturn(taskPage);
+        when(taskMapper.fromTaskToTaskListResponse(any())).thenReturn(new TaskListResponse());
+
+        PaginationListResponse<TaskListResponse> response = taskService.findAllByCreatorIdAndEventEmpty(authentication, 0, 10);
+
+        assertEquals(1, response.getContent().size());
+        verify(taskRepository).findAllByCreator_IdAndEventIsNull(eq(1L), any());
+    }
+
+    @Test
+    void countAllTaskAndCompleted_success() {
+        when(taskRepository.countAllByUserIdAndDone(1L)).thenReturn(5L);
+        when(taskRepository.countAllByUserId(1L)).thenReturn(10L);
+
+        var result = taskService.countAllTaskAndCompleted(1L);
+
+        assertEquals(5L, result.getCountCompleted());
+        assertEquals(10L, result.getCountAll());
+        verify(taskRepository).countAllByUserIdAndDone(1L);
+        verify(taskRepository).countAllByUserId(1L);
+    }
+
+    @Test
+    void changeCreatorToDeletedUser_success() {
+        User deletedUser = new User();
+        deletedUser.setEmail("!deleted-user!@deleted.com");
+
+        List<Task> tasks = List.of(task);
+        when(taskRepository.findAll(any(Specification.class))).thenReturn(tasks);
+        when(userService.findByEmailForServices("!deleted-user!@deleted.com")).thenReturn(deletedUser);
+
+        taskService.changeCreatorToDeletedUser(1L);
+
+        verify(taskRepository).saveAll(tasks);
+        assertEquals(deletedUser, task.getCreator());
+    }
+    @Test
+    void findAllByUserIdForServices_success() {
+        List<Task> tasks = List.of(new Task(), new Task());
+
+        when(taskRepository.findAll(any(Specification.class))).thenReturn(tasks);
+
+        List<Task> result = taskService.findAllByUserIdForServices(1L);
+
+        assertEquals(2, result.size());
+        verify(taskRepository).findAll(any(Specification.class));
+    }
+
 }

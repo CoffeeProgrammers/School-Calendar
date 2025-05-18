@@ -3,6 +3,7 @@ package com.calendar.backend.services.impl;
 import com.calendar.backend.TestUtil;
 import com.calendar.backend.dto.comment.CommentRequest;
 import com.calendar.backend.dto.comment.CommentResponse;
+import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.CommentMapper;
 import com.calendar.backend.models.Comment;
@@ -140,5 +141,33 @@ class CommentServiceImplTest {
         when(commentRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(EntityNotFoundException.class, () -> commentService.findByIdForServices(1L));
+    }
+
+    @Test
+    void countAllCommentsByCreatorId_success() {
+        Authentication auth = mock(Authentication.class);
+        when(userService.findUserByAuth(auth)).thenReturn(user);
+        when(commentRepository.countAllByCreator_Id(user.getId())).thenReturn(5L);
+
+        LongResponse result = commentService.countAllCommentsByCreatorId(auth);
+
+        assertEquals(5L, result.getCount());
+        verify(commentRepository).countAllByCreator_Id(user.getId());
+    }
+
+    @Test
+    void changeCreatorToDeletedUser_success() {
+        long deletedUserId = 123L;
+        User deletedUser = TestUtil.createUser("DELETED");
+        deletedUser.setEmail("!deleted-user!@deleted.com");
+
+        List<Comment> comments = List.of(comment);
+        when(commentRepository.findAllByCreator_Id(deletedUserId)).thenReturn(comments);
+        when(userService.findByEmailForServices("!deleted-user!@deleted.com")).thenReturn(deletedUser);
+
+        commentService.changeCreatorToDeletedUser(deletedUserId);
+
+        assertEquals(deletedUser, comments.get(0).getCreator());
+        verify(commentRepository).saveAll(comments);
     }
 }
