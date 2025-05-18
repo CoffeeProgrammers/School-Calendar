@@ -26,6 +26,7 @@ public class TaskController {
     private final TaskAssignmentService taskAssignmentService;
     private final UserService userService;
 
+
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskFullResponse createTask(
@@ -72,6 +73,19 @@ public class TaskController {
         return taskFullResponse;
     }
 
+    @GetMapping("/events/{event_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public PaginationListResponse<TaskListResponse> getTasksByEvent(
+            @PathVariable(value = "event_id") Long eventId,
+            @RequestParam int page,
+            @RequestParam int size,
+            Authentication auth) {
+        log.info("Controller: Get all tasks for event with id: {}", eventId);
+        PaginationListResponse<TaskListResponse> taskListResponse =
+                taskService.findAllByEventId(eventId, page, size);
+        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
+    }
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public PaginationListResponse<TaskListResponse> getMyTasks(
@@ -96,19 +110,6 @@ public class TaskController {
         return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
     }
 
-    @GetMapping("/events/{event_id}")
-    @ResponseStatus(HttpStatus.OK)
-    public PaginationListResponse<TaskListResponse> getTasksByEvent(
-            @PathVariable(value = "event_id") Long eventId,
-            @RequestParam int page,
-            @RequestParam int size,
-            Authentication auth) {
-        log.info("Controller: Get all tasks for event with id: {}", eventId);
-        PaginationListResponse<TaskListResponse> taskListResponse =
-                taskService.findAllByEventId(eventId, page, size);
-        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
-    }
-
     @GetMapping("/getMyWithoutEvent")
     @ResponseStatus(HttpStatus.OK)
     public PaginationListResponse<TaskListResponse> getMyTasks(
@@ -123,6 +124,12 @@ public class TaskController {
                 size
         );
         return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
+    }
+
+    @GetMapping("/countAllMy/user/{user_id}")
+    public CountAllTaskAndCompleted countAllUsersTask(@PathVariable(value = "user_id") Long userId) {
+        log.info("Controller: Get count of all tasks and completed for user with id: {}", userId);
+        return taskService.countAllTaskAndCompleted(userId);
     }
 
     @PreAuthorize("@userSecurity.checkUserOfTask(#auth, #id)")
@@ -155,11 +162,5 @@ public class TaskController {
         log.info("Controller: Unassign task with id: {} from event", id);
         taskAssignmentService.unassignTasksFromEventUsers(id);
         taskService.unassignTaskFromEvent(id);
-    }
-
-    @GetMapping("/countAllMy/user/{user_id}")
-    public CountAllTaskAndCompleted countAllUsersTask(@PathVariable(value = "user_id") Long userId) {
-        log.info("Controller: Get count of all tasks and completed for user with id: {}", userId);
-        return taskService.countAllTaskAndCompleted(userId);
     }
 }

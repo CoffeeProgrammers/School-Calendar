@@ -28,12 +28,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class InvitationServiceImpl implements InvitationService {
-    private final InvitationRepository invitationRepository;
-    private final InvitationMapper invitationMapper;
-    private final NotificationService notificationServices;
-    private final UserService userService;
-    private final EventService eventService;
+
     private final TaskAssignmentService taskAssignmentService;
+    private final InvitationRepository invitationRepository;
+    private final NotificationService notificationServices;
+    private final InvitationMapper invitationMapper;
+    private final EventService eventService;
+    private final UserService userService;
+
 
     @Override
     public InvitationResponse create(InvitationRequest invitationRequest, Authentication authentication,
@@ -89,7 +91,7 @@ public class InvitationServiceImpl implements InvitationService {
     }
 
     @Override
-    public PaginationListResponse<InvitationResponse> findAllByRecieverId(Authentication authentication, int page, int size) {
+    public PaginationListResponse<InvitationResponse> findAllByReceiverId(Authentication authentication, int page, int size) {
         log.info("Service: Finding all invitations for my user");
         Page<Invitation> invitations = invitationRepository.findAllByReceiver_Id(
                 userService.findUserByAuth(authentication).getId(),
@@ -100,6 +102,50 @@ public class InvitationServiceImpl implements InvitationService {
                 invitationMapper::fromInvitationToInvitationResponse).toList()));
         return response;
     }
+
+    @Override
+    public void acceptInvitation(Long id) {
+        log.info("Service: Accepting invitation with id {}", id);
+        Invitation invitation = findByIdForServices(id);
+        User receiver = invitation.getReceiver();
+        Event event = invitation.getEvent();
+        event.addUser(receiver);
+        taskAssignmentService.assignTasksForNewUserFromEvent(event.getId(), receiver.getId());
+        notificationServices.create(new Notification(List.of(invitation.getSender()),
+                "User " + receiver.getFirstName() + " " +
+                        receiver.getLastName() + " accepted your invitation"));
+        invitationRepository.deleteById(id);
+    }
+
+    @Override
+    public void rejectInvitation(Long id) {
+        log.info("Service: Rejecting invitation with id {}", id);
+        Invitation invitation = findByIdForServices(id);
+        User receiver = invitation.getReceiver();
+        notificationServices.create(new Notification(List.of(invitation.getSender()),
+                "User " + receiver.getFirstName() + " " +
+                        receiver.getLastName() + " reject your invitation"));
+        invitationRepository.deleteById(id);
+    }
+
+    @Override
+    public void changeCreatorToDeletedUser(long userId) {
+        log.info("Service: Changing creator to deleted user with id {}", userId);
+        List<Invitation> invitationsFromDeletedUser = invitationRepository.findAllBySender_Id(userId);
+        User deleted = userService.findByEmailForServices("!deleted-user!@deleted.com");
+        for(Invitation invitation : invitationsFromDeletedUser) {
+            invitation.setSender(deleted);
+        }
+        invitationRepository.saveAll(invitationsFromDeletedUser);
+    }
+
+
+    private Invitation findByIdForServices(Long id) {
+        log.info("Service: Finding private invitation with id {}", id);
+        return invitationRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Invitation not found"));
+    }
+
 
     private List<InvitationResponse> checkAndAddWarning(List<InvitationResponse> response) {
         log.info("Service: Checking invitations for warnings");
@@ -135,50 +181,5 @@ public class InvitationServiceImpl implements InvitationService {
         }
 
         return response;
-    }
-
-
-
-    @Override
-    public void acceptInvitation(Long id) {
-        log.info("Service: Accepting invitation with id {}", id);
-        Invitation invitation = findByIdForServices(id);
-        User receiver = invitation.getReceiver();
-        Event event = invitation.getEvent();
-        event.addUser(receiver);
-        taskAssignmentService.assignTasksForNewUserFromEvent(event.getId(), receiver.getId());
-        notificationServices.create(new Notification(List.of(invitation.getSender()),
-                "User " + receiver.getFirstName() + " " +
-                        receiver.getLastName() + " accepted your invitation"));
-        invitationRepository.deleteById(id);
-    }
-
-    @Override
-    public void rejectInvitation(Long id) {
-        log.info("Service: Rejecting invitation with id {}", id);
-        Invitation invitation = findByIdForServices(id);
-        User receiver = invitation.getReceiver();
-        notificationServices.create(new Notification(List.of(invitation.getSender()),
-                "User " + receiver.getFirstName() + " " +
-                        receiver.getLastName() + " reject your invitation"));
-        invitationRepository.deleteById(id);
-    }
-
-    @Override
-    public void changeCreatorToDeletedUser(long userId) {
-        log.info("Service: Changing creator to deleted user with id {}", userId);
-        List<Invitation> invitationsFromDeletedUser = invitationRepository.findAllBySender_Id(userId);
-        User deleted = userService.findByEmail("!deleted-user!@deleted.com");
-        for(Invitation invitation : invitationsFromDeletedUser) {
-            invitation.setSender(deleted);
-        }
-        invitationRepository.saveAll(invitationsFromDeletedUser);
-    }
-
-
-    private Invitation findByIdForServices(Long id) {
-        log.info("Service: Finding private invitation with id {}", id);
-        return invitationRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Invitation not found"));
     }
 }

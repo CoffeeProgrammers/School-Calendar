@@ -22,9 +22,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
+
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
     private final UserService userService;
+
 
     @Override
     public void create(Notification notification) {

@@ -15,8 +15,8 @@ public class UserSpecification {
             if (filters == null || filters.isEmpty()) {
                 return null;
             }
-
             List<Predicate> predicates = new ArrayList<>();
+
             if (filters.containsKey("firstName")) {
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("firstName")),
                         "%" + filters.get("firstName").toString().toLowerCase() + "%"));
@@ -36,6 +36,10 @@ public class UserSpecification {
                 Long roleId = Long.valueOf(filters.get("role").toString());
                 predicates.add(criteriaBuilder.equal(root.get("role"), roleId));
             }
+
+            String emailOdDeletedUser = "deleted-user!@deleted.com";
+            predicates.add(criteriaBuilder.notEqual(root.get("email"), emailOdDeletedUser));
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
@@ -79,5 +83,4 @@ public class UserSpecification {
             }
         };
     }
-
 }

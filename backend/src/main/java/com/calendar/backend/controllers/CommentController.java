@@ -21,6 +21,7 @@ public class CommentController {
 
     private final CommentService commentService;
 
+
     @PreAuthorize("@userSecurity.checkUserOfEvent(#auth, #eventId)")
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,7 +47,7 @@ public class CommentController {
     @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfComment(#auth, #id)")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteComment(@PathVariable Long id) {
+    public void deleteComment(@PathVariable Long id, Authentication auth) {
         log.info("Controller: Delete comment with id: {}", id);
         commentService.delete(id);
     }
@@ -68,4 +69,3 @@ public class CommentController {
         return commentService.countAllCommentsByCreatorId(auth);
     }
 }
-

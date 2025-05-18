@@ -16,18 +16,16 @@ public interface TaskService {
     void delete(long id);
     TaskFullResponse findById(long id);
     PaginationListResponse<TaskListResponse> findAllByUserId(
-            String name, String deadline, String is_done, String is_past,
-            long userId, int page, int size);
-    List<Task> findAllByUserIdForServices(long userId);
-    PaginationListResponse<TaskListResponse> findAllByEventId(
-            long eventId, int page, int size);
-    List<Task> findAllByEventId(long eventId);
-    Task findByIdForServices(long id);
-    TaskListResponse assignTaskToEvent(long eventId, long id);
-    void unassignTaskFromEvent(long taskId);
-    void unsignAllFromEvent(long eventId);
+            String name, String deadline, String is_done, String is_past, long userId, int page, int size);
+    PaginationListResponse<TaskListResponse> findAllByEventId(long eventId, int page, int size);
     PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty
             (Authentication authentication, int page, int size);
     CountAllTaskAndCompleted countAllTaskAndCompleted(long userId);
     void changeCreatorToDeletedUser(long userId);
+    TaskListResponse assignTaskToEvent(long eventId, long id);
+    void unassignTaskFromEvent(long taskId);
+    void unsignAllFromEvent(long eventId);
+    Task findByIdForServices(long id);
+    List<Task> findAllByUserIdForServices(long userId);
+    List<Task> findAllByEventIdForServices(long eventId);
 }

@@ -27,6 +27,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     public String createRefreshToken(String username) {
         log.info("create refresh token for user: {}", username);
+
         String token = UUID.randomUUID().toString();
         LocalDateTime expirationTime = LocalDateTime.now().plusNanos(refreshTokenExpirationMs * 1_000_000);
 
@@ -39,15 +40,15 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         return token;
     }
 
-    public Optional<RefreshToken> findByToken(String token) {
-        log.info("try to find refresh token by token: {}", token);
-        return repository.findByToken(token);
-    }
-
     @Transactional
     public void deleteAllByUsername(String username) {
         log.info("delete all refresh tokens for user: {}", username);
         repository.deleteAllByUsername(username);
+    }
+
+    public Optional<RefreshToken> findByToken(String token) {
+        log.info("try to find refresh token by token: {}", token);
+        return repository.findByToken(token);
     }
 
     public Optional<RefreshToken> findByUsername(String username) {

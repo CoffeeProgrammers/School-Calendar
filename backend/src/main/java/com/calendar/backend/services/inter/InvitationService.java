@@ -11,7 +11,7 @@ public interface InvitationService {
     InvitationResponse update(long invitationId, InvitationRequest invitationRequest);
     void delete(Long id);
     InvitationResponse findById(Long id);
-    PaginationListResponse<InvitationResponse> findAllByRecieverId
+    PaginationListResponse<InvitationResponse> findAllByReceiverId
             (Authentication authentication, int page, int size);
     PaginationListResponse<InvitationResponse> findAllBySenderId
             (Authentication authentication, int page, int size);

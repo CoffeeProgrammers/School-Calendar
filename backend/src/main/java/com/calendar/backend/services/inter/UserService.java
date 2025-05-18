@@ -19,14 +19,14 @@ public interface UserService extends UserDetailsService {
     void delete(long id);
     UserFullResponse findById(long id);
     PaginationListResponse<UserListResponse> findAll(
-            String email, String firstName, String lastName, String role, int page, int size);
+            String email, String firstName, String lastName, String role, int page, int size, Authentication auth);
     PaginationListResponse<UserListResponse> findAllByEventId(
             String email, String firstName, String lastName, String role, long eventId, int page, int size, Authentication auth);
     PaginationListResponse<UserListResponse> findAllByEventsNotContains(
             String email, String firstName, String lastName, String role, long eventId, int page, int size);
-    User findByEmail(String email);
+    List<UserListResponse> findTop5UsersByUpcomingEvents();
     User findUserByAuth(Authentication authentication);
     User findByIdForServices(long id);
+    User findByEmailForServices(String email);
     List<User> findAllByEventIdForServices(long eventId);
-    List<UserListResponse> findTop5UsersByUpcomingEvents();
 }

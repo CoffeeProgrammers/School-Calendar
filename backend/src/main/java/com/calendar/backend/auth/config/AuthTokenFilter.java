@@ -24,9 +24,10 @@ import java.util.Optional;
 @Slf4j
 @Component
 public class AuthTokenFilter extends OncePerRequestFilter {
-    private final JwtUtils jwtUtils;
-    private final UserServiceImpl userDetailsService;
+
     private final RefreshTokenServiceImpl refreshTokenService;
+    private final UserServiceImpl userDetailsService;
+    private final JwtUtils jwtUtils;
 
     public AuthTokenFilter(JwtUtils jwtUtils, UserServiceImpl userDetailsService,
                            RefreshTokenServiceImpl refreshTokenService) {
@@ -35,6 +36,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         this.refreshTokenService = refreshTokenService;
     }
 
+
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -42,7 +44,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         try {
+            log.info("Auth: Processing request");
             if (hasAuthorizationBearer(request)) {
+                log.info("Auth: Processing JWT token");
                 String token = getAccessToken(request);
 
                 if (!jwtUtils.validateToken(token)) {
@@ -52,6 +56,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     return;
                 }
 
+                log.info("Auth: Valid JWT token");
                 String username = jwtUtils.getSubject(token);
 
                 if (jwtUtils.isTokenExpired(token)) {
@@ -66,6 +71,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                         return;
                     }
 
+                    log.info("Auth: Refresh token is valid, refreshing access token");
+
                     String newAccessToken = jwtUtils.refreshAccessToken(username, refreshToken.get().getToken());
                     response.setStatus(498);
                     setHeaders(response);
@@ -73,9 +80,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     response.setHeader("Set-Cookie", "accessToken=" + newAccessToken + ";Path=/;");
                     response.setCharacterEncoding("UTF-8");
 
-
                     return;
                 } else {
+                    log.info("Auth: Access token is valid and doesn`t expire");
                     setAuthenticationContext(token, request);
                 }
             }

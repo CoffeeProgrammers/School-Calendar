@@ -3,8 +3,6 @@ package com.calendar.backend.repositories.specification;
 import com.calendar.backend.models.Task;
 import com.calendar.backend.models.TaskAssignment;
 import jakarta.persistence.criteria.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
@@ -14,20 +12,18 @@ import java.util.List;
 import java.util.Map;
 
 public class TaskSpecification {
-    private static final Logger log = LoggerFactory.getLogger(TaskSpecification.class);
-
     public static Specification<Task> filterTasks(Map<String, Object> filters) {
         return (Root<Task> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) -> {
             if (filters == null || filters.isEmpty()) {
                 return null;
             }
-
             List<Predicate> predicates = new ArrayList<>();
 
             if (filters.containsKey("name")) {
                 String name = (String) filters.get("name");
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
             }
+
             if (filters.containsKey("deadline")) {
                 LocalDateTime deadline = LocalDateTime.parse(filters.get("deadline").toString());
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("deadline"), deadline));
@@ -50,6 +46,7 @@ public class TaskSpecification {
                     predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("deadline"), LocalDateTime.now(ZoneId.of("Europe/Kiev"))));
                 }
             }
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

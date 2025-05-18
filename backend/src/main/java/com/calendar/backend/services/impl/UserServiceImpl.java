@@ -37,33 +37,30 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserFullResponse create(UserCreateRequest userCreateRequest) {
         log.info("Service: Saving new user {}", userCreateRequest);
+
         if (userRepository.findByEmail(userCreateRequest.getEmail()).isPresent()) {
             throw new EntityExistsException("User with email " +
                     userCreateRequest.getEmail() + " already exists");
         }
         User userToCreate = userMapper.fromUserRequestToUser(userCreateRequest);
         userToCreate.setPassword(passwordEncoder.encode(userToCreate.getPassword()));
-        return userMapper.fromUserToUserResponse(userRepository.save(userToCreate));
-    }
 
-    @Override
-    public void delete(long id) {
-        log.info("Service: Deleting user with id {}", id);
-        userRepository.deleteById(id);
+        return userMapper.fromUserToUserResponse(userRepository.save(userToCreate));
     }
 
     @Override
     public UserFullResponse updateUser(UserUpdateRequest userUpdateRequest, long userId) {
         log.info("Service: Updating user with id {}", userId);
-        User userToUpdate = userRepository.findById(userId).orElseThrow(() ->
-                new EntityNotFoundException("User with id " + userId + " not found"));
+        checkForDeletedUser(userId);
+        User userToUpdate = findByIdForServices(userId);
         userToUpdate.setFirstName(userUpdateRequest.getFirstName());
         userToUpdate.setLastName(userUpdateRequest.getLastName());
         userToUpdate.setDescription(userUpdateRequest.getDescription());
@@ -84,6 +81,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void delete(long id) {
+        log.info("Service: Deleting user with id {}", id);
+        checkForDeletedUser(id);
+        userRepository.deleteById(id);
+    }
+
+    @Override
     public UserFullResponse findById(long id) {
         log.info("Service: Finding user with id {}", id);
         return userMapper.fromUserToUserResponse(findByIdForServices(id));
@@ -91,10 +95,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PaginationListResponse<UserListResponse> findAll(
-            String email, String firstName, String lastName, String role, int page, int size) {
+            String email, String firstName, String lastName, String role, int page, int size, Authentication auth) {
+
         Map<String, Object> filters = createFilters(email, firstName, lastName, role);
+        User user = findUserByAuth(auth);
+
         log.info("Service: Finding all users with filters {}", filters);
-        Page<User> users = userRepository.findAll(UserSpecification.filterUsers(filters),
+
+        Page<User> users = userRepository.findAll(
+                UserSpecification.filterUsers(filters).and(UserSpecification.notUser(user.getId())),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
+
+        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(users.getTotalPages());
+        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
+        return response;
+    }
+
+    @Override
+    public PaginationListResponse<UserListResponse> findAllByEventId(
+            String email, String firstName, String lastName, String role,
+            long eventId, int page, int size, Authentication auth) {
+
+        User user = findUserByAuth(auth);
+        Map<String, Object> filters = createFilters(email, firstName, lastName, role);
+
+        log.info("Service: Finding all users disincluding me with filters {} and event id {}", filters, eventId);
+
+        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId)
+                        .and(UserSpecification.notUser(user.getId())).and(UserSpecification.filterUsers(filters)),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
         PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
         response.setTotalPages(users.getTotalPages());
@@ -103,23 +132,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        log.info("Service: Finding user with email {}", email);
-        return userRepository.findByEmail(email).orElseThrow(
-                () -> new EntityNotFoundException("User not found")
-        );
+    public PaginationListResponse<UserListResponse> findAllByEventsNotContains(
+            String email, String firstName, String lastName, String role, long eventId, int page, int size) {
+
+        Map<String, Object> filters = createFilters(email, firstName, lastName, role);
+        log.info("Service: Finding all users with events not contains event with id {}", eventId);
+
+        Page<User> users = userRepository.findAll(UserSpecification.doesNotHaveEvent(eventId)
+                        .and(UserSpecification.filterUsers(filters)),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
+        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(users.getTotalPages());
+        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
+        return response;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("Service: Finding user details with email by loading {}", username);
-        Optional<User> user = userRepository.findByEmail(username);
-        if (user.isEmpty()) {
-            throw new EntityNotFoundException("User not found");
-        }
-        return user.get();
+    public List<UserListResponse> findTop5UsersByUpcomingEvents() {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Kiev"));
+        log.info("Service: Finding top 5 users with upcoming events");
+        List<User> users = userRepository.findTop5UsersByUpcomingEvents(now);
+        return users.stream().map(userMapper::fromUserToUserListResponse).toList();
     }
 
+    @Override
     public User findUserByAuth(Authentication authentication) {
         log.info("Service: Finding user by authentication {}", authentication);
         return userRepository.findByEmail(authentication.getName()).orElseThrow(
@@ -135,47 +171,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmailForServices(String email) {
+        log.info("Service: Finding user with email {}", email);
+        return userRepository.findByEmail(email).orElseThrow(
+                () -> new EntityNotFoundException("User not found")
+        );
+    }
+
+    @Override
     public List<User> findAllByEventIdForServices(long eventId){
         log.info("Service: Finding all users for event with id {}", eventId);
         return userRepository.findAllByEventId(eventId);
     }
 
     @Override
-    public List<UserListResponse> findTop5UsersByUpcomingEvents() {
-        LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Kiev"));
-        log.info("Service: Finding top 5 users with upcoming events");
-        List<User> users = userRepository.findTop5UsersByUpcomingEvents(now);
-        return users.stream().map(userMapper::fromUserToUserListResponse).toList();
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("Service: Finding user details with email by loading {}", username);
+        Optional<User> user = userRepository.findByEmail(username);
+        if (user.isEmpty()) {
+            throw new EntityNotFoundException("User not found");
+        }
+        return user.get();
     }
 
-    @Override
-    public PaginationListResponse<UserListResponse> findAllByEventsNotContains(
-            String email, String firstName, String lastName, String role, long eventId, int page, int size) {
-        Map<String, Object> filters = createFilters(email, firstName, lastName, role);
-        log.info("Service: Finding all users with events not contains event with id {}", eventId);
-        Page<User> users = userRepository.findAll(UserSpecification.doesNotHaveEvent(eventId).and(UserSpecification.filterUsers(filters)),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
-        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
-        response.setTotalPages(users.getTotalPages());
-        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
-        return response;
-    }
-
-    @Override
-    public PaginationListResponse<UserListResponse> findAllByEventId(
-            String email, String firstName, String lastName, String role,
-            long eventId, int page, int size, Authentication auth) {
-        User user = findUserByAuth(auth);
-        Map<String, Object> filters = createFilters(email, firstName, lastName, role);
-        log.info("Service: Finding all users disincluding me with filters {} and event id {}", filters, eventId);
-        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId)
-                        .and(UserSpecification.notUser(user.getId())).and(UserSpecification.filterUsers(filters)),
-                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
-        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
-        response.setTotalPages(users.getTotalPages());
-        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
-        return response;
-    }
 
     private Map<String, Object> createFilters(String email, String firstName, String lastName, String role) {
         Map<String, Object> filters = new HashMap<>();
@@ -192,6 +210,14 @@ public class UserServiceImpl implements UserService {
             filters.put("role", Role.valueOf(role.toUpperCase()).getLevel());
         }
         return filters;
+    }
+
+    private void checkForDeletedUser(long userId){
+        log.info("Service: Checking for deleted user with id {}", userId);
+        if (findByIdForServices(userId).getEmail().equals("!deleted-user!@deleted.com")) {
+            log.info("Service: User with id {} is deleted", userId);
+            throw new EntityExistsException("Can`t do anything with deleted user");
+        }
     }
 }
 

@@ -25,9 +25,11 @@ import java.util.List;
 @RequestMapping("/api/events")
 @RequiredArgsConstructor
 public class EventController {
+
     private final EventService eventService;
     private final UserService userService;
     private final TaskService taskService;
+
 
     @PreAuthorize("hasAnyRole('TEACHER', 'STUDENT')")
     @PostMapping("/create")

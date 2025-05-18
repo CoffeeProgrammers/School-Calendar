@@ -16,15 +16,14 @@ public interface EventService {
     EventFullResponse create (EventCreateRequest eventCreateRequest, Authentication authentication);
     EventFullResponse update (EventUpdateRequest eventUpdateRequest, long eventId);
     void delete (Long id);
+    void deleteUserById(long id, long userId);
     EventFullResponse findById (Long id);
     PaginationListResponse<EventListResponse> findAllByUserId
-            (long userId, String search, String startDate, String endDate,
-             String typeOfEvent, int page, int size);
+            (long userId, String search, String startDate, String endDate, String typeOfEvent, int page, int size);
     List<EventListResponse> findAllByUserIdForCalendar
             (long userId, LocalDateTime start, LocalDateTime end);
-    Event findByIdForServices(long id);
-    void deleteUserById(long id, long userId);
-    LongResponse countAllEventsByUserAndPast(long userId);
     List<String> findForInvitationCheck(long userId, LocalDateTime start, LocalDateTime end);
+    LongResponse countAllEventsByUserAndPast(long userId);
     void unsignUserAndCreatorFromAll(long userId);
+    Event findByIdForServices(long id);
 }

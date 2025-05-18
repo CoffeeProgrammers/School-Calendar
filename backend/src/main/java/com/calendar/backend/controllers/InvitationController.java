@@ -22,6 +22,7 @@ public class InvitationController {
     private final InvitationService invitationService;
     private final UserService userService;
 
+
     @PreAuthorize("@userSecurity.checkCreatorOfEvent(#auth, #eventId)")
     @PostMapping("/create/events/{event_id}/receivers/{receiver_id}")
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,11 +61,7 @@ public class InvitationController {
             @RequestParam int size,
             Authentication auth) {
         log.info("Controller: Get all invitations for user with id: {}", userService.findUserByAuth(auth).getId());
-        return invitationService.findAllByRecieverId(
-                auth,
-                page,
-                size
-        );
+        return invitationService.findAllByReceiverId(auth, page, size);
     }
 
     @GetMapping("/getMySent")
@@ -74,11 +71,7 @@ public class InvitationController {
             @RequestParam int size,
             Authentication auth) {
         log.info("Controller: Get all sent invitations by my user");
-        return invitationService.findAllBySenderId(
-                auth,
-                page,
-                size
-        );
+        return invitationService.findAllBySenderId(auth, page, size);
     }
 
     @PreAuthorize("@userSecurity.checkReceiverOfInvitation(#auth, #id)")
@@ -96,6 +89,4 @@ public class InvitationController {
         log.info("Controller: Reject invitation with id: {}", id);
         invitationService.rejectInvitation(id);
     }
-
 }
-

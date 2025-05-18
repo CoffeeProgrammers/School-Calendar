@@ -25,12 +25,14 @@ import java.util.List;
 public class UserController {
 
     private final TaskAssignmentService taskAssignmentService;
+    private final NotificationService notificationService;
     private final InvitationService invitationService;
     private final CommentService commentService;
     private final EventService eventService;
     private final UserService userService;
     private final TaskService taskService;
     private final UserMapper userMapper;
+
 
     @PreAuthorize("hasRole('TEACHER')")
     @PostMapping("/create")
@@ -80,6 +82,8 @@ public class UserController {
         taskAssignmentService.unassignTasksFromUser(id);
         eventService.unsignUserAndCreatorFromAll(id);
 
+        notificationService.deleteAllLinksToUser(id);
+
         invitationService.changeCreatorToDeletedUser(id);
         commentService.changeCreatorToDeletedUser(id);
         taskService.changeCreatorToDeletedUser(id);
@@ -110,10 +114,11 @@ public class UserController {
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String role
+            @RequestParam(required = false) String role,
+            Authentication auth
     ) {
         log.info("Controller: Get all users");
-        return userService.findAll(email, firstName, lastName, role, page, size);
+        return userService.findAll(email, firstName, lastName, role, page, size, auth);
     }
 
     @PreAuthorize("@userSecurity.checkUserOfEvent(#auth, #eventId)")

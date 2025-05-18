@@ -69,7 +69,7 @@ class CommentServiceImplTest {
         Authentication auth = mock(Authentication.class);
 
         when(auth.getName()).thenReturn(user.getEmail());
-        when(userService.findByEmail(user.getEmail())).thenReturn(user);
+        when(userService.findByEmailForServices(user.getEmail())).thenReturn(user);
         when(eventService.findByIdForServices(event.getId())).thenReturn(event);
         when(commentMapper.fromCommentRequestToComment(request)).thenReturn(comment);
         when(commentRepository.save(any(Comment.class))).thenReturn(comment);

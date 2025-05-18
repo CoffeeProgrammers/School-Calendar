@@ -38,6 +38,7 @@ public class JwtUtils {
     private static final String ISSUER = "com.todo.app";
     private static final String AUDIENCE = "todo-users";
 
+
     public String generateTokenFromUsername(String username, Map<String, Object> claims) {
         log.info("Auth: generate token for user: {}", username);
         return Jwts.builder()
@@ -71,7 +72,7 @@ public class JwtUtils {
     }
 
     private Claims parseClaims(String token) {
-        log.info("Auth: try to parse claims from token: {}", token);
+        log.info("Auth: try to parse claims from token");
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(getSignInKey())

@@ -6,7 +6,6 @@ import java.util.Optional;
 
 public interface RefreshTokenService {
     String createRefreshToken(String username);
-    Optional<RefreshToken> findByToken(String token);
     void deleteAllByUsername(String username);
     Optional<RefreshToken> findByUsername(String username);
 }

@@ -94,7 +94,7 @@ class TaskAssignmentServiceImplTest {
 
     @Test
     void assignTasksForNewUserFromEvent_success() {
-        when(taskService.findAllByEventId(anyLong())).thenReturn(List.of(task));
+        when(taskService.findAllByEventIdForServices(anyLong())).thenReturn(List.of(task));
         when(userService.findByIdForServices(anyLong())).thenReturn(user);
 
         taskAssignmentService.assignTasksForNewUserFromEvent(1L, 1L);

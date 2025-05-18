@@ -13,7 +13,7 @@ public interface CommentService {
     CommentResponse update (CommentRequest commentRequest, long id);
     void delete (long id);
     PaginationListResponse<CommentResponse> findAllByEventId(long eventId, int page, int size);
-    Comment findByIdForServices(long id);
     LongResponse countAllCommentsByCreatorId(Authentication authentication);
     void changeCreatorToDeletedUser(long userId);
+    Comment findByIdForServices(long id);
 }

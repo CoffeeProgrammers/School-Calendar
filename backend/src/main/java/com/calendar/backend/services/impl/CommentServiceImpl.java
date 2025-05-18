@@ -31,18 +31,20 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-    private final EventService eventService;
-    private final UserService userService;
+
     private final NotificationService notificationService;
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
+    private final EventService eventService;
+    private final UserService userService;
+
 
     @Override
     public CommentResponse create(CommentRequest commentRequest, Authentication authentication,
                                   long eventId) {
         log.info("Service: Saving new comment {}", commentRequest);
         Comment comment = commentMapper.fromCommentRequestToComment(commentRequest);
-        User user = userService.findByEmail(authentication.getName());
+        User user = userService.findUserByAuth(authentication);
         Event event = eventService.findByIdForServices(eventId);
         comment.setDate(LocalDateTime.now(ZoneId.of("Europe/Kiev")));
         comment.setCreator(user);
@@ -84,13 +86,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment findByIdForServices(long id) {
-        log.info("Service: Finding comment for service with id {}", id);
-        return commentRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Comment not found"));
-    }
-
-    @Override
     public LongResponse countAllCommentsByCreatorId(Authentication authentication) {
         User user = userService.findUserByAuth(authentication);
         log.info("Service: Counting all comments for creator with id {}", user.getId());
@@ -103,10 +98,17 @@ public class CommentServiceImpl implements CommentService {
     public void changeCreatorToDeletedUser(long userId) {
         log.info("Service: Changing creator to deleted user with id {}", userId);
         List<Comment> commentsFromDeletedUser = commentRepository.findAllByCreator_Id(userId);
-        User deleted = userService.findByEmail("!deleted-user!@deleted.com");
+        User deleted = userService.findByEmailForServices("!deleted-user!@deleted.com");
         for(Comment comment : commentsFromDeletedUser) {
             comment.setCreator(deleted);
         }
         commentRepository.saveAll(commentsFromDeletedUser);
+    }
+
+    @Override
+    public Comment findByIdForServices(long id) {
+        log.info("Service: Finding comment for service with id {}", id);
+        return commentRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Comment not found"));
     }
 }

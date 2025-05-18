@@ -32,10 +32,12 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class TaskServicesImpl implements TaskService {
+
+    private final TaskRepository taskRepository;
     private final EventService eventService;
     private final UserService userService;
-    private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
+
 
     @Override
     public TaskFullResponse create(TaskRequest taskRequest, Authentication authentication, long eventId) {
@@ -70,10 +72,8 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
-    public PaginationListResponse<TaskListResponse> findAllByUserId(String name,
-                                                                    String deadline, String isDone,
-                                                                    String isPast, long userId,
-                                                                    int page, int size) {
+    public PaginationListResponse<TaskListResponse> findAllByUserId(
+            String name, String deadline, String isDone, String isPast, long userId, int page, int size) {
         Map<String, Object> filters = new HashMap<>();
         if(name != null && !name.isBlank() && !name.equals("null")) {
             filters.put("name", name);
@@ -101,11 +101,6 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllByUserIdForServices(long userId) {
-        return taskRepository.findAll(TaskSpecification.assignedToUser(userId));
-    }
-
-    @Override
     public PaginationListResponse<TaskListResponse> findAllByEventId(
             long eventId, int page, int size) {
         log.info("Service: Finding all tasks for event with id {}", eventId);
@@ -119,44 +114,8 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findAllByEventId(long eventId) {
-        log.info("Service: Finding all tasks in list for event with id {}", eventId);
-        return taskRepository.findAllByEvent_Id(eventId);
-    }
-
-
-    public Task findByIdForServices(long id) {
-        log.info("Service: Finding task for services with id {}", id);
-        return taskRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Task not found"));
-    }
-
-    @Override
-    public TaskListResponse assignTaskToEvent(long eventId, long id) {
-        log.info("Service: Assigning task with id {} to event with id {}", id, eventId);
-        Task task = findByIdForServices(id);
-        task.setEvent(eventService.findByIdForServices(eventId));
-        return taskMapper.fromTaskToTaskListResponse(taskRepository.save(task));
-    }
-
-    @Override
-    public void unassignTaskFromEvent(long taskId){
-        log.info("Service: Unassigning task with id {} from event", taskId);
-        Task task = this.findByIdForServices(taskId);
-        task.setEvent(null);
-        taskRepository.save(task);
-    }
-
-    @Override
-    public void unsignAllFromEvent(long eventId) {
-        log.info("Service: Unassigning all tasks from event with id {}", eventId);
-        List<Task> tasks = findAllByEventId(eventId).stream().map(task -> {task.setEvent(null); return task;}).toList();
-        taskRepository.saveAll(tasks);
-    }
-
-    @Override
-    public PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(Authentication authentication,
-                                                                                    int page, int size) {
+    public PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(
+            Authentication authentication, int page, int size) {
         log.info("Service: Finding all tasks for auth user with no events");
         PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
         Page<Task> tasks = taskRepository.findAllByCreator_IdAndEventIsNull(
@@ -180,10 +139,54 @@ public class TaskServicesImpl implements TaskService {
     public void changeCreatorToDeletedUser(long userId) {
         log.info("Service: Changing creator to deleted user with id {}", userId);
         List<Task> taskFromDeletedUser = taskRepository.findAll(TaskSpecification.hasCreator(userId));
-        User deleted = userService.findByEmail("!deleted-user!@deleted.com");
+        User deleted = userService.findByEmailForServices("!deleted-user!@deleted.com");
         for(Task task : taskFromDeletedUser) {
             task.setCreator(deleted);
         }
         taskRepository.saveAll(taskFromDeletedUser);
     }
+
+    @Override
+    public TaskListResponse assignTaskToEvent(long eventId, long id) {
+        log.info("Service: Assigning task with id {} to event with id {}", id, eventId);
+        Task task = findByIdForServices(id);
+        task.setEvent(eventService.findByIdForServices(eventId));
+        return taskMapper.fromTaskToTaskListResponse(taskRepository.save(task));
+    }
+
+    @Override
+    public void unassignTaskFromEvent(long taskId){
+        log.info("Service: Unassigning task with id {} from event", taskId);
+        Task task = this.findByIdForServices(taskId);
+        task.setEvent(null);
+        taskRepository.save(task);
+    }
+
+    @Override
+    public void unsignAllFromEvent(long eventId) {
+        log.info("Service: Unassigning all tasks from event with id {}", eventId);
+        List<Task> tasks = findAllByEventIdForServices(eventId).stream()
+                .map(task -> {task.setEvent(null); return task;}).toList();
+        taskRepository.saveAll(tasks);
+    }
+
+    @Override
+    public Task findByIdForServices(long id) {
+        log.info("Service: Finding task for services with id {}", id);
+        return taskRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Task not found"));
+    }
+
+    @Override
+    public List<Task> findAllByEventIdForServices(long eventId) {
+        log.info("Service: Finding all tasks in list for event with id {}", eventId);
+        return taskRepository.findAllByEvent_Id(eventId);
+    }
+
+
+    @Override
+    public List<Task> findAllByUserIdForServices(long userId) {
+        return taskRepository.findAll(TaskSpecification.assignedToUser(userId));
+    }
+
 }

@@ -23,9 +23,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TaskAssignmentServiceImpl implements TaskAssignmentService {
+
+    private final TaskAssignmentRepository taskAssignmentRepository;
     private final TaskService taskService;
     private final UserService userService;
-    private final TaskAssignmentRepository taskAssignmentRepository;
+
 
     @Override
     public void create(Long taskId, Long userId) {
@@ -46,9 +48,19 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     public boolean isDone(Long taskId, Authentication authentication) {
         log.info("Service: Try to determine if task assignment is done for {}", taskId);
         return taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,
-                userService.findUserByAuth(authentication).getId()).get().isDone();
+                userService.findUserByAuth(authentication).getId()).orElseThrow(() ->
+                new EntityNotFoundException("Cant find such task assigment")).isDone();
     }
 
+    @Override
+    public PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth
+            (PaginationListResponse<TaskListResponse> tasks, Authentication authentication) {
+        log.info("Service: Setting all task assignments done for all tasks and auth user");
+        tasks.setContent(tasks.getContent().stream().map(task -> {
+            task.setDone(this.isDone(task.getId(), authentication));
+            return task;}).sorted(Comparator.comparing(TaskListResponse::isDone)).toList());
+        return tasks;
+    }
     @Override
     public void toggleDone(Long taskId, Authentication authentication) {
         log.info("Service: Toggling done status for task assignment with task id {} and auth user", taskId);
@@ -62,7 +74,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Override
     public void assignTasksForNewUserFromEvent(Long eventId, Long userId) {
         log.info("Service: Assigning tasks for new user with id {} from event with id {}", userId, eventId);
-        List<Task> tasksFromEvent = taskService.findAllByEventId(eventId);
+        List<Task> tasksFromEvent = taskService.findAllByEventIdForServices(eventId);
         for(Task task : tasksFromEvent) {
             create(task.getId(), userId);
         }
@@ -79,22 +91,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
         }
     }
 
-    @Transactional
-    @Override
-    public void unsignAllFromTask(Long taskId) {
-        log.info("Service: Unsigning all task assignments for task with id {}", taskId);
-        taskAssignmentRepository.deleteAllByTask_Id(taskId);
-    }
 
-    @Override
-    public PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth
-            (PaginationListResponse<TaskListResponse> tasks, Authentication authentication) {
-        log.info("Service: Setting all task assignments done for all tasks and auth user");
-        tasks.setContent(tasks.getContent().stream().map(task -> {
-            task.setDone(this.isDone(task.getId(), authentication));
-            return task;}).sorted(Comparator.comparing(TaskListResponse::isDone)).toList());
-        return tasks;
-    }
 
     @Override
     @Transactional
@@ -113,4 +110,13 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
         log.info("Service: Unsigning all task assignments for user with id {}", userId);
         taskAssignmentRepository.deleteAllByUser_Id(userId);
     }
+
+
+    @Transactional
+    @Override
+    public void unsignAllFromTask(Long taskId) {
+        log.info("Service: Unsigning all task assignments for task with id {}", taskId);
+        taskAssignmentRepository.deleteAllByTask_Id(taskId);
+    }
+
 }

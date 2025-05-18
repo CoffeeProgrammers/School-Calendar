@@ -19,7 +19,6 @@ public class EventSpecification {
             if (filters == null || filters.isEmpty()) {
                 return null;
             }
-
             List<Predicate> predicates = new ArrayList<>();
 
             if (filters.containsKey("search")) {

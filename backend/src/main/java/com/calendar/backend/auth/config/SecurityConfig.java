@@ -27,9 +27,10 @@ import org.springframework.security.web.context.SecurityContextPersistenceFilter
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final RefreshTokenServiceImpl refreshTokenService;
     private final UserServiceImpl userDetailsService;
     private final JwtUtils jwtUtils;
-    private final RefreshTokenServiceImpl refreshTokenService;
+
 
     @Bean
     public static PasswordEncoder passwordEncoder() {

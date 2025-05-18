@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
+
     @Query(value = "SELECT e.* FROM events e " +
             "JOIN users_events ue ON e.id = ue.event_id " +
             "WHERE ue.user_id = :userId " +
             "AND e.start_date >= :startDate " +
             "AND e.end_date <= :endDate",
             nativeQuery = true)
-    List<Event> findAllByUserIdAndDateRange(Long userId, LocalDateTime startDate,
-                                            LocalDateTime endDate, Sort sort);
+    List<Event> findAllByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate, Sort sort);
 
     @Query(value =
             "SELECT count(e.id)" +

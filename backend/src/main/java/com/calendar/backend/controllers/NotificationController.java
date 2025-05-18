@@ -19,6 +19,7 @@ public class NotificationController {
     private final NotificationService notificationService;
     private final UserService userService;
 
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public PaginationListResponse<NotificationResponse> getAllMyNotifications(
@@ -28,5 +29,4 @@ public class NotificationController {
         log.info("Controller: Get all notifications for user with id: {}", userService.findUserByAuth(auth).getId());
         return notificationService.findAllByUserId(userService.findUserByAuth(auth).getId(), page, size);
     }
-
 }

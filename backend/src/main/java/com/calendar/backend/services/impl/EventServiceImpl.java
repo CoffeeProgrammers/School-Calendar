@@ -35,10 +35,12 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
+
+    private final NotificationServiceImpl notificationServices;
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
     private final UserService userService;
-    private final NotificationServiceImpl notificationServices;
+
 
     @Override
     public EventFullResponse create(EventCreateRequest eventCreateRequest, Authentication authentication) {
@@ -74,18 +76,25 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public void deleteUserById(long id, long userId) {
+        log.info("Service: Deleting user with id {} from event with id {}", userId, id);
+        Event event = findByIdForServices(id);
+        User user = userService.findByIdForServices(userId);
+        notificationServices.create(new Notification(List.of(user),
+                "You have been removed from " + event.getName()));
+        event.deleteUser(user);
+        eventRepository.save(event);
+    }
+
+    @Override
     public EventFullResponse findById(Long id) {
         log.info("Service: Finding event with id {}", id);
         return eventMapper.fromEventToEventResponse(findByIdForServices(id));
     }
 
     @Override
-    public PaginationListResponse<EventListResponse> findAllByUserId(long userId,
-                                                                     String search,
-                                                                     String startDate,
-                                                                     String endDate,
-                                                                     String typeOfEvent,
-                                                                     int page, int size) {
+    public PaginationListResponse<EventListResponse> findAllByUserId(
+            long userId, String search, String startDate, String endDate, String typeOfEvent, int page, int size) {
         Map<String, Object> filters = new HashMap<>();
         if(search != null && !search.isBlank() && !search.equals("null")) {
             filters.put("search", search);
@@ -110,31 +119,12 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventListResponse> findAllByUserIdForCalendar(long userId,
-                                                                                LocalDateTime start,
-                                                                                LocalDateTime end) {
+    public List<EventListResponse> findAllByUserIdForCalendar(
+            long userId, LocalDateTime start, LocalDateTime end) {
         log.info("Service: Finding all events for user with id {} and date range {} - {}", userId, start, end);
         List<Event> events = eventRepository.findAllByUserIdAndDateRange(userId,
                 start, end, Sort.by(Sort.Direction.ASC, "start_date"));
         return events.stream().map(eventMapper::fromEventToEventListResponse).toList();
-    }
-
-    @Override
-    public Event findByIdForServices(long id) {
-        log.info("Service: Finding event for service with id {}", id);
-        return eventRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Event not found"));
-    }
-
-    @Override
-    public void deleteUserById(long id, long userId) {
-        log.info("Service: Deleting user with id {} from event with id {}", userId, id);
-        Event event = findByIdForServices(id);
-        User user = userService.findByIdForServices(userId);
-        notificationServices.create(new Notification(List.of(user),
-                "You have been removed from " + event.getName()));
-        event.deleteUser(user);
-        eventRepository.save(event);
     }
 
     @Override
@@ -151,14 +141,6 @@ public class EventServiceImpl implements EventService {
         return eventRepository.existWarningInvitation(userId, start, end);
     }
 
-    private List<Event> findAllByUserIdForServices(long userId){
-        return eventRepository.findAll(EventSpecification.hasUser(userId));
-    }
-
-    private List<Event> findAllByCreatorIdForServices(long creatorId){
-        return eventRepository.findAll(EventSpecification.hasCreator(creatorId));
-    }
-
     @Override
     public void unsignUserAndCreatorFromAll(long userId) {
         log.info("Service: Unsigning all events for user with id {}", userId);
@@ -168,11 +150,26 @@ public class EventServiceImpl implements EventService {
         }
         log.info("Service: Unsigning creator for user with id {}", userId);
         List<Event> eventsCreator = findAllByCreatorIdForServices(userId);
-        User deleted = userService.findByEmail("!deleted-user!@deleted.com");
+        User deleted = userService.findByEmailForServices("!deleted-user!@deleted.com");
         for(Event event : eventsCreator) {
             event.setCreator(deleted);
         }
         eventRepository.saveAll(events);
         eventRepository.saveAll(eventsCreator);
+    }
+
+    @Override
+    public Event findByIdForServices(long id) {
+        log.info("Service: Finding event for service with id {}", id);
+        return eventRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Event not found"));
+    }
+
+    private List<Event> findAllByUserIdForServices(long userId){
+        return eventRepository.findAll(EventSpecification.hasUser(userId));
+    }
+
+    private List<Event> findAllByCreatorIdForServices(long creatorId){
+        return eventRepository.findAll(EventSpecification.hasCreator(creatorId));
     }
 }

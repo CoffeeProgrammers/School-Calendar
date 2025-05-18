@@ -174,7 +174,7 @@ class TaskServiceImplTest {
         assertEquals(task.getEvent(), task.getEvent());
     }
     @Test
-    void findAllByEventId_success_withPagination() {
+    void findAllByEventId_ForServices_success_withPagination() {
         Page<Task> taskPage = new PageImpl<>(List.of(task));
         when(taskRepository.findAllByEvent_Id(eq(1L), any(PageRequest.class))).thenReturn(taskPage);
         when(taskMapper.fromTaskToTaskListResponse(task)).thenReturn(new TaskListResponse());
@@ -187,10 +187,10 @@ class TaskServiceImplTest {
     }
 
     @Test
-    void findAllByEventId_success_withoutPagination() {
+    void findAllByEventId_ForServices_ForServices_success_withoutPagination() {
         when(taskRepository.findAllByEvent_Id(eq(1L))).thenReturn(List.of(task));
 
-        List<Task> result = taskService.findAllByEventId(1L);
+        List<Task> result = taskService.findAllByEventIdForServices(1L);
 
         assertEquals(1, result.size());
         verify(taskRepository).findAllByEvent_Id(eq(1L));

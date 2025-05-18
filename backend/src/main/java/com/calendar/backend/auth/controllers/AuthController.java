@@ -1,11 +1,10 @@
 package com.calendar.backend.auth.controllers;
 
 import com.calendar.backend.auth.config.JwtUtils;
-import com.calendar.backend.auth.dto.auth.AuthResponse;
-import com.calendar.backend.auth.dto.auth.LogInRequest;
+import com.calendar.backend.auth.dto.AuthResponse;
+import com.calendar.backend.auth.dto.LogInRequest;
 import com.calendar.backend.auth.services.impl.RefreshTokenServiceImpl;
 import com.calendar.backend.dto.wrapper.StringRequest;
-import com.calendar.backend.mappers.UserMapper;
 import com.calendar.backend.models.User;
 import com.calendar.backend.services.inter.UserService;
 import jakarta.validation.Valid;
@@ -26,11 +25,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final RefreshTokenServiceImpl refreshTokenService;
+    private final UserService userService;
     private final JwtUtils jwtUtils;
-    private final UserMapper userMapper;
+
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/checks")
