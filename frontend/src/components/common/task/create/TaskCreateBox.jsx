@@ -3,9 +3,8 @@ import {Box, Container, Divider, TextField} from "@mui/material";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Typography from "@mui/material/Typography";
 import DefaultDateTimePicker from "../../layouts/DefaultDateTimePicker";
-import AssignEventToTaskDialog from "../event/AssignEventToTaskDialog";
 
-const TaskFormBox = (
+const TaskCreateBox = (
     {
         name,
         setName,
@@ -13,10 +12,7 @@ const TaskFormBox = (
         setDeadline,
         content,
         setContent,
-        boxName,
-        event,
-        setEvent,
-        isCreate,
+        boxName
     }) => {
 
     return (
@@ -53,7 +49,11 @@ const TaskFormBox = (
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
-
+                        <DefaultDateTimePicker
+                            label={"Deadline"}
+                            value={deadline}
+                            setValue={setDeadline}
+                        />
                         <TextField
                             label="Content"
                             fullWidth
@@ -63,15 +63,6 @@ const TaskFormBox = (
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                         />
-                        {isCreate && (
-                           <AssignEventToTaskDialog event={event} setEvent={setEvent}/>
-                        )}
-
-                        <DefaultDateTimePicker
-                            label={"Deadline"}
-                            value={deadline}
-                            setValue={setDeadline}
-                        />
                     </Box>
                 </Container>
             </Box>
@@ -79,4 +70,4 @@ const TaskFormBox = (
     );
 };
 
-export default TaskFormBox;
+export default TaskCreateBox;

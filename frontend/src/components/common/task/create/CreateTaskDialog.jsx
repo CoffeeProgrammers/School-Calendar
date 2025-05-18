@@ -12,6 +12,8 @@ const CreateTaskDialog = ({handleCreate}) => {
     const [deadline, setDeadline] = useState('');
     const [content, setContent] = useState('');
 
+    const [event, setEvent] = useState('');
+
 
     const clearFields = () => {
         setName('');
@@ -29,7 +31,7 @@ const CreateTaskDialog = ({handleCreate}) => {
     };
 
     const handleSave = () => {
-        handleCreate({
+        handleCreate(event.id, {
             name: name,
             deadline: deadline,
             content: content
@@ -57,6 +59,9 @@ const CreateTaskDialog = ({handleCreate}) => {
                     setDeadline={setDeadline}
                     content={content}
                     setContent={setContent}
+                    event={event}
+                    setEventId={setEvent}
+                    isCreate={true}
                 />
             </FullScreenFunctionDialog>
         </>

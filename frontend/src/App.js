@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import {ThemeProvider} from '@mui/material';
 import {LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
@@ -18,10 +18,21 @@ import EventPage from "./components/pages/event/EventPage";
 import Login from "./security/login/Login";
 import InvitationsPage from "./components/pages/invitations/InvitationsPage";
 import TeacherPanelPage from "./components/pages/teacher_panel/TeacherPanelPage";
+import {history} from "./utils/history";
+import {useEffect} from "react";
 
+const InitNavigation = ({ children }) => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        history.navigate = navigate;
+    }, [navigate]);
+
+    return children;
+};
 
 function App() {
-    const privateRoutes = [
+    const routes = [
         {path: "", element: <MainPage/>},
         {path: "/events", element: <Page><Events/></Page>},
         {path: "/users", element: <Page><Users/></Page>},
@@ -33,28 +44,27 @@ function App() {
         {path: "/notifications", element: <Page><NotificationsPage/></Page>},
         {path: "/invitations", element: <InvitationsPage/>},
         {path: "/teacherPanel", element: <TeacherPanelPage/>}
-
     ];
-    return (
-        <Router>
-            <ThemeProvider theme={theme}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <Routes>
-                        <Route path={"/login"} element={<Login/>}/>
 
-                        {privateRoutes.map((route, index) => (
-                           // <Route element={<PrivateRoute/>}>
+    return (
+        <BrowserRouter>
+            <InitNavigation>
+                <ThemeProvider theme={theme}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <Routes>
+                            <Route path="/login" element={<Login />} />
+                            {routes.map((route, index) => (
                                 <Route
                                     key={index}
                                     path={route.path}
                                     element={route.element}
                                 />
-                         //   </Route>
-                        ))}
-                    </Routes>
-                </LocalizationProvider>
-            </ThemeProvider>
-        </Router>
+                            ))}
+                        </Routes>
+                    </LocalizationProvider>
+                </ThemeProvider>
+            </InitNavigation>
+        </BrowserRouter>
     );
 }
 

@@ -2,79 +2,57 @@ import BaseService from "../BaseService";
 
 class TaskService extends BaseService {
     constructor() {
-        super("http://localhost:8081/api/tasks");
+        super("/tasks");
     }
 
     createTask(eventId, data) {
-        return this.handleRequest(() =>
-            this.apiClient.post(`/create?eventId=${eventId}`, data)
-        );
+        return this.post(`/create?eventId=${eventId}`, data);
     }
 
     updateTask(id, data) {
-        return this.handleRequest(() =>
-            this.apiClient.put(`/update/${id}`, data)
-        );
+        return this.put(`/update/${id}`, data);
     }
 
     deleteTask(id) {
-        return this.handleRequest(() =>
-            this.apiClient.delete(`/delete/${id}`)
-        );
+        return this.delete(`/delete/${id}`);
     }
 
     getTask(id) {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/${id}`)
-        );
+        return this.get(`/${id}`);
     }
 
     getMyTasks(page, size, name, deadline, isDone, isPast) {
-        return this.handleRequest(() =>
-            this.apiClient.get("", {
-                params: { page, size, name, deadline, isDone, isPast }
-            })
-        );
+        return this.get("", {
+            params: { page, size, name, deadline, isDone, isPast }
+        });
     }
 
     getMyTasksWithoutEvent(page, size) {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/getMyWithoutEvent`, {
-                params: { page, size }
-            })
-        );
+        return this.get(`/getMyWithoutEvent`, {
+            params: { page, size }
+        });
     }
 
     getTasksByEvent(eventId, page, size) {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/events/${eventId}`, {
-                params: { page, size }
-            })
-        );
+        return this.get(`/events/${eventId}`, {
+            params: { page, size }
+        });
     }
 
     toggleTaskDone(id) {
-        return this.handleRequest(() =>
-            this.apiClient.put(`/toggle/${id}`)
-        );
+        return this.put(`/toggle/${id}`);
     }
 
     assignTaskToEvent(taskId, eventId) {
-        return this.handleRequest(() =>
-            this.apiClient.put(`/assign/${taskId}/to/${eventId}`)
-        );
+        return this.put(`/assign/${taskId}/to/${eventId}`);
     }
 
     unassignTaskFromEvent(taskId) {
-        return this.handleRequest(() =>
-            this.apiClient.put(`/unassign/${taskId}`)
-        );
+        return this.put(`/unassign/${taskId}`);
     }
 
     countAllUserTasks(userId) {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/countAllMy/user/${userId}`)
-        );
+        return this.get(`/countAllMy/user/${userId}`);
     }
 }
 
