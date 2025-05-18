@@ -130,17 +130,11 @@ ALTER TABLE
     "comments"
     ADD CONSTRAINT "comments_event_id_foreign" FOREIGN KEY ("event_id") REFERENCES "events" ("id");
 ALTER TABLE
-    "parents_students"
-    ADD CONSTRAINT "parents_students_parent_id_foreign" FOREIGN KEY ("parent_id") REFERENCES "users" ("id");
-ALTER TABLE
     "users_events"
     ADD CONSTRAINT "users_events_user_id_foreign" FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 ALTER TABLE
     "users_events"
     ADD CONSTRAINT "users_events_event_id_foreign" FOREIGN KEY ("event_id") REFERENCES "events" ("id");
-ALTER TABLE
-    "parents_students"
-    ADD CONSTRAINT "parents_students_student_id_foreign" FOREIGN KEY ("student_id") REFERENCES "users" ("id");
 ALTER TABLE
     "comments"
     ADD CONSTRAINT "comments_creator_id_foreign" FOREIGN KEY ("creator_id") REFERENCES "users" ("id");
