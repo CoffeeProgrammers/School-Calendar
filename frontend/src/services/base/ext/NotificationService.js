@@ -2,15 +2,13 @@ import BaseService from "../BaseService";
 
 class NotificationService extends BaseService {
     constructor() {
-        super("http://localhost:8081/api/notifications");
+        super("/notifications");
     }
 
     getMyNotifications(page, size) {
-        return this.handleRequest(() =>
-            this.apiClient.get("", {
-                params: { page, size }
-            })
-        );
+        return this.get("", {
+            params: {page, size}
+        });
     }
 }
 

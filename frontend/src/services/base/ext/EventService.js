@@ -2,83 +2,52 @@ import BaseService from "../BaseService";
 
 class EventService extends BaseService {
     constructor() {
-        super("http://localhost:8081/api/events");
+        super("/events");
     }
 
     createEvent(data) {
-        return this.handleRequest(() =>
-            this.apiClient.post("/create", data)
-        );
+        return this.post("/create", data);
     }
 
     updateEvent(id, data) {
-        return this.handleRequest(() =>
-            this.apiClient.put(`/update/${id}`,data)
-        );
+        return this.put(`/update/${id}`, data);
     }
 
     deleteEvent(id) {
-        return this.handleRequest(() =>
-            this.apiClient.delete(`/delete/${id}`)
-        );
+        return this.delete(`/delete/${id}`);
     }
 
     deleteUserFromEvent(eventId, userId) {
-        return this.handleRequest(() =>
-            this.apiClient.put(`/delete/${eventId}/user/${userId}`)
-        );
+        return this.put(`/delete/${eventId}/user/${userId}`);
     }
 
     getEvent(id) {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/${id}`)
-        );
+        return this.get(`/${id}`);
     }
 
-    getMyEvents(
-        page,
-        size,
-        search = null,
-        startDate = null,
-        endDate = null,
-        typeOfEvent = null
-    ) {
+    getMyEvents(page, size, search = null, startDate = null, endDate = null, typeOfEvent = null) {
         const params = {
             page,
             size,
-            ...(search && {search}),
-            ...(startDate && {startDate}),
-            ...(endDate && {endDate}),
-            ...(typeOfEvent && {typeOfEvent}),
+            ...(search && { search }),
+            ...(startDate && { startDate }),
+            ...(endDate && { endDate }),
+            ...(typeOfEvent && { typeOfEvent }),
         };
 
-        return this.handleRequest(() =>
-            this.apiClient.get("", {params})
-        );
+        return this.get("", { params });
     }
 
     getUserEventsBetween(userId, startDate, endDate, gap = 0) {
-        return this.handleRequest(() =>
-            this.apiClient.get(`/users/${userId}/between`, {
-                params: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    gap,
-                }
-            })
-        );
+        return this.get(`/users/${userId}/between`, {
+            params: { startDate, endDate, gap }
+        });
     }
 
     getMyEventsBetween(startDate, endDate, gap = 0) {
-        return this.handleRequest(() =>
-            this.apiClient.get("/between", {
-                params: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    gap,
-                }
-            })
-        );
+        return this.get("/between", {
+            params: { startDate, endDate, gap }
+        });
     }
 }
 
