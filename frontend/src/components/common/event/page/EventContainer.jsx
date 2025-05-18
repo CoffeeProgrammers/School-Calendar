@@ -4,10 +4,12 @@ import {Typography} from "@mui/material";
 import EventView from "./EventView";
 import EventService from "../../../../services/base/ext/EventService";
 import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
 const EventContainer = ({eventId}) => {
     const navigate = useNavigate();
-    
+    const myId = Cookies.get('userId');
+
     const [event, setEvent] = useState(null);
 
     const [loading, setLoading] = useState(true);
@@ -42,7 +44,7 @@ const EventContainer = ({eventId}) => {
         }
     };
 
-    const handleDelete = async (eventId) => {
+    const handleDelete = async () => {
         setLoading(true);
         setError(null);
         try {
@@ -54,6 +56,19 @@ const EventContainer = ({eventId}) => {
             setLoading(false);
         }
     };
+
+    const handleUserLeaveFromEvent = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            await EventService.deleteUserFromEvent(eventId, myId);
+            navigate('/events');
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     if (loading) {
         return <Loading/>;
@@ -68,6 +83,7 @@ const EventContainer = ({eventId}) => {
             event={event}
             handleUpdate={handleUpdate}
             handleDelete={handleDelete}
+            handleUserLeaveFromEvent={handleUserLeaveFromEvent}
         />
     );
 };

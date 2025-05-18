@@ -4,7 +4,7 @@ import EventTasksAddDialog from "./EventTasksAddDialog";
 import TaskService from "../../../../../services/base/ext/TaskService";
 
 
-const EventTasksAddDialogContainer = ({handleAddTask, eventId}) => {
+const EventTasksAddDialogContainer = ({handleAddTask}) => {
     const [tasks, setTasks] = useState([])
 
     const [searchName, setSearchName] = useState('');
@@ -45,7 +45,7 @@ const EventTasksAddDialogContainer = ({handleAddTask, eventId}) => {
     }, [searchName, deadline, isDone, page, isPast]);
 
     const handleAdd = async (taskId) => {
-        handleAddTask(eventId, taskId);
+        handleAddTask(taskId);
         setTasks(prevTasks => prevTasks.filter(t => t.id !== taskId));
     }
 

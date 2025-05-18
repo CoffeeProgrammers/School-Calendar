@@ -81,13 +81,13 @@ const EventPageMainBox = ({event, isCreator}) => {
                 <Divider sx={{mt: 1, mb: 0.7}}/>
 
                 <Stack direction="row" spacing={0.5}>
-                    <ParticipantsContainer eventId={event.id} isCreator={isCreator}/>
-                    <CommentsContainer eventId={event.id}/>
-                    <EventTasksContainer eventId={event.id}/>
+                    <ParticipantsContainer event={event} isCreator={isCreator}/>
+                    <EventTasksContainer event={event}/>
+                    <CommentsContainer event={event}/>
                 </Stack>
 
 
-                {event.isContentAvailableAnytime || isEventStart ? (
+                {(event.isContentAvailableAnytime || isEventStart) ? (
                     <>
                         <Divider sx={{mt: 0.7, mb: 0.5}}/>
                         <Box sx={listElementBoxTextStyle}>

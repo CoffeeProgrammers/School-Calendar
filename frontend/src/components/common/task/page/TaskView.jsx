@@ -13,7 +13,7 @@ const TaskView = (
     }) => {
 
     const isCreator = task.creator.id.toString() === Cookies.get('userId');
-    console.log(`Is event creator: ` + isCreator)
+
     return (
         <Box sx={{width: "850px", display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
             {isCreator &&

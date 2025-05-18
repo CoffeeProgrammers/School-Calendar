@@ -43,6 +43,8 @@ class BaseService {
             // console.log(Cookies.get('accessToken'))
             return response.data;
         } catch (error) {
+            throw error;
+
             // console.log("ERROR")
             // if (error.response.status === 498) {
             //     try {
@@ -72,7 +74,7 @@ class BaseService {
             //         throw error;
             //     }
             // }
-            throw error;
+
         }
     }
 }

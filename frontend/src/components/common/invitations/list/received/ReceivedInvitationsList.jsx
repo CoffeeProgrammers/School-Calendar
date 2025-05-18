@@ -2,7 +2,7 @@ import {Stack} from '@mui/material';
 import ReceivedInvitationListBox from "./ReceivedInvitationListBox";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Loading from "../../../../layouts/Loading";
 import PaginationBox from "../../../../layouts/lists/PaginationBox";
 import InvitationService from "../../../../../services/base/ext/InvitationService";
@@ -16,48 +16,40 @@ const ReceivedInvitationsList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await InvitationService.getInvitations(
-                    page - 1,
-                    10
-                );
-                console.log(response)
-
-                setInvitations(response.content);
-                setPagesCount(response.totalPages)
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
+    const fetchInvitations = useCallback(async () => {
+        try {
+            setLoading(true);
+            const response = await InvitationService.getInvitations(page - 1, 10);
+            setInvitations(response.content);
+            setPagesCount(response.totalPages);
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
     }, [page]);
 
-    const handleRejectInvitation = async (invitationId) => {
-        try {
-            await InvitationService.rejectInvitation(invitationId);
-            setInvitations(prev =>
-                prev.filter(invitation => invitation.id !== invitationId)
-            );
-        } catch (error) {
-            console.error('Failed to reject invitation: ', error);
-        }
-    }
+    useEffect(() => {
+        fetchInvitations();
+    }, [fetchInvitations]);
 
     const handleAcceptInvitation = async (invitationId) => {
         try {
             await InvitationService.acceptInvitation(invitationId);
-            setInvitations(prev =>
-                prev.filter(invitation => invitation.id !== invitationId)
-            );
+            await fetchInvitations(); // оновити весь список
         } catch (error) {
             console.error('Failed to accept invitation: ', error);
         }
-    }
+    };
+
+    const handleRejectInvitation = async (invitationId) => {
+        try {
+            await InvitationService.rejectInvitation(invitationId);
+            await fetchInvitations(); // оновити весь список
+        } catch (error) {
+            console.error('Failed to reject invitation: ', error);
+        }
+    };
 
     if (loading) {
         return <Loading />;
