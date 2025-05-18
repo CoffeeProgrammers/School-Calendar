@@ -111,7 +111,9 @@ public class UserServiceImpl implements UserService {
         log.info("Service: Finding all users with filters {}", filters);
 
         Page<User> users = userRepository.findAll(
-                UserSpecification.filterUsers(filters).and(UserSpecification.notUser(user.getId())),
+                UserSpecification.filterUsers(filters)
+                        .and(UserSpecification.notUser(user.getId()))
+                        .and(UserSpecification.notIncludeDeleted()),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
 
         return createResponse(users);
@@ -127,8 +129,11 @@ public class UserServiceImpl implements UserService {
 
         log.info("Service: Finding all users disincluding me with filters {} and event id {}", filters, eventId);
 
-        Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId)
-                        .and(UserSpecification.notUser(user.getId())).and(UserSpecification.filterUsers(filters)),
+        Page<User> users = userRepository.findAll(
+                UserSpecification.hasEvent(eventId)
+                        .and(UserSpecification.notUser(user.getId()))
+                        .and(UserSpecification.filterUsers(filters))
+                        .and(UserSpecification.notIncludeDeleted()),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
 
         return createResponse(users);
@@ -141,8 +146,10 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> filters = createFilters(email, firstName, lastName, role);
         log.info("Service: Finding all users with events not contains event with id {}", eventId);
 
-        Page<User> users = userRepository.findAll(UserSpecification.doesNotHaveEvent(eventId)
-                        .and(UserSpecification.filterUsers(filters)),
+        Page<User> users = userRepository.findAll(
+                UserSpecification.doesNotHaveEvent(eventId)
+                        .and(UserSpecification.filterUsers(filters))
+                        .and(UserSpecification.notIncludeDeleted()),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
 
         return createResponse(users);
