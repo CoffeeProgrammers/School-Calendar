@@ -156,11 +156,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserListResponse> findTop5UsersByUpcomingEvents() {
+    public List<UserListResponse> findTop5UsersBySentComments() {
+        log.info("Service: Finding top 5 users with sent comments");
+
+        List<User> users = userRepository.findTop5UsersBySentComments();
+
+        return users.stream().map(userMapper::fromUserToUserListResponse).toList();
+    }
+
+    @Override
+    public List<UserListResponse> findTop5UsersByPastEvents() {
         log.info("Service: Finding top 5 users with upcoming events");
 
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Kiev"));
-        List<User> users = userRepository.findTop5UsersByUpcomingEvents(now);
+        List<User> users = userRepository.findTop5UsersByPastEvents(now);
+
+        return users.stream().map(userMapper::fromUserToUserListResponse).toList();
+    }
+
+    @Override
+    public List<UserListResponse> findTop5UsersByDoneTasks() {
+        log.info("Service: Finding top 5 users with done tasks");
+
+        List<User> users = userRepository.findTop5UsersByDoneTasks();
 
         return users.stream().map(userMapper::fromUserToUserListResponse).toList();
     }

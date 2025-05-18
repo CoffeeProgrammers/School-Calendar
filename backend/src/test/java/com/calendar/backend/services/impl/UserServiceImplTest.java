@@ -321,16 +321,16 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findTop5Users_success() {
+    void findTop5UsersByPastEvents_success() {
         List<UserListResponse> result = List.of(new UserListResponse());
-        when(userRepository.findTop5UsersByUpcomingEvents(any())).thenReturn(List.of(new User()));
+        when(userRepository.findTop5UsersByPastEvents(any())).thenReturn(List.of(new User()));
         when(userMapper.fromUserToUserListResponse(new User())).thenReturn(new UserListResponse());
 
-        List<UserListResponse> result2 = userService.findTop5UsersByUpcomingEvents();
+        List<UserListResponse> result2 = userService.findTop5UsersByPastEvents();
 
         assertEquals(result.get(0), result2.get(0));
         assertEquals(1, result.size());
-        verify(userRepository).findTop5UsersByUpcomingEvents(any());
+        verify(userRepository).findTop5UsersByPastEvents(any());
     }
 
     @Test
