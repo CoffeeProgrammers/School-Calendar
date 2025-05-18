@@ -14,8 +14,8 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
     @Query(value = "SELECT e.* FROM events e " +
             "JOIN users_events ue ON e.id = ue.event_id " +
             "WHERE ue.user_id = :userId " +
-            "AND e.start_date >= :startDate " +
-            "AND e.end_date <= :endDate",
+            "AND e.start_date <= :endDate " +
+            "AND e.end_date >= :startDate",
             nativeQuery = true)
     List<Event> findAllByUserIdAndDateRange(Long userId, LocalDateTime startDate, LocalDateTime endDate, Sort sort);
 

@@ -1,9 +1,6 @@
 package com.calendar.backend.controllers;
 
-import com.calendar.backend.dto.event.EventCreateRequest;
-import com.calendar.backend.dto.event.EventFullResponse;
-import com.calendar.backend.dto.event.EventListResponse;
-import com.calendar.backend.dto.event.EventUpdateRequest;
+import com.calendar.backend.dto.event.*;
 import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.EventService;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -118,7 +116,7 @@ public class EventController {
 
     @GetMapping("/users/{user_id}/between")
     @ResponseStatus(HttpStatus.OK)
-    public List<EventListResponse> getUserEventsBetween(
+    public Map<String, List<EventCalenderResponse>> getUserEventsBetween(
             @PathVariable(value = "user_id") Long userId,
             @RequestParam String startDate,
             @RequestParam String endDate,
@@ -126,14 +124,15 @@ public class EventController {
         log.info("Controller: Get user events with id: {} between dates: {} and {}",
                 userId, startDate, endDate);
         return eventService.findAllByUserIdForCalendar(userId,
-                LocalDateTime.parse(startDate).minusDays(gap),
-                LocalDateTime.parse(endDate).plusDays(gap)
+                LocalDateTime.parse(startDate),
+                LocalDateTime.parse(endDate),
+                gap
         );
     }
 
     @GetMapping("/between")
     @ResponseStatus(HttpStatus.OK)
-    public List<EventListResponse> getMyEventsBetween(
+    public Map<String, List<EventCalenderResponse>> getMyEventsBetween(
             @RequestParam String startDate,
             @RequestParam String endDate,
             Authentication auth,
@@ -141,8 +140,9 @@ public class EventController {
         log.info("Controller: Get my events between dates: {} and {}", startDate, endDate);
         return eventService.findAllByUserIdForCalendar(
                 userService.findUserByAuth(auth).getId(),
-                LocalDateTime.parse(startDate).minusDays(gap),
-                LocalDateTime.parse(endDate).plusDays(gap)
+                LocalDateTime.parse(startDate),
+                LocalDateTime.parse(endDate),
+                gap
         );
     }
 

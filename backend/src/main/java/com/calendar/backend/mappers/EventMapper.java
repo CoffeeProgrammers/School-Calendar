@@ -1,5 +1,6 @@
 package com.calendar.backend.mappers;
 
+import com.calendar.backend.dto.event.EventCalenderResponse;
 import com.calendar.backend.dto.event.EventCreateRequest;
 import com.calendar.backend.dto.event.EventFullResponse;
 import com.calendar.backend.dto.event.EventListResponse;
@@ -11,6 +12,8 @@ public interface EventMapper {
     EventFullResponse fromEventToEventResponse(Event event);
 
     EventListResponse fromEventToEventListResponse(Event event);
+
+    EventCalenderResponse fromEventToEventCalenderResponse(Event event);
 
     Event fromEventRequestToEvent(EventCreateRequest eventCreateRequest);
 }

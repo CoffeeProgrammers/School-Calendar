@@ -1,9 +1,6 @@
 package com.calendar.backend.services.impl;
 
-import com.calendar.backend.dto.event.EventCreateRequest;
-import com.calendar.backend.dto.event.EventFullResponse;
-import com.calendar.backend.dto.event.EventListResponse;
-import com.calendar.backend.dto.event.EventUpdateRequest;
+import com.calendar.backend.dto.event.*;
 import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.EventMapper;
@@ -137,14 +134,24 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventListResponse> findAllByUserIdForCalendar(
-            long userId, LocalDateTime start, LocalDateTime end) {
-        log.info("Service: Finding all events for user with id {} and date range {} - {}", userId, start, end);
+    public Map<String, List<EventCalenderResponse>> findAllByUserIdForCalendar(
+            long userId, LocalDateTime start, LocalDateTime end, int gap) {
+        log.info("Service: Finding all events for user with id {} and date range {} - {} and gap {}",
+                userId, start, end, gap);
 
-        List<Event> events = eventRepository.findAllByUserIdAndDateRange(userId,
+        List<Event> eventsPast = eventRepository.findAllByUserIdAndDateRange(userId,
+                start.minusDays(gap), end.minusDays(gap), Sort.by(Sort.Direction.ASC, "start_date"));
+        List<Event> eventsNow = eventRepository.findAllByUserIdAndDateRange(userId,
                 start, end, Sort.by(Sort.Direction.ASC, "start_date"));
+        List<Event> eventsNext = eventRepository.findAllByUserIdAndDateRange(userId,
+                start.plusDays(gap), end.plusDays(gap), Sort.by(Sort.Direction.ASC, "start_date"));
 
-        return events.stream().map(eventMapper::fromEventToEventListResponse).toList();
+        Map<String, List<EventCalenderResponse>> response = new HashMap<>();
+        response.put("past", eventsPast.stream().map(eventMapper::fromEventToEventCalenderResponse).toList());
+        response.put("now", eventsNow.stream().map(eventMapper::fromEventToEventCalenderResponse).toList());
+        response.put("next", eventsNext.stream().map(eventMapper::fromEventToEventCalenderResponse).toList());
+
+        return response;
     }
 
     @Override
