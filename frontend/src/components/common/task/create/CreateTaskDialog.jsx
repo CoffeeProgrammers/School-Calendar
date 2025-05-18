@@ -19,6 +19,7 @@ const CreateTaskDialog = ({handleCreate}) => {
         setName('');
         setDeadline('');
         setContent('');
+        setEvent('');
     }
 
     const handleClickOpen = () => {

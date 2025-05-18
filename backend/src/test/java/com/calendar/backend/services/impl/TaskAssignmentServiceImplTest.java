@@ -1,6 +1,8 @@
 package com.calendar.backend.services.impl;
 
 import com.calendar.backend.TestUtil;
+import com.calendar.backend.dto.task.TaskListResponse;
+import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.models.Task;
 import com.calendar.backend.models.TaskAssignment;
 import com.calendar.backend.models.User;
@@ -44,6 +46,7 @@ class TaskAssignmentServiceImplTest {
     void setUp() {
         task = TestUtil.createTask("Test Task");
         user = TestUtil.createUser("TEACHER");
+        task.setCreator(user);
         taskAssignment = TestUtil.assignTaskToUser(task, user);
         taskAssignment.setDone(false);
 
@@ -72,7 +75,16 @@ class TaskAssignmentServiceImplTest {
     }
 
     @Test
-    void toggleDone_success() {
+    void isDone_notFound() {
+        when(userService.findUserByAuth(authentication)).thenReturn(user);
+        when(taskAssignmentRepository.findByTask_IdAndUser_Id(anyLong(), anyLong()))
+                .thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> taskAssignmentService.isDone(1L, authentication));
+    }
+
+    @Test
+    void toggleDone_successTrue() {
         when(userService.findUserByAuth(authentication)).thenReturn(user);
         when(taskAssignmentRepository.findByTask_IdAndUser_Id(anyLong(), anyLong()))
                 .thenReturn(Optional.of(taskAssignment));
@@ -80,6 +92,19 @@ class TaskAssignmentServiceImplTest {
         taskAssignmentService.toggleDone(1L, authentication);
 
         assertTrue(taskAssignment.isDone());
+        verify(taskAssignmentRepository).save(taskAssignment);
+    }
+
+    @Test
+    void toggleDone_successFalse() {
+        when(userService.findUserByAuth(authentication)).thenReturn(user);
+        when(taskAssignmentRepository.findByTask_IdAndUser_Id(anyLong(), anyLong()))
+                .thenReturn(Optional.of(taskAssignment));
+        taskAssignment.setDone(true);
+
+        taskAssignmentService.toggleDone(1L, authentication);
+
+        assertFalse(taskAssignment.isDone());
         verify(taskAssignmentRepository).save(taskAssignment);
     }
 
@@ -102,13 +127,95 @@ class TaskAssignmentServiceImplTest {
         verify(taskAssignmentRepository, times(1)).save(any(TaskAssignment.class));
     }
 
-//    @Test
-//    void assignTasksToEventUsers_success() {
-//        when(userService.findAllByEventIdForServices(anyLong())).thenReturn(List.of(user));
-//        when(taskService.findByIdForServices(anyLong())).thenReturn(task);
-//
-//        taskAssignmentService.assignTasksToEventUsers(1L, 1L);
-//
-//        verify(taskAssignmentRepository, times(1)).save(any(TaskAssignment.class));
-//    }
+    @Test
+    void assignTasksToEventUsers_creatorSkip() {
+        when(userService.findAllByEventIdForServices(anyLong())).thenReturn(List.of(user));
+        when(taskService.findByIdForServices(anyLong())).thenReturn(task);
+
+        taskAssignmentService.assignTasksToEventUsers(1L, 1L);
+
+        verify(taskAssignmentRepository, times(0)).save(any(TaskAssignment.class));
+    }
+
+    @Test
+    void assignTasksToEventUsers_success() {
+        when(userService.findAllByEventIdForServices(anyLong())).thenReturn(List.of(user));
+        when(taskService.findByIdForServices(anyLong())).thenReturn(task);
+        User user1 = TestUtil.createUser("STUDENT");
+        user1.setId(-1L);
+        task.setCreator(user1);
+        taskAssignmentService.assignTasksToEventUsers(1L, 1L);
+
+        verify(taskAssignmentRepository, times(1)).save(any(TaskAssignment.class));
+    }
+
+    @Test
+    void unassignTasksFromEventUsers_success() {
+        User eventUser = TestUtil.createUser("STUDENT");
+        eventUser.setId(2L);
+
+        task.setEvent(TestUtil.createEvent("Event"));
+        task.getEvent().setUsers(List.of(user, eventUser));
+
+        when(taskService.findByIdForServices(task.getId())).thenReturn(task);
+
+        taskAssignmentService.unassignTasksFromEventUsers(task.getId());
+
+        verify(taskAssignmentRepository).deleteByTask_IdAndUser_Id(task.getId(), eventUser.getId());
+        verify(taskAssignmentRepository, never()).deleteByTask_IdAndUser_Id(task.getId(), user.getId()); // creator is skipped
+    }
+
+    @Test
+    void unassignTasksFromUser_success() {
+        long userId = 123L;
+
+        taskAssignmentService.unassignTasksFromUser(userId);
+
+        verify(taskAssignmentRepository).deleteAllByUser_Id(userId);
+    }
+
+    @Test
+    void unsignAllFromTask_success() {
+        long taskId = 456L;
+
+        taskAssignmentService.unsignAllFromTask(taskId);
+
+        verify(taskAssignmentRepository).deleteAllByTask_Id(taskId);
+    }
+
+    @Test
+    void setAllDoneByTasksAndAuth_success() {
+        TaskListResponse task1 = new TaskListResponse();
+        task1.setId(1L);
+        TaskListResponse task2 = new TaskListResponse();
+        task2.setId(2L);
+
+        PaginationListResponse<TaskListResponse> input = new PaginationListResponse<>();
+        input.setContent(List.of(task1, task2));
+
+        when(userService.findUserByAuth(authentication)).thenReturn(user);
+        when(taskAssignmentRepository.findByTask_IdAndUser_Id(eq(1L), eq(user.getId())))
+                .thenReturn(Optional.of(taskAssignment));
+        when(taskAssignmentRepository.findByTask_IdAndUser_Id(eq(2L), eq(user.getId())))
+                .thenReturn(Optional.of(TestUtil.assignTaskToUser(TestUtil.createTask("X"), user)));
+
+        // When
+        PaginationListResponse<TaskListResponse> result =
+                taskAssignmentService.setAllDoneByTasksAndAuth(input, authentication);
+
+        // Then
+        assertEquals(2, result.getContent().size());
+        verify(taskAssignmentRepository, times(2)).findByTask_IdAndUser_Id(anyLong(), anyLong());
+    }
+    @Test
+    void createWithNewTask_success() {
+        when(userService.findUserByAuth(authentication)).thenReturn(user);
+        when(taskService.findByIdForServices(1L)).thenReturn(task);
+        when(userService.findByIdForServices(user.getId())).thenReturn(user);
+
+        taskAssignmentService.createWithNewTask(authentication, 1L);
+
+        verify(taskAssignmentRepository).save(any(TaskAssignment.class));
+    }
+
 }

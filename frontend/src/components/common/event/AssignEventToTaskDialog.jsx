@@ -32,7 +32,7 @@ const AssignEventToTaskDialog = ({event, setEvent}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await EventService.getMyEvents(
+                const response = await EventService.getMyCreatedEvents(
                     page - 1,
                     12,
                     searchQuery,

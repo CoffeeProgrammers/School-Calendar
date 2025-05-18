@@ -30,6 +30,10 @@ const Events = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        setPage(1);
+    }, [searchQuery, eventType, startDateFilter, endDateFilter]);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await EventService.getMyEvents(
@@ -56,9 +60,7 @@ const Events = () => {
         fetchData();
     }, [endDateFilter, eventType, page, searchQuery, startDateFilter]);
 
-    useEffect(() => {
-        setPage(1);
-    }, [searchQuery, eventType, startDateFilter, endDateFilter]);
+
     
     const handleCreate = async (newEvent) => {
         try {
