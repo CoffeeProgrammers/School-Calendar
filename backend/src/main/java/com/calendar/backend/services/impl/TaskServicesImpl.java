@@ -2,6 +2,7 @@ package com.calendar.backend.services.impl;
 
 import com.calendar.backend.dto.task.TaskFullResponse;
 import com.calendar.backend.dto.task.TaskListResponse;
+import com.calendar.backend.dto.task.TaskListSmallResponse;
 import com.calendar.backend.dto.task.TaskRequest;
 import com.calendar.backend.dto.wrapper.CountAllTaskAndCompleted;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
@@ -114,7 +115,7 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
-    public PaginationListResponse<TaskListResponse> findAllByDeadlineToday(
+    public PaginationListResponse<TaskListSmallResponse> findAllByDeadlineToday(
             Authentication authentication, int page, int size) {
         log.info("Service: Finding all tasks for auth user with deadline today");
 
@@ -125,7 +126,10 @@ public class TaskServicesImpl implements TaskService {
                         .and(TaskSpecification.assignedToUser(user.getId())),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
 
-        return createResponse(tasks);
+        PaginationListResponse<TaskListSmallResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(tasks.getTotalPages());
+        response.setContent(tasks.getContent().stream().map(taskMapper::fromTaskToTaskListResponseSmall).toList());
+        return response;
     }
 
     @Override

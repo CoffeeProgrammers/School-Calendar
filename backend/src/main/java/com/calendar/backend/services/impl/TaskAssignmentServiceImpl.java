@@ -1,6 +1,7 @@
 package com.calendar.backend.services.impl;
 
 import com.calendar.backend.dto.task.TaskListResponse;
+import com.calendar.backend.dto.task.TaskListSmallResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.models.Task;
 import com.calendar.backend.models.TaskAssignment;
@@ -16,7 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -63,11 +63,24 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
         log.info("Service: Setting all task assignments done for all tasks and auth user");
 
         tasks.setContent(tasks.getContent().stream().map(
-                task -> {task.setDone(this.isDone(task.getId(), authentication)); return task;})
-                .sorted(Comparator.comparing(TaskListResponse::isDone)).toList());
+                task -> {task.setDone(this.isDone(task.getId(), authentication));
+                    return task;}).toList());
 
         return tasks;
     }
+
+    @Override
+    public PaginationListResponse<TaskListSmallResponse> setAllDoneByTasksSmallAndAuth(PaginationListResponse<TaskListSmallResponse> tasks, Authentication authentication) {
+
+        log.info("Service: Setting all small task assignments done for all tasks and auth user");
+
+        tasks.setContent(tasks.getContent().stream().map(
+                task -> {task.setDone(this.isDone(task.getId(), authentication));
+                    return task;}).toList());
+
+        return tasks;
+    }
+
     @Override
     public void toggleDone(Long taskId, Authentication authentication) {
         log.info("Service: Toggling done status for task assignment with task id {} and auth user", taskId);
