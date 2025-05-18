@@ -5,6 +5,7 @@ import com.calendar.backend.models.TaskAssignment;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class TaskSpecification {
                 boolean isPast = Boolean.parseBoolean(filters.get("is_past").toString());
                 if (isPast) {
                     predicates.add(criteriaBuilder.lessThan(root.get("deadline"), LocalDateTime.now(ZoneId.of("Europe/Kiev"))));
-                } else{
+                } else {
                     predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("deadline"), LocalDateTime.now(ZoneId.of("Europe/Kiev"))));
                 }
             }
@@ -60,4 +61,14 @@ public class TaskSpecification {
         return (root, query, cb) ->
                 cb.equal(root.get("creator").get("id"), userId);
     }
+
+    public static Specification<Task> DeadlineToday() {
+        LocalDate today = LocalDate.now(ZoneId.of("Europe/Kiev"));
+        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime endOfDay = today.atTime(23, 59, 59);
+
+        return (root, query, cb) ->
+                cb.between(root.get("deadline"), startOfDay, endOfDay);
+    }
+
 }

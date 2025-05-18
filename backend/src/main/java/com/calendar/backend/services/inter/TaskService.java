@@ -20,6 +20,8 @@ public interface TaskService {
     PaginationListResponse<TaskListResponse> findAllByEventId(long eventId, int page, int size);
     PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty
             (Authentication authentication, int page, int size);
+    PaginationListResponse<TaskListResponse> findAllByDeadlineToday
+            (Authentication authentication, int page, int size);
     CountAllTaskAndCompleted countAllTaskAndCompleted(long userId);
     void changeCreatorToDeletedUser(long userId);
     TaskListResponse assignTaskToEvent(long eventId, long id);

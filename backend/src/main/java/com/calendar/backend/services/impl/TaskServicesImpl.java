@@ -114,6 +114,21 @@ public class TaskServicesImpl implements TaskService {
     }
 
     @Override
+    public PaginationListResponse<TaskListResponse> findAllByDeadlineToday(
+            Authentication authentication, int page, int size) {
+        log.info("Service: Finding all tasks for auth user with deadline today");
+
+        User user = userService.findUserByAuth(authentication);
+
+        Page<Task> tasks = taskRepository.findAll(
+                TaskSpecification.DeadlineToday()
+                        .and(TaskSpecification.assignedToUser(user.getId())),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "deadline")));
+
+        return createResponse(tasks);
+    }
+
+    @Override
     public CountAllTaskAndCompleted countAllTaskAndCompleted(long userId) {
         log.info("Service: Counting all tasks by user id {} and completed", userId);
 

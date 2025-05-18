@@ -126,6 +126,22 @@ public class TaskController {
         return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
     }
 
+    @GetMapping("/today")
+    @ResponseStatus(HttpStatus.OK)
+    public PaginationListResponse<TaskListResponse> getTodayTasks(
+            @RequestParam int page,
+            @RequestParam int size,
+            Authentication auth){
+        log.info("Controller: Get all tasks for today");
+        PaginationListResponse<TaskListResponse> taskListResponse =
+                taskService.findAllByDeadlineToday(
+                auth,
+                page,
+                size
+        );
+        return taskAssignmentService.setAllDoneByTasksAndAuth(taskListResponse, auth);
+    }
+
     @GetMapping("/countAllMy/user/{user_id}")
     public CountAllTaskAndCompleted countAllUsersTask(@PathVariable(value = "user_id") Long userId) {
         log.info("Controller: Get count of all tasks and completed for user with id: {}", userId);
