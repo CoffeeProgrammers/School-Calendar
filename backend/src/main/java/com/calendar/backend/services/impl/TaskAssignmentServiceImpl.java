@@ -3,21 +3,29 @@ package com.calendar.backend.services.impl;
 import com.calendar.backend.dto.task.TaskListResponse;
 import com.calendar.backend.dto.task.TaskListSmallResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
+import com.calendar.backend.mappers.TaskMapper;
 import com.calendar.backend.models.Task;
 import com.calendar.backend.models.TaskAssignment;
 import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.TaskAssignmentRepository;
+import com.calendar.backend.repositories.specification.TaskAssignmentsSpecification;
 import com.calendar.backend.services.inter.TaskAssignmentService;
 import com.calendar.backend.services.inter.TaskService;
 import com.calendar.backend.services.inter.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -27,6 +35,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     private final TaskAssignmentRepository taskAssignmentRepository;
     private final TaskService taskService;
     private final UserService userService;
+    private final TaskMapper taskMapper;
 
 
     @Override
@@ -56,18 +65,18 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
                 new EntityNotFoundException("Cant find such task assigment")).isDone();
     }
 
-    @Override
-    public PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth
-            (PaginationListResponse<TaskListResponse> tasks, Authentication authentication) {
-
-        log.info("Service: Setting all task assignments done for all tasks and auth user");
-
-        tasks.setContent(tasks.getContent().stream().map(
-                task -> {task.setDone(this.isDone(task.getId(), authentication));
-                    return task;}).toList());
-
-        return tasks;
-    }
+//    @Override
+//    public PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth
+//            (PaginationListResponse<TaskListResponse> tasks, Authentication authentication) {
+//
+//        log.info("Service: Setting all task assignments done for all tasks and auth user");
+//
+//        tasks.setContent(tasks.getContent().stream().map(
+//                task -> {task.setDone(this.isDone(task.getId(), authentication));
+//                    return task;}).toList());
+//
+//        return tasks;
+//    }
 
     @Override
     public PaginationListResponse<TaskListSmallResponse> setAllDoneByTasksSmallAndAuth(PaginationListResponse<TaskListSmallResponse> tasks, Authentication authentication) {
@@ -79,6 +88,65 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
                     return task;}).toList());
 
         return tasks;
+    }
+
+    @Override
+    public PaginationListResponse<TaskListResponse> findAllByUserId(
+            String name, String deadline, String isDone, String isPast, long userId, int page, int size) {
+        log.info("Service: Finding all task assignments for user with id {} and filters {} {} {} {} {} {}",
+                userId, name, deadline, isDone, isPast, page, size);
+
+        Map<String, Object> filters = createFilters(name, deadline, isDone, isPast, userId);
+
+        Page<TaskAssignment> taskAssignments = taskAssignmentRepository.findAll(
+                TaskAssignmentsSpecification.assignedToUser(userId)
+                        .and(TaskAssignmentsSpecification.filterTaskAssignments(filters)),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "isDone", "task.deadline")));
+
+        return createResponse(taskAssignments);
+    }
+
+    @Override
+    public PaginationListResponse<TaskListResponse> findAllByEventId(
+            long eventId, int page, int size, Authentication auth) {
+        log.info("Service: Finding all task assignments for event with id {} and page {} and size {}",
+                eventId, page, size);
+
+        User user = userService.findUserByAuth(auth);
+
+        Page<TaskAssignment> taskAssignments = taskAssignmentRepository.findAll(
+                TaskAssignmentsSpecification.assignedToUser(user.getId())
+                        .and(TaskAssignmentsSpecification.hasEvent(eventId)),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "isDone", "task.deadline")));
+
+        return createResponse(taskAssignments);
+    }
+
+    @Override
+    public PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(Authentication authentication, int page, int size) {
+        log.info("Service: Finding all task assignments for auth user with no events");
+
+        User user = userService.findUserByAuth(authentication);
+
+        Page<TaskAssignment> taskAssignments = taskAssignmentRepository.findAll(
+                TaskAssignmentsSpecification.hasNullEventAndMeIsCreator(user.getId()),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "isDone", "task.deadline")));
+
+        return createResponse(taskAssignments);
+    }
+
+    @Override
+    public PaginationListResponse<TaskListSmallResponse> findAllByDeadlineToday(Authentication authentication, int page, int size) {
+        log.info("Service: Finding all task assignments for deadline today");
+
+        User user = userService.findUserByAuth(authentication);
+
+        Page<TaskAssignment> taskAssignments = taskAssignmentRepository.findAll(
+                TaskAssignmentsSpecification.assignedToUser(user.getId()).and(TaskAssignmentsSpecification.DeadlineToday()),
+                PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "isDone", "task.deadline"))
+        );
+
+        return createSmallResponse(taskAssignments);
     }
 
     @Override
@@ -145,5 +213,54 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
         log.info("Service: Unsigning all task assignments for task with id {}", taskId);
 
         taskAssignmentRepository.deleteAllByTask_Id(taskId);
+    }
+
+    private Map<String, Object> createFilters(String name, String deadline, String isDone, String isPast, long userId) {
+        Map<String, Object> filters = new HashMap<>();
+
+        if(name != null && !name.isBlank() && !name.equals("null")) {
+            filters.put("name", name);
+        }
+        if(deadline != null && !deadline.isBlank() && !deadline.equals("null")) {
+            filters.put("deadline", deadline);
+        }
+        if(isPast != null && !isPast.isBlank() && !isPast.equals("null")) {
+            filters.put("is_past", isPast);
+        }
+        if(isDone != null && !isDone.isBlank() && !isDone.equals("null")) {
+            filters.put("is_done", isDone);
+        }
+        if(userId != 0) {
+            filters.put("user_id", userId);
+        }
+        return filters;
+    }
+
+    private PaginationListResponse<TaskListResponse> createResponse(Page<TaskAssignment> tasks){
+        List<TaskListResponse> taskListResponses = new ArrayList<>();
+        TaskListResponse taskListResponse;
+        for(TaskAssignment taskAssignment : tasks.getContent()) {
+            taskListResponse = taskMapper.fromTaskToTaskListResponse(taskAssignment.getTask());
+            taskListResponse.setDone(taskAssignment.isDone());
+            taskListResponses.add(taskListResponse);
+        }
+        PaginationListResponse<TaskListResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(tasks.getTotalPages());
+        response.setContent(taskListResponses);
+        return response;
+    }
+
+    private PaginationListResponse<TaskListSmallResponse> createSmallResponse(Page<TaskAssignment> tasks){
+        List<TaskListSmallResponse> taskListResponses = new ArrayList<>();
+        TaskListSmallResponse taskListResponse;
+        for(TaskAssignment taskAssignment : tasks.getContent()) {
+            taskListResponse = taskMapper.fromTaskToTaskListResponseSmall(taskAssignment.getTask());
+            taskListResponse.setDone(taskAssignment.isDone());
+            taskListResponses.add(taskListResponse);
+        }
+        PaginationListResponse<TaskListSmallResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(tasks.getTotalPages());
+        response.setContent(taskListResponses);
+        return response;
     }
 }

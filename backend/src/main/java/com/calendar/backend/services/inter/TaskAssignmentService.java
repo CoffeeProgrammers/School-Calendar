@@ -9,10 +9,13 @@ public interface TaskAssignmentService {
     void create(Long taskId, Long userId);
     void createWithNewTask(Authentication authentication, Long taskId);
     boolean isDone(Long taskId, Authentication authentication);
-    PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth(
-            PaginationListResponse<TaskListResponse> tasks, Authentication authentication);
     PaginationListResponse<TaskListSmallResponse> setAllDoneByTasksSmallAndAuth(
             PaginationListResponse<TaskListSmallResponse> tasks, Authentication authentication);
+    PaginationListResponse<TaskListResponse> findAllByUserId(
+            String name, String deadline, String is_done, String is_past, long userId, int page, int size);
+    PaginationListResponse<TaskListResponse> findAllByEventId(long eventId, int page, int size, Authentication auth);
+    PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty(Authentication authentication, int page, int size);
+    PaginationListResponse<TaskListSmallResponse> findAllByDeadlineToday(Authentication authentication, int page, int size);
     void toggleDone(Long taskId, Authentication authentication);
     void assignTasksForNewUserFromEvent(Long eventId, Long userId);
     void assignTasksToEventUsers(Long eventId, Long taskId);

@@ -88,6 +88,10 @@ docker-compose up --build
 
 5. Open your browser and go to http://localhost:3000 to access the application.
 
+
+6. Base user
+    - email - john.doe@example.com 
+    - password(For all base users) - passWord1
 ---
 
 ## Contribution Guidelines
