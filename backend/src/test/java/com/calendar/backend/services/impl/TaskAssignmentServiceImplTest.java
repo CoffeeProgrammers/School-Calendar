@@ -266,6 +266,7 @@ class TaskAssignmentServiceImplTest {
         when(taskMapper.fromTaskToTaskListResponse(task)).thenReturn(response);
         task.setDeadline(LocalDateTime.now().plusDays(2));
         user.setId(1L);
+        task.setName("Name");
         PaginationListResponse<TaskListResponse> result = taskAssignmentService.findAllByUserId(
                 task.getName(), task.getDeadline().toString(), "true", "false", user.getId(), 0, 10);
 
