@@ -209,7 +209,7 @@ const TeacherPanelContent = () => {
                                             key={user.id}
                                             hover
                                             sx={{cursor: 'pointer', height: "36px"}}
-                                            onClick={() => navigate(`${user.id}`)}
+                                            onClick={() => navigate(`/users/${user.id}`)}
                                         >
                                             {columns.map(col => (
                                                 <TableCell key={col.id} align={col.align || "left"}
