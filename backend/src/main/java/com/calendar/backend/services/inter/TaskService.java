@@ -18,7 +18,7 @@ public interface TaskService {
     TaskFullResponse findById(long id);
     PaginationListResponse<TaskListResponse> findAllByUserId(
             String name, String deadline, String is_done, String is_past, long userId, int page, int size);
-    PaginationListResponse<TaskListResponse> findAllByEventId(long eventId, int page, int size);
+    PaginationListResponse<TaskListResponse> findAllByEventId(long eventId, int page, int size, Authentication auth);
     PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty
             (Authentication authentication, int page, int size);
     PaginationListResponse<TaskListSmallResponse> findAllByDeadlineToday
