@@ -59,37 +59,45 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserFullResponse updateUser(UserUpdateRequest userUpdateRequest, long userId) {
         log.info("Service: Updating user with id {}", userId);
+
         checkForDeletedUser(userId);
         User userToUpdate = findByIdForServices(userId);
+
         userToUpdate.setFirstName(userUpdateRequest.getFirstName());
         userToUpdate.setLastName(userUpdateRequest.getLastName());
         userToUpdate.setDescription(userUpdateRequest.getDescription());
         userToUpdate.setBirthday(LocalDateTime.parse(userUpdateRequest.getBirthday()));
+
         return userMapper.fromUserToUserResponse(userRepository.save(userToUpdate));
     }
 
     @Override
     public boolean updatePassword(PasswordRequest passwordRequest, Authentication authentication) {
         log.info("Service: Updating password for user with email {}", authentication.getName());
+
         User user = findUserByAuth(authentication);
         if (!passwordEncoder.matches(passwordRequest.getOldPassword(), user.getPassword())) {
             return false;
         }
         user.setPassword(passwordEncoder.encode(passwordRequest.getNewPassword()));
         userRepository.save(user);
+
         return true;
     }
 
     @Override
     public void delete(long id) {
         log.info("Service: Deleting user with id {}", id);
+
         checkForDeletedUser(id);
+
         userRepository.deleteById(id);
     }
 
     @Override
     public UserFullResponse findById(long id) {
         log.info("Service: Finding user with id {}", id);
+
         return userMapper.fromUserToUserResponse(findByIdForServices(id));
     }
 
@@ -106,10 +114,7 @@ public class UserServiceImpl implements UserService {
                 UserSpecification.filterUsers(filters).and(UserSpecification.notUser(user.getId())),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
 
-        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
-        response.setTotalPages(users.getTotalPages());
-        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
-        return response;
+        return createResponse(users);
     }
 
     @Override
@@ -125,10 +130,8 @@ public class UserServiceImpl implements UserService {
         Page<User> users = userRepository.findAll(UserSpecification.hasEvent(eventId)
                         .and(UserSpecification.notUser(user.getId())).and(UserSpecification.filterUsers(filters)),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
-        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
-        response.setTotalPages(users.getTotalPages());
-        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
-        return response;
+
+        return createResponse(users);
     }
 
     @Override
@@ -141,23 +144,24 @@ public class UserServiceImpl implements UserService {
         Page<User> users = userRepository.findAll(UserSpecification.doesNotHaveEvent(eventId)
                         .and(UserSpecification.filterUsers(filters)),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "lastName", "firstName")));
-        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
-        response.setTotalPages(users.getTotalPages());
-        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
-        return response;
+
+        return createResponse(users);
     }
 
     @Override
     public List<UserListResponse> findTop5UsersByUpcomingEvents() {
-        LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Kiev"));
         log.info("Service: Finding top 5 users with upcoming events");
+
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Kiev"));
         List<User> users = userRepository.findTop5UsersByUpcomingEvents(now);
+
         return users.stream().map(userMapper::fromUserToUserListResponse).toList();
     }
 
     @Override
     public User findUserByAuth(Authentication authentication) {
         log.info("Service: Finding user by authentication {}", authentication);
+
         return userRepository.findByEmail(authentication.getName()).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
         );
@@ -166,6 +170,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByIdForServices(long id) {
         log.info("Service: Finding user for service with id {}", id);
+
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found"));
     }
@@ -173,6 +178,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmailForServices(String email) {
         log.info("Service: Finding user with email {}", email);
+
         return userRepository.findByEmail(email).orElseThrow(
                 () -> new EntityNotFoundException("User not found")
         );
@@ -181,6 +187,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllByEventIdForServices(long eventId){
         log.info("Service: Finding all users for event with id {}", eventId);
+
         return userRepository.findAllByEventId(eventId);
     }
 
@@ -196,6 +203,9 @@ public class UserServiceImpl implements UserService {
 
 
     private Map<String, Object> createFilters(String email, String firstName, String lastName, String role) {
+        log.info("Service: Creating filters for user with email {}, first name {}, last name {} and role {}",
+                email, firstName, lastName, role);
+
         Map<String, Object> filters = new HashMap<>();
         if(email != null && !email.isBlank() && !email.equals("null")) {
             filters.put("email", email);
@@ -209,15 +219,26 @@ public class UserServiceImpl implements UserService {
         if(role != null && !role.isBlank() && !role.equals("null")) {
             filters.put("role", Role.valueOf(role.toUpperCase()).getLevel());
         }
+
         return filters;
     }
 
     private void checkForDeletedUser(long userId){
         log.info("Service: Checking for deleted user with id {}", userId);
+
         if (findByIdForServices(userId).getEmail().equals("!deleted-user!@deleted.com")) {
             log.info("Service: User with id {} is deleted", userId);
             throw new EntityExistsException("Can`t do anything with deleted user");
         }
+    }
+
+    private PaginationListResponse<UserListResponse> createResponse(Page<User> users) {
+        log.info("Service: Creating response for users");
+
+        PaginationListResponse<UserListResponse> response = new PaginationListResponse<>();
+        response.setTotalPages(users.getTotalPages());
+        response.setContent(users.getContent().stream().map(userMapper::fromUserToUserListResponse).toList());
+        return response;
     }
 }
 

@@ -29,9 +29,9 @@ public class NotificationServiceImpl implements NotificationService {
 
 
     @Override
-    public void create(Notification notification) {
-        log.info("Service: Saving new notification {}", notification);
-        notificationRepository.save(notification);
+    public void create(List<User> users, String message) {
+        log.info("Service: Saving new notification {} for users {}", message, users);
+        notificationRepository.save(new Notification(users, message));
     }
 
     @Override

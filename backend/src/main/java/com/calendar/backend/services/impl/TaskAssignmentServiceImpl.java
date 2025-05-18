@@ -32,6 +32,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Override
     public void create(Long taskId, Long userId) {
         log.info("Service: Saving new task assignment for task with id {} and user with id {}", taskId, userId);
+
         taskAssignmentRepository.save(new TaskAssignment(taskService.findByIdForServices(taskId),
                 userService.findByIdForServices(userId)));
     }
@@ -39,7 +40,9 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Override
     public void createWithNewTask(Authentication authentication, Long taskId) {
         User user = userService.findUserByAuth(authentication);
+
         log.info("Service: Saving new task assignment for task with id {} and my user", taskId);
+
         taskAssignmentRepository.save(new TaskAssignment(taskService.findByIdForServices(taskId),
                 userService.findByIdForServices(user.getId())));
     }
@@ -47,6 +50,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Override
     public boolean isDone(Long taskId, Authentication authentication) {
         log.info("Service: Try to determine if task assignment is done for {}", taskId);
+
         return taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,
                 userService.findUserByAuth(authentication).getId()).orElseThrow(() ->
                 new EntityNotFoundException("Cant find such task assigment")).isDone();
@@ -55,26 +59,34 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Override
     public PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth
             (PaginationListResponse<TaskListResponse> tasks, Authentication authentication) {
+
         log.info("Service: Setting all task assignments done for all tasks and auth user");
-        tasks.setContent(tasks.getContent().stream().map(task -> {
-            task.setDone(this.isDone(task.getId(), authentication));
-            return task;}).sorted(Comparator.comparing(TaskListResponse::isDone)).toList());
+
+        tasks.setContent(tasks.getContent().stream().map(
+                task -> {task.setDone(this.isDone(task.getId(), authentication)); return task;})
+                .sorted(Comparator.comparing(TaskListResponse::isDone)).toList());
+
         return tasks;
     }
     @Override
     public void toggleDone(Long taskId, Authentication authentication) {
         log.info("Service: Toggling done status for task assignment with task id {} and auth user", taskId);
+
         TaskAssignment taskAssignment = taskAssignmentRepository.findByTask_IdAndUser_Id(taskId,
                         userService.findUserByAuth(authentication).getId())
                 .orElseThrow(() -> new EntityNotFoundException("Task assignment not found"));
+
         taskAssignment.setDone(!taskAssignment.isDone());
+
         taskAssignmentRepository.save(taskAssignment);
     }
 
     @Override
     public void assignTasksForNewUserFromEvent(Long eventId, Long userId) {
         log.info("Service: Assigning tasks for new user with id {} from event with id {}", userId, eventId);
+
         List<Task> tasksFromEvent = taskService.findAllByEventIdForServices(eventId);
+
         for(Task task : tasksFromEvent) {
             create(task.getId(), userId);
         }
@@ -83,20 +95,21 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Override
     public void assignTasksToEventUsers(Long eventId, Long taskId) {
         log.info("Service: Assigning tasks for users from event with id {}", eventId);
+
         List<User> users = userService.findAllByEventIdForServices(eventId);
         Long creatorId = taskService.findById(taskId).getCreator().getId();
+
         for(User user : users) {
             if(user.getId() == creatorId) continue;
             create(taskId, user.getId());
         }
     }
 
-
-
     @Override
     @Transactional
     public void unassignTasksFromEventUsers(Long id) {
         log.info("Service: Unsigning all task assignments for event users for task with id {}", id);
+
         Task task = taskService.findByIdForServices(id);
         for(User user : task.getEvent().getUsers()) {
             if(user.getId() == task.getCreator().getId()) continue;
@@ -108,6 +121,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Override
     public void unassignTasksFromUser(Long userId) {
         log.info("Service: Unsigning all task assignments for user with id {}", userId);
+
         taskAssignmentRepository.deleteAllByUser_Id(userId);
     }
 
@@ -116,7 +130,7 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
     @Override
     public void unsignAllFromTask(Long taskId) {
         log.info("Service: Unsigning all task assignments for task with id {}", taskId);
+
         taskAssignmentRepository.deleteAllByTask_Id(taskId);
     }
-
 }
