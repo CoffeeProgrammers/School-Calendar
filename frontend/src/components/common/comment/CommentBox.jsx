@@ -6,13 +6,15 @@ import CommentActionsMenu from "./CommentActionsMenu";
 import TextUtils from "../../../utils/TextUtils";
 import Cookies from "js-cookie";
 
-const CommentBox = ({comment, handleDeleteComment, handleEditComment}) => {
+const CommentBox = ({event, comment, handleDeleteComment, handleEditComment}) => {
     const formattedDate = DateUtils.formatDate(comment.date)
     const isCreator = comment.creator.id.toString() === Cookies.get('userId')
-
+    const isCommentEventCreator = event.creator.id.toString() === Cookies.get('userId')
+    console.log(`comment`)
+    console.log(isCommentEventCreator)
     return (
         <Card variant="outlined" sx={{borderRadius: "10px", position: 'relative'}}>
-            {isCreator &&
+            {(isCreator || isCommentEventCreator) &&
                 <Box sx={{position: 'absolute', top: 8, right: 8}}>
                     <CommentActionsMenu
                         handleDeleteComment={() => handleDeleteComment(comment.id)}

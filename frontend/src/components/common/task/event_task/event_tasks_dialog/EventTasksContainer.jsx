@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import EventTasksDialog from "./EventTasksDialog";
 import TaskService from "../../../../../services/base/ext/TaskService";
 
-const EventTasksContainer = ({eventId}) => {
+const EventTasksContainer = ({event}) => {
     const [tasks, setTasks] = useState([])
 
     const [page, setPage] = useState(1);
@@ -16,7 +16,7 @@ const EventTasksContainer = ({eventId}) => {
         const fetchData = async () => {
             try {
                 const response = await TaskService.getTasksByEvent(
-                    eventId,
+                    event.id,
                     page - 1,
                     9
                 );
@@ -31,14 +31,11 @@ const EventTasksContainer = ({eventId}) => {
         };
 
         fetchData();
-    }, [eventId, page]);
+    }, [event, page]);
 
     const handleToggleTask = async (taskId) => {
         try {
-            const updatedTask = await TaskService.toggleTaskDone(taskId);
-            setTasks(prevTasks =>
-                prevTasks.map(t => (t.id === updatedTask.id ? updatedTask : t))
-            );
+            await TaskService.toggleTaskDone(taskId);
         } catch (error) {
             console.error("Failed to toggle task:", error);
             setError(error);
@@ -59,7 +56,9 @@ const EventTasksContainer = ({eventId}) => {
 
     const handleAdd = async (taskId) => {
         try {
-            const createdTask = await TaskService.assignTaskToEvent(eventId, taskId);
+            const createdTask = await TaskService.assignTaskToEvent(taskId, event.id);
+            console.log("createdTask:")
+            console.log(createdTask)
             setTasks(prevTasks => [...prevTasks, createdTask]);
         } catch (error) {
             console.error("Failed to add task:", error);
@@ -72,7 +71,7 @@ const EventTasksContainer = ({eventId}) => {
 
     return (
         <EventTasksDialog
-            eventId={eventId}
+            event={event}
             tasks={tasks}
             pagesCount={pagesCount}
             page={page}

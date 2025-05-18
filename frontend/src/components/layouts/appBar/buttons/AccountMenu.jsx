@@ -7,9 +7,12 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {IconButton} from "@mui/material";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import AuthService from "../../../../services/auth/AuthService";
 
 export default function AccountMenu() {
+    const navigate = useNavigate();
+
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
 
@@ -24,6 +27,18 @@ export default function AccountMenu() {
 
         setOpen(false);
     };
+
+    const handleLogout = async () => {
+        try {
+            await AuthService.logout();
+            navigate('/login')
+        } catch (error) {
+            console.error("Error during logout:", error);
+            throw error;
+        }
+    };
+
+    
 
     const prevOpen = React.useRef(open);
     React.useEffect(() => {
@@ -67,7 +82,7 @@ export default function AccountMenu() {
                                     >
                                         Profile
                                     </MenuItem>
-                                    <MenuItem onClick={handleClose}>Logout</MenuItem> {/*TODO: handleLogout*/}
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                 </MenuList>
                             </ClickAwayListener>
                         </Paper>

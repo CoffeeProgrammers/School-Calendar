@@ -3,10 +3,13 @@ import {Box, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/ma
 import Checkbox from "@mui/material/Checkbox";
 import theme from "../../../../assets/theme";
 import EventTaskActionsMenu from "./EventTaskActionsMenu";
-import DateUtils from "../../../../utils/DateUtils";
+import {useNavigate} from "react-router-dom";
 
-const EventTaskBox = ({task, handleToggleTask, handleRemove}) => {
+const EventTaskBox = ({task, handleToggleTask, handleRemove, isEventCreator}) => {
+    const navigate = useNavigate();
     const [actionMenuPosition, setActionMenuPosition] = useState(null);
+
+    const [checked, setChecked] = useState(task.done ?? false);
 
     const handleClick = (event) => {
         event.preventDefault();
@@ -22,6 +25,7 @@ const EventTaskBox = ({task, handleToggleTask, handleRemove}) => {
 
     const toggleCheckbox = () => {
         handleToggleTask()
+        setChecked(!checked)
     }
 
     return (
@@ -42,7 +46,7 @@ const EventTaskBox = ({task, handleToggleTask, handleRemove}) => {
                     },
                 }}
             >
-                <ListItemButton onClick={handleClick}>
+                <ListItemButton onClick={isEventCreator ? handleClick : () => navigate(`/tasks/${task.id}`)}>
                     <ListItemIcon
                         sx={{minWidth: 'unset', marginRight: 1, marginLeft: 0.5}}
                         onClick={(e) => {
@@ -53,7 +57,7 @@ const EventTaskBox = ({task, handleToggleTask, handleRemove}) => {
                         <Checkbox
                             color="secondary"
                             edge="start"
-                            checked={task.isDone}
+                            checked={checked}
                             tabIndex={-1}
                             disableRipple
                             sx={{
@@ -70,7 +74,7 @@ const EventTaskBox = ({task, handleToggleTask, handleRemove}) => {
                     </ListItemIcon>
                     <ListItemText sx={{mr: 2}} primary={task.name}/>
                     <Box sx={{marginLeft: 'auto', minWidth: '100px'}}>
-                        <ListItemText secondary={DateUtils.formatDate(task.deadline)}/>
+                        {/*<ListItemText secondary={DateUtils.formatDate(task.deadline)}/>*/}
                     </Box>
                 </ListItemButton>
             </ListItem>

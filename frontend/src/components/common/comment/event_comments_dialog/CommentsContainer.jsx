@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import CommentService from "../../../../services/base/ext/CommentService";
 import CommentsDialog from "./CommentsDialog";
 
-const CommentsContainer = ({eventId}) => {
+const CommentsContainer = ({event}) => {
 
     const [comments, setComments] = useState([])
 
@@ -17,7 +17,7 @@ const CommentsContainer = ({eventId}) => {
         const fetchData = async () => {
             try {
                 const response = await CommentService.getComments(
-                    eventId,
+                    event.id,
                     page - 1,
                     10,
                 );
@@ -29,11 +29,11 @@ const CommentsContainer = ({eventId}) => {
         };
 
         fetchData();
-    }, [eventId, page]);
+    }, [event, page]);
 
     const handleDeleteComment = async (deletedId) => {
         try {
-            await CommentService.deleteComment(eventId, deletedId);
+            await CommentService.deleteComment(event.id, deletedId);
             setComments((prev) => prev.filter(comment => comment.id !== deletedId));
         } catch (error) {
             console.error("Error deleting comment:", error);
@@ -42,7 +42,7 @@ const CommentsContainer = ({eventId}) => {
 
     const handleEditComment = async (commentId, data) => {
         try {
-            const updatedComment = await CommentService.updateComment(eventId, commentId, data);
+            const updatedComment = await CommentService.updateComment(event.id, commentId, data);
             setComments((prev) =>
                 prev.map((comment) =>
                     comment.id === commentId
@@ -61,7 +61,7 @@ const CommentsContainer = ({eventId}) => {
 
     const handleCreateComment = async (data) => {
         try {
-            const newComment = await CommentService.createComment(eventId, data);
+            const newComment = await CommentService.createComment(event.id, data);
             setComments((prev) => [newComment, ...prev]);
         } catch (error) {
             console.error("Error creating comment:", error);
@@ -82,6 +82,7 @@ const CommentsContainer = ({eventId}) => {
             handleDeleteComment={handleDeleteComment}
             handleEditComment={handleEditComment}
             handleCreate={handleCreateComment}
+            event={event}
         />
     );
 }

@@ -5,6 +5,7 @@ const API_URL = 'http://localhost:8081/api/'
 
 const apiClient = axios.create({
     baseURL: API_URL,
+    withCredentials: true
 });
 
 class AuthService {
@@ -38,6 +39,19 @@ class AuthService {
 
             console.log(response.data)
         } catch (error) {
+            throw error;
+        }
+    }
+
+    static async logout() {
+        try {
+            await apiClient.post("auth/logout");
+
+            Cookies.remove('accessToken');
+            Cookies.remove('role');
+            Cookies.remove('userId');
+        } catch (error) {
+            console.error("Logout failed:", error);
             throw error;
         }
     }

@@ -17,6 +17,7 @@ import TaskPage from './components/pages/task/TaskPage';
 import EventPage from "./components/pages/event/EventPage";
 import Login from "./security/login/Login";
 import InvitationsPage from "./components/pages/invitations/InvitationsPage";
+import TeacherPanelPage from "./components/pages/teacher_panel/TeacherPanelPage";
 
 
 function App() {
@@ -30,7 +31,8 @@ function App() {
         {path: "/users/:id", element: <Page><UserPage/></Page>},
         {path: "/tasks/:id", element: <TaskPage/>},
         {path: "/notifications", element: <Page><NotificationsPage/></Page>},
-        {path: "/invitations", element: <InvitationsPage/>}
+        {path: "/invitations", element: <InvitationsPage/>},
+        {path: "/teacherPanel", element: <TeacherPanelPage/>}
 
     ];
     return (

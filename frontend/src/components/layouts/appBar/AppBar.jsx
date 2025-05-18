@@ -49,7 +49,7 @@ const AppBar = () => {
     ]
 
     if (role === "TEACHER") {
-        buttons.push({text: "Teacher panel", link: "/admin"})
+        buttons.push({text: "Teacher panel", link: "/teacherPanel"})
     }
 
     return (

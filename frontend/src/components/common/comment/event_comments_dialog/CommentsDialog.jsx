@@ -4,7 +4,7 @@ import CommentBox from "../CommentBox";
 import ElementAdditionDialog from "../../../layouts/dialog/ElementAdditionDialog";
 import CreateCommentDialog from "../CreateCommentDialog";
 
-const CommentsDialog = ({comments, pagesCount, page, setPage, handleDeleteComment, handleEditComment, handleCreate}) => {
+const CommentsDialog = ({event, comments, pagesCount, page, setPage, handleDeleteComment, handleEditComment, handleCreate}) => {
 
     return (
         <ElementAdditionDialog
@@ -14,10 +14,12 @@ const CommentsDialog = ({comments, pagesCount, page, setPage, handleDeleteCommen
                 <Stack spacing={1}>
                     {comments.map(comment => (
                         <CommentBox
+                            event={event}
                             comment={comment}
                             handleDeleteComment={handleDeleteComment}
                             handleEditComment={handleEditComment}
-                            key={comment.id}/>
+                            key={comment.id}
+                        />
                     ))}
                 </Stack>
             }

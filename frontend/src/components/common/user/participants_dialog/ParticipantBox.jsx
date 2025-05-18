@@ -2,12 +2,18 @@ import React, {useState} from 'react';
 import UserListBox from "../list/UserListBox";
 import {Box} from "@mui/material";
 import ParticipantsActionsMenu from "./ParticipantsActionsMenu";
+import {useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
-const ParticipantBox = ({user, handleRemove}) => {
+const ParticipantBox = ({event, user, handleRemove}) => {
+    const navigate = useNavigate();
+
+    const isEventCreator = event.creator.id.toString() === Cookies.get('userId');
+
     const [menuPosition, setMenuPosition] = useState(null);
     const [menuUser, setMenuUser] = useState(null);
 
-    const handleUserClick = (event, user) => {
+    const handleUserClick = (event) => {
         event.preventDefault();
         setMenuUser(user);
         setMenuPosition({
@@ -22,7 +28,7 @@ const ParticipantBox = ({user, handleRemove}) => {
     };
     return (
         <>
-            <Box onClick={(e) => handleUserClick(e, user)}>
+            <Box onClick={isEventCreator ? handleUserClick : () => navigate(`/users/${user.id}`)}>
                 <UserListBox user={user} />
             </Box>
 

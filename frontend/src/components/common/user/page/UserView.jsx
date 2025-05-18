@@ -13,6 +13,7 @@ import UpdatePasswordDialog from "../password/UpdatePasswordDialog";
 
 const UserView = ({user, handleUpdate, handleUpdatePassword}) => {
     const isMyUser = user.id.toString() === Cookies.get("userId");
+    const isTeacher = Cookies.get("role") === "TEACHER";
     const optionList = [
         {
             icon: <CalendarMonthIcon color="primary"/>,
@@ -60,11 +61,12 @@ const UserView = ({user, handleUpdate, handleUpdatePassword}) => {
                         </Box>
 
                         <Box mb={2} sx={{display: 'flex', alignItems: 'center',}}>
-                            {isMyUser && (
+                            {(isTeacher || isMyUser) && (
                                 <>
-                                    <Box mt={1}>
-                                        <UpdatePasswordDialog handleUpdatePassword={handleUpdatePassword}/>
-                                    </Box>
+                                    {!isTeacher && (
+                                        <Box mt={1}>
+                                            <UpdatePasswordDialog handleUpdatePassword={handleUpdatePassword}/>
+                                        </Box>)}
                                     <Box mt={1}>
                                         <UpdateUserDialog user={user} handleUpdate={handleUpdate}/>
                                     </Box>

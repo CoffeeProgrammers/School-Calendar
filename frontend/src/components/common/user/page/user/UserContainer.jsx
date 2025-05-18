@@ -28,6 +28,15 @@ const UserContainer = () => {
         fetchData();
     }, [id]);
 
+    const handleUpdate = async (data) => {
+        try {
+            const response = await UserService.updateUser(user.id, data);
+            setUser(response);
+        } catch (error) {
+            setError(error);
+        }
+    }
+
     if (loading) {
         return <Loading/>;
     }
@@ -38,6 +47,7 @@ const UserContainer = () => {
 
     return (
         <UserView
+            handleUpdate={handleUpdate}
             user={user}
         />
     );

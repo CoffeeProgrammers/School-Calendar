@@ -20,7 +20,7 @@ const roleTypes = [
 
 ];
 
-const ParticipantsContainer = ({eventId, isCreator}) => {
+const ParticipantsContainer = ({event, isCreator}) => {
     const [users, setUsers] = useState([])
 
     const [searchFirstName, setSearchFirstName] = useState('');
@@ -39,7 +39,7 @@ const ParticipantsContainer = ({eventId, isCreator}) => {
         const fetchData = async () => {
             try {
                 const response = await UserService.getUsersByEvent(
-                    eventId,
+                    event.id,
                     page - 1,
                     15,
                     searchFirstName,
@@ -58,11 +58,11 @@ const ParticipantsContainer = ({eventId, isCreator}) => {
         };
 
         fetchData();
-    }, [eventId, page, role, searchEmail, searchFirstName, searchLastName]);
+    }, [event, page, role, searchEmail, searchFirstName, searchLastName]);
 
     const handleRemove = async (userId) => {
         try {
-            await EventService.deleteUserFromEvent(eventId, userId);
+            await EventService.deleteUserFromEvent(event.id, userId);
             setUsers((prevUsers) => prevUsers.filter(user => user.id !== userId));
         } catch (error) {
             console.error("Failed to remove user:", error);
@@ -82,6 +82,7 @@ const ParticipantsContainer = ({eventId, isCreator}) => {
                 title={"Participants"}
                 content={
                     <ParticipantsDialogContent
+                        event={event}
                         searchFirstName={searchFirstName}
                         setSearchFirstName={setSearchFirstName}
                         searchLastName={searchLastName}
@@ -99,7 +100,7 @@ const ParticipantsContainer = ({eventId, isCreator}) => {
                 page={page}
                 setPage={setPage}
                 pagesCount={pagesCount}
-                actions={isCreator && <EventInviteContainer eventId={eventId}/>}
+                actions={isCreator && <EventInviteContainer eventId={event.id}/>}
             />
         </>
     );
@@ -122,6 +123,7 @@ const ParticipantsDialogContent = (
         setRole,
         users,
         handleRemove,
+        event
     }) => {
     return (
         <>
@@ -171,7 +173,7 @@ const ParticipantsDialogContent = (
             <Grid container spacing={1.5}>
                 {users.map(user => (
                     <Grid size={{xs: 12, sm: 6, md: 4}} key={user.id}>
-                        <ParticipantBox user={user} handleRemove={handleRemove}/>
+                        <ParticipantBox event={event} user={user} handleRemove={handleRemove}/>
                     </Grid>
                 ))}
             </Grid>
