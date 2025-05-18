@@ -68,11 +68,15 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
 
     @Override
     public TaskFullResponse findById(long id, Authentication auth) {
+        log.info("Service: Finding task assignment with id {} for auth user", id);
+
         User user = userService.findUserByAuth(auth);
+
         TaskAssignment taskAssignment = taskAssignmentRepository.findByTask_IdAndUser_Id(id, user.getId()).orElseThrow(
                 () -> new EntityNotFoundException("Can`t find that you have such task"));
         TaskFullResponse response = taskMapper.fromTaskToTaskResponse(taskAssignment.getTask());
         response.setDone(taskAssignment.isDone());
+
         return response;
     }
 

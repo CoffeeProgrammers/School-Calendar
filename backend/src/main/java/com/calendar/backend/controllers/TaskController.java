@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TaskController {
 
-    private final TaskService taskService;
     private final TaskAssignmentService taskAssignmentService;
+    private final TaskService taskService;
     private final UserService userService;
 
 
@@ -51,7 +51,7 @@ public class TaskController {
             @Valid @RequestBody TaskRequest request,
             Authentication auth) {
         log.info("Controller: Update task with id: {} with body: {}", id, request);
-        TaskFullResponse taskFullResponse =  taskService.update(request, id);
+        TaskFullResponse taskFullResponse = taskService.update(request, id);
         taskFullResponse.setDone(taskAssignmentService.isDone(id, auth));
         return taskFullResponse;
     }
@@ -142,9 +142,11 @@ public class TaskController {
     public TaskListResponse assignTaskToEvent(
             @PathVariable Long id, @PathVariable Long event_id, Authentication auth) {
         log.info("Controller: Assign task with id: {} to event with id: {}", id, event_id);
+
         TaskListResponse taskListResponse = taskService.assignTaskToEvent(event_id, id);
         taskAssignmentService.assignTasksToEventUsers(event_id, id);
         taskListResponse.setDone(taskAssignmentService.isDone(id, auth));
+
         return taskListResponse;
     }
 
@@ -153,6 +155,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public void unassignTaskFromEvent(@PathVariable Long id, Authentication auth) {
         log.info("Controller: Unassign task with id: {} from event", id);
+
         taskAssignmentService.unassignTasksFromEventUsers(id);
         taskService.unassignTaskFromEvent(id);
     }
