@@ -9,4 +9,5 @@ public interface NotificationService {
     NotificationResponse findById(Long id);
     PaginationListResponse<NotificationResponse> findAllByUserId(long userId, int page, int size);
     void delete(long notificationId);
+    void deleteAllLinksToUser(long userId);
 }

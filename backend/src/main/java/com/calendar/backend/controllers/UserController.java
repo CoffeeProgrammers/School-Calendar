@@ -7,7 +7,7 @@ import com.calendar.backend.dto.user.UserUpdateRequest;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.dto.wrapper.PasswordRequest;
 import com.calendar.backend.mappers.UserMapper;
-import com.calendar.backend.services.inter.UserService;
+import com.calendar.backend.services.inter.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final TaskAssignmentService taskAssignmentService;
+    private final InvitationService invitationService;
+    private final CommentService commentService;
+    private final EventService eventService;
     private final UserService userService;
+    private final TaskService taskService;
     private final UserMapper userMapper;
 
     @PreAuthorize("hasRole('TEACHER')")
@@ -45,11 +50,56 @@ public class UserController {
         return userService.updateUser(request, id);
     }
 
+    @PutMapping("/update")
+    @ResponseStatus(HttpStatus.OK)
+    public UserFullResponse updateMyUser(
+            @RequestBody UserUpdateRequest request,
+            Authentication auth) {
+        log.info("Controller: Update my user with body: {}", request);
+        return userService.updateUser(
+                request,
+                userService.findUserByAuth(auth).getId()
+        );
+    }
+
+    @PutMapping("/update/password")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean updateMyPassword(
+            @RequestBody PasswordRequest password,
+            Authentication auth) {
+        log.info("Controller: Update my password");
+        return userService.updatePassword(password, auth);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
+        log.info("Controller: Delete user with id: {}", id);
+
+        taskAssignmentService.unassignTasksFromUser(id);
+        eventService.unsignUserAndCreatorFromAll(id);
+
+        invitationService.changeCreatorToDeletedUser(id);
+        commentService.changeCreatorToDeletedUser(id);
+        taskService.changeCreatorToDeletedUser(id);
+
+        userService.delete(id);
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserFullResponse getUser(@PathVariable Long id) {
         log.info("Controller: Get user with id: {}", id);
         return userService.findById(id);
+    }
+
+
+    @GetMapping("/my")
+    @ResponseStatus(HttpStatus.OK)
+    public UserFullResponse getMyUser(Authentication auth) {
+        log.info("Controller: Get my user");
+        return userMapper.fromUserToUserResponse(userService.findUserByAuth(auth));
     }
 
     @GetMapping
@@ -98,41 +148,6 @@ public class UserController {
         return userService.findAllByEventsNotContains(email, firstName, lastName, role, eventId, page, size);
     }
 
-    @GetMapping("/my")
-    @ResponseStatus(HttpStatus.OK)
-    public UserFullResponse getMyUser(Authentication auth) {
-        log.info("Controller: Get my user");
-        return userMapper.fromUserToUserResponse(userService.findUserByAuth(auth));
-    }
-
-    @PreAuthorize("hasRole('TEACHER')")
-    @DeleteMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable Long id) {
-        log.info("Controller: Delete user with id: {}", id);
-        userService.delete(id);
-    }
-
-    @PutMapping("/update")
-    @ResponseStatus(HttpStatus.OK)
-    public UserFullResponse updateMyUser(
-            @RequestBody UserUpdateRequest request,
-            Authentication auth) {
-        log.info("Controller: Update my user with body: {}", request);
-        return userService.updateUser(
-                request,
-                userService.findUserByAuth(auth).getId()
-        );
-    }
-
-    @PutMapping("/update/password")
-    @ResponseStatus(HttpStatus.OK)
-    public boolean updateMyPassword(
-            @RequestBody PasswordRequest password,
-            Authentication auth) {
-        log.info("Controller: Update my password");
-        return userService.updatePassword(password, auth);
-    }
 
     @GetMapping("/countTop5")
     @ResponseStatus(HttpStatus.OK)

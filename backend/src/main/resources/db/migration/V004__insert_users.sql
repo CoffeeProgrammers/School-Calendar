@@ -1,11 +1,6 @@
 INSERT INTO "users" ("email", "password", "role", "first_name", "last_name", "description", "birthday")
-VALUES ('john.doe@example.com',
-        '$2a$12$tCc7xjpcZZg0PT57MxYmX.3Pp2gedmXUHfS86IHz5Y8RUoIKq.Ma6',
-        0,
-        'John',
-        'Doe',
-        'Example user for testing.',
-        '2000-01-01 00:00:00'),
+VALUES ('john.doe@example.com', '$2a$12$tCc7xjpcZZg0PT57MxYmX.3Pp2gedmXUHfS86IHz5Y8RUoIKq.Ma6',
+        0, 'John', 'Doe', 'Example user for testing.', '2000-01-01 00:00:00'),
        ('johnotan@example.com', '$2a$12$tCc7xjpcZZg0PT57MxYmX.3Pp2gedmXUHfS86IHz5Y8RUoIKq.Ma6',
         0, 'Johnotan', 'Doe', 'Math teacher', '1980-06-15 00:00:00'),
        ('alice@example.com', '$2a$12$tCc7xjpcZZg0PT57MxYmX.3Pp2gedmXUHfS86IHz5Y8RUoIKq.Ma6',
@@ -23,4 +18,6 @@ VALUES ('john.doe@example.com',
        ('lucy@example.com', '$2a$12$tCc7xjpcZZg0PT57MxYmX.3Pp2gedmXUHfS86IHz5Y8RUoIKq.Ma6',
         1, 'Lucy', 'Brown', 'Science teacher', '1985-09-05 00:00:00'),
        ('kate@example.com', '$2a$12$tCc7xjpcZZg0PT57MxYmX.3Pp2gedmXUHfS86IHz5Y8RUoIKq.Ma6',
-        1, 'Kate', 'Doe', 'Math teacher', '1980-06-15 00:00:00');
+        1, 'Kate', 'Doe', 'Math teacher', '1980-06-15 00:00:00'),
+       ('!deleted-user!@deleted.com', '1234567890abcdABCD0987654321',
+        3, 'Deleted', 'User', 'Deleted user, sorry', '1999-01-01 00:00:00');

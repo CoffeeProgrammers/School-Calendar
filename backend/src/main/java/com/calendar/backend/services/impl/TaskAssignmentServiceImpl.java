@@ -106,4 +106,11 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
             taskAssignmentRepository.deleteByTask_IdAndUser_Id(task.getId(), user.getId());
         }
     }
+
+    @Transactional
+    @Override
+    public void unassignTasksFromUser(Long userId) {
+        log.info("Service: Unsigning all task assignments for user with id {}", userId);
+        taskAssignmentRepository.deleteAllByUser_Id(userId);
+    }
 }

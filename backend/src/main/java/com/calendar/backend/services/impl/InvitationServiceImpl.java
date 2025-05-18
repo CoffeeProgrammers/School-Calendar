@@ -31,7 +31,7 @@ public class InvitationServiceImpl implements InvitationService {
     private final InvitationRepository invitationRepository;
     private final InvitationMapper invitationMapper;
     private final NotificationService notificationServices;
-    private final UserService userServices;
+    private final UserService userService;
     private final EventService eventService;
     private final TaskAssignmentService taskAssignmentService;
 
@@ -48,8 +48,8 @@ public class InvitationServiceImpl implements InvitationService {
         Invitation invitation = invitationMapper.fromInvitationRequestToInvitation(invitationRequest);
         Event event = eventService.findByIdForServices(eventId);
         invitation.setEvent(event);
-        invitation.setSender(userServices.findUserByAuth(authentication));
-        invitation.setReceiver(userServices.findByIdForServices(receiverId));
+        invitation.setSender(userService.findUserByAuth(authentication));
+        invitation.setReceiver(userService.findByIdForServices(receiverId));
         invitation.setTime(LocalDateTime.now(ZoneId.of("Europe/Kiev")));
 
         return invitationMapper.fromInvitationToInvitationResponse(invitationRepository.save(invitation));
@@ -58,7 +58,7 @@ public class InvitationServiceImpl implements InvitationService {
     @Override
     public InvitationResponse update(long invitationId, InvitationRequest invitationRequest) {
         log.info("Service: Updating invitation with id {}", invitationId);
-        Invitation invitation = findInvitationById(invitationId);
+        Invitation invitation = findByIdForServices(invitationId);
         invitation.setDescription(invitationRequest.getDescription());
         return invitationMapper.fromInvitationToInvitationResponse(invitationRepository.save(invitation));
     }
@@ -72,14 +72,14 @@ public class InvitationServiceImpl implements InvitationService {
     @Override
     public InvitationResponse findById(Long id) {
         log.info("Service: Finding for controller invitation with id {}", id);
-        return invitationMapper.fromInvitationToInvitationResponse(findInvitationById(id));
+        return invitationMapper.fromInvitationToInvitationResponse(findByIdForServices(id));
     }
 
     @Override
     public PaginationListResponse<InvitationResponse> findAllBySenderId(Authentication authentication, int page, int size) {
         log.info("Service: Finding all invitations sent by my user");
         Page<Invitation> invitations = invitationRepository.findAllBySender_Id
-                (userServices.findUserByAuth(authentication).getId(),
+                (userService.findUserByAuth(authentication).getId(),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "time")));
         PaginationListResponse<InvitationResponse> response = new PaginationListResponse<>();
         response.setTotalPages(invitations.getTotalPages());
@@ -92,7 +92,7 @@ public class InvitationServiceImpl implements InvitationService {
     public PaginationListResponse<InvitationResponse> findAllByRecieverId(Authentication authentication, int page, int size) {
         log.info("Service: Finding all invitations for my user");
         Page<Invitation> invitations = invitationRepository.findAllByReceiver_Id(
-                userServices.findUserByAuth(authentication).getId(),
+                userService.findUserByAuth(authentication).getId(),
                 PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "time")));
         PaginationListResponse<InvitationResponse> response = new PaginationListResponse<>();
         response.setTotalPages(invitations.getTotalPages());
@@ -142,7 +142,7 @@ public class InvitationServiceImpl implements InvitationService {
     @Override
     public void acceptInvitation(Long id) {
         log.info("Service: Accepting invitation with id {}", id);
-        Invitation invitation = findInvitationById(id);
+        Invitation invitation = findByIdForServices(id);
         User receiver = invitation.getReceiver();
         Event event = invitation.getEvent();
         event.addUser(receiver);
@@ -156,7 +156,7 @@ public class InvitationServiceImpl implements InvitationService {
     @Override
     public void rejectInvitation(Long id) {
         log.info("Service: Rejecting invitation with id {}", id);
-        Invitation invitation = findInvitationById(id);
+        Invitation invitation = findByIdForServices(id);
         User receiver = invitation.getReceiver();
         notificationServices.create(new Notification(List.of(invitation.getSender()),
                 "User " + receiver.getFirstName() + " " +
@@ -164,7 +164,19 @@ public class InvitationServiceImpl implements InvitationService {
         invitationRepository.deleteById(id);
     }
 
-    private Invitation findInvitationById(Long id) {
+    @Override
+    public void changeCreatorToDeletedUser(long userId) {
+        log.info("Service: Changing creator to deleted user with id {}", userId);
+        List<Invitation> invitationsFromDeletedUser = invitationRepository.findAllBySender_Id(userId);
+        User deleted = userService.findByEmail("!deleted-user!@deleted.com");
+        for(Invitation invitation : invitationsFromDeletedUser) {
+            invitation.setSender(deleted);
+        }
+        invitationRepository.saveAll(invitationsFromDeletedUser);
+    }
+
+
+    private Invitation findByIdForServices(Long id) {
         log.info("Service: Finding private invitation with id {}", id);
         return invitationRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Invitation not found"));

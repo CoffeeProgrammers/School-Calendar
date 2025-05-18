@@ -4,8 +4,10 @@ import com.calendar.backend.dto.notification.NotificationResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.NotificationMapper;
 import com.calendar.backend.models.Notification;
+import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.NotificationRepository;
 import com.calendar.backend.services.inter.NotificationService;
+import com.calendar.backend.services.inter.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,12 +16,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
+    private final UserService userService;
 
     @Override
     public void create(Notification notification) {
@@ -51,5 +56,15 @@ public class NotificationServiceImpl implements NotificationService {
     public void delete(long notificationId) {
         log.info("Service: Deleting notification with id {}", notificationId);
         notificationRepository.deleteById(notificationId);
+    }
+
+    @Override
+    public void deleteAllLinksToUser(long userId) {
+        User user = userService.findByIdForServices(userId);
+        List<Notification> notificationList = notificationRepository.findAllByUserId(userId);
+        for(Notification notification : notificationList) {
+            notification.getUsers().remove(user);
+        }
+        notificationRepository.saveAll(notificationList);
     }
 }

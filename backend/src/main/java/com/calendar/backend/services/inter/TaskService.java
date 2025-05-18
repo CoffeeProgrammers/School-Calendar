@@ -29,4 +29,5 @@ public interface TaskService {
     PaginationListResponse<TaskListResponse> findAllByCreatorIdAndEventEmpty
             (Authentication authentication, int page, int size);
     CountAllTaskAndCompleted countAllTaskAndCompleted(long userId);
+    void changeCreatorToDeletedUser(long userId);
 }

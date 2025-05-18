@@ -98,4 +98,15 @@ public class CommentServiceImpl implements CommentService {
         longResponse.setCount(commentRepository.countAllByCreator_Id(user.getId()));
         return longResponse;
     }
+
+    @Override
+    public void changeCreatorToDeletedUser(long userId) {
+        log.info("Service: Changing creator to deleted user with id {}", userId);
+        List<Comment> commentsFromDeletedUser = commentRepository.findAllByCreator_Id(userId);
+        User deleted = userService.findByEmail("!deleted-user!@deleted.com");
+        for(Comment comment : commentsFromDeletedUser) {
+            comment.setCreator(deleted);
+        }
+        commentRepository.saveAll(commentsFromDeletedUser);
+    }
 }

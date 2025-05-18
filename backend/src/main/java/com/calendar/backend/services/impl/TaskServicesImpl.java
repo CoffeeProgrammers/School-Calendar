@@ -7,6 +7,7 @@ import com.calendar.backend.dto.wrapper.CountAllTaskAndCompleted;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.mappers.TaskMapper;
 import com.calendar.backend.models.Task;
+import com.calendar.backend.models.User;
 import com.calendar.backend.repositories.TaskRepository;
 import com.calendar.backend.repositories.specification.TaskSpecification;
 import com.calendar.backend.services.inter.EventService;
@@ -173,5 +174,16 @@ public class TaskServicesImpl implements TaskService {
         countAllTaskAndCompleted.setCountCompleted(taskRepository.countAllByUserIdAndDone(userId));
         countAllTaskAndCompleted.setCountAll(taskRepository.countAllByUserId(userId));
         return countAllTaskAndCompleted;
+    }
+
+    @Override
+    public void changeCreatorToDeletedUser(long userId) {
+        log.info("Service: Changing creator to deleted user with id {}", userId);
+        List<Task> taskFromDeletedUser = taskRepository.findAll(TaskSpecification.hasCreator(userId));
+        User deleted = userService.findByEmail("!deleted-user!@deleted.com");
+        for(Task task : taskFromDeletedUser) {
+            task.setCreator(deleted);
+        }
+        taskRepository.saveAll(taskFromDeletedUser);
     }
 }

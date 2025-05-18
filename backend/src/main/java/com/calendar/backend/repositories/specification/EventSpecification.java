@@ -47,6 +47,12 @@ public class EventSpecification {
     }
 
     public static Specification<Event> hasUser(Long userId) {
-        return (root, query, cb) -> cb.equal(root.join("users").get("id"), userId);
+        return (root, query, cb) ->
+                cb.equal(root.join("users").get("id"), userId);
+    }
+
+    public static Specification<Event> hasCreator(Long userId) {
+        return (root, query, cb) ->
+                cb.equal(root.get("creator").get("id"), userId);
     }
 }

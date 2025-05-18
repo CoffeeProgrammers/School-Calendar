@@ -150,4 +150,29 @@ public class EventServiceImpl implements EventService {
     public List<String> findForInvitationCheck(long userId, LocalDateTime start, LocalDateTime end) {
         return eventRepository.existWarningInvitation(userId, start, end);
     }
+
+    private List<Event> findAllByUserIdForServices(long userId){
+        return eventRepository.findAll(EventSpecification.hasUser(userId));
+    }
+
+    private List<Event> findAllByCreatorIdForServices(long creatorId){
+        return eventRepository.findAll(EventSpecification.hasCreator(creatorId));
+    }
+
+    @Override
+    public void unsignUserAndCreatorFromAll(long userId) {
+        log.info("Service: Unsigning all events for user with id {}", userId);
+        List<Event> events = findAllByUserIdForServices(userId);
+        for(Event event : events) {
+            event.deleteUser(userService.findByIdForServices(userId));
+        }
+        log.info("Service: Unsigning creator for user with id {}", userId);
+        List<Event> eventsCreator = findAllByCreatorIdForServices(userId);
+        User deleted = userService.findByEmail("!deleted-user!@deleted.com");
+        for(Event event : eventsCreator) {
+            event.setCreator(deleted);
+        }
+        eventRepository.saveAll(events);
+        eventRepository.saveAll(eventsCreator);
+    }
 }

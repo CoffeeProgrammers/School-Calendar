@@ -15,4 +15,5 @@ public interface CommentService {
     PaginationListResponse<CommentResponse> findAllByEventId(long eventId, int page, int size);
     Comment findByIdForServices(long id);
     LongResponse countAllCommentsByCreatorId(Authentication authentication);
+    void changeCreatorToDeletedUser(long userId);
 }
