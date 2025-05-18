@@ -69,9 +69,7 @@ public class TaskController {
     @ResponseStatus(HttpStatus.OK)
     public TaskFullResponse getTask(@PathVariable Long id, Authentication auth) {
         log.info("Controller: Get task with id: {}", id);
-        TaskFullResponse taskFullResponse = taskService.findById(id);
-        taskFullResponse.setDone(taskAssignmentService.isDone(id, auth));
-        return taskFullResponse;
+        return taskAssignmentService.findById(id, auth);
     }
 
     @GetMapping("/events/{event_id}")

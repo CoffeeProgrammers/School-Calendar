@@ -13,7 +13,6 @@ public interface TaskService {
     TaskFullResponse create(TaskRequest taskRequest, Authentication authentication, long eventId);
     TaskFullResponse update(TaskRequest taskRequest, long id);
     void delete(long id);
-    TaskFullResponse findById(long id);
     CountAllTaskAndCompleted countAllTaskAndCompleted(long userId);
     void changeCreatorToDeletedUser(long userId);
     TaskListResponse assignTaskToEvent(long eventId, long id);

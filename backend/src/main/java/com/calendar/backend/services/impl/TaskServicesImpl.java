@@ -64,13 +64,6 @@ public class TaskServicesImpl implements TaskService {
         taskRepository.deleteById(id);
     }
 
-    @Override
-    public TaskFullResponse findById(long id) {
-        log.info("Service: Finding task with id {}", id);
-
-        return taskMapper.fromTaskToTaskResponse(findByIdForServices(id));
-    }
-
 //    @Override
 //    public PaginationListResponse<TaskListResponse> findAllByUserId(
 //            String name, String deadline, String isDone, String isPast, long userId, int page, int size) {

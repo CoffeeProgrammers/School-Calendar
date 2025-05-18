@@ -1,5 +1,6 @@
 package com.calendar.backend.services.impl;
 
+import com.calendar.backend.dto.task.TaskFullResponse;
 import com.calendar.backend.dto.task.TaskListResponse;
 import com.calendar.backend.dto.task.TaskListSmallResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
@@ -65,29 +66,14 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
                 new EntityNotFoundException("Cant find such task assigment")).isDone();
     }
 
-//    @Override
-//    public PaginationListResponse<TaskListResponse> setAllDoneByTasksAndAuth
-//            (PaginationListResponse<TaskListResponse> tasks, Authentication authentication) {
-//
-//        log.info("Service: Setting all task assignments done for all tasks and auth user");
-//
-//        tasks.setContent(tasks.getContent().stream().map(
-//                task -> {task.setDone(this.isDone(task.getId(), authentication));
-//                    return task;}).toList());
-//
-//        return tasks;
-//    }
-
     @Override
-    public PaginationListResponse<TaskListSmallResponse> setAllDoneByTasksSmallAndAuth(PaginationListResponse<TaskListSmallResponse> tasks, Authentication authentication) {
-
-        log.info("Service: Setting all small task assignments done for all tasks and auth user");
-
-        tasks.setContent(tasks.getContent().stream().map(
-                task -> {task.setDone(this.isDone(task.getId(), authentication));
-                    return task;}).toList());
-
-        return tasks;
+    public TaskFullResponse findById(long id, Authentication auth) {
+        User user = userService.findUserByAuth(auth);
+        TaskAssignment taskAssignment = taskAssignmentRepository.findByTask_IdAndUser_Id(id, user.getId()).orElseThrow(
+                () -> new EntityNotFoundException("Can`t find that you have such task"));
+        TaskFullResponse response = taskMapper.fromTaskToTaskResponse(taskAssignment.getTask());
+        response.setDone(taskAssignment.isDone());
+        return response;
     }
 
     @Override
