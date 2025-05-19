@@ -7,8 +7,6 @@ import {defaultButtonStyles, disagreeButtonStyles} from "../../../../../assets/s
 import DateUtils from "../../../../../utils/DateUtils";
 import TextUtils from "../../../../../utils/TextUtils";
 import SubjectIcon from "@mui/icons-material/Subject";
-import Link from "@mui/material/Link";
-import {Link as RouterLink} from "react-router-dom";
 
 const ReceivedInvitationListBox = ({ invitation, handleRejectInvitation, handleAcceptInvitation }) => {
     const formattedDate =
@@ -40,10 +38,7 @@ const ReceivedInvitationListBox = ({ invitation, handleRejectInvitation, handleA
                 />
                 <CardContent sx={{ paddingTop: "10px" }}>
                     <Typography>
-                        <i>You have been invited to event
-                            <Link component={RouterLink} to={`/events/${invitation.event.id}`}>
-                                {" " + invitation.event.name}
-                            </Link> at {formattedDate}.</i>
+                        <i>You have been invited to event {invitation.event.name} at {formattedDate}.</i>
                     </Typography>
                     {invitation.description && (
                         <>

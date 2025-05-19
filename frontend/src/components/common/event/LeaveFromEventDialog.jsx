@@ -20,8 +20,11 @@ const LeaveFromEventDialog = ({handleUserLeaveFromEvent}) => {
             <Typography variant="body1" color="primary">Participant panel</Typography>
 
             <Box sx={{display: 'flex'}}>
-                <IconButton onClick={() => setOpenConfirmDialog(true)} color="secondary"
-                            sx={{borderRadius: '5px', width: '30px', height: '30px'}}>
+                <IconButton
+                    color="secondary"
+                    sx={{borderRadius: '5px', width: '30px', height: '30px'}}
+                    onClick={() => setOpenConfirmDialog(true)}
+                >
                     <LogoutIcon/>
                 </IconButton>
 

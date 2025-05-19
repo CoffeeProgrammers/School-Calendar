@@ -63,15 +63,7 @@ const EventPageMainBox = ({event, isCreator}) => {
     ]
 
     return (
-        <Box sx={{
-            width: "90%",
-            border: '1px solid #ddd',
-            padding: '20px',
-            margin: '10px',
-            borderRadius: "10px",
-            display: "flex",
-            flexDirection: "column"
-        }}>
+        <Box sx={{width: "90%", border: '1px solid #ddd', padding: '20px', margin: '10px', borderRadius: "10px", display: "flex", flexDirection: "column"}}>
             <Container maxWidth="md">
                 <Typography variant="h4" sx={{display: 'flex', alignItems: 'center', gap: 0.5}}>
                     <SpaceDashboard fontSize="large" color="secondary"/>
