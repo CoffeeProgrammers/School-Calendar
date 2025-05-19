@@ -65,7 +65,7 @@ invitations tailored for users of the system (e.g., teachers or students).
 ---
 
 ## Installation Instructions
-0. Install docker desktop and git (if you don`t have it already downloaded to your computer)
+0. Install and open docker desktop and git (if you don`t have it already downloaded to your computer)
 
 - [docker-desktop](https://www.docker.com/products/docker-desktop/)
 
