@@ -60,6 +60,7 @@ invitations tailored for users of the system (e.g., teachers or students).
 - MUI: library of React components
 - H2: database for our project tests
 - PostgreSQL: database for our project
+- Docker: for start servers and creating containers in one system
 
 ---
 
