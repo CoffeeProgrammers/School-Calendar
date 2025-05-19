@@ -22,6 +22,7 @@ import {history} from "./utils/history";
 import {useEffect} from "react";
 
 import './index.css';
+import PrivateRoute from "./security/PrivateRoute";
 
 const InitNavigation = ({ children }) => {
     const navigate = useNavigate();
@@ -56,11 +57,12 @@ function App() {
                         <Routes>
                             <Route path="/login" element={<Login />} />
                             {routes.map((route, index) => (
-                                <Route
-                                    key={index}
-                                    path={route.path}
-                                    element={route.element}
-                                />
+                                <Route element={<PrivateRoute/>} key={index}>
+                                    <Route
+                                        path={route.path}
+                                        element={route.element}
+                                    />
+                                </Route>
                             ))}
                         </Routes>
                     </LocalizationProvider>
