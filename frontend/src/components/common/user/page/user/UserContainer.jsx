@@ -4,11 +4,18 @@ import {Typography} from "@mui/material";
 import UserView from "../UserView";
 import UserService from "../../../../../services/base/ext/UserService";
 import {useParams} from "react-router-dom";
+import EventService from "../../../../../services/base/ext/EventService";
+import TaskService from "../../../../../services/base/ext/TaskService";
+import CommentService from "../../../../../services/base/ext/CommentService";
 
 const UserContainer = () => {
     const {id} = useParams();
 
     const [user, setUser] = useState(null);
+
+    const [visitedEventsCount, setVisitedEventsCount] = useState(0);
+    const [completedTasksCount, setCompletedTasksCount] = useState({countCompleted:0, countAll: 0});
+    const [writtenCommentsCount, setWrittenCommentsCount] = useState(0);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -16,8 +23,15 @@ const UserContainer = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await UserService.getUser(id);
-                setUser(response);
+                const response1 = await UserService.getUser(id);
+                const response2 = await EventService.getPastEventCountByUser(id)
+                const response3 = await TaskService.countAllUserTasks(id)
+                const response4 = await CommentService.getUserCommentsCount(id)
+
+                setUser(response1);
+                setVisitedEventsCount(response2.count);
+                setCompletedTasksCount(response3);
+                setWrittenCommentsCount(response4.count);
             } catch (error) {
                 setError(error);
             } finally {
@@ -49,6 +63,9 @@ const UserContainer = () => {
         <UserView
             handleUpdate={handleUpdate}
             user={user}
+            visitedEventsCount={visitedEventsCount}
+            completedTasksCount={completedTasksCount}
+            writtenCommentsCount={writtenCommentsCount}
         />
     );
 };

@@ -2,29 +2,29 @@ import BaseService from "../BaseService";
 
 class CommentService extends BaseService {
     constructor() {
-        super("/events");
+        super("/comments"); // змінив з "/events" на "/comments"
     }
 
     createComment(eventId, data) {
-        return this.post(`/${eventId}/comments/create`, data);
+        return this.post(`/events/${eventId}/create`, data);
     }
 
-    updateComment(eventId, commentId, data) {
-        return this.put(`/${eventId}/comments/update/${commentId}`, data);
+    updateComment(commentId, data) {
+        return this.put(`/update/${commentId}`, data);
     }
 
-    deleteComment(eventId, commentId) {
-        return this.delete(`/${eventId}/comments/delete/${commentId}`);
+    deleteComment(commentId) {
+        return this.delete(`/delete/${commentId}`);
     }
 
     getComments(eventId, page, size) {
-        return this.get(`/${eventId}/comments`, {
+        return this.get(`/events/${eventId}`, {
             params: { page, size }
         });
     }
 
-    getMyCommentsCount() {
-        return this.get("/1/comments/getMyCount");
+    getUserCommentsCount(userId) {
+        return this.get(`/getCount/${userId}`);
     }
 }
 

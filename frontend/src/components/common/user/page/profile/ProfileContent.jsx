@@ -26,7 +26,7 @@ const ProfileContent = () => {
                 const response1 = await UserService.getMyUser();
                 const response2 = await EventService.getPastEventCountByUser(myId)
                 const response3 = await TaskService.countAllUserTasks(myId)
-                const response4 = await CommentService.getMyCommentsCount()
+                const response4 = await CommentService.getUserCommentsCount(myId)
 
                 setUser(response1);
                 setVisitedEventsCount(response2.count);

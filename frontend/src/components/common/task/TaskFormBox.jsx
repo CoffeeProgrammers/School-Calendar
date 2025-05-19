@@ -59,7 +59,7 @@ const TaskFormBox = (
                             fullWidth
                             variant="outlined"
                             multiline
-                            rows={4}
+                            rows={6}
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                         />

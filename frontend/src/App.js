@@ -23,6 +23,7 @@ import {useEffect} from "react";
 
 import './index.css';
 import PrivateRoute from "./security/PrivateRoute";
+import {ErrorProvider} from "./contexts/ErrorContext";
 
 const InitNavigation = ({ children }) => {
     const navigate = useNavigate();
@@ -52,21 +53,23 @@ function App() {
     return (
         <BrowserRouter>
             <InitNavigation>
-                <ThemeProvider theme={theme}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <Routes>
-                            <Route path="/login" element={<Login />} />
-                            {routes.map((route, index) => (
-                                <Route element={<PrivateRoute/>} key={index}>
-                                    <Route
-                                        path={route.path}
-                                        element={route.element}
-                                    />
-                                </Route>
-                            ))}
-                        </Routes>
-                    </LocalizationProvider>
-                </ThemeProvider>
+                <ErrorProvider>
+                    <ThemeProvider theme={theme}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Routes>
+                                <Route path="/login" element={<Login />} />
+                                {routes.map((route, index) => (
+                                    <Route element={<PrivateRoute/>} key={index}>
+                                        <Route
+                                            path={route.path}
+                                            element={route.element}
+                                        />
+                                    </Route>
+                                ))}
+                            </Routes>
+                        </LocalizationProvider>
+                    </ThemeProvider>
+                </ErrorProvider>
             </InitNavigation>
         </BrowserRouter>
     );
