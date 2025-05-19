@@ -8,8 +8,8 @@ import {useError} from "../../contexts/ErrorContext";
 
 const Login = () => {
     const {showError} = useError()
-    const [email, setEmail] = useState('john.doe@example.com');
-    const [password, setPassword] = useState('passWord1');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const [errorMessages, setErrorMessages] = useState([]);
 
