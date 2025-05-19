@@ -54,7 +54,8 @@ function App() {
         {
             path: "*", element:
                 <Page>
-                    <Typography p={"50px"} variant={"h4"} color={'error'}>404 Page not found
+                    <Typography p={"50px"} variant={"h4"} color={'error'}>
+                        404 Page not found
                     </Typography>
                 </Page>
         },
