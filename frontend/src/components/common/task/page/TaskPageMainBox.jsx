@@ -10,6 +10,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {SpaceDashboard} from "@mui/icons-material";
 import DateUtils from "../../../../utils/DateUtils";
 import TextUtils from "../../../../utils/TextUtils";
+import {Link as RouterLink} from "react-router-dom";
+import Link from "@mui/material/Link";
 
 
 const TaskPageMainBox = ({task, handleToggleTask}) => {
@@ -35,17 +37,18 @@ const TaskPageMainBox = ({task, handleToggleTask}) => {
         {
             icon: <AccountCircleIcon fontSize="small"/>,
             label: "Creator:",
-            value: TextUtils.getUserFullName(task.creator)
+            value:
+                <Link component={RouterLink} to={`/users/${task.creator.id}`}>
+                    {TextUtils.getUserFullName(task.creator)}
+                </Link>
         },
         {
             icon: <SpaceDashboard fontSize="small"/>,
             label: "Event:",
             value: (task.event ? (
-                //TODO: Link
-
-                // <Link to={`/events/${task.event.id}`}>
-                task.event.name
-                // </Link>
+                        <Link component={RouterLink} to={`/events/${task.event.id}`}>
+                            {task.event.name}
+                        </Link>
             ) : "---")
         },
     ]

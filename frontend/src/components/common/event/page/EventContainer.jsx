@@ -3,10 +3,11 @@ import Loading from "../../../layouts/Loading";
 import {Typography} from "@mui/material";
 import EventView from "./EventView";
 import EventService from "../../../../services/base/ext/EventService";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Cookies from "js-cookie";
 
-const EventContainer = ({eventId}) => {
+const EventContainer = () => {
+    const {id} = useParams();
     const navigate = useNavigate();
     const myId = Cookies.get('userId');
 
@@ -18,7 +19,7 @@ const EventContainer = ({eventId}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await EventService.getEvent(eventId);
+                const response = await EventService.getEvent(id);
                 setEvent(response);
             } catch (error) {
                 setError(error);
@@ -28,14 +29,14 @@ const EventContainer = ({eventId}) => {
         };
 
         fetchData();
-    }, [eventId]);
+    }, []);
 
 
     const handleUpdate = async (updatedEvent) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await EventService.updateEvent(eventId, updatedEvent);
+            const response = await EventService.updateEvent(id, updatedEvent);
             setEvent(response);
         } catch (error) {
             setError(error);
@@ -48,7 +49,7 @@ const EventContainer = ({eventId}) => {
         setLoading(true);
         setError(null);
         try {
-            await EventService.deleteEvent(eventId);
+            await EventService.deleteEvent(id);
             navigate('/events');
         } catch (error) {
             setError(error);
@@ -61,7 +62,7 @@ const EventContainer = ({eventId}) => {
         setLoading(true);
         setError(null);
         try {
-            await EventService.deleteUserFromEvent(eventId, myId);
+            await EventService.deleteUserFromEvent(id, myId);
             navigate('/events');
         } catch (error) {
             setError(error);
