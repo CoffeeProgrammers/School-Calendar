@@ -25,7 +25,6 @@ const UpdatePasswordDialog = ({handleUpdatePassword}) => {
             handleUpdatePassword(password, newPassword)
             setOpen(false);
         }else {
-            //TODO: handle
             throw new Error("Passwords do not match")
         }
 

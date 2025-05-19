@@ -26,7 +26,7 @@ import PrivateRoute from "./security/PrivateRoute";
 import {ErrorProvider} from "./contexts/ErrorContext";
 import Cookies from "js-cookie";
 
-const InitNavigation = ({ children }) => {
+const InitNavigation = ({children}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,7 +51,13 @@ function App() {
         {path: "/tasks/:id", element: <TaskPage/>},
         {path: "/notifications", element: <Page><NotificationsPage/></Page>},
         {path: "/invitations", element: <InvitationsPage/>},
-        {path: "*", element: <Typography p={"50px"} variant={"h4"} color={'error'}>404 page found </Typography>},
+        {
+            path: "*", element:
+                <Page>
+                    <Typography p={"50px"} variant={"h4"} color={'error'}>404 Page not found
+                    </Typography>
+                </Page>
+        },
         role === 'TEACHER' && {path: "/teacherPanel", element: <TeacherPanelPage/>}
 
     ];
@@ -63,7 +69,7 @@ function App() {
                     <ThemeProvider theme={theme}>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Routes>
-                                <Route path="/login" element={<Login />} />
+                                <Route path="/login" element={<Login/>}/>
                                 {routes.map((route, index) => (
                                     <Route element={<PrivateRoute/>} key={index}>
                                         <Route

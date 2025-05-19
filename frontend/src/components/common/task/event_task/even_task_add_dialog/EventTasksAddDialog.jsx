@@ -60,7 +60,6 @@ const EventTasksAddDialog = (
                 title={"Choose the tasks to add"}
                 size={"md"}
                 content={
-                    //TODO: refactor bp
                     <>
                         <Stack direction="row" sx={listPanelStyles}>
                             <Box sx={listPanelStyles} gap={0.5}>

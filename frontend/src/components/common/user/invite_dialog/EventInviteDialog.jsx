@@ -64,7 +64,6 @@ const EventInviteDialog = (
                 title={"Choose the person to invite"}
                 size={"md"}
                 content={
-                    //TODO: refactor bp
                     <>
                         <Stack direction="row" sx={listPanelStyles}>
                             <Box sx={listPanelStyles} gap={0.5}>
@@ -112,7 +111,6 @@ const EventInviteDialog = (
                             </Box>
                         )}
 
-                        {/*TODO: list optimize*/}
                         <Grid container spacing={1.5}>
                             {users.map(user => (
                                 <Grid size={{ xs: 12, sm: 6, md: 4}} key={user.id}>

@@ -4,7 +4,6 @@ import ElementAdditionDialog from "../../../layouts/dialog/ElementAdditionDialog
 import EventInviteContainer from "../invite_dialog/EventInviteContainer";
 import ParticipantBox from "./ParticipantBox";
 
-//TODO: clear
 const ParticipantsDialog = ({ users, pagesCount, page, setPage, handleRemove, isCreator, eventId }) => {
     return (
         <>
@@ -12,7 +11,6 @@ const ParticipantsDialog = ({ users, pagesCount, page, setPage, handleRemove, is
                 size={"sm"}
                 title={"Participants"}
                 content={
-                    //TODO: list optimize
                     <Grid container spacing={1.5}>
                         {users.map(user => (
                             <Grid size={{ xs: 12, sm: 6}} key={user.id}>

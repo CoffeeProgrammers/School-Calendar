@@ -10,7 +10,6 @@ import TextUtils from "../../../../utils/TextUtils";
 
 
 const EventListBox = ({event}) => {
-    //TODO date to utils
     const startDate = new Date(event.startDate);
     const formattedStartDate = startDate.toLocaleString('en-US', {
         month: 'long',
