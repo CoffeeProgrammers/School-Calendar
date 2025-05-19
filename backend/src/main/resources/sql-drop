@@ -1,0 +1,15 @@
+docker exec -it db psql -U postgres -d db
+
+-- Drop tables
+DROP TABLE IF EXISTS "users_notifications" CASCADE;
+DROP TABLE IF EXISTS "task_assignments" CASCADE;
+DROP TABLE IF EXISTS "tasks" CASCADE;
+DROP TABLE IF EXISTS "comments" CASCADE;
+DROP TABLE IF EXISTS "users_events" CASCADE;
+DROP TABLE IF EXISTS "invitations" CASCADE;
+DROP TABLE IF EXISTS "events" CASCADE;
+DROP TABLE IF EXISTS "notifications" CASCADE;
+DROP TABLE IF EXISTS "parents_students" CASCADE;
+DROP TABLE IF EXISTS "users" CASCADE;
+DROP TABLE IF EXISTS "refresh_tokens" CASCADE;
+DROP TABLE IF EXISTS flyway_schema_history;

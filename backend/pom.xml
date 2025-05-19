@@ -26,20 +26,20 @@
         </developer>
         <developer>
             <id>aliakravets</id>
-<!--            <name></name>-->
-<!--            <email></email>-->
+            <name>Kravets Albina</name>
+            <email>aliakravets2008@gmail.com</email>
             <organization>CoffeeProgrammers</organization>
         </developer>
         <developer>
             <id>Vladobrod</id>
-            <name>Vladislav Bulakovski</name>
-<!--            <email></email>-->
+            <name>Vladyslav Bulakovskyi</name>
+            <email>bulakovskijvladislav@gmail.com</email>
             <organization>CoffeeProgrammers</organization>
         </developer>
         <developer>
             <id>Yaroslav-Holobyn</id>
             <name>Yaroslav Holobyn</name>
-<!--            <email></email>-->
+            <email>slavaholobyn@gmail.com</email>
             <organization>CoffeeProgrammers</organization>
         </developer>
     </developers>
@@ -106,6 +106,12 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.instancio</groupId>
+            <artifactId>instancio-junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Libraries -->
         <dependency>
@@ -137,10 +143,6 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>0.11.5</version>
@@ -154,10 +156,6 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>

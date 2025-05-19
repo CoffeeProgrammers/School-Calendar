@@ -1,0 +1,114 @@
+* {
+    font-family: Open Sans, sans-serif;
+}
+
+.profile-container {
+    width: 1300px;
+    display: grid;
+    grid-template-columns: 1fr 2.5fr;
+}
+
+.profile-information {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-photo {
+    padding: 0;
+    height: 210px;
+    width: 210px;
+    margin-bottom: 10px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-photo-icon {
+    padding: 0;
+    margin: 0;
+}
+
+.edit-userPhoto {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+    opacity: 0;
+}
+
+.edit-userPhoto:hover {
+    opacity: 1;
+}
+
+.user-name {
+    display: flex;
+    align-items: center;
+}
+
+.edit-userName {
+    opacity: 0;
+}
+
+.user-name:hover .edit-userName {
+    opacity: 1;
+}
+
+.user-description {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-userDescription {
+    opacity: 0;
+}
+
+.user-description:hover .edit-userDescription {
+    opacity: 1;
+}
+
+
+.user-information tr td {
+    padding: 0 10px 0 0;
+}
+
+.user-information-edit {
+    background: green;
+    border: none;
+    outline: none;
+    width: 100px;
+    padding: 10px;
+    border-radius: 5px;
+    color: aliceblue;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.profile-calendar {
+    margin-top: 20px;
+    border: 2px solid green;
+}
+
+.profile-calendar thead tr {
+    height: 50px;
+    text-align: center;
+}
+
+.profile-calendar thead tr td {
+    background: rgba(0, 128, 0, 0.637);
+}
+
+.profile-calendar tbody tr td {
+    height: 100px;
+    width: 100px;
+    background: rgba(39, 175, 39, 0.438);
+    text-align: center;
+}
+
+.active-date {
+    border: 2px solid green;
+}

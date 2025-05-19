@@ -1,0 +1,18 @@
+:root {
+    --sx-color-primary: #007a00;
+    --sx-color-on-primary: #ffffff;
+    --sx-color-primary-container: #01632f;
+    --sx-color-on-primary-container: #e0f2f1;
+}
+
+.sx__calendar-header {
+    display: none !important;
+}
+
+.sx__time-grid-event {
+    height: 37px !important;
+}
+
+.sx__event {
+    cursor: pointer;
+}

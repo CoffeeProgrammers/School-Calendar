@@ -1,18 +1,12 @@
+# Stage 1: Build
 FROM node:18
 
 WORKDIR /app
-
-COPY package*.json ./
-
+COPY . .
 RUN npm install
 
-RUN npm install web-vitals
-RUN npm install --save-dev @babel/plugin-proposal-private-property-in-object
-
-COPY . .
-
-RUN npm run build
-
+# Відкриваємо порт для dev server
 EXPOSE 3000
 
+# Запускаємо React development server
 CMD ["npm", "start"]

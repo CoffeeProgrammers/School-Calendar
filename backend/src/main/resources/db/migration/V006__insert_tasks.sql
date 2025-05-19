@@ -1,0 +1,17 @@
+INSERT INTO "tasks" ("creator_id", "event_id", "name", "content", "deadline") VALUES
+(1, 1, 'Prepare Notes', 'Review and summarize lecture material', '2025-05-11 23:59:00'),
+(2, 2, 'Design Flyer', 'Create and print promotional flyers for the exhibition', '2025-06-08 20:00:00'),
+(3, 3, 'Sports Gear Check', 'Ensure all equipment is ready for the tournament', '2025-05-19 18:00:00'),
+(4, 4, 'Create Code Examples', 'Prepare coding examples for workshop', '2025-05-31 18:00:00'),
+(1, 5, 'Coordinate Sound', 'Ensure audio equipment is working', '2025-07-04 16:00:00'),
+(2, 6, 'Prepare PowerPoint', 'Create a PowerPoint for the guest lecture', '2025-05-24 18:00:00'),
+(3, 7, 'Election Campaign', 'Design posters and prepare speeches', '2025-05-29 18:00:00'),
+(4, 8, 'Organize Transport', 'Arrange transportation for participants', '2025-06-14 18:00:00'),
+(1, 9, 'Prepare Coding Samples', 'Create coding examples for bootcamp', '2025-06-19 18:00:00'),
+(2, 10, 'Promote Event', 'Share the poetry reading event on social media', '2025-07-09 20:00:00'),
+(3, 11, 'Prepare Presentation', 'Create presentation on climate change', '2025-05-17 18:00:00'),
+(4, 12, 'Design Dance Poster', 'Create a poster for the performance', '2025-06-24 18:00:00'),
+(1, 13, 'Set Up Technology Displays', 'Prepare the technology display booth', '2025-07-14 18:00:00'),
+(2, 14, 'Food Preparation', 'Coordinate with vendors for the food festival', '2025-07-11 18:00:00'),
+(3, 15, 'Rehearse Lines', 'Practice lines for the drama play', '2025-06-06 18:00:00'),
+(4, 16, 'Create Awareness Materials', 'Design posters and flyers for the environmental event', '2025-05-21 18:00:00');
