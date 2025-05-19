@@ -64,13 +64,13 @@ public class TaskAssignmentsSpecification {
 
     public static Specification<TaskAssignment> hasEvent(Long eventId) {
         return (root, query, cb) ->
-                cb.equal(root.join("task").join("events").get("id"), eventId);
+                cb.equal(root.join("task").join("event").get("id"), eventId);
     }
 
     public static  Specification<TaskAssignment> hasNullEventAndMeIsCreator(long userId) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
-            predicates.add(cb.isNull(root.join("task").join("events")));
+            predicates.add(cb.isNull(root.join("task").join("event")));
             predicates.add(cb.equal(root.join("task").get("creator").get("id"), userId));
 
             return cb.and(predicates.toArray(new Predicate[0]));
