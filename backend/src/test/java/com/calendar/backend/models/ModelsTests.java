@@ -61,6 +61,7 @@ public class ModelsTests {
         Invitation inv1 = new Invitation(user, user, event, "Description", "Warning");
         Invitation inv2 = new Invitation(inv1.getReceiver(), inv1.getSender(), inv1.getEvent(), inv1.getDescription(), inv1.getWarning());
 
+        inv2.setTime(inv1.getTime());
         assertEquals(inv1, inv2);
         assertEquals(inv1.toString(), inv2.toString());
         assertEquals(inv1.hashCode(), inv2.hashCode());

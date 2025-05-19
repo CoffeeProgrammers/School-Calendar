@@ -75,7 +75,7 @@ class CommentControllerTest{
     void createComment() throws Exception {
         when(commentService.create(any(), any(), anyLong())).thenReturn(commentResponse);
 
-        MvcResult mvcResult = mvc.perform(post("/api/events/1/comments/create")
+        MvcResult mvcResult = mvc.perform(post("/api/comments/events/1/create")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"text\": \"This is a comment\"}"))
@@ -94,7 +94,7 @@ class CommentControllerTest{
     void updateComment() throws Exception {
         when(commentService.update(any(), anyLong())).thenReturn(commentResponse);
 
-        MvcResult mvcResult = mvc.perform(put("/api/events/1/comments/update/1")
+        MvcResult mvcResult = mvc.perform(put("/api/comments/update/1")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"text\": \"Updated comment\"}"))
@@ -113,7 +113,7 @@ class CommentControllerTest{
     void deleteComment() throws Exception {
         doNothing().when(commentService).delete(anyLong());
 
-        mvc.perform(delete("/api/events/1/comments/delete/1")
+        mvc.perform(delete("/api/comments/delete/1")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -129,7 +129,7 @@ class CommentControllerTest{
 
         when(commentService.findAllByEventId(anyLong(), anyInt(), anyInt())).thenReturn(paginationResponse);
 
-        MvcResult mvcResult = mvc.perform(get("/api/events/1/comments?page=0&size=10"))
+        MvcResult mvcResult = mvc.perform(get("/api/comments/events/1?page=0&size=10"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
