@@ -9,7 +9,6 @@ import TaskList from "../../common/task/TaskList";
 import TaskService from "../../../services/base/ext/TaskService";
 import {listPanelStyles} from "../../../assets/styles";
 import CreateTaskDialog from "../../common/task/create/CreateTaskDialog";
-import Cookies from "js-cookie";
 import {useError} from "../../../contexts/ErrorContext";
 
 const isDoneSelectOptions = [
@@ -25,7 +24,6 @@ const isPastSelectOptions = [
 ];
 
 const Tasks = () => {
-    const isMeParent = Cookies.get('role') === 'PARENT';
     const [tasks, setTasks] = useState([])
     const {showError} = useError()
 
@@ -120,7 +118,7 @@ const Tasks = () => {
                             isOpenFilterMenu={isOpenFilterMenu}
                             setOpenFilterMenu={setOpenFilterMenu}
                         />
-                        {!isMeParent && <CreateTaskDialog handleCreate={handleCreate}/>}
+                        <CreateTaskDialog handleCreate={handleCreate}/>
                     </Box>
                 </Stack>
 
