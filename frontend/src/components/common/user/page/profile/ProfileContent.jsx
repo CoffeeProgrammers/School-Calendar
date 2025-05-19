@@ -4,7 +4,7 @@ import {Typography} from "@mui/material";
 import UserView from "../UserView";
 import UserService from "../../../../../services/base/ext/UserService";
 
-const ProfileContainer = () => {
+const ProfileContent = () => {
     const [user, setUser] = useState(null);
 
     const [loading, setLoading] = useState(true);
@@ -60,4 +60,4 @@ const ProfileContainer = () => {
     );
 };
 
-export default ProfileContainer;
+export default ProfileContent;

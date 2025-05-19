@@ -4,7 +4,7 @@ import Loading from "../../../layouts/Loading";
 import {Typography} from "@mui/material";
 import XCalendar from "../../../layouts/calendar/XCalendar";
 
-const CalendarContent = () => {
+const CalendarContent = ({userId}) => {
     const [events, setEvents] = useState([])
 
     const [loading, setLoading] = useState(true);
@@ -13,7 +13,8 @@ const CalendarContent = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await EventService.getMyEventsBetween(
+                const response = await EventService.getUserEventsBetween(
+                    userId,
                     '1990-01-01T00:00:00',
                     '2050-01-01T00:00:00'
                 );
@@ -30,7 +31,7 @@ const CalendarContent = () => {
         };
 
         fetchData();
-    }, []);
+    }, [userId]);
 
     if (loading) {
         return <Loading/>;
@@ -40,7 +41,7 @@ const CalendarContent = () => {
         return <Typography color={"error"}>Error: {error.message}</Typography>;
     }
     return (
-        <XCalendar events={events}/>
+        <XCalendar events={events} userId={userId}/>
     );
 };
 

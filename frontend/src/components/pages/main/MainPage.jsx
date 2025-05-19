@@ -3,8 +3,10 @@ import {Box} from "@mui/material";
 import TasksMainPageContent from "../../common/task/TasksMainPageContent";
 import React from "react";
 import CalendarContent from "../../common/event/calendar/CalendarContent";
+import Cookies from "js-cookie";
 
 const MainPage = () => {
+    const userId = Cookies.get('userId');
     return (
         <Page>
             <Box sx={{
@@ -29,7 +31,7 @@ const MainPage = () => {
                 display: "flex",
                 flexDirection: "column"
             }}>
-                <CalendarContent/>
+                <CalendarContent userId={userId}/>
             </Box>
         </Page>
     );

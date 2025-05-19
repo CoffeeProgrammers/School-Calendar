@@ -5,15 +5,54 @@ import PersonIcon from "@mui/icons-material/Person";
 import Typography from "@mui/material/Typography";
 import TextUtils from "../../../../utils/TextUtils";
 import Options from "../../../layouts/Options";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import EmailIcon from "@mui/icons-material/Email";
-import Cookies from "js-cookie";
-import DateUtils from "../../../../utils/DateUtils";
 import UpdatePasswordDialog from "../password/UpdatePasswordDialog";
+import CalendarContent from "../../event/calendar/CalendarContent";
+import Cookies from "js-cookie";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import DateUtils from "../../../../utils/DateUtils";
+import EmailIcon from "@mui/icons-material/Email";
 
 const UserView = ({user, handleUpdate, handleUpdatePassword}) => {
     const isMyUser = user.id.toString() === Cookies.get("userId");
+
+    return (
+        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center',  width: '100%',}}>
+            <Box sx={{
+                width: '100%',
+                border: '1px solid #ddd',
+                padding: '20px',
+                margin: '10px',
+                borderRadius: "10px",
+                display: "flex",
+                flexDirection: "column"
+            }}>
+                <Box sx={{display: 'grid', gridTemplateColumns: '1fr 2.5fr'}}>
+                    <UserDataBox
+                        user={user}
+                        handleUpdate={handleUpdate}
+                        handleUpdatePassword={handleUpdatePassword}
+                        isMyUser={isMyUser}
+                    />
+                    <Box sx={{
+                        border: '1px solid #ddd',
+                        padding: '10px',
+                        borderRadius: "10px",
+                    }}>
+                        <CalendarContent userId={user.id}/>
+                    </Box>
+                </Box>
+
+            </Box>
+        </Box>
+
+
+    )
+}
+export default UserView
+
+const UserDataBox = ({user, handleUpdate, handleUpdatePassword, isMyUser}) => {
     const isTeacher = Cookies.get("role") === "TEACHER";
+
     const optionList = [
         {
             icon: <CalendarMonthIcon color="primary"/>,
@@ -33,67 +72,48 @@ const UserView = ({user, handleUpdate, handleUpdatePassword}) => {
     ]
 
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
+        <Box sx={{padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <Box sx={{
-                width: '100%',
-                border: '1px solid #ddd',
-                padding: '20px',
-                margin: '10px',
-                borderRadius: "10px",
+                height: 210,
+                width: 210,
+                padding: 0,
+                marginBottom: "10px",
+                borderRadius: "100%",
                 display: "flex",
-                flexDirection: "column"
+                justifyContent: "center",
+                alignItems: "center",
+                border: 3,
+                borderColor: 'secondary.main'
             }}>
-                <Box sx={{display: 'grid', gridTemplateColumns: '1fr 2.5fr'}}>
-                    <Box sx={{padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                        <Box sx={{
-                            height: 210,
-                            width: 210,
-                            padding: 0,
-                            marginBottom: "10px",
-                            borderRadius: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            border: 3,
-                            borderColor: 'secondary.main'
-                        }}>
-                            <PersonIcon color="primary" sx={{fontSize: 210, padding: 0, margin: 0}}/>
+                <PersonIcon color="primary" sx={{fontSize: 210, padding: 0, margin: 0}}/>
+            </Box>
+
+            <Box mb={2} sx={{display: 'flex', alignItems: 'center',}}>
+                {(isTeacher || isMyUser) && (
+                    <>
+                        {isMyUser && (
+                            <Box mt={1}>
+                                <UpdatePasswordDialog handleUpdatePassword={handleUpdatePassword}/>
+                            </Box>)}
+                        <Box mt={1}>
+                            <UpdateUserDialog user={user} handleUpdate={handleUpdate}/>
                         </Box>
+                    </>
+                )}
 
-                        <Box mb={2} sx={{display: 'flex', alignItems: 'center',}}>
-                            {(isTeacher || isMyUser) && (
-                                <>
-                                    {isMyUser && (
-                                        <Box mt={1}>
-                                            <UpdatePasswordDialog handleUpdatePassword={handleUpdatePassword}/>
-                                        </Box>)}
-                                    <Box mt={1}>
-                                        <UpdateUserDialog user={user} handleUpdate={handleUpdate}/>
-                                    </Box>
-                                </>
-                            )}
+                <Typography variant="h4">{TextUtils.getUserFullName(user)}</Typography>
+            </Box>
 
-                            <Typography variant="h4">{TextUtils.getUserFullName(user)}</Typography>
-                        </Box>
+            <Box>
+                <Options optionsList={optionList}/>
 
-                        <Box>
-                            <Options optionsList={optionList}/>
-
-                            <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                <Typography mt={2} sx={{fontWeight: "bold", textAlign: 'center'}}>
-                                    Description:
-                                </Typography>
-                                <Typography mt={0.5}>{user.description}</Typography>
-                            </Box>
-                        </Box>
-
-                    </Box>
+                <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                    <Typography mt={2} sx={{fontWeight: "bold", textAlign: 'center'}}>
+                        Description:
+                    </Typography>
+                    <Typography mt={0.5}>{user.description}</Typography>
                 </Box>
             </Box>
         </Box>
-
-
     )
 }
-
-export default UserView

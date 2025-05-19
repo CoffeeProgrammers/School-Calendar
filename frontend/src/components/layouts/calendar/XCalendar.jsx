@@ -6,6 +6,8 @@ import {createViewDay, createViewMonthGrid, createViewWeek} from '@schedule-x/ca
 import {createCalendarControlsPlugin} from '@schedule-x/calendar-controls';
 import CustomToolbar from './CustomToolBar';
 import '../../../assets/css/calendar.css'
+import {Box} from "@mui/material";
+import Cookies from "js-cookie";
 
 const mapEventToCalendarEvent = (event) => ({
     id: event.id,
@@ -14,9 +16,10 @@ const mapEventToCalendarEvent = (event) => ({
     end: event.endDate.replace('T', ' ').slice(0, 16),
 });
 
-const XCalendar = ({events}) => {
+const XCalendar = ({events, userId}) => {
     const navigate = useNavigate();
 
+    const isMyUser = userId.toString() === Cookies.get('userId')
     const [calendarControls] = useState(() => createCalendarControlsPlugin());
     const [selectedDate, setSelectedDate] = useState(null);
 
@@ -28,9 +31,11 @@ const XCalendar = ({events}) => {
         events: calendarEvents,
         plugins: [calendarControls],
         callbacks: {
-            onEventClick: evt => {
-                navigate(`/events/${evt.id}`)
-            },
+            onEventClick: isMyUser
+                ? (evt) => {
+                    navigate(`/events/${evt.id}`);
+                }
+                : undefined,
             onDateChange: ({ date }) => {
                 setSelectedDate(date);
             }
@@ -85,7 +90,7 @@ const XCalendar = ({events}) => {
     }, [calendar, calendarControls]);
 
     return (
-        <>
+        <Box>
             <CustomToolbar
                 goToBack={goToPrevious}
                 goToToday={goToToday}
@@ -100,7 +105,7 @@ const XCalendar = ({events}) => {
                     <ScheduleXCalendar calendarApp={calendar} />
                 </div>
             </div>
-        </>
+        </Box>
     );
 };
 

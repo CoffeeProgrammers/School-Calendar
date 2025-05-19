@@ -3,14 +3,15 @@ import {Box, Button, ButtonGroup, Typography} from '@mui/material';
 import dayjs from 'dayjs';
 import DateIconPicker from "./DateIconPicker";
 
-const CustomToolbar = ({
-                           goToBack,
-                           goToNext,
-                           goToToday,
-                           handleViewChange,
-                           date,
-                           onDateChange,
-                       }) => {
+const CustomToolbar = (
+    {
+        goToBack,
+        goToNext,
+        goToToday,
+        handleViewChange,
+        date,
+        onDateChange,
+    }) => {
     const pickerValue = date ? dayjs(date) : null;
 
     return (
