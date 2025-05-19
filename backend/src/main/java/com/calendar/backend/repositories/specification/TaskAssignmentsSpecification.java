@@ -82,7 +82,7 @@ public class TaskAssignmentsSpecification {
 
     public static Specification<TaskAssignment> DeadlineToday() {
         LocalDate today = LocalDate.now(ZoneId.of("Europe/Kiev"));
-        LocalDateTime startOfDay = today.atStartOfDay();
+        LocalDateTime startOfDay = today.atTime(0, 0, 0);
         LocalDateTime endOfDay = today.atTime(23, 59, 59);
 
         return (root, query, cb) ->

@@ -94,12 +94,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public LongResponse countAllCommentsByCreatorId(Authentication authentication) {
-        User user = userService.findUserByAuth(authentication);
-        log.info("Service: Counting all comments for creator with id {}", user.getId());
+    public LongResponse countAllCommentsByCreatorId(long userId) {
+        log.info("Service: Counting all comments for creator with id {}", userId);
 
         LongResponse longResponse = new LongResponse();
-        longResponse.setCount(commentRepository.countAllByCreator_Id(user.getId()));
+        longResponse.setCount(commentRepository.countAllByCreator_Id(userId));
 
         return longResponse;
     }

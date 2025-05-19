@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/events/{event_id}/comments")
+@RequestMapping("/api/comments")
 @RequiredArgsConstructor
 public class CommentController {
 
@@ -23,7 +23,7 @@ public class CommentController {
 
 
     @PreAuthorize("@userSecurity.checkUserOfEvent(#auth, #eventId)")
-    @PostMapping("/create")
+    @PostMapping("/events/{event_id}/create")
     @ResponseStatus(HttpStatus.CREATED)
     public CommentResponse createComment(
             @PathVariable(value = "event_id") Long eventId,
@@ -52,7 +52,7 @@ public class CommentController {
         commentService.delete(id);
     }
 
-    @GetMapping
+    @GetMapping("/events/{event_id}")
     @ResponseStatus(HttpStatus.OK)
     public PaginationListResponse<CommentResponse> getAllComments(
             @PathVariable(value = "event_id") Long eventId,
@@ -62,10 +62,10 @@ public class CommentController {
         return commentService.findAllByEventId(eventId, page, size);
     }
 
-    @GetMapping("/getMyCount")
+    @GetMapping("/getCount/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public LongResponse getMyCommentsCount(Authentication auth) {
+    public LongResponse geCountOfUsersComments(@PathVariable long userId) {
         log.info("Controller: Get my comments count");
-        return commentService.countAllCommentsByCreatorId(auth);
+        return commentService.countAllCommentsByCreatorId(userId);
     }
 }

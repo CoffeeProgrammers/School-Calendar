@@ -148,7 +148,7 @@ public class EventController {
 
     @GetMapping("/count/user/{user_id}")
     @ResponseStatus(HttpStatus.OK)
-    public LongResponse getEventsByUserAndPast(
+    public LongResponse getCountOfEventsByUserAndPast(
             @PathVariable(value = "user_id") Long userId) {
         log.info("Controller: Get events count by user id: {}", userId);
         return eventService.countAllEventsByUserAndPast(userId);
