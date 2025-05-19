@@ -1,4 +1,3 @@
-// src/services/InvitationService.js
 import BaseService from "../BaseService";
 
 class InvitationService extends BaseService {

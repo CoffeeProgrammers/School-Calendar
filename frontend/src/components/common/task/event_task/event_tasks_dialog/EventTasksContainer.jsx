@@ -3,8 +3,10 @@ import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import EventTasksDialog from "./EventTasksDialog";
 import TaskService from "../../../../../services/base/ext/TaskService";
+import {useError} from "../../../../../contexts/ErrorContext";
 
 const EventTasksContainer = ({event}) => {
+    const {showError} = useError()
     const [tasks, setTasks] = useState([])
 
     const [page, setPage] = useState(1);
@@ -38,7 +40,7 @@ const EventTasksContainer = ({event}) => {
             await TaskService.toggleTaskDone(taskId);
         } catch (error) {
             console.error("Failed to toggle task:", error);
-            setError(error);
+            showError(error);
         }
         
     }
@@ -49,7 +51,7 @@ const EventTasksContainer = ({event}) => {
             setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
         } catch (error) {
             console.error("Failed to remove task:", error);
-            setError(error);
+            showError(error);
         }
     };
 
@@ -61,8 +63,8 @@ const EventTasksContainer = ({event}) => {
             console.log(createdTask)
             setTasks(prevTasks => [...prevTasks, createdTask]);
         } catch (error) {
+            showError(error);
             console.error("Failed to add task:", error);
-            setError(error);
         }
     };
     if (error) {

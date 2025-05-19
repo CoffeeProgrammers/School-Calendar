@@ -7,8 +7,10 @@ import EventService from "../../../../../services/base/ext/EventService";
 import Cookies from "js-cookie";
 import TaskService from "../../../../../services/base/ext/TaskService";
 import CommentService from "../../../../../services/base/ext/CommentService";
+import {useError} from "../../../../../contexts/ErrorContext";
 
 const ProfileContent = () => {
+    const {showError} = useError();
     const myId = Cookies.get('userId');
     const [user, setUser] = useState(null);
 
@@ -47,7 +49,8 @@ const ProfileContent = () => {
             const response = await UserService.updateMyUser(updatedUser);
             setUser(response);
         } catch (error) {
-            setError(error);
+            showError(error);
+
         }
     }
     
@@ -55,7 +58,7 @@ const ProfileContent = () => {
         try {
             await UserService.updateMyPassword(password, newPassword);
         } catch (error) {
-            setError(error);
+            showError(error);
         }
         
     }

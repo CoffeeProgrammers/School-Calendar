@@ -6,9 +6,12 @@ import {Stack} from "@mui/material";
 import Box from "@mui/material/Box";
 import PaginationBox from "../../../../layouts/lists/PaginationBox";
 import SentInvitationListBox from "./SentInvitationListBox";
+import {useError} from "../../../../../contexts/ErrorContext";
 
 
 const SentInvitationsList = () => {
+    const {showError} = useError()
+
     const [invitations, setInvitations] = useState([])
 
     const [page, setPage] = useState(1);
@@ -50,8 +53,8 @@ const SentInvitationsList = () => {
             );
 
         } catch (error) {
+            showError(error);
             console.error("Error updating invitation:", error);
-            setError(error);
         }
     };
 
@@ -65,8 +68,8 @@ const SentInvitationsList = () => {
             );
 
         } catch (error) {
+            showError(error);
             console.error("Error deleting invitation:", error);
-            setError(error);
         }
     };
 

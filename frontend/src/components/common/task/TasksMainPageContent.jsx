@@ -8,8 +8,10 @@ import {useNavigate} from "react-router-dom";
 import TaskCheckbox from "./TaskCheckbox";
 import Checkbox from "@mui/material/Checkbox";
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import {useError} from "../../../contexts/ErrorContext";
 
 const TasksMainPageContent = () => {
+    const {showError} = useError()
     const [tasks, setTasks] = useState([])
 
     const [page, setPage] = useState(1);
@@ -55,7 +57,8 @@ const TasksMainPageContent = () => {
             await TaskService.toggleTaskDone(taskId);
         } catch (error) {
             console.error("Failed to toggle task:", error);
-            setError(error);
+            showError(error);
+
         }
 
     }

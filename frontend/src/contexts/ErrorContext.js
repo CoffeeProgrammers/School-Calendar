@@ -9,8 +9,22 @@ export const ErrorProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     const showError = useCallback((errorObj) => {
-        const messages = errorObj?.response?.data?.messages || errorObj?.messages.join("\n") || "Unknown error";
-        setError(messages);
+        if(errorObj){
+            if(errorObj.response){
+                if(errorObj.response.data){
+                    if(errorObj?.response?.data?.messages){
+                        setError(errorObj?.response?.data?.messages.join(". "))
+                        return
+                    }
+                }
+            }else {
+                if(errorObj.message){
+                    setError(errorObj.message)
+                    return;
+                }
+            }
+        }
+        setError("Unknown error")
     }, []);
 
     const clearError = () => setError(null);
@@ -19,7 +33,7 @@ export const ErrorProvider = ({ children }) => {
         <ErrorContext.Provider value={{ showError }}>
             {children}
             {error && (
-                <SnackbarAlert  message={error} onClose={clearError} />
+                <SnackbarAlert message={error} onClose={clearError} />
             )}
         </ErrorContext.Provider>
     );

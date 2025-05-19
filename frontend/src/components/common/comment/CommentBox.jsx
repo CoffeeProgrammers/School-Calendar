@@ -5,6 +5,8 @@ import DateUtils from "../../../utils/DateUtils";
 import CommentActionsMenu from "./CommentActionsMenu";
 import TextUtils from "../../../utils/TextUtils";
 import Cookies from "js-cookie";
+import {Link as RouterLink} from "react-router-dom";
+import Link from "@mui/material/Link";
 
 const CommentBox = ({event, comment, handleDeleteComment, handleEditComment}) => {
     const formattedDate = DateUtils.formatDate(comment.date)
@@ -33,7 +35,11 @@ const CommentBox = ({event, comment, handleDeleteComment, handleEditComment}) =>
                 avatar={
                     <AccountCircleIcon sx={{fontSize: "40px"}} color="secondary"/>
                 }
-                title={TextUtils.getUserFullName(comment.creator)}
+                title={
+                    <Link component={RouterLink} to={`/users/${comment.creator.id}`}>
+                        {TextUtils.getUserFullName(comment.creator)}
+                    </Link>
+                }
                 subheader={formattedDate}
             />
 

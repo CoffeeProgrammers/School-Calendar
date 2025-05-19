@@ -10,8 +10,11 @@ import EventListBox from "../../common/event/list/EventListBox";
 import {useNavigate} from "react-router-dom";
 import {eventTypes} from "../../../utils/constants";
 import CreateEventDialog from "../../common/event/create/CreateEventDialog";
+import {useError} from "../../../contexts/ErrorContext";
 
 const Events = () => {
+    const {showError} = useError()
+
     const navigate = useNavigate();
 
     const [events, setEvents] = useState([])
@@ -74,7 +77,7 @@ const Events = () => {
             setEndDateFilter('');
             setEventType('');
         } catch (error) {
-            setError(error);
+            showError(error);
         } finally {
             setLoading(false);
         }

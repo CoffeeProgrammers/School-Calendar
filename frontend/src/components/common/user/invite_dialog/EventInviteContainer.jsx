@@ -4,9 +4,12 @@ import Loading from "../../../layouts/Loading";
 import EventInviteDialog from "./EventInviteDialog";
 import UserService from "../../../../services/base/ext/UserService";
 import InvitationService from "../../../../services/base/ext/InvitationService";
+import {useError} from "../../../../contexts/ErrorContext";
 
 
 const EventInviteContainer = ({eventId}) => {
+    const {showError} = useError()
+
     const [users, setUsers] = useState([])
 
     const [searchFirstName, setSearchFirstName] = useState('');
@@ -56,6 +59,7 @@ const EventInviteContainer = ({eventId}) => {
             await InvitationService.createInvitation(eventId, invitedUser.id, {description: text});
             setUsers((prevUsers) => prevUsers.filter(user => user.id !== invitedUser.id));
         } catch (error) {
+            showError(error);
         }
     }
 

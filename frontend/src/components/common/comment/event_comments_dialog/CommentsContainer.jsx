@@ -3,8 +3,10 @@ import {useEffect, useState} from 'react';
 import Typography from '@mui/material/Typography';
 import CommentService from "../../../../services/base/ext/CommentService";
 import CommentsDialog from "./CommentsDialog";
+import {useError} from "../../../../contexts/ErrorContext";
 
 const CommentsContainer = ({event}) => {
+    const {showError} = useError()
 
     const [comments, setComments] = useState([])
 
@@ -36,13 +38,14 @@ const CommentsContainer = ({event}) => {
             await CommentService.deleteComment(event.id, deletedId);
             setComments((prev) => prev.filter(comment => comment.id !== deletedId));
         } catch (error) {
+            showError(error)
             console.error("Error deleting comment:", error);
         }
     };
 
     const handleEditComment = async (commentId, data) => {
         try {
-            const updatedComment = await CommentService.updateComment(event.id, commentId, data);
+            const updatedComment = await CommentService.updateComment(commentId, data);
             setComments((prev) =>
                 prev.map((comment) =>
                     comment.id === commentId
@@ -55,6 +58,7 @@ const CommentsContainer = ({event}) => {
                 )
             );
         } catch (error) {
+            showError(error)
             console.error("Error updating comment:", error);
         }
     };
@@ -64,6 +68,7 @@ const CommentsContainer = ({event}) => {
             const newComment = await CommentService.createComment(event.id, data);
             setComments((prev) => [newComment, ...prev]);
         } catch (error) {
+            showError(error)
             console.error("Error creating comment:", error);
         }
     };
