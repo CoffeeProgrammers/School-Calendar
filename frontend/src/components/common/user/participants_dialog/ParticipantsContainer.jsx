@@ -11,14 +11,7 @@ import Search from "../../../layouts/lists/Search";
 import OpenFiltersButton from "../../../layouts/lists/OpenFiltersButton";
 import FiltersGroup from "../../../layouts/lists/FiltersGroup";
 import ParticipantBox from "./ParticipantBox";
-
-const roleTypes = [
-    {value: '', label: <em>None</em>},
-    {value: 'TEACHER', label: 'Teacher'},
-    {value: 'STUDENT', label: 'Student'},
-    {value: 'PARENT', label: 'Parents'},
-
-];
+import {roleTypes} from "../../../../utils/constants";
 
 const ParticipantsContainer = ({event, isCreator}) => {
     const [users, setUsers] = useState([])
@@ -34,6 +27,10 @@ const ParticipantsContainer = ({event, isCreator}) => {
     const [pagesCount, setPagesCount] = useState(1)
 
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        setPage(1);
+    }, [searchFirstName, searchLastName, searchEmail, role]);
 
     useEffect(() => {
         const fetchData = async () => {

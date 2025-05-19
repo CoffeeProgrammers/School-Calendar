@@ -42,6 +42,10 @@ const Tasks = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        setPage(1);
+    }, [searchName, deadline, isDone, isPast]);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 console.log("isDone" + isDone)
@@ -68,9 +72,7 @@ const Tasks = () => {
         fetchData();
     }, [searchName, deadline, isDone, page, isPast]);
 
-    useEffect(() => {
-        setPage(1);
-    }, [searchName, deadline, isDone, isPast]);
+
 
     const handleCreate = async (eventId, newTask) => {
         try {

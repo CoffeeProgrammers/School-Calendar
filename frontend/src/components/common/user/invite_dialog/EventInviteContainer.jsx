@@ -23,6 +23,10 @@ const EventInviteContainer = ({eventId}) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        setPage(1);
+    }, [searchFirstName, searchLastName, searchEmail, role]);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await UserService.getUsersByNotEvent(
@@ -49,20 +53,9 @@ const EventInviteContainer = ({eventId}) => {
 
     const handleInvite = async (invitedUser, text) => {
         try {
-            console.log(
-                "inviting user: ",
-                invitedUser,
-                "to event: ",
-                eventId,
-                "with text: ",
-                text)
-            const response = await InvitationService.createInvitation(eventId, invitedUser.id, {description: text});
-            console.log(
-                "invitation response: ",
-                response)
+            await InvitationService.createInvitation(eventId, invitedUser.id, {description: text});
             setUsers((prevUsers) => prevUsers.filter(user => user.id !== invitedUser.id));
         } catch (error) {
-            console.error("Error inviting user: ", error);
         }
     }
 

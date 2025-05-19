@@ -28,6 +28,10 @@ const Users = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        setPage(1);
+    }, [searchFirstName, searchLastName, searchEmail, role]);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await UserService.getAllUsers(
@@ -52,10 +56,6 @@ const Users = () => {
 
         fetchData();
     }, [searchFirstName, role, page, searchEmail, searchLastName]);
-
-    useEffect(() => {
-        setPage(1);
-    }, [searchFirstName, searchLastName, searchEmail, role]);
 
     if (loading) {
         return <Loading/>;

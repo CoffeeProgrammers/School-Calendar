@@ -21,15 +21,19 @@ const EventTasksAddDialogContainer = ({handleAddTask}) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        setPage(1);
+    }, [searchName, deadline, isDone, isPast]);
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await TaskService.getMyTasksWithoutEvent(
                     page - 1,
                     15,
-                    // searchName,
-                    // deadline,
-                    // isDone,
-                    // isPast
+                    searchName,
+                    deadline,
+                    isDone,
+                    isPast
                 );
                 console.log("tasks:")
                 console.log(response)
