@@ -132,7 +132,7 @@ class EventControllerTest {
         MvcResult mvcResult = mvc.perform(put("/api/events/update/1")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\": \"Updated Event\", \"description\": \"Updated Description\"}"))
+                        .content("{\"name\": \"Updated Event\", \"description\": \"Updated Description\", \"content\": \"Content\", \"meetingType\": \"ONLINE\", \"place\": \"School\"}"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
