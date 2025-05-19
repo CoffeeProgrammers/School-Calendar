@@ -27,6 +27,26 @@ const theme = createTheme({
                 },
             },
         },
+        MuiLink: {
+            styleOverrides: {
+                root: {
+                    textDecoration: 'none',
+                    color: '#125598',
+                    fontWeight: 500,
+                    transition: 'color 0.2s ease',
+                    '&:hover': {
+                        textDecoration: 'none',
+                        color: '#1976d2',
+                    },
+                    '&:active': {
+                        color: '#0d3c61',
+                    }
+                },
+            },
+            defaultProps: {
+                underline: 'hover',
+            },
+        },
     },
 
 });

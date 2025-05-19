@@ -8,6 +8,8 @@ import SubjectIcon from "@mui/icons-material/Subject";
 import DateUtils from "../../../../../utils/DateUtils";
 import {Card, CardContent} from "@mui/material";
 import SentInvitationActionMenu from "../../action_menu/SentInvitationActionMenu";
+import {Link as RouterLink} from 'react-router-dom';
+import Link from '@mui/material/Link';
 
 const SentInvitationListBox = ({invitation, handleEditInvitation, handleDeleteInvitation}) => {
     return (
@@ -25,15 +27,29 @@ const SentInvitationListBox = ({invitation, handleEditInvitation, handleDeleteIn
                         <Box>
                             <OutgoingMailIcon sx={{fontSize: 30}} color="secondary"/>
                         </Box>
-                        <Typography mt={0.3} variant='body1'
-                                    fontWeight='bold'>to {TextUtils.getUserFullName(invitation.receiver)}</Typography>
+                        <Typography mt={0.3} variant='body1' fontWeight='bold'>
+                            to
+                            <Link
+                                component={RouterLink}
+                                to={`/users/${invitation.receiver.id}`}
+                            >
+                                <b>{" " + TextUtils.getUserFullName(invitation.receiver)}</b>
+                            </Link>
+
+                        </Typography>
                     </Box>
 
                     <Box mt={1} sx={{display: 'flex', alignItems: 'top', gap: 0.5}}>
                         <Box mt={0.2}>
                             <SpaceDashboard fontSize="small" color="secondary"/>
                         </Box>
-                        <Typography>{invitation.event.name}</Typography>
+                        <Typography>
+                            <Link
+                                component={RouterLink}
+                                to={`/events/${invitation.event.id}`}>
+                                {invitation.event.name}
+                            </Link>
+                        </Typography>
                     </Box>
                     {invitation.description && (
                         <>
