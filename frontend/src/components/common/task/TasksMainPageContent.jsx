@@ -93,25 +93,29 @@ const TasksMainPageContent = () => {
 
 export default TasksMainPageContent;
 
-const TasksList = ({tasks, handleToggleTask}) => {
+const TasksList = ({ tasks, handleToggleTask }) => {
     const navigate = useNavigate();
 
     const columns = [
         {
             id: 'checkbox',
-            label: <Checkbox/>,
-            render: task => <TaskCheckbox
-                task={task}
-                handleToggleTask={handleToggleTask}
-                sx={{borderRadius: '5px', width: '20px', height: '20px'}}
-            />
+            label: <Checkbox />,
+            width: '15px',
+            render: task => (
+                <TaskCheckbox
+                    task={task}
+                    handleToggleTask={handleToggleTask}
+                    sx={{ borderRadius: '5px', width: '20px', height: '20px' }}
+                />
+            ),
         },
         {
             id: 'name',
-            label: "Name",
-            render: task => task.name
+            label: 'Name',
+            render: task => <Typography variant={'body2'}>{task.name}</Typography>,
         },
     ];
+
     return (
         <TableContainer>
             <Table>
@@ -120,12 +124,18 @@ const TasksList = ({tasks, handleToggleTask}) => {
                         <TableRow
                             key={task.id}
                             hover
-                            sx={{cursor: 'pointer', height: "36px"}}
+                            sx={{ cursor: 'pointer', height: '36px' }}
                             onClick={() => navigate(`/tasks/${task.id}`)}
                         >
                             {columns.map(col => (
-                                <TableCell key={col.id} align={col.align || "left"}
-                                           sx={{padding: "8px"}}>
+                                <TableCell
+                                    key={col.id}
+                                    align={col.align || 'left'}
+                                    sx={{
+                                        padding: '8px',
+                                        ...(col.width && { width: col.width, maxWidth: col.width, minWidth: col.width }),
+                                    }}
+                                >
                                     {col.render(task, index)}
                                 </TableCell>
                             ))}
@@ -134,5 +144,5 @@ const TasksList = ({tasks, handleToggleTask}) => {
                 </TableBody>
             </Table>
         </TableContainer>
-    )
-}
+    );
+};

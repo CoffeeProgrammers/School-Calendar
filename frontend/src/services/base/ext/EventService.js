@@ -62,6 +62,11 @@ class EventService extends BaseService {
 
         return this.get("/getCreatorIsMe", { params });
     }
+
+    getPastEventCountByUser(userId) {
+        return this.get(`/count/user/${userId}`);
+    }
+
 }
 
 export default new EventService();

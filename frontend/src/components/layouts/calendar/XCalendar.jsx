@@ -40,7 +40,7 @@ const XCalendar = ({events, userId}) => {
                 setSelectedDate(date);
             }
         },
-
+        defaultView: 'month-grid'
     });
 
     const handleDateChange = (newDate) => {
