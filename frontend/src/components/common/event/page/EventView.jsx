@@ -7,7 +7,6 @@ import LeaveFromEventDialog from "../LeaveFromEventDialog";
 
 const EventView = ({event, handleUpdate, handleDelete, handleUserLeaveFromEvent}) => {
     const isCreator = event.creator.id.toString() === Cookies.get('userId');
-    console.log(`Is event creator: ` + isCreator)
     return (
         <Box sx={{width: "850px", display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
             {isCreator ? (
@@ -24,6 +23,7 @@ const EventView = ({event, handleUpdate, handleDelete, handleUserLeaveFromEvent}
 
             }
             <EventPageMainBox event={event} isCreator={isCreator}/>
+
         </Box>
     );
 };

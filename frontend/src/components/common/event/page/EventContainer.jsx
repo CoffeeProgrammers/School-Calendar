@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import Loading from "../../../layouts/Loading";
 import {Typography} from "@mui/material";
 import EventView from "./EventView";
 import EventService from "../../../../services/base/ext/EventService";
 import {useNavigate, useParams} from "react-router-dom";
 import Cookies from "js-cookie";
+import Loading from "../../../layouts/Loading";
 
 const EventContainer = () => {
     const {id} = useParams();
+    console.log(id)
     const navigate = useNavigate();
     const myId = Cookies.get('userId');
 
@@ -21,6 +22,7 @@ const EventContainer = () => {
             try {
                 const response = await EventService.getEvent(id);
                 setEvent(response);
+
             } catch (error) {
                 setError(error);
             } finally {
@@ -29,7 +31,7 @@ const EventContainer = () => {
         };
 
         fetchData();
-    }, []);
+    }, [id]);
 
 
     const handleUpdate = async (updatedEvent) => {

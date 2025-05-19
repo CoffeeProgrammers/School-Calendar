@@ -32,7 +32,7 @@ const CreateTaskDialog = ({handleCreate}) => {
     };
 
     const handleSave = () => {
-        handleCreate(event.id, {
+        handleCreate(event ? event.id : 0, {
             name: name,
             deadline: deadline,
             content: content
