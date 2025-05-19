@@ -11,7 +11,6 @@ const CommentActionsMenu = ({handleDeleteComment, handleEditComment, commentCont
     const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
     const [openEditDialog, setOpenEditDialog] = useState(false)
 
-
     const handleOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -30,9 +29,10 @@ const CommentActionsMenu = ({handleDeleteComment, handleEditComment, commentCont
         handleClose();
     };
 
-    const handleConfirmDeleteDialog = async () => {
-        handleDeleteComment()
-        handleCloseConfirmDeleteDialog()
+    const handleConfirmDeleteDialog = () => {
+            handleDeleteComment()
+            handleCloseConfirmDeleteDialog()
+
     };
 
     const handleCloseConfirmDeleteDialog = () => {
@@ -70,7 +70,7 @@ const CommentActionsMenu = ({handleDeleteComment, handleEditComment, commentCont
                 }}
             >
                 <MenuItem onClick={handleOptionEdit}>Edit</MenuItem>
-                <Divider />
+                <Divider/>
                 <MenuItem onClick={handleOptionDelete}>Delete</MenuItem>
             </Menu>
 

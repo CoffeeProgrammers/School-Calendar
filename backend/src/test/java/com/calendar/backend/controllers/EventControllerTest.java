@@ -15,6 +15,7 @@ import com.calendar.backend.models.enums.MeetingType;
 import com.calendar.backend.services.impl.EventServiceImpl;
 import com.calendar.backend.services.impl.TaskServicesImpl;
 import com.calendar.backend.services.impl.UserServiceImpl;
+import com.calendar.backend.services.inter.TaskAssignmentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,9 @@ class EventControllerTest {
 
     @MockitoBean
     private TaskServicesImpl taskService;
+
+    @MockitoBean
+    private TaskAssignmentService taskAssignmentService;
 
     @MockitoBean
     private RefreshTokenServiceImpl refreshTokenService;

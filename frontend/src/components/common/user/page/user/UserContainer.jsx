@@ -7,8 +7,10 @@ import {useParams} from "react-router-dom";
 import EventService from "../../../../../services/base/ext/EventService";
 import TaskService from "../../../../../services/base/ext/TaskService";
 import CommentService from "../../../../../services/base/ext/CommentService";
+import {useError} from "../../../../../contexts/ErrorContext";
 
 const UserContainer = () => {
+    const {showError} = useError();
     const {id} = useParams();
 
     const [user, setUser] = useState(null);
@@ -47,7 +49,7 @@ const UserContainer = () => {
             const response = await UserService.updateUser(user.id, data);
             setUser(response);
         } catch (error) {
-            setError(error);
+            showError(error);
         }
     }
 

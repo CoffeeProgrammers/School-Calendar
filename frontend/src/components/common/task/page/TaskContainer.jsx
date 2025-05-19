@@ -4,9 +4,12 @@ import Loading from "../../../layouts/Loading";
 import {Typography} from "@mui/material";
 import TaskView from "./TaskView";
 import TaskService from "../../../../services/base/ext/TaskService";
+import {useError} from "../../../../contexts/ErrorContext";
 
 
 const TaskContainer = () => {
+    const {showError} = useError()
+
     const {id} = useParams();
 
     const navigate = useNavigate();
@@ -41,33 +44,30 @@ const TaskContainer = () => {
             console.log("task is deleted");
             navigate('/tasks');
         } catch (error) {
+            showError(error);
             console.error("Error deleting task:", error);
         }
     }
 
     const handleUpdate = async (data) => {
         try {
-            console.log(
-                task
-            )
             const updatedTask = await TaskService.updateTask(task.id, data);
-            console.log(
-                task
-            )
-            console.log("task is updated");
             setTask(updatedTask);
         } catch (error) {
-            console.error("Error updating task:", error);
+            showError(error);
         }
+
     }
     const handleToggleTask = async () => {
         try {
             await TaskService.toggleTaskDone(task.id);
             console.log("toggle task");
         } catch (error) {
+            showError(error);
             console.error("Error toggling task:", error);
         }
     }
+
     if (loading) {
         return <Loading/>;
     }

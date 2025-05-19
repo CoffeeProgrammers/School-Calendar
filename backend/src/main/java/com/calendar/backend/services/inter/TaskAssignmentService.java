@@ -22,4 +22,6 @@ public interface TaskAssignmentService {
     void unassignTasksFromEventUsers(Long id);
     void unassignTasksFromUser(Long userId);
     void unsignAllFromTask(Long taskId);
+
+    void unassignTasksFromUserByEventId(long eventId, long userId);
 }

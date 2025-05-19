@@ -26,8 +26,10 @@ import TagIcon from '@mui/icons-material/Tag';
 import {listPanelStyles} from "../../../assets/styles";
 import CreateUserDialog from "../user/create/CreateUserDialog";
 import TextUtils from "../../../utils/TextUtils";
+import {useError} from "../../../contexts/ErrorContext";
 
 const TeacherPanelContent = () => {
+    const {showError} = useError()
     const navigate = useNavigate();
 
     const [users, setUsers] = useState([])
@@ -82,7 +84,7 @@ const TeacherPanelContent = () => {
             setUsers(prev => prev.filter(user => user.id !== userId));
         } catch (error) {
             console.error("Failed to delete user:", error);
-            setError(error);
+            showError(error);
         }
     };
 
@@ -92,7 +94,7 @@ const TeacherPanelContent = () => {
             setUsers(prev => [...prev, response]);
         } catch (error) {
             console.error("Failed to create user:", error);
-            setError(error);
+            showError(error);
         }
     };
 

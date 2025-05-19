@@ -4,6 +4,7 @@ import com.calendar.backend.dto.event.*;
 import com.calendar.backend.dto.wrapper.LongResponse;
 import com.calendar.backend.dto.wrapper.PaginationListResponse;
 import com.calendar.backend.services.inter.EventService;
+import com.calendar.backend.services.inter.TaskAssignmentService;
 import com.calendar.backend.services.inter.TaskService;
 import com.calendar.backend.services.inter.UserService;
 import jakarta.validation.Valid;
@@ -27,6 +28,7 @@ public class EventController {
     private final EventService eventService;
     private final UserService userService;
     private final TaskService taskService;
+    private final TaskAssignmentService taskAssignmentService;
 
 
     @PreAuthorize("hasAnyRole('TEACHER', 'STUDENT')")
@@ -62,9 +64,10 @@ public class EventController {
     @PreAuthorize("hasRole('TEACHER') or @userSecurity.checkCreatorOfEvent(#auth, #id)")
     @PutMapping("/delete/{id}/user/{user_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUserById(@PathVariable Long id, @PathVariable Long user_id, Authentication auth) {
-        log.info("Controller: Delete user with id: {} from event with id: {}", user_id, id);
-        eventService.deleteUserById(id, user_id);
+    public void deleteUserById(@PathVariable Long id, @PathVariable(value = "user_id") Long userId, Authentication auth) {
+        log.info("Controller: Delete user with id: {} from event with id: {}", userId, id);
+        eventService.deleteUserById(id, userId);
+        taskAssignmentService.unassignTasksFromUserByEventId(id, userId);
     }
 
 

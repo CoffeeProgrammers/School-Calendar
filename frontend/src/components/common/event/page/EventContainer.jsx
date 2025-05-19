@@ -5,10 +5,12 @@ import EventService from "../../../../services/base/ext/EventService";
 import {useNavigate, useParams} from "react-router-dom";
 import Cookies from "js-cookie";
 import Loading from "../../../layouts/Loading";
+import {useError} from "../../../../contexts/ErrorContext";
 
 const EventContainer = () => {
     const {id} = useParams();
-    console.log(id)
+    const {showError} = useError()
+
     const navigate = useNavigate();
     const myId = Cookies.get('userId');
 
@@ -41,7 +43,7 @@ const EventContainer = () => {
             const response = await EventService.updateEvent(id, updatedEvent);
             setEvent(response);
         } catch (error) {
-            setError(error);
+            showError(error)
         } finally {
             setLoading(false);
         }
@@ -54,7 +56,7 @@ const EventContainer = () => {
             await EventService.deleteEvent(id);
             navigate('/events');
         } catch (error) {
-            setError(error);
+            showError(error)
         } finally {
             setLoading(false);
         }
@@ -67,7 +69,7 @@ const EventContainer = () => {
             await EventService.deleteUserFromEvent(id, myId);
             navigate('/events');
         } catch (error) {
-            setError(error);
+            showError(error)
         } finally {
             setLoading(false);
         }

@@ -3,20 +3,7 @@ import Cookies from 'js-cookie';
 
 const API_URL = 'http://localhost:8081/api/'
 
-const apiClient = axios.create({
-    baseURL: API_URL,
-});
-
 class AuthService {
-    static async handleRequest(request) {
-        try {
-            const response = await request();
-            return response.data;
-        } catch (error) {
-            console.error('Error:', error);
-            throw error;
-        }
-    }
 
     static async login(email, password) {
         try {

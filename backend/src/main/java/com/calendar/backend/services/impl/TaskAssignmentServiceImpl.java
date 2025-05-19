@@ -253,4 +253,13 @@ public class TaskAssignmentServiceImpl implements TaskAssignmentService {
         response.setContent(taskListResponses);
         return response;
     }
+
+    @Transactional
+    @Override
+    public void unassignTasksFromUserByEventId(long eventId, long userId) {
+        List<Task> eventTasks = taskService.findAllByEventIdForServices(eventId);
+        for(Task task : eventTasks) {
+            taskAssignmentRepository.deleteByTask_IdAndUser_Id(task.getId(), userId);
+        }
+    }
 }

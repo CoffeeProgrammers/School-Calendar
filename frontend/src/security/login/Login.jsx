@@ -4,8 +4,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import AuthService from "../../services/auth/AuthService";
 import './../../assets/css/login.css'
+import {useError} from "../../contexts/ErrorContext";
 
 const Login = () => {
+    const {showError} = useError()
     const [email, setEmail] = useState('john.doe@example.com');
     const [password, setPassword] = useState('passWord1');
 
@@ -20,12 +22,7 @@ const Login = () => {
             await AuthService.login(email, password);
             navigate("/");
         } catch (error) {
-            if (error.response && error.response.data.messages && Array.isArray(error.response.data.messages)) {
-                const errorMessages = error.response.data.messages;
-                setErrorMessages(errorMessages);
-            } else {
-                console.error("Error login:", error);
-            }
+            showError(error);
         }
 
     };
