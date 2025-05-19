@@ -1,5 +1,5 @@
 import {BrowserRouter, Route, Routes, useNavigate} from 'react-router-dom';
-import {ThemeProvider} from '@mui/material';
+import {ThemeProvider, Typography} from '@mui/material';
 import {LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 
@@ -24,6 +24,7 @@ import {useEffect} from "react";
 import './index.css';
 import PrivateRoute from "./security/PrivateRoute";
 import {ErrorProvider} from "./contexts/ErrorContext";
+import Cookies from "js-cookie";
 
 const InitNavigation = ({ children }) => {
     const navigate = useNavigate();
@@ -36,6 +37,9 @@ const InitNavigation = ({ children }) => {
 };
 
 function App() {
+
+    const role = Cookies.get('role');
+
     const routes = [
         {path: "", element: <MainPage/>},
         {path: "/events", element: <Page><Events/></Page>},
@@ -47,7 +51,9 @@ function App() {
         {path: "/tasks/:id", element: <TaskPage/>},
         {path: "/notifications", element: <Page><NotificationsPage/></Page>},
         {path: "/invitations", element: <InvitationsPage/>},
-        {path: "/teacherPanel", element: <TeacherPanelPage/>}
+        {path: "*", element: <Typography p={"50px"} variant={"h4"} color={'error'}>404 page found </Typography>},
+        role === 'TEACHER' && {path: "/teacherPanel", element: <TeacherPanelPage/>}
+
     ];
 
     return (

@@ -8,6 +8,7 @@ import Toolbar from "@mui/material/Toolbar";
 import NotificationsButton from "./buttons/NotificationsButton";
 import AccountMenu from "./buttons/AccountMenu";
 import InvitationsButton from "./buttons/InvitationsButton";
+import Cookies from "js-cookie";
 
 const appBarStyles = {
     width: '100%',
@@ -39,7 +40,7 @@ const calendarTypographyStyles = {
 
 
 const AppBar = () => {
-    const role = "TEACHER" //TODO
+    const role = Cookies.get("role");
 
     const buttons = [
         {text: "Home", link: "/"},
