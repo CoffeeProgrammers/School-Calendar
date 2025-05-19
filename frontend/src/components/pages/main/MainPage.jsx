@@ -8,8 +8,7 @@ const MainPage = () => {
     return (
         <Page>
             <Box sx={{
-                maxWidth: "250px",
-                width: '100%',
+                width: '250px',
                 height: '100%',
                 border: '1px solid #ddd',
                 padding: '20px',
@@ -21,7 +20,7 @@ const MainPage = () => {
                 <TasksMainPageContent/>
             </Box>
             <Box sx={{
-                width: '100%',
+                width: '90%',
                 height: '100%',
                 border: '1px solid #ddd',
                 padding: '10px',

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import EventService from "../../../../services/base/ext/EventService";
 import Loading from "../../../layouts/Loading";
 import {Typography} from "@mui/material";
-import StyledCalendar from "../../../layouts/calendar/StyledCalendar";
+import XCalendar from "../../../layouts/calendar/XCalendar";
 
 const CalendarContent = () => {
     const [events, setEvents] = useState([])
@@ -21,7 +21,7 @@ const CalendarContent = () => {
                 console.log("events:")
                 console.log(response)
 
-                setEvents(response);
+                setEvents(response.now);
             } catch (error) {
                 setError(error);
             } finally {
@@ -40,7 +40,7 @@ const CalendarContent = () => {
         return <Typography color={"error"}>Error: {error.message}</Typography>;
     }
     return (
-        <StyledCalendar events={events}/>
+        <XCalendar events={events}/>
     );
 };
 

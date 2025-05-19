@@ -21,6 +21,8 @@ import TeacherPanelPage from "./components/pages/teacher_panel/TeacherPanelPage"
 import {history} from "./utils/history";
 import {useEffect} from "react";
 
+import './index.css';
+
 const InitNavigation = ({ children }) => {
     const navigate = useNavigate();
 
