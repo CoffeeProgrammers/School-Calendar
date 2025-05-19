@@ -3,13 +3,14 @@ import {Box} from "@mui/material";
 import TasksMainPageContent from "../../common/task/TasksMainPageContent";
 import React from "react";
 import CalendarContent from "../../common/event/calendar/CalendarContent";
+import Cookies from "js-cookie";
 
 const MainPage = () => {
+    const userId = Cookies.get('userId');
     return (
         <Page>
             <Box sx={{
-                maxWidth: "250px",
-                width: '100%',
+                width: '250px',
                 height: '100%',
                 border: '1px solid #ddd',
                 padding: '20px',
@@ -21,7 +22,7 @@ const MainPage = () => {
                 <TasksMainPageContent/>
             </Box>
             <Box sx={{
-                width: '100%',
+                width: '90%',
                 height: '100%',
                 border: '1px solid #ddd',
                 padding: '10px',
@@ -30,7 +31,7 @@ const MainPage = () => {
                 display: "flex",
                 flexDirection: "column"
             }}>
-                <CalendarContent/>
+                <CalendarContent userId={userId}/>
             </Box>
         </Page>
     );

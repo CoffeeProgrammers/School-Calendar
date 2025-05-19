@@ -1,12 +1,12 @@
 import React from 'react';
-import ProfileContainer from "../../common/user/page/profile/ProfileContainer";
+import ProfileContent from "../../common/user/page/profile/ProfileContent";
 import Page from "../../layouts/Page";
 
 const ProfilePage = () => {
 
     return (
         <Page>
-            <ProfileContainer/>
+            <ProfileContent/>
         </Page>
 
     );

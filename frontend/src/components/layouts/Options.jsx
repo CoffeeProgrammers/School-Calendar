@@ -2,7 +2,7 @@ import React from 'react';
 import {Typography} from "@mui/material";
 import {listElementBoxTextStyle} from "../../assets/styles";
 
-const Options = ({optionsList}) => {
+const Options = ({optionsList, textAlign}) => {
     return (
         <table>
             <tbody>
@@ -14,7 +14,7 @@ const Options = ({optionsList}) => {
                             {label}
                         </Typography>
                     </td>
-                    <td>
+                    <td style={{textAlign: textAlign}}>
                         <Typography component="div">{value}</Typography>
                     </td>
                 </tr>

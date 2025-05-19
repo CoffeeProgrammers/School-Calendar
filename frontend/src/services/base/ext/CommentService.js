@@ -22,6 +22,10 @@ class CommentService extends BaseService {
             params: { page, size }
         });
     }
+
+    getMyCommentsCount() {
+        return this.get("/1/comments/getMyCount");
+    }
 }
 
 export default new CommentService();

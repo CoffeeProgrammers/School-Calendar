@@ -3,18 +3,35 @@ import Loading from "../../../../layouts/Loading";
 import {Typography} from "@mui/material";
 import UserView from "../UserView";
 import UserService from "../../../../../services/base/ext/UserService";
+import EventService from "../../../../../services/base/ext/EventService";
+import Cookies from "js-cookie";
+import TaskService from "../../../../../services/base/ext/TaskService";
+import CommentService from "../../../../../services/base/ext/CommentService";
 
-const ProfileContainer = () => {
+const ProfileContent = () => {
+    const myId = Cookies.get('userId');
     const [user, setUser] = useState(null);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const [visitedEventsCount, setVisitedEventsCount] = useState(0);
+    const [completedTasksCount, setCompletedTasksCount] = useState({countCompleted:0, countAll: 0});
+    const [writtenCommentsCount, setWrittenCommentsCount] = useState(0);
+    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await UserService.getMyUser();
-                setUser(response);
+                const response1 = await UserService.getMyUser();
+                const response2 = await EventService.getPastEventCountByUser(myId)
+                const response3 = await TaskService.countAllUserTasks(myId)
+                const response4 = await CommentService.getMyCommentsCount()
+
+                setUser(response1);
+                setVisitedEventsCount(response2.count);
+                setCompletedTasksCount(response3);
+                 setWrittenCommentsCount(response4.count);
             } catch (error) {
                 setError(error);
             } finally {
@@ -23,7 +40,7 @@ const ProfileContainer = () => {
         };
 
         fetchData();
-    }, []);
+    }, [myId]);
 
     const handleUpdate = async (updatedUser) => {
         try {
@@ -56,8 +73,11 @@ const ProfileContainer = () => {
             handleUpdate={handleUpdate}
             user={user}
             handleUpdatePassword={handleUpdatePassword}
+            visitedEventsCount={visitedEventsCount}
+            completedTasksCount={completedTasksCount}
+            writtenCommentsCount={writtenCommentsCount}
         />
     );
 };
 
-export default ProfileContainer;
+export default ProfileContent;
