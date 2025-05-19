@@ -1,11 +1,11 @@
 import React from 'react';
 import Page from "../../layouts/Page";
-import TaskContainer from "../../common/task/page/TaskContainer";
+import TaskContent from "../../common/task/page/TaskContainer";
 
 const TaskPage = () => {
     return (
         <Page>
-            <TaskContainer/>
+            <TaskContent/>
         </Page>
     );
 };

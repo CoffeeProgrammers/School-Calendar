@@ -15,6 +15,8 @@ import CameraIndoorIcon from '@mui/icons-material/CameraIndoor';
 import DateUtils from "../../../../utils/DateUtils";
 import TextUtils from "../../../../utils/TextUtils";
 import LockIcon from '@mui/icons-material/Lock';
+import Link from "@mui/material/Link";
+import {Link as RouterLink} from "react-router-dom";
 
 const EventPageMainBox = ({event, isCreator}) => {
 
@@ -54,13 +56,15 @@ const EventPageMainBox = ({event, isCreator}) => {
         {
             icon: <AccountCircleIcon fontSize="small"/>,
             label: "Creator:",
-            value: TextUtils.getUserFullName(event.creator)
+            value: <Link component={RouterLink} to={`/users/${event.creator.id}`}>
+                {TextUtils.getUserFullName(event.creator)}
+            </Link>
         }
     ]
 
     return (
         <Box sx={{
-            width: "800px",
+            width: "90%",
             border: '1px solid #ddd',
             padding: '20px',
             margin: '10px',
