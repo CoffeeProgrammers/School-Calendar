@@ -11,10 +11,12 @@ import {useNavigate} from "react-router-dom";
 import {eventTypes} from "../../../utils/constants";
 import CreateEventDialog from "../../common/event/create/CreateEventDialog";
 import {useError} from "../../../contexts/ErrorContext";
+import Cookies from "js-cookie";
 
 const Events = () => {
     const {showError} = useError()
 
+    const isMeParent = Cookies.get('role') === 'PARENT';
     const navigate = useNavigate();
 
     const [events, setEvents] = useState([])
@@ -106,7 +108,7 @@ const Events = () => {
                             setOpenFilterMenu={setOpenFilterMenu}
                         />
 
-                       <CreateEventDialog handleCreate={handleCreate}/>
+                        {!isMeParent &&  <CreateEventDialog handleCreate={handleCreate}/>}
                     </Box>
                 </Stack>
 

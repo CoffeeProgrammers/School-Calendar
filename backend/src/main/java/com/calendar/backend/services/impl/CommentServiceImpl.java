@@ -72,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
     public void delete(long id) {
         log.info("Service: Deleting comment with id {}", id);
 
-        Comment comment = commentRepository.findById(id).orElseThrow();
+        Comment comment = findByIdForServices(id);
         Event event = comment.getEvent();
         event.getComments().remove(comment);
         commentRepository.deleteById(id);
@@ -121,6 +121,6 @@ public class CommentServiceImpl implements CommentService {
         log.info("Service: Finding comment for service with id {}", id);
 
         return commentRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Comment not found"));
+                () -> new EntityNotFoundException("Comment not found with id " + id));
     }
 }
