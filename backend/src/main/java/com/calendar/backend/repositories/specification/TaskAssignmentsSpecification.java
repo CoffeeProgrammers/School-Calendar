@@ -1,5 +1,6 @@
 package com.calendar.backend.repositories.specification;
 
+import com.calendar.backend.models.Event;
 import com.calendar.backend.models.Task;
 import com.calendar.backend.models.TaskAssignment;
 import jakarta.persistence.criteria.*;
@@ -69,11 +70,13 @@ public class TaskAssignmentsSpecification {
 
     public static  Specification<TaskAssignment> hasNullEventAndMeIsCreator(long userId) {
         return (root, query, cb) -> {
-            List<Predicate> predicates = new ArrayList<>();
-            predicates.add(cb.isNull(root.join("task").join("event")));
-            predicates.add(cb.equal(root.join("task").get("creator").get("id"), userId));
+            Join<TaskAssignment, Task> taskJoin = root.join("task", JoinType.INNER);
+            Join<Task, Event> eventJoin = taskJoin.join("event", JoinType.LEFT);
 
-            return cb.and(predicates.toArray(new Predicate[0]));
+            Predicate eventIsNull = cb.isNull(eventJoin.get("id"));
+            Predicate creatorIsUser = cb.equal(taskJoin.get("creator").get("id"), userId);
+
+            return cb.and(eventIsNull, creatorIsUser);
         };
     }
 
