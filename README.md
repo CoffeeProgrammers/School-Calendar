@@ -1,5 +1,8 @@
 # School-Calendar
 
+School calendar for events, tasks, invitations and notifications. Built by team **CoffeeProgrammers** for the
+All-Ukrainian Team Programming Tournament 2025, where the team took **1st place**.
+
 ---
 
 ## Overview
@@ -11,6 +14,22 @@ teachers and parents—providing a structured and user-friendly way
 to organize educational and extracurricular processes in the form of a calendar. The 
 system enhances communication, coordination and engagement across the school 
 community.
+
+---
+
+## Team and my role
+
+Team: [Artem Moseichenko](https://github.com/dexipua) (team lead), [Yaroslav Holobyn](https://github.com/Yaroslav-Holobyn),
+[Vladyslav](https://github.com/Vladobrod), [Alya Kravets](https://github.com/aliakravets).
+
+**Artem Moseichenko, team lead and backend developer** (the most commits in the team):
+
+- Planned the project, designed the architecture and database schema, split the tasks and reviewed code.
+- Built authentication: Spring Security with JWT access and refresh tokens.
+- Wrote most of the backend services and REST controllers for events, tasks, task assignments, invitations,
+  comments and notifications, plus statistics endpoints.
+- Added filtering and sorting with JPA Specifications and global exception handling.
+- Set up database migrations with Flyway, Docker Compose for the whole app, and backend tests.
 
 ---
 
@@ -54,13 +73,12 @@ invitations tailored for users of the system (e.g., teachers or students).
 ---
 ## Technologies Used
 
-- Java: 21
-- Spring Boot: 3.4.2
-- React: 19.0.0
-- MUI: library of React components
-- H2: database for our project tests
-- PostgreSQL: database for our project
-- Docker: for start servers and creating containers in one system
+- **Backend:** Java 21, Spring Boot 3.4 (Web, Data JPA, Security, Validation, Session JDBC), JWT, MapStruct, Lombok,
+  Flyway
+- **Database:** PostgreSQL (H2 for tests)
+- **Frontend:** React 19, MUI, Schedule-X calendar, axios
+- **Testing:** JUnit, Spring Boot Test, Instancio
+- **DevOps:** Docker, Docker Compose
 
 ---
 
