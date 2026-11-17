@@ -1,5 +1,7 @@
 # School-Calendar
 
+[![CI](https://github.com/CoffeeProgrammers/School-Calendar/actions/workflows/ci.yml/badge.svg)](https://github.com/CoffeeProgrammers/School-Calendar/actions/workflows/ci.yml)
+
 School calendar for events, tasks, invitations and notifications. Built by team **CoffeeProgrammers** for the
 All-Ukrainian Team Programming Tournament 2025, where the team took **1st place**.
 
