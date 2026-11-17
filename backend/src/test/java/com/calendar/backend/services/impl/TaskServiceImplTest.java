@@ -69,7 +69,7 @@ class TaskServiceImplTest {
         updatedTask.setId(1L);
         updatedTask.setName("Updated Task");
         updatedTask.setContent("Updated Content");
-        updatedTask.setDeadline(LocalDateTime.now());
+        updatedTask.setDeadline(task.getDeadline());
 
         taskFullResponse = new TaskFullResponse();
         taskFullResponse.setId(1L);
